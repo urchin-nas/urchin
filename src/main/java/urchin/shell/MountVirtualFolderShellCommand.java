@@ -12,9 +12,9 @@ public class MountVirtualFolderShellCommand {
 
     private static final Logger LOG = LoggerFactory.getLogger(MountVirtualFolderShellCommand.class);
     public static final String FOLDER_LIST = "%folderList%";
-    public static final String DESTINATION_FOLDER_PATH = "%destinationFolderPath%";
+    public static final String VIRTUAL_FOLDER_PATH = "%virtualFolderPath%";
 
-    private static final String[] COMMAND = new String[]{"mhddfs", FOLDER_LIST, DESTINATION_FOLDER_PATH};
+    private static final String[] COMMAND = new String[]{"mhddfs", "-o", "allow_other", FOLDER_LIST, VIRTUAL_FOLDER_PATH};
 
     private final Runtime runtime;
 
@@ -22,10 +22,11 @@ public class MountVirtualFolderShellCommand {
         this.runtime = runtime;
     }
 
-    public void execute(List<String> folderPaths, String destinationFolderPath) {
+    public void execute(List<String> folderPaths, String virtualFolderPath) {
+        LOG.debug("Mounting virtual folder {} for {} folders", virtualFolderPath, folderPaths.size());
         String[] command = Arrays.copyOf(COMMAND, COMMAND.length);
-        command[1] = arrayToDelimitedString(folderPaths.toArray(), ",");
-        command[2] = destinationFolderPath;
+        command[3] = arrayToDelimitedString(folderPaths.toArray(), ",");
+        command[4] = virtualFolderPath;
         try {
             Process process = runtime.exec(command);
             process.waitFor();
