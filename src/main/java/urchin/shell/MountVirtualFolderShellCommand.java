@@ -3,9 +3,6 @@ package urchin.shell;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedWriter;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.util.Arrays;
 import java.util.List;
 
@@ -31,10 +28,6 @@ public class MountVirtualFolderShellCommand {
         command[2] = destinationFolderPath;
         try {
             Process process = runtime.exec(command);
-            OutputStream outputStream = process.getOutputStream();
-            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
-            bufferedWriter.newLine();
-            bufferedWriter.flush();
             process.waitFor();
             if (process.exitValue() != 0) {
                 throw new ShellCommandException("Process returned code: " + process.exitValue());
