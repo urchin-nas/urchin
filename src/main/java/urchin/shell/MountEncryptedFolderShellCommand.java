@@ -1,9 +1,11 @@
-package urchin.domain;
+package urchin.shell;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.*;
+import java.io.BufferedWriter;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.util.Arrays;
 
 public class MountEncryptedFolderShellCommand {
@@ -15,45 +17,32 @@ public class MountEncryptedFolderShellCommand {
 
     private static final String[] COMMAND = new String[]{"sudo", "mount", "-t", "ecryptfs", ENCRYPTED_FOLDER_PATH, FOLDER_PATH, "-o", "key=passphrase:passphrase_passwd=" + PASSPHRASE + ",ecryptfs_cipher=aes,ecryptfs_key_bytes=16,ecryptfs_passthrough=n,no_sig_cache=n,ecryptfs_enable_filename_crypto=y"};
 
-    private final Runtime runTime;
-    private final String folderPath;
-    private final String encryptedFolderPath;
-    private final String passphrase;
+    private final Runtime runtime;
 
-    public MountEncryptedFolderShellCommand(Runtime runTime, String folderPath, String encryptedFolderPath, String passphrase) {
-        this.runTime = runTime;
-        this.folderPath = folderPath;
-        this.encryptedFolderPath = encryptedFolderPath;
-        this.passphrase = passphrase;
+    public MountEncryptedFolderShellCommand(Runtime runtime) {
+        this.runtime = runtime;
     }
 
-    public String execute() {
+    public void execute(String folderPath, String encryptedFolderPath, String passphrase) {
         LOG.debug("Mounting encrypted folder {} to {}", encryptedFolderPath, folderPath);
-        String[] command = setupCommand();
+        String[] command = setupCommand(folderPath, encryptedFolderPath, passphrase);
         try {
-            StringBuilder result = new StringBuilder();
-            Process process = runTime.exec(command);
+            Process process = runtime.exec(command);
             OutputStream outputStream = process.getOutputStream();
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
             bufferedWriter.newLine();
             bufferedWriter.flush();
             process.waitFor();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                result.append(line).append("\n");
+            if (process.exitValue() != 0) {
+                throw new ShellCommandException("Process returned code: " + process.exitValue());
             }
-            System.out.println("process.exitValue = " + process.exitValue());
-            System.out.println("result = " + result);
-
-            return result.toString();
         } catch (Exception e) {
             LOG.error("Failed to execute command");
-            throw new RuntimeException(e);
+            throw new ShellCommandException(e);
         }
     }
 
-    private String[] setupCommand() {
+    private String[] setupCommand(String folderPath, String encryptedFolderPath, String passphrase) {
         String[] command = Arrays.copyOf(COMMAND, COMMAND.length);
         command[4] = encryptedFolderPath;
         command[5] = folderPath;
