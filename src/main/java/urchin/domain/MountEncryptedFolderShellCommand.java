@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.util.Arrays;
 
-public class MountEncryptedFolderShellCommand implements ShellCommand {
+public class MountEncryptedFolderShellCommand {
 
     private static final Logger LOG = LoggerFactory.getLogger(MountEncryptedFolderShellCommand.class);
     public static final String ENCRYPTED_FOLDER_PATH = "%encryptedFolderPath%";
