@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.Arrays;
 
 public class UmountFolderShellCommand {
@@ -21,10 +21,10 @@ public class UmountFolderShellCommand {
         this.runtime = runtime;
     }
 
-    public void execute(File folder) {
-        LOG.debug("Unmounting folder {}", folder.getAbsoluteFile());
+    public void execute(Path folder) {
+        LOG.debug("Unmounting folder {}", folder.toAbsolutePath());
         String[] command = Arrays.copyOf(COMMAND, COMMAND.length);
-        command[3] = folder.getAbsolutePath();
+        command[3] = folder.toAbsolutePath().toString();
         try {
             Process process = runtime.exec(command);
             process.waitFor();

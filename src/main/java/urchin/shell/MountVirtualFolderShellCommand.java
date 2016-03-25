@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.File;
+import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
 
@@ -25,11 +25,11 @@ public class MountVirtualFolderShellCommand {
         this.runtime = runtime;
     }
 
-    public void execute(List<File> folders, File virtualFolder) {
-        LOG.debug("Mounting virtual folder {} for {} folders", virtualFolder.getAbsoluteFile(), folders.size());
+    public void execute(List<Path> folders, Path virtualFolder) {
+        LOG.debug("Mounting virtual folder {} for {} folders", virtualFolder.toAbsolutePath(), folders.size());
         String[] command = Arrays.copyOf(COMMAND, COMMAND.length);
         command[3] = arrayToDelimitedString(folders.toArray(), ",");
-        command[4] = virtualFolder.getAbsolutePath();
+        command[4] = virtualFolder.toAbsolutePath().toString();
         try {
             Process process = runtime.exec(command);
             process.waitFor();

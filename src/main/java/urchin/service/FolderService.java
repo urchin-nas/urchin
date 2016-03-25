@@ -8,8 +8,14 @@ import urchin.shell.MountVirtualFolderShellCommand;
 import urchin.shell.SetupAndMountEncryptedFolderShellCommand;
 import urchin.shell.UmountFolderShellCommand;
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
+
+import static java.nio.file.Files.createDirectories;
+
 
 public class FolderService {
 
@@ -30,37 +36,37 @@ public class FolderService {
         this.umountFolderShellCommand = umountFolderShellCommand;
     }
 
-    public void setupEncryptedFolder(File folder) {
-        File encryptedFolder = getEncryptedFolder(folder);
+    public void setupEncryptedFolder(Path folder) throws IOException {
+        Path encryptedFolder = getEncryptedFolder(folder);
         createEncryptionFolderPair(folder, encryptedFolder);
         Passphrase passphrase = setupAndMountEncryptedFolderShellCommand.execute(folder, encryptedFolder);
     }
 
-    public void setupVirtualFolder(List<File> folders, File virtualFolder) {
+    public void setupVirtualFolder(List<Path> folders, Path virtualFolder) throws IOException {
         createVirtualFolder(virtualFolder);
         mountVirtualFolderShellCommand.execute(folders, virtualFolder);
     }
 
-    private File getEncryptedFolder(File folder) {
-        String path = folder.getAbsolutePath();
+    private Path getEncryptedFolder(Path folder) {
+        String path = folder.toAbsolutePath().toString();
         String encryptedFolderPath = path.substring(0, path.lastIndexOf("/")) + "/." + path.substring(path.lastIndexOf("/") + 1);
         LOG.debug("Encrypted folder path {}", encryptedFolderPath);
-        return new File(encryptedFolderPath);
+        return Paths.get(encryptedFolderPath);
     }
 
-    private void createVirtualFolder(File virtualFolder) {
-        if (!virtualFolder.exists()) {
-            virtualFolder.mkdirs();
+    private void createVirtualFolder(Path virtualFolder) throws IOException {
+        if (!Files.exists(virtualFolder)) {
+            createDirectories(virtualFolder);
         }
     }
 
-    private boolean createEncryptionFolderPair(File folder, File encryptedFolder) {
-        if (!folder.exists() && !encryptedFolder.exists()) {
+    private void createEncryptionFolderPair(Path folder, Path encryptedFolder) throws IOException {
+        if (!Files.exists(folder) && !Files.exists(encryptedFolder)) {
             LOG.info("Creating folder pair {} - {}", folder, encryptedFolder);
-            return folder.mkdirs() && encryptedFolder.mkdirs();
+            createDirectories(folder);
+            createDirectories(encryptedFolder);
         } else {
             LOG.warn("Folder pair already exist");
         }
-        return false;
     }
 }

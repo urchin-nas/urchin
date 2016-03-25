@@ -7,9 +7,9 @@ import urchin.domain.Passphrase;
 import urchin.util.PassphraseGenerator;
 
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.nio.file.Path;
 import java.util.Arrays;
 
 public class SetupAndMountEncryptedFolderShellCommand {
@@ -28,7 +28,7 @@ public class SetupAndMountEncryptedFolderShellCommand {
         this.runtime = runtime;
     }
 
-    public Passphrase execute(File folder, File encryptedFolder) {
+    public Passphrase execute(Path folder, Path encryptedFolder) {
         LOG.info("Setting up encrypted folder {} and mounting it to {}", encryptedFolder, folder);
         Passphrase passphrase = PassphraseGenerator.generateEcryptfsPassphrase();
         String[] command = setupCommand(folder, encryptedFolder, passphrase);
@@ -49,10 +49,10 @@ public class SetupAndMountEncryptedFolderShellCommand {
         return passphrase;
     }
 
-    private String[] setupCommand(File folder, File encryptedFolder, Passphrase passphrase) {
+    private String[] setupCommand(Path folder, Path encryptedFolder, Passphrase passphrase) {
         String[] command = Arrays.copyOf(COMMAND, COMMAND.length);
-        command[4] = encryptedFolder.getAbsolutePath();
-        command[5] = folder.getAbsolutePath();
+        command[4] = encryptedFolder.toAbsolutePath().toString();
+        command[5] = folder.toAbsolutePath().toString();
         command[7] = command[7].replace(PASSPHRASE, passphrase.getPassphrase());
         return command;
     }
