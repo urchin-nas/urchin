@@ -51,7 +51,7 @@ public class FolderServiceIT {
         try {
             folderService.setupVirtualFolder(Arrays.asList(folder_1, folder_2), virtualFolder);
 
-            Path file = createPathInVirtualFolder(filename, virtualFolder);
+            createFileInVirtualFolder(filename, virtualFolder);
             assertTrue(exists(folder_1));
             assertTrue(exists(folder_2));
             assertTrue(exists(virtualFolder));
@@ -63,10 +63,9 @@ public class FolderServiceIT {
         }
     }
 
-    private Path createPathInVirtualFolder(String filename, Path virtualFolder) throws IOException {
+    private Path createFileInVirtualFolder(String filename, Path virtualFolder) throws IOException {
         Path file = Paths.get(virtualFolder.toAbsolutePath().toString() + "/" + filename);
-        Files.createFile(file);
-        return file;
+        return Files.createFile(file);
     }
 
     private boolean containsPath(Path folder, String filename) throws IOException {
