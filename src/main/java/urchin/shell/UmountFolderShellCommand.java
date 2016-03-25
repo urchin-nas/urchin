@@ -6,30 +6,25 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.util.Arrays;
-import java.util.List;
 
-import static org.springframework.util.StringUtils.arrayToDelimitedString;
+public class UmountFolderShellCommand {
 
-public class MountVirtualFolderShellCommand {
-
+    public static final String FOLDER = "%folder%";
     private static final Logger LOG = LoggerFactory.getLogger(MountVirtualFolderShellCommand.class);
-    public static final String FOLDER_LIST = "%folderList%";
-    public static final String VIRTUAL_FOLDER_PATH = "%virtualFolderPath%";
 
-    private static final String[] COMMAND = new String[]{"mhddfs", "-o", "allow_other", FOLDER_LIST, VIRTUAL_FOLDER_PATH};
+    private static final String[] COMMAND = new String[]{"sudo", "umount", "-l", FOLDER};
 
     private final Runtime runtime;
 
     @Autowired
-    public MountVirtualFolderShellCommand(Runtime runtime) {
+    public UmountFolderShellCommand(Runtime runtime) {
         this.runtime = runtime;
     }
 
-    public void execute(List<File> folders, File virtualFolder) {
-        LOG.debug("Mounting virtual folder {} for {} folders", virtualFolder.getAbsoluteFile(), folders.size());
+    public void execute(File folder) {
+        LOG.debug("Unmounting folder {}", folder.getAbsoluteFile());
         String[] command = Arrays.copyOf(COMMAND, COMMAND.length);
-        command[3] = arrayToDelimitedString(folders.toArray(), ",");
-        command[4] = virtualFolder.getAbsolutePath();
+        command[3] = folder.getAbsolutePath();
         try {
             Process process = runtime.exec(command);
             process.waitFor();
@@ -41,4 +36,5 @@ public class MountVirtualFolderShellCommand {
             throw new ShellCommandException(e);
         }
     }
+
 }

@@ -2,30 +2,36 @@ package urchin.shell;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import urchin.domain.Passphrase;
+import urchin.util.PassphraseGenerator;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.util.Arrays;
 
-public class MountEncryptedFolderShellCommand {
+public class SetupAndMountEncryptedFolderShellCommand {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MountEncryptedFolderShellCommand.class);
-    public static final String ENCRYPTED_FOLDER_PATH = "%encryptedFolderPath%";
-    public static final String FOLDER_PATH = "%folderPath%";
-    public static final String PASSPHRASE = "%passphrase%";
+    private static final Logger LOG = LoggerFactory.getLogger(SetupAndMountEncryptedFolderShellCommand.class);
+    private static final String ENCRYPTED_FOLDER_PATH = "%encryptedFolderPath%";
+    private static final String FOLDER_PATH = "%folderPath%";
+    private static final String PASSPHRASE = "%passphrase%";
 
     private static final String[] COMMAND = new String[]{"sudo", "mount", "-t", "ecryptfs", ENCRYPTED_FOLDER_PATH, FOLDER_PATH, "-o", "key=passphrase:passphrase_passwd=" + PASSPHRASE + ",ecryptfs_cipher=aes,ecryptfs_key_bytes=16,ecryptfs_passthrough=n,no_sig_cache=n,ecryptfs_enable_filename_crypto=y"};
 
     private final Runtime runtime;
 
-    public MountEncryptedFolderShellCommand(Runtime runtime) {
+    @Autowired
+    public SetupAndMountEncryptedFolderShellCommand(Runtime runtime) {
         this.runtime = runtime;
     }
 
-    public void execute(String folderPath, String encryptedFolderPath, String passphrase) {
-        LOG.debug("Mounting encrypted folder {} to {}", encryptedFolderPath, folderPath);
-        String[] command = setupCommand(folderPath, encryptedFolderPath, passphrase);
+    public Passphrase execute(File folder, File encryptedFolder) {
+        LOG.info("Setting up encrypted folder {} and mounting it to {}", encryptedFolder, folder);
+        Passphrase passphrase = PassphraseGenerator.generateEcryptfsPassphrase();
+        String[] command = setupCommand(folder, encryptedFolder, passphrase);
         try {
             Process process = runtime.exec(command);
             OutputStream outputStream = process.getOutputStream();
@@ -40,13 +46,14 @@ public class MountEncryptedFolderShellCommand {
             LOG.error("Failed to execute command");
             throw new ShellCommandException(e);
         }
+        return passphrase;
     }
 
-    private String[] setupCommand(String folderPath, String encryptedFolderPath, String passphrase) {
+    private String[] setupCommand(File folder, File encryptedFolder, Passphrase passphrase) {
         String[] command = Arrays.copyOf(COMMAND, COMMAND.length);
-        command[4] = encryptedFolderPath;
-        command[5] = folderPath;
-        command[7] = command[7].replace(PASSPHRASE, passphrase);
+        command[4] = encryptedFolder.getAbsolutePath();
+        command[5] = folder.getAbsolutePath();
+        command[7] = command[7].replace(PASSPHRASE, passphrase.getPassphrase());
         return command;
     }
 }

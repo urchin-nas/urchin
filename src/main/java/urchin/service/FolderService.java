@@ -3,8 +3,10 @@ package urchin.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import urchin.shell.MountEncryptedFolderShellCommand;
+import urchin.domain.Passphrase;
 import urchin.shell.MountVirtualFolderShellCommand;
+import urchin.shell.SetupAndMountEncryptedFolderShellCommand;
+import urchin.shell.UmountFolderShellCommand;
 
 import java.io.File;
 import java.util.List;
@@ -13,43 +15,52 @@ public class FolderService {
 
     private static final Logger LOG = LoggerFactory.getLogger(FolderService.class);
 
-    private final MountEncryptedFolderShellCommand mountEncryptedFolderShellCommand;
+    private final SetupAndMountEncryptedFolderShellCommand setupAndMountEncryptedFolderShellCommand;
     private final MountVirtualFolderShellCommand mountVirtualFolderShellCommand;
+    private final UmountFolderShellCommand umountFolderShellCommand;
 
     @Autowired
-    public FolderService(MountEncryptedFolderShellCommand mountEncryptedFolderShellCommand, MountVirtualFolderShellCommand mountVirtualFolderShellCommand) {
-        this.mountEncryptedFolderShellCommand = mountEncryptedFolderShellCommand;
+    public FolderService(
+            SetupAndMountEncryptedFolderShellCommand setupAndMountEncryptedFolderShellCommand,
+            MountVirtualFolderShellCommand mountVirtualFolderShellCommand,
+            UmountFolderShellCommand umountFolderShellCommand
+    ) {
+        this.setupAndMountEncryptedFolderShellCommand = setupAndMountEncryptedFolderShellCommand;
         this.mountVirtualFolderShellCommand = mountVirtualFolderShellCommand;
+        this.umountFolderShellCommand = umountFolderShellCommand;
     }
 
-    public void setupEncryptedFolder(String folderPath, String passphrase) {
-        String encryptedFolderPath = folderPath.substring(0, folderPath.lastIndexOf("/")) + "/." + folderPath.substring(folderPath.lastIndexOf("/") + 1);
-        createEncryptionFolders(folderPath, encryptedFolderPath);
-        mountEncryptedFolderShellCommand.execute(folderPath, encryptedFolderPath, passphrase);
+    public void setupEncryptedFolder(File folder) {
+        File encryptedFolder = getEncryptedFolder(folder);
+        createEncryptionFolderPair(folder, encryptedFolder);
+        Passphrase passphrase = setupAndMountEncryptedFolderShellCommand.execute(folder, encryptedFolder);
     }
 
-    public void setupVirtualFolder(List<String> folderPaths, String virtualFolderPath) {
-        createVirtualFolder(virtualFolderPath);
-        mountVirtualFolderShellCommand.execute(folderPaths, virtualFolderPath);
+    public void setupVirtualFolder(List<File> folders, File virtualFolder) {
+        createVirtualFolder(virtualFolder);
+        mountVirtualFolderShellCommand.execute(folders, virtualFolder);
     }
 
-    private void createVirtualFolder(String virtualFolderPath) {
-        File virtualFolder = new File(virtualFolderPath);
+    private File getEncryptedFolder(File folder) {
+        String path = folder.getAbsolutePath();
+        String encryptedFolderPath = path.substring(0, path.lastIndexOf("/")) + "/." + path.substring(path.lastIndexOf("/") + 1);
+        LOG.debug("Encrypted folder path {}", encryptedFolderPath);
+        return new File(encryptedFolderPath);
+    }
+
+    private void createVirtualFolder(File virtualFolder) {
         if (!virtualFolder.exists()) {
             virtualFolder.mkdirs();
         }
     }
 
-    private void createEncryptionFolders(String folderPath, String encryptedFolderPath) {
-        File folder = new File(folderPath);
-        File encryptedFolder = new File(encryptedFolderPath);
-
+    private boolean createEncryptionFolderPair(File folder, File encryptedFolder) {
         if (!folder.exists() && !encryptedFolder.exists()) {
-            LOG.info("Creating folders");
-            folder.mkdirs();
-            encryptedFolder.mkdirs();
+            LOG.info("Creating folder pair {} - {}", folder, encryptedFolder);
+            return folder.mkdirs() && encryptedFolder.mkdirs();
         } else {
-            LOG.warn("Folders already exist");
+            LOG.warn("Folder pair already exist");
         }
+        return false;
     }
 }
