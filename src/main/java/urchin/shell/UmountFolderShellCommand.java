@@ -10,7 +10,7 @@ import java.util.Arrays;
 public class UmountFolderShellCommand {
 
     public static final String FOLDER = "%folder%";
-    private static final Logger LOG = LoggerFactory.getLogger(MountVirtualFolderShellCommand.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UmountFolderShellCommand.class);
 
     private static final String[] COMMAND = new String[]{"sudo", "umount", "-l", FOLDER};
 

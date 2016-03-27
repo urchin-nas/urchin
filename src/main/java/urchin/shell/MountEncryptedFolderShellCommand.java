@@ -3,8 +3,8 @@ package urchin.shell;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import urchin.domain.EncryptedFolder;
 import urchin.domain.Passphrase;
-import urchin.util.PassphraseGenerator;
 
 import java.io.BufferedWriter;
 import java.io.OutputStream;
@@ -12,9 +12,9 @@ import java.io.OutputStreamWriter;
 import java.nio.file.Path;
 import java.util.Arrays;
 
-public class SetupAndMountEncryptedFolderShellCommand {
+public class MountEncryptedFolderShellCommand {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SetupAndMountEncryptedFolderShellCommand.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MountEncryptedFolderShellCommand.class);
     private static final String ENCRYPTED_FOLDER_PATH = "%encryptedFolderPath%";
     private static final String FOLDER_PATH = "%folderPath%";
     private static final String PASSPHRASE = "%passphrase%";
@@ -24,13 +24,12 @@ public class SetupAndMountEncryptedFolderShellCommand {
     private final Runtime runtime;
 
     @Autowired
-    public SetupAndMountEncryptedFolderShellCommand(Runtime runtime) {
+    public MountEncryptedFolderShellCommand(Runtime runtime) {
         this.runtime = runtime;
     }
 
-    public Passphrase execute(Path folder, Path encryptedFolder) {
-        LOG.info("Setting up encrypted folder {} and mounting it to {}", encryptedFolder, folder);
-        Passphrase passphrase = PassphraseGenerator.generateEcryptfsPassphrase();
+    public Passphrase execute(Path folder, EncryptedFolder encryptedFolder, Passphrase passphrase) {
+        LOG.info("Setting up encrypted folder {} and mounting it to {}", encryptedFolder.getPath(), folder);
         String[] command = setupCommand(folder, encryptedFolder, passphrase);
         try {
             Process process = runtime.exec(command);
@@ -49,9 +48,9 @@ public class SetupAndMountEncryptedFolderShellCommand {
         return passphrase;
     }
 
-    private String[] setupCommand(Path folder, Path encryptedFolder, Passphrase passphrase) {
+    private String[] setupCommand(Path folder, EncryptedFolder encryptedFolder, Passphrase passphrase) {
         String[] command = Arrays.copyOf(COMMAND, COMMAND.length);
-        command[4] = encryptedFolder.toAbsolutePath().toString();
+        command[4] = encryptedFolder.getPath().toAbsolutePath().toString();
         command[5] = folder.toAbsolutePath().toString();
         command[7] = command[7].replace(PASSPHRASE, passphrase.getPassphrase());
         return command;

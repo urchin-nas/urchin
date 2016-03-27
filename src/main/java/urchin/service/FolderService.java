@@ -3,43 +3,67 @@ package urchin.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import urchin.domain.EncryptedFolder;
 import urchin.domain.Passphrase;
+import urchin.shell.MountEncryptedFolderShellCommand;
 import urchin.shell.MountVirtualFolderShellCommand;
-import urchin.shell.SetupAndMountEncryptedFolderShellCommand;
 import urchin.shell.UmountFolderShellCommand;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.List;
 
 import static java.nio.file.Files.createDirectories;
-
+import static urchin.util.EncryptedFolderUtil.getEncryptedFolder;
+import static urchin.util.EncryptedFolderUtil.getFolder;
+import static urchin.util.PassphraseGenerator.generateEcryptfsPassphrase;
 
 public class FolderService {
 
     private static final Logger LOG = LoggerFactory.getLogger(FolderService.class);
 
-    private final SetupAndMountEncryptedFolderShellCommand setupAndMountEncryptedFolderShellCommand;
+    private final MountEncryptedFolderShellCommand mountEncryptedFolderShellCommand;
     private final MountVirtualFolderShellCommand mountVirtualFolderShellCommand;
     private final UmountFolderShellCommand umountFolderShellCommand;
 
     @Autowired
     public FolderService(
-            SetupAndMountEncryptedFolderShellCommand setupAndMountEncryptedFolderShellCommand,
+            MountEncryptedFolderShellCommand mountEncryptedFolderShellCommand,
             MountVirtualFolderShellCommand mountVirtualFolderShellCommand,
             UmountFolderShellCommand umountFolderShellCommand
     ) {
-        this.setupAndMountEncryptedFolderShellCommand = setupAndMountEncryptedFolderShellCommand;
+        this.mountEncryptedFolderShellCommand = mountEncryptedFolderShellCommand;
         this.mountVirtualFolderShellCommand = mountVirtualFolderShellCommand;
         this.umountFolderShellCommand = umountFolderShellCommand;
     }
 
-    public void setupEncryptedFolder(Path folder) throws IOException {
-        Path encryptedFolder = getEncryptedFolder(folder);
+    public Passphrase createAndMountEncryptedFolder(Path folder) throws IOException {
+        EncryptedFolder encryptedFolder = getEncryptedFolder(folder);
         createEncryptionFolderPair(folder, encryptedFolder);
-        Passphrase passphrase = setupAndMountEncryptedFolderShellCommand.execute(folder, encryptedFolder);
+        Passphrase passphrase = generateEcryptfsPassphrase();
+        mountEncryptedFolderShellCommand.execute(folder, encryptedFolder, passphrase);
+        return passphrase;
+    }
+
+    public void mountEncryptedFolder(EncryptedFolder encryptedFolder, Passphrase passphrase) throws IOException {
+        Path folder = getFolder(encryptedFolder);
+        if (!Files.exists(folder)) {
+            Files.createDirectories(folder);
+            mountEncryptedFolderShellCommand.execute(folder, encryptedFolder, passphrase);
+        } else {
+            throw new IllegalStateException(String.format("Folder %s should not exist", folder));
+        }
+    }
+
+    public void umountEncryptedFolder(Path folder) throws IOException {
+        umountFolderShellCommand.execute(folder);
+        if (folder.toFile().list().length == 0) {
+            LOG.info("Deleting empty folder {}", folder.toAbsolutePath());
+            Files.delete(folder);
+        } else {
+            throw new RuntimeException("Something went wrong during umount");
+        }
     }
 
     public void setupVirtualFolder(List<Path> folders, Path virtualFolder) throws IOException {
@@ -47,12 +71,6 @@ public class FolderService {
         mountVirtualFolderShellCommand.execute(folders, virtualFolder);
     }
 
-    private Path getEncryptedFolder(Path folder) {
-        String path = folder.toAbsolutePath().toString();
-        String encryptedFolderPath = path.substring(0, path.lastIndexOf("/")) + "/." + path.substring(path.lastIndexOf("/") + 1);
-        LOG.debug("Encrypted folder path {}", encryptedFolderPath);
-        return Paths.get(encryptedFolderPath);
-    }
 
     private void createVirtualFolder(Path virtualFolder) throws IOException {
         if (!Files.exists(virtualFolder)) {
@@ -60,11 +78,11 @@ public class FolderService {
         }
     }
 
-    private void createEncryptionFolderPair(Path folder, Path encryptedFolder) throws IOException {
-        if (!Files.exists(folder) && !Files.exists(encryptedFolder)) {
+    private void createEncryptionFolderPair(Path folder, EncryptedFolder encryptedFolder) throws IOException {
+        if (!Files.exists(folder) && !Files.exists(encryptedFolder.getPath())) {
             LOG.info("Creating folder pair {} - {}", folder, encryptedFolder);
             createDirectories(folder);
-            createDirectories(encryptedFolder);
+            createDirectories(encryptedFolder.getPath());
         } else {
             LOG.warn("Folder pair already exist");
         }

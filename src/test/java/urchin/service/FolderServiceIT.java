@@ -3,10 +3,11 @@ package urchin.service;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.TemporaryFolder;
+import urchin.domain.Passphrase;
+import urchin.shell.MountEncryptedFolderShellCommand;
 import urchin.shell.MountVirtualFolderShellCommand;
-import urchin.shell.SetupAndMountEncryptedFolderShellCommand;
 import urchin.shell.UmountFolderShellCommand;
+import urchin.util.TemporaryFolderUmount;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,60 +16,75 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 
 import static java.nio.file.Files.exists;
+import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
+import static urchin.util.EncryptedFolderUtil.getEncryptedFolder;
 
 public class FolderServiceIT {
 
     public static final Runtime runtime = Runtime.getRuntime();
 
     @Rule
-    public TemporaryFolder temporaryFolder = new TemporaryFolder();
+    public TemporaryFolderUmount temporaryFolder = new TemporaryFolderUmount();
 
     private UmountFolderShellCommand umountFolderShellCommand;
     private FolderService folderService;
+    private Path folder_1;
+    private Path folder_2;
+    private Path virtualFolder;
+    public static final String FILENAME = "test.txt";
 
     @Before
     public void setup() {
-        SetupAndMountEncryptedFolderShellCommand setupAndMountEncryptedFolderShellCommand = new SetupAndMountEncryptedFolderShellCommand(runtime);
+        MountEncryptedFolderShellCommand mountEncryptedFolderShellCommand = new MountEncryptedFolderShellCommand(runtime);
         MountVirtualFolderShellCommand mountVirtualFolderShellCommand = new MountVirtualFolderShellCommand(runtime);
         umountFolderShellCommand = new UmountFolderShellCommand(runtime);
         folderService = new FolderService(
-                setupAndMountEncryptedFolderShellCommand,
+                mountEncryptedFolderShellCommand,
                 mountVirtualFolderShellCommand,
                 umountFolderShellCommand
         );
+
+        String tmpFolderPath = temporaryFolder.getRoot().getAbsolutePath();
+        folder_1 = Paths.get(tmpFolderPath + "/folder1");
+        folder_2 = Paths.get(tmpFolderPath + "/folder2");
+        virtualFolder = Paths.get(tmpFolderPath + "/virtual");
     }
 
     @Test
     public void encryptedFoldersAreCreatedAndMountedAsVirtualFolder() throws IOException {
-        String tmpFolderPath = temporaryFolder.getRoot().getAbsolutePath();
-        String filename = "test.txt";
-        Path folder_1 = Paths.get(tmpFolderPath + "/folder1");
-        Path folder_2 = Paths.get(tmpFolderPath + "/folder2");
-        Path virtualFolder = Paths.get(tmpFolderPath + "/virtual");
-        folderService.setupEncryptedFolder(folder_1);
-        folderService.setupEncryptedFolder(folder_2);
-        try {
-            folderService.setupVirtualFolder(Arrays.asList(folder_1, folder_2), virtualFolder);
+        folderService.createAndMountEncryptedFolder(folder_1);
+        folderService.createAndMountEncryptedFolder(folder_2);
 
-            createFileInVirtualFolder(filename, virtualFolder);
-            assertTrue(exists(folder_1));
-            assertTrue(exists(folder_2));
-            assertTrue(exists(virtualFolder));
-            assertTrue(containsPath(folder_1, filename) || containsPath(folder_2, filename));
-        } finally {
-            umountFolderShellCommand.execute(virtualFolder);
-            umountFolderShellCommand.execute(folder_1);
-            umountFolderShellCommand.execute(folder_2);
-        }
+        folderService.setupVirtualFolder(Arrays.asList(folder_1, folder_2), virtualFolder);
+
+        createFileInFolder(FILENAME, virtualFolder);
+        assertTrue(exists(folder_1));
+        assertTrue(exists(folder_2));
+        assertTrue(exists(virtualFolder));
+        assertTrue(folderContainsFile(folder_1, FILENAME) || folderContainsFile(folder_2, FILENAME));
+
     }
 
-    private Path createFileInVirtualFolder(String filename, Path virtualFolder) throws IOException {
-        Path file = Paths.get(virtualFolder.toAbsolutePath().toString() + "/" + filename);
+    @Test
+    public void umountAndmountExistingEncryptedFolder() throws IOException {
+        Passphrase passphrase = folderService.createAndMountEncryptedFolder(folder_1);
+        createFileInFolder(FILENAME, folder_1);
+        assertTrue(folderContainsFile(folder_1, FILENAME));
+
+        folderService.umountEncryptedFolder(folder_1);
+        assertFalse(Files.exists(folder_1));
+
+        folderService.mountEncryptedFolder(getEncryptedFolder(folder_1), passphrase);
+        assertTrue(folderContainsFile(folder_1, FILENAME));
+    }
+
+    private Path createFileInFolder(String filename, Path folder) throws IOException {
+        Path file = Paths.get(folder.toAbsolutePath().toString() + "/" + filename);
         return Files.createFile(file);
     }
 
-    private boolean containsPath(Path folder, String filename) throws IOException {
+    private boolean folderContainsFile(Path folder, String filename) throws IOException {
         for (Path path : Files.newDirectoryStream(folder)) {
             if (path.getFileName().toString().equals(filename)) {
                 return true;
