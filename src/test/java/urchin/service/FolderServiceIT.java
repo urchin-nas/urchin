@@ -25,7 +25,7 @@ public class FolderServiceIT {
     public static final Runtime runtime = Runtime.getRuntime();
 
     @Rule
-    public TemporaryFolderUmount temporaryFolder = new TemporaryFolderUmount();
+    public TemporaryFolderUmount temporaryFolderUmount = new TemporaryFolderUmount();
 
     private UmountFolderShellCommand umountFolderShellCommand;
     private FolderService folderService;
@@ -45,7 +45,7 @@ public class FolderServiceIT {
                 umountFolderShellCommand
         );
 
-        String tmpFolderPath = temporaryFolder.getRoot().getAbsolutePath();
+        String tmpFolderPath = temporaryFolderUmount.getRoot().getAbsolutePath();
         folder_1 = Paths.get(tmpFolderPath + "/folder1");
         folder_2 = Paths.get(tmpFolderPath + "/folder2");
         virtualFolder = Paths.get(tmpFolderPath + "/virtual");
