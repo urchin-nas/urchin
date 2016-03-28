@@ -1,6 +1,8 @@
 package urchin.testutil;
 
 import org.junit.rules.TemporaryFolder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import urchin.shell.UmountFolderShellCommand;
 
 import java.io.IOException;
@@ -13,22 +15,26 @@ import static urchin.util.EncryptedFolderUtil.SLASH_HIDDEN_FOLDER;
 
 public class TemporaryFolderUmount extends TemporaryFolder {
 
+    private static final Logger LOG = LoggerFactory.getLogger(TemporaryFolderUmount.class);
+
     private UmountFolderShellCommand umountFolderShellCommand = new UmountFolderShellCommand(Runtime.getRuntime());
 
     @Override
     protected void after() {
-        umountFolders();
+        unmountFolders();
         super.after();
     }
 
-    private void umountFolders() {
+    private void unmountFolders() {
         Path rootPath = Paths.get(getRoot().getAbsolutePath());
+        LOG.info("Unmounting folder in {}", rootPath.toAbsolutePath());
         try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(rootPath)) {
             for (Path path : directoryStream) {
                 if (Files.isDirectory(path) && !path.toAbsolutePath().toString().contains(SLASH_HIDDEN_FOLDER)) {
                     try {
                         umountFolderShellCommand.execute(path);
-                    } catch (Exception ignore) {
+                    } catch (Exception e) {
+                        LOG.error("Error during umount", e);
                     }
                 }
             }
