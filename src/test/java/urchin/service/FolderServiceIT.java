@@ -7,7 +7,7 @@ import urchin.domain.Passphrase;
 import urchin.shell.MountEncryptedFolderShellCommand;
 import urchin.shell.MountVirtualFolderShellCommand;
 import urchin.shell.UmountFolderShellCommand;
-import urchin.util.TemporaryFolderUmount;
+import urchin.testutil.TemporaryFolderUmount;
 
 import java.io.IOException;
 import java.nio.file.Files;

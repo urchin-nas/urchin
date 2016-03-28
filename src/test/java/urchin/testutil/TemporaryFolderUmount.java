@@ -1,4 +1,4 @@
-package urchin.util;
+package urchin.testutil;
 
 import org.junit.rules.TemporaryFolder;
 import urchin.shell.UmountFolderShellCommand;

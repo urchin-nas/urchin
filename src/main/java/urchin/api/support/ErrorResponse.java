@@ -1,12 +1,15 @@
 package urchin.api.support;
 
-public class ErrorMessage {
+public class ErrorResponse {
 
-    private final String code;
+    private String code;
     private String field;
     private String message;
 
-    public ErrorMessage(String code) {
+    private ErrorResponse() {
+    }
+
+    public ErrorResponse(String code) {
         this.code = code;
     }
 
@@ -18,7 +21,7 @@ public class ErrorMessage {
         return field;
     }
 
-    public ErrorMessage setField(String field) {
+    public ErrorResponse setField(String field) {
         this.field = field;
         return this;
     }
@@ -27,7 +30,7 @@ public class ErrorMessage {
         return message;
     }
 
-    public ErrorMessage setMessage(String message) {
+    public ErrorResponse setMessage(String message) {
         this.message = message;
         return this;
     }
