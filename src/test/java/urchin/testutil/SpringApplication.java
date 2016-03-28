@@ -22,19 +22,18 @@ public abstract class SpringApplication {
 
     @Value("${local.server.port}")
     protected int port;
-    protected String baseUrl;
-    protected RestTemplate template;
     protected String contextPath;
+    protected String baseUrl;
     protected String url;
+    protected RestTemplate template;
 
     @Before
     public void setupSpringApplication() throws IOException {
         Properties properties = loadProperties(new ClassPathResource("application.properties"));
-        String serverUrl = "http://localhost:" + port;
         contextPath = properties.getProperty("server.contextPath");
-        baseUrl = serverUrl + contextPath;
-        template = new TestRestTemplate();
+        baseUrl = "http://localhost:" + port + contextPath;
         url = baseUrl + getPath();
+        template = new TestRestTemplate();
     }
 
     protected abstract String getPath();
