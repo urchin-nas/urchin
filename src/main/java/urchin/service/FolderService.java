@@ -49,8 +49,11 @@ public class FolderService {
     }
 
     public void mountEncryptedFolder(EncryptedFolder encryptedFolder, Passphrase passphrase) throws IOException {
+        if (!Files.exists(encryptedFolder.getPath())) {
+            throw new IllegalArgumentException(String.format("Encrypted folder %s does not exist", encryptedFolder.getPath()));
+        }
         Path folder = getFolder(encryptedFolder);
-        if (!Files.exists(folder)) {
+        if (!Files.exists(folder) || isEmpty(folder)) {
             Files.createDirectories(folder);
             mountEncryptedFolderShellCommand.execute(folder, encryptedFolder, passphrase);
         } else {
@@ -59,20 +62,26 @@ public class FolderService {
     }
 
     public void umountEncryptedFolder(Path folder) throws IOException {
-        umountFolderShellCommand.execute(folder);
-        if (folder.toFile().list().length == 0) {
-            LOG.info("Deleting empty folder {}", folder.toAbsolutePath());
-            Files.delete(folder);
-        } else {
-            throw new RuntimeException("Something went wrong during umount");
+        if (Files.exists(folder)) {
+            umountFolderShellCommand.execute(folder);
+            if (isEmpty(folder)) {
+                LOG.info("Deleting empty folder {}", folder.toAbsolutePath());
+                Files.delete(folder);
+            } else {
+                throw new RuntimeException("Something went wrong during umount");
+            }
         }
     }
 
     public void setupVirtualFolder(List<Path> folders, Path virtualFolder) throws IOException {
+        //TODO error handling, tests etc
         createVirtualFolder(virtualFolder);
         mountVirtualFolderShellCommand.execute(folders, virtualFolder);
     }
 
+    private boolean isEmpty(Path folder) {
+        return folder.toFile().list().length == 0;
+    }
 
     private void createVirtualFolder(Path virtualFolder) throws IOException {
         if (!Files.exists(virtualFolder)) {
@@ -86,7 +95,7 @@ public class FolderService {
             createDirectories(folder);
             createDirectories(encryptedFolder.getPath());
         } else {
-            LOG.warn("Folder pair already exist");
+            throw new IllegalArgumentException("At least one folder in folder pair already exist");
         }
     }
 }
