@@ -27,7 +27,7 @@ public class TemporaryFolderUmount extends TemporaryFolder {
 
     private void unmountFolders() {
         Path rootPath = Paths.get(getRoot().getAbsolutePath());
-        LOG.info("Unmounting folder in {}", rootPath.toAbsolutePath());
+        LOG.info("Unmounting folders in {}", rootPath.toAbsolutePath());
         try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(rootPath)) {
             for (Path path : directoryStream) {
                 if (Files.isDirectory(path) && !path.toAbsolutePath().toString().contains(SLASH_HIDDEN_FOLDER)) {
