@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import urchin.api.CreateEncryptedFolderApi;
 import urchin.api.PasspraseApi;
-import urchin.api.support.ControllerSupport;
 import urchin.api.support.ErrorResponse;
 import urchin.api.support.ResponseMessage;
 import urchin.api.support.error.ResponseException;
@@ -23,7 +22,7 @@ import java.nio.file.Paths;
 
 @RestController()
 @RequestMapping("folder")
-public class FolderController extends ControllerSupport {
+public class FolderController {
 
     private final FolderService folderService;
 

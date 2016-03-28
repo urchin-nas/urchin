@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import urchin.api.support.error.ResponseException;
@@ -16,11 +17,12 @@ import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static urchin.api.support.error.ErrorResponseEntityBuilder.createResponseEntity;
 
-public abstract class ControllerSupport {
+@ControllerAdvice
+public class ExceptionControllerAdvice {
 
+    private final static Logger LOG = LoggerFactory.getLogger(ExceptionControllerAdvice.class);
     public static final String VALIDATION_MESSAGE_DELIMITER = ";";
     public static final String UNKNOWN_ERROR = "UNKNOWN_ERROR";
-    private final static Logger LOG = LoggerFactory.getLogger(ControllerSupport.class);
 
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     protected ResponseEntity<ResponseMessage> handleValidationError(MethodArgumentNotValidException e, WebRequest webRequest) {
@@ -55,5 +57,4 @@ public abstract class ControllerSupport {
         }
         return new ErrorResponse(code).setMessage(message).setField(fieldError.getField());
     }
-
 }
