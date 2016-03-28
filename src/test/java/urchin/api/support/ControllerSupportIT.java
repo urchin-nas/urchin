@@ -73,7 +73,7 @@ public class ControllerSupportIT extends SpringApplication {
         assertNull(response.getBody().getData());
         assertEquals(1, response.getBody().getErrors().size());
         ErrorResponse errorResponse = response.getBody().getErrors().get(0);
-        assertEquals(ControllerSupport.UNKNOWN_ERROR, errorResponse.getCode());
+        assertEquals(ExceptionControllerAdvice.UNKNOWN_ERROR, errorResponse.getCode());
     }
 
     private ResponseEntity<ResponseMessage<TestResponseApi>> postRequest(String url, TestRequestApi requestApi) {
