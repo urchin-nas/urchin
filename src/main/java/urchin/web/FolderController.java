@@ -1,7 +1,6 @@
 package urchin.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,7 +39,7 @@ public class FolderController {
     public ResponseEntity<ResponseMessage<PassphraseApi>> createEncryptedFolder(@Valid @RequestBody EncryptedFolderApi encryptedFolderApi) {
         try {
             Passphrase passphrase = folderService.createAndMountEncryptedFolder(Paths.get(encryptedFolderApi.getFolder()));
-            return createResponse(new PassphraseApi(passphrase.getPassphrase()), HttpStatus.OK);
+            return createResponse(new PassphraseApi(passphrase.getPassphrase()));
         } catch (IOException e) {
             throw unexpectedError(e);
         }
