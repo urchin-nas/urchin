@@ -36,7 +36,7 @@ public class FolderController {
         this.folderService = folderService;
     }
 
-    @RequestMapping(value = "createResponse", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseMessage<PassphraseApi>> createEncryptedFolder(@Valid @RequestBody EncryptedFolderApi encryptedFolderApi) {
         try {
             Passphrase passphrase = folderService.createAndMountEncryptedFolder(Paths.get(encryptedFolderApi.getFolder()));
