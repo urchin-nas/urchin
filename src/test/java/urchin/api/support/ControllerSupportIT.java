@@ -8,6 +8,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import urchin.api.support.error.ExceptionControllerAdvice;
 import urchin.testutil.SpringApplication;
 import urchin.testutil.TestController;
 import urchin.testutil.TestRequestApi;

@@ -21,13 +21,14 @@ import javax.validation.Valid;
 import java.io.IOException;
 import java.nio.file.Paths;
 
+import static urchin.api.support.DataResponseEntityBuilder.createOkResponse;
+import static urchin.api.support.DataResponseEntityBuilder.createResponse;
 import static urchin.api.support.error.ResponseExceptionBuilder.unexpectedError;
 
 @RestController()
 @RequestMapping("folder")
 public class FolderController {
 
-    public static final String OK = "OK";
     private final FolderService folderService;
 
     @Autowired
@@ -35,11 +36,11 @@ public class FolderController {
         this.folderService = folderService;
     }
 
-    @RequestMapping(value = "create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "createResponse", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseMessage<PassphraseApi>> createEncryptedFolder(@Valid @RequestBody EncryptedFolderApi encryptedFolderApi) {
         try {
             Passphrase passphrase = folderService.createAndMountEncryptedFolder(Paths.get(encryptedFolderApi.getFolder()));
-            return new ResponseEntity<>(new ResponseMessage<>(new PassphraseApi(passphrase.getPassphrase())), HttpStatus.OK);
+            return createResponse(new PassphraseApi(passphrase.getPassphrase()), HttpStatus.OK);
         } catch (IOException e) {
             throw unexpectedError(e);
         }
@@ -51,7 +52,7 @@ public class FolderController {
         Passphrase passphrase = new Passphrase(mountEncryptedFolderApi.getPassphrase());
         try {
             folderService.mountEncryptedFolder(encryptedFolder, passphrase);
-            return new ResponseEntity<>(new ResponseMessage<>(OK), HttpStatus.OK);
+            return createOkResponse();
         } catch (IOException e) {
             throw unexpectedError(e);
         }
@@ -61,7 +62,7 @@ public class FolderController {
     public ResponseEntity<ResponseMessage<String>> unmountEncryptedFolder(@Valid @RequestBody EncryptedFolderApi encryptedFolderApi) {
         try {
             folderService.umountEncryptedFolder(Paths.get(encryptedFolderApi.getFolder()));
-            return new ResponseEntity<>(new ResponseMessage<>(OK), HttpStatus.OK);
+            return createOkResponse();
         } catch (IOException e) {
             throw unexpectedError(e);
         }
