@@ -1,5 +1,7 @@
 package urchin.api.support;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+
 import java.util.List;
 
 public class ResponseMessage<T> {
@@ -7,6 +9,7 @@ public class ResponseMessage<T> {
     private T data;
     private List<ErrorResponse> errors;
 
+    @JsonCreator
     private ResponseMessage() {
     }
 
