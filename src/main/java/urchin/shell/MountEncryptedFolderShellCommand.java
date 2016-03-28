@@ -30,7 +30,7 @@ public class MountEncryptedFolderShellCommand {
         this.runtime = runtime;
     }
 
-    public Passphrase execute(Path folder, EncryptedFolder encryptedFolder, Passphrase passphrase) {
+    public void execute(Path folder, EncryptedFolder encryptedFolder, Passphrase passphrase) {
         LOG.info("Setting up encrypted folder {} and mounting it to {}", encryptedFolder.getPath(), folder);
         String[] command = setupCommand(folder, encryptedFolder, passphrase);
         try {
@@ -47,7 +47,6 @@ public class MountEncryptedFolderShellCommand {
             LOG.error("Failed to execute command");
             throw new ShellCommandException(e);
         }
-        return passphrase;
     }
 
     private String[] setupCommand(Path folder, EncryptedFolder encryptedFolder, Passphrase passphrase) {
