@@ -10,9 +10,11 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import urchin.api.CreateEncryptedFolderApi;
+import urchin.api.EncryptedFolderApi;
+import urchin.api.MountEncryptedFolderApi;
 import urchin.api.PassphraseApi;
 import urchin.api.support.ResponseMessage;
+import urchin.domain.EncryptedFolder;
 import urchin.testutil.SpringApplication;
 import urchin.testutil.TemporaryFolderUmount;
 
@@ -26,7 +28,8 @@ import static urchin.util.EncryptedFolderUtil.getEncryptedFolder;
 @RunWith(SpringJUnit4ClassRunner.class)
 public class FolderControllerIT extends SpringApplication {
 
-    private String url;
+    private Path folder;
+    private EncryptedFolder encryptedFolder;
 
     @Rule
     public TemporaryFolderUmount temporaryFolderUmount = new TemporaryFolderUmount();
@@ -38,26 +41,52 @@ public class FolderControllerIT extends SpringApplication {
 
     @Before
     public void setup() {
-        url = baseUrl + getPath();
+        folder = Paths.get(temporaryFolderUmount.getRoot() + "/test_folder");
+        encryptedFolder = getEncryptedFolder(folder);
     }
 
     @Test
-    public void createEncryptedFolderCreatesAndMountsFolderAndReturnsPassphrase() {
-        CreateEncryptedFolderApi createEncryptedFolderApi = new CreateEncryptedFolderApi();
-        Path folder = Paths.get(temporaryFolderUmount.getRoot() + "/test_folder");
-        createEncryptedFolderApi.setFolderPath(folder.toAbsolutePath().toString());
+    public void createUnmountAndMountEncryptedFolder() {
+        EncryptedFolderApi encryptedFolderApi = new EncryptedFolderApi();
+        encryptedFolderApi.setFolder(folder.toAbsolutePath().toString());
 
-        ResponseEntity<ResponseMessage<PassphraseApi>> response = postRequest(createEncryptedFolderApi);
+        ResponseEntity<ResponseMessage<PassphraseApi>> createResponse = postCreateRequest(encryptedFolderApi);
 
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-        assertNotNull(response.getBody().getData().getPassphrase());
-        assertNull(response.getBody().getErrors());
+        assertEquals(HttpStatus.OK, createResponse.getStatusCode());
+        assertNotNull(createResponse.getBody().getData().getPassphrase());
+        assertNull(createResponse.getBody().getErrors());
         assertTrue(exists(folder));
-        assertTrue(exists(getEncryptedFolder(folder).getPath()));
+        assertTrue(exists(encryptedFolder.getPath()));
+
+        ResponseEntity<ResponseMessage<String>> unmountResponse = postUnmountRequest(encryptedFolderApi);
+
+        assertEquals(HttpStatus.OK, unmountResponse.getStatusCode());
+        assertFalse(exists(folder));
+        assertTrue(exists(encryptedFolder.getPath()));
+
+        MountEncryptedFolderApi mountEncryptedFolderApi = new MountEncryptedFolderApi();
+        mountEncryptedFolderApi.setFolder(folder.toAbsolutePath().toString());
+        mountEncryptedFolderApi.setPassphrase(createResponse.getBody().getData().getPassphrase());
+
+        ResponseEntity<ResponseMessage<String>> mountResponse = postMountRequest(mountEncryptedFolderApi);
+        assertEquals(HttpStatus.OK, mountResponse.getStatusCode());
+        assertTrue(exists(folder));
+        assertTrue(exists(encryptedFolder.getPath()));
+
     }
 
-    private ResponseEntity<ResponseMessage<PassphraseApi>> postRequest(CreateEncryptedFolderApi createEncryptedFolderApi) {
-        return template.exchange(url + "/create", HttpMethod.POST, new HttpEntity<>(createEncryptedFolderApi), new ParameterizedTypeReference<ResponseMessage<PassphraseApi>>() {
+    private ResponseEntity<ResponseMessage<PassphraseApi>> postCreateRequest(EncryptedFolderApi encryptedFolderApi) {
+        return template.exchange(url + "/create", HttpMethod.POST, new HttpEntity<>(encryptedFolderApi), new ParameterizedTypeReference<ResponseMessage<PassphraseApi>>() {
+        });
+    }
+
+    private ResponseEntity<ResponseMessage<String>> postUnmountRequest(EncryptedFolderApi encryptedFolderApi) {
+        return template.exchange(url + "/unmount", HttpMethod.POST, new HttpEntity<>(encryptedFolderApi), new ParameterizedTypeReference<ResponseMessage<String>>() {
+        });
+    }
+
+    private ResponseEntity<ResponseMessage<String>> postMountRequest(MountEncryptedFolderApi mountEncryptedFolderApi) {
+        return template.exchange(url + "/mount", HttpMethod.POST, new HttpEntity<>(mountEncryptedFolderApi), new ParameterizedTypeReference<ResponseMessage<String>>() {
         });
     }
 

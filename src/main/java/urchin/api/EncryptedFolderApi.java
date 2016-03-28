@@ -6,17 +6,17 @@ import javax.validation.constraints.Size;
 import static urchin.api.support.validation.ValidationConstants.FIELD_EMPTY;
 import static urchin.api.support.validation.ValidationConstants.FIELD_MISSING;
 
-public class CreateEncryptedFolderApi {
+public class EncryptedFolderApi {
 
     @NotNull(message = FIELD_MISSING)
     @Size(min = 1, message = FIELD_EMPTY)
-    private String folderPath;
+    private String folder;
 
-    public String getFolderPath() {
-        return folderPath;
+    public String getFolder() {
+        return folder;
     }
 
-    public void setFolderPath(String folderPath) {
-        this.folderPath = folderPath;
+    public void setFolder(String folder) {
+        this.folder = folder;
     }
 }
