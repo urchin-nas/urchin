@@ -1,15 +1,16 @@
 package urchin.api.support;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class ErrorResponse {
 
-    private String code;
+    private final String code;
     private String field;
     private String message;
 
-    private ErrorResponse() {
-    }
-
-    public ErrorResponse(String code) {
+    @JsonCreator
+    public ErrorResponse(@JsonProperty("code") String code) {
         this.code = code;
     }
 
