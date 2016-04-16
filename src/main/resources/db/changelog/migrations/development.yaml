@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: andhem
+      changes:
+        - createTable:
+            tableName: folder
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: encrypted_folder
+                  type: varchar(4096)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: folder
+                  type: varchar(4096)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created
+                  type: datetime
+                  constraints:
+                    nullable: false
