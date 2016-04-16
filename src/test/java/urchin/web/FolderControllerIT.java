@@ -25,7 +25,6 @@ import static java.nio.file.Files.exists;
 import static org.junit.Assert.*;
 import static urchin.util.EncryptedFolderUtil.getEncryptedFolder;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 public class FolderControllerIT extends SpringApplication {
 
     private Path folder;

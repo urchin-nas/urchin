@@ -17,7 +17,6 @@ import urchin.testutil.TestResponseApi;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-@RunWith(SpringJUnit4ClassRunner.class)
 public class ControllerSupportIT extends SpringApplication {
 
     public static final String VALIDATION = "/validation";

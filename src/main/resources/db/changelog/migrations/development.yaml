@@ -4,7 +4,7 @@ databaseChangeLog:
       author: andhem
       changes:
         - createTable:
-            tableName: folder
+            tableName: folder_settings
             columns:
               - column:
                   name: id

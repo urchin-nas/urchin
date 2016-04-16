@@ -1,11 +1,13 @@
 package urchin.testutil;
 
 import org.junit.Before;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.TestRestTemplate;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestTemplate;
 import urchin.Application;
@@ -18,6 +20,7 @@ import static org.springframework.core.io.support.PropertiesLoaderUtils.loadProp
 @WebAppConfiguration
 @SpringApplicationConfiguration(classes = Application.class)
 @IntegrationTest({"server.port=0"})
+@RunWith(SpringJUnit4ClassRunner.class)
 public abstract class SpringApplication {
 
     @Value("${local.server.port}")
