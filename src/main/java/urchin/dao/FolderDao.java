@@ -24,6 +24,7 @@ public class FolderDao {
     }
 
     public void saveFolderSettings(FolderSettings folderSettings) {
+        LOG.info("Saving new folder settings for folder {}", folderSettings.getFolder());
         jdbcTemplate.update("INSERT INTO folder_settings(encrypted_folder, folder, created) VALUES(?,?,?)",
                 folderSettings.getEncryptedFolder().getPath().toAbsolutePath().toString(), folderSettings.getFolder().toAbsolutePath().toString(), new Date());
     }
@@ -33,6 +34,7 @@ public class FolderDao {
     }
 
     public void removeFolderSettings(int id) {
+        LOG.info("Removing folder settings for id {}", id);
         jdbcTemplate.update("DELETE FROM folder_settings WHERE id = ?", id);
     }
 }

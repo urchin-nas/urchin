@@ -12,10 +12,11 @@ public class FolderSettingsRowMapper implements RowMapper<FolderSettings> {
 
     @Override
     public FolderSettings mapRow(ResultSet resultSet, int i) throws SQLException {
-        FolderSettings folderSettings = new FolderSettings();
+        FolderSettings folderSettings = new FolderSettings(
+                Paths.get(resultSet.getString("folder")),
+                new EncryptedFolder(Paths.get(resultSet.getString("encrypted_folder")))
+        );
         folderSettings.setId(resultSet.getInt("id"));
-        folderSettings.setFolder(Paths.get(resultSet.getString("folder")));
-        folderSettings.setEncryptedFolder(new EncryptedFolder(Paths.get(resultSet.getString("encrypted_folder"))));
         folderSettings.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
         return folderSettings;
     }

@@ -6,12 +6,9 @@ import java.time.LocalDateTime;
 public class FolderSettings {
 
     private int id;
-    private Path folder;
-    private EncryptedFolder encryptedFolder;
+    private final Path folder;
+    private final EncryptedFolder encryptedFolder;
     private LocalDateTime created;
-
-    public FolderSettings() {
-    }
 
     public FolderSettings(Path folder, EncryptedFolder encryptedFolder) {
         this.folder = folder;
@@ -30,16 +27,8 @@ public class FolderSettings {
         return folder;
     }
 
-    public void setFolder(Path folder) {
-        this.folder = folder;
-    }
-
     public EncryptedFolder getEncryptedFolder() {
         return encryptedFolder;
-    }
-
-    public void setEncryptedFolder(EncryptedFolder encryptedFolder) {
-        this.encryptedFolder = encryptedFolder;
     }
 
     public LocalDateTime getCreated() {
