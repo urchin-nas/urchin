@@ -14,21 +14,21 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 
-public class FolderDaoTest extends DaoApplication {
+public class FolderSettingsDaoTest extends DaoApplication {
 
-    private FolderDao folderDao;
+    private FolderSettingsDao folderSettingsDao;
 
     @Before
     public void setup() {
-        folderDao = new FolderDao(jdbcTemplate);
+        folderSettingsDao = new FolderSettingsDao(jdbcTemplate);
     }
 
     @Test
     public void crd() {
         LocalDateTime now = LocalDateTime.now();
         FolderSettings folderSettings = new FolderSettings(Paths.get("/some/path"), new EncryptedFolder(Paths.get("/some/.path")));
-        folderDao.saveFolderSettings(folderSettings);
-        List<FolderSettings> allFolderSettings = folderDao.getAllFolderSettings();
+        folderSettingsDao.saveFolderSettings(folderSettings);
+        List<FolderSettings> allFolderSettings = folderSettingsDao.getAllFolderSettings();
 
         assertEquals(1, allFolderSettings.size());
         FolderSettings readFolderSettings = allFolderSettings.get(0);
@@ -37,9 +37,9 @@ public class FolderDaoTest extends DaoApplication {
         assertEquals(folderSettings.getEncryptedFolder(), readFolderSettings.getEncryptedFolder());
         assertTrue(now.isBefore(readFolderSettings.getCreated()));
 
-        folderDao.removeFolderSettings(readFolderSettings.getId());
+        folderSettingsDao.removeFolderSettings(readFolderSettings.getId());
 
-        assertEquals(0, folderDao.getAllFolderSettings().size());
+        assertEquals(0, folderSettingsDao.getAllFolderSettings().size());
     }
 
 }

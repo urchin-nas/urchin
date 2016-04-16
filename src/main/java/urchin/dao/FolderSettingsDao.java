@@ -12,14 +12,14 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public class FolderDao {
+public class FolderSettingsDao {
 
-    private static final Logger LOG = LoggerFactory.getLogger(FolderDao.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FolderSettingsDao.class);
 
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public FolderDao(JdbcTemplate jdbcTemplate) {
+    public FolderSettingsDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 
