@@ -9,17 +9,17 @@ import java.nio.file.Path;
 import java.util.Arrays;
 
 @Repository
-public class UnmountFolderShellCommand {
+public class UnmountFolderCommand {
 
     public static final String FOLDER = "%folder%";
-    private static final Logger LOG = LoggerFactory.getLogger(UnmountFolderShellCommand.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UnmountFolderCommand.class);
 
     private static final String[] COMMAND = new String[]{"sudo", "umount", "-l", FOLDER};
 
     private final Runtime runtime;
 
     @Autowired
-    public UnmountFolderShellCommand(Runtime runtime) {
+    public UnmountFolderCommand(Runtime runtime) {
         this.runtime = runtime;
     }
 
@@ -31,11 +31,11 @@ public class UnmountFolderShellCommand {
             Process process = runtime.exec(command);
             process.waitFor();
             if (process.exitValue() != 0) {
-                throw new ShellCommandException("Process returned code: " + process.exitValue());
+                throw new CommandException("Process returned code: " + process.exitValue());
             }
         } catch (Exception e) {
             LOG.error("Failed to execute command");
-            throw new ShellCommandException(e);
+            throw new CommandException(e);
         }
     }
 

@@ -11,9 +11,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import urchin.domain.EncryptedFolder;
 import urchin.domain.FolderSettingsRepository;
 import urchin.domain.Passphrase;
-import urchin.domain.shell.MountEncryptedFolderShellCommand;
-import urchin.domain.shell.MountVirtualFolderShellCommand;
-import urchin.domain.shell.UnmountFolderShellCommand;
+import urchin.domain.shell.MountEncryptedFolderCommand;
+import urchin.domain.shell.MountVirtualFolderCommand;
+import urchin.domain.shell.UnmountFolderCommand;
 import urchin.util.EncryptedFolderUtil;
 
 import java.io.IOException;
@@ -38,13 +38,13 @@ public class FolderServiceTest {
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
     @Mock
-    private MountEncryptedFolderShellCommand mountEncryptedFolderShellCommand;
+    private MountEncryptedFolderCommand mountEncryptedFolderCommand;
 
     @Mock
-    private MountVirtualFolderShellCommand mountVirtualFolderShellCommand;
+    private MountVirtualFolderCommand mountVirtualFolderCommand;
 
     @Mock
-    private UnmountFolderShellCommand unmountFolderShellCommand;
+    private UnmountFolderCommand unmountFolderCommand;
 
     @Mock
     private FolderSettingsRepository folderSettingsRepository;
@@ -55,7 +55,7 @@ public class FolderServiceTest {
 
     @Before
     public void setup() {
-        folderService = new FolderService(mountEncryptedFolderShellCommand, mountVirtualFolderShellCommand, unmountFolderShellCommand, folderSettingsRepository);
+        folderService = new FolderService(mountEncryptedFolderCommand, mountVirtualFolderCommand, unmountFolderCommand, folderSettingsRepository);
         folder = Paths.get(temporaryFolder.getRoot() + FOLDER_NAME);
         encryptedFolder = new EncryptedFolder(Paths.get(temporaryFolder.getRoot() + ENCRYPTED_FOLDER_NAME));
     }
@@ -79,7 +79,7 @@ public class FolderServiceTest {
         Passphrase passphrase = folderService.createAndMountEncryptedFolder(folder);
 
         ArgumentCaptor<EncryptedFolder> captor = ArgumentCaptor.forClass(EncryptedFolder.class);
-        verify(mountEncryptedFolderShellCommand).execute(eq(folder), captor.capture(), eq(passphrase));
+        verify(mountEncryptedFolderCommand).execute(eq(folder), captor.capture(), eq(passphrase));
         assertEquals(encryptedFolder.getPath().toAbsolutePath().toString(), captor.getValue().getPath().toAbsolutePath().toString());
         assertNotEqual(encryptedFolder, folder);
         assertTrue(Files.exists(folder));
@@ -113,7 +113,7 @@ public class FolderServiceTest {
         folderService.mountEncryptedFolder(encryptedFolder, passphrase);
 
         ArgumentCaptor<Path> captor = ArgumentCaptor.forClass(Path.class);
-        verify(mountEncryptedFolderShellCommand).execute(captor.capture(), eq(encryptedFolder), eq(passphrase));
+        verify(mountEncryptedFolderCommand).execute(captor.capture(), eq(encryptedFolder), eq(passphrase));
         assertEquals(folder.toAbsolutePath().toString(), captor.getValue().toAbsolutePath().toString());
         assertNotEqual(encryptedFolder, folder);
         assertTrue(Files.exists(folder));
@@ -123,7 +123,7 @@ public class FolderServiceTest {
     @Test
     public void umountEncryptedFolderThatDoesNotExistDoesNothing() throws IOException {
         folderService.umountEncryptedFolder(folder);
-        verifyZeroInteractions(unmountFolderShellCommand);
+        verifyZeroInteractions(unmountFolderCommand);
     }
 
     @Test(expected = RuntimeException.class)
@@ -133,7 +133,7 @@ public class FolderServiceTest {
 
         folderService.umountEncryptedFolder(folder);
 
-        verify(unmountFolderShellCommand).execute(folder);
+        verify(unmountFolderCommand).execute(folder);
     }
 
     @Test
@@ -142,7 +142,7 @@ public class FolderServiceTest {
 
         folderService.umountEncryptedFolder(folder);
 
-        verify(unmountFolderShellCommand).execute(folder);
+        verify(unmountFolderCommand).execute(folder);
         assertFalse(Files.exists(folder));
     }
 

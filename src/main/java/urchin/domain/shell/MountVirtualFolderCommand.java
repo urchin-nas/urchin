@@ -12,9 +12,9 @@ import java.util.List;
 import static org.springframework.util.StringUtils.arrayToDelimitedString;
 
 @Repository
-public class MountVirtualFolderShellCommand {
+public class MountVirtualFolderCommand {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MountVirtualFolderShellCommand.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MountVirtualFolderCommand.class);
     public static final String FOLDER_LIST = "%folderList%";
     public static final String VIRTUAL_FOLDER_PATH = "%virtualFolderPath%";
 
@@ -23,7 +23,7 @@ public class MountVirtualFolderShellCommand {
     private final Runtime runtime;
 
     @Autowired
-    public MountVirtualFolderShellCommand(Runtime runtime) {
+    public MountVirtualFolderCommand(Runtime runtime) {
         this.runtime = runtime;
     }
 
@@ -36,11 +36,11 @@ public class MountVirtualFolderShellCommand {
             Process process = runtime.exec(command);
             process.waitFor();
             if (process.exitValue() != 0) {
-                throw new ShellCommandException("Process returned code: " + process.exitValue());
+                throw new CommandException("Process returned code: " + process.exitValue());
             }
         } catch (Exception e) {
             LOG.error("Failed to execute command");
-            throw new ShellCommandException(e);
+            throw new CommandException(e);
         }
     }
 }

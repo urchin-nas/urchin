@@ -14,9 +14,9 @@ import java.nio.file.Path;
 import java.util.Arrays;
 
 @Repository
-public class MountEncryptedFolderShellCommand {
+public class MountEncryptedFolderCommand {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MountEncryptedFolderShellCommand.class);
+    private static final Logger LOG = LoggerFactory.getLogger(MountEncryptedFolderCommand.class);
     private static final String ENCRYPTED_FOLDER_PATH = "%encryptedFolderPath%";
     private static final String FOLDER_PATH = "%folderPath%";
     private static final String PASSPHRASE = "%passphrase%";
@@ -26,7 +26,7 @@ public class MountEncryptedFolderShellCommand {
     private final Runtime runtime;
 
     @Autowired
-    public MountEncryptedFolderShellCommand(Runtime runtime) {
+    public MountEncryptedFolderCommand(Runtime runtime) {
         this.runtime = runtime;
     }
 
@@ -41,11 +41,11 @@ public class MountEncryptedFolderShellCommand {
             bufferedWriter.flush();
             process.waitFor();
             if (process.exitValue() != 0) {
-                throw new ShellCommandException("Process returned code: " + process.exitValue());
+                throw new CommandException("Process returned code: " + process.exitValue());
             }
         } catch (Exception e) {
             LOG.error("Failed to execute command");
-            throw new ShellCommandException(e);
+            throw new CommandException(e);
         }
     }
 

@@ -6,9 +6,9 @@ import org.junit.Test;
 import urchin.domain.FolderSettings;
 import urchin.domain.FolderSettingsRepository;
 import urchin.domain.Passphrase;
-import urchin.domain.shell.MountEncryptedFolderShellCommand;
-import urchin.domain.shell.MountVirtualFolderShellCommand;
-import urchin.domain.shell.UnmountFolderShellCommand;
+import urchin.domain.shell.MountEncryptedFolderCommand;
+import urchin.domain.shell.MountVirtualFolderCommand;
+import urchin.domain.shell.UnmountFolderCommand;
 import urchin.testutil.H2Application;
 import urchin.testutil.TemporaryFolderUmount;
 
@@ -31,7 +31,7 @@ public class FolderServiceIT extends H2Application {
     @Rule
     public TemporaryFolderUmount temporaryFolderUmount = new TemporaryFolderUmount();
 
-    private UnmountFolderShellCommand unmountFolderShellCommand;
+    private UnmountFolderCommand unmountFolderCommand;
     private FolderSettingsRepository folderSettingsRepository;
     private FolderService folderService;
     private Path folder_1;
@@ -40,14 +40,14 @@ public class FolderServiceIT extends H2Application {
 
     @Before
     public void setup() {
-        MountEncryptedFolderShellCommand mountEncryptedFolderShellCommand = new MountEncryptedFolderShellCommand(runtime);
-        MountVirtualFolderShellCommand mountVirtualFolderShellCommand = new MountVirtualFolderShellCommand(runtime);
-        unmountFolderShellCommand = new UnmountFolderShellCommand(runtime);
+        MountEncryptedFolderCommand mountEncryptedFolderCommand = new MountEncryptedFolderCommand(runtime);
+        MountVirtualFolderCommand mountVirtualFolderCommand = new MountVirtualFolderCommand(runtime);
+        unmountFolderCommand = new UnmountFolderCommand(runtime);
         folderSettingsRepository = new FolderSettingsRepository(jdbcTemplate);
         folderService = new FolderService(
-                mountEncryptedFolderShellCommand,
-                mountVirtualFolderShellCommand,
-                unmountFolderShellCommand,
+                mountEncryptedFolderCommand,
+                mountVirtualFolderCommand,
+                unmountFolderCommand,
                 folderSettingsRepository
         );
 
