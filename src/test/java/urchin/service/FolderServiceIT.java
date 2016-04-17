@@ -71,7 +71,14 @@ public class FolderServiceIT extends H2Application {
         assertTrue(folderContainsFile(folder_1, FILENAME) || folderContainsFile(folder_2, FILENAME));
 
         List<FolderSettings> allFolderSettings = folderSettingsRepository.getAllFolderSettings();
-        assertEquals(2, allFolderSettings.size());
+
+        int found = 0;
+        for (FolderSettings folderSetting : allFolderSettings) {
+            if (folderSetting.getFolder().equals(folder_1) || folderSetting.getFolder().equals(folder_2)) {
+                found++;
+            }
+        }
+        assertEquals(2, found);
     }
 
     @Test
