@@ -9,6 +9,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import urchin.domain.EncryptedFolder;
+import urchin.domain.FolderSettingsRepository;
 import urchin.domain.Passphrase;
 import urchin.shell.MountEncryptedFolderShellCommand;
 import urchin.shell.MountVirtualFolderShellCommand;
@@ -45,13 +46,16 @@ public class FolderServiceTest {
     @Mock
     private UmountFolderShellCommand umountFolderShellCommand;
 
+    @Mock
+    private FolderSettingsRepository folderSettingsRepository;
+
     private FolderService folderService;
     private Path folder;
     private EncryptedFolder encryptedFolder;
 
     @Before
     public void setup() {
-        folderService = new FolderService(mountEncryptedFolderShellCommand, mountVirtualFolderShellCommand, umountFolderShellCommand);
+        folderService = new FolderService(mountEncryptedFolderShellCommand, mountVirtualFolderShellCommand, umountFolderShellCommand, folderSettingsRepository);
         folder = Paths.get(temporaryFolder.getRoot() + FOLDER_NAME);
         encryptedFolder = new EncryptedFolder(Paths.get(temporaryFolder.getRoot() + ENCRYPTED_FOLDER_NAME));
     }

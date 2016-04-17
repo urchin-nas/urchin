@@ -3,10 +3,13 @@ package urchin.service;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import urchin.domain.FolderSettings;
+import urchin.domain.FolderSettingsRepository;
 import urchin.domain.Passphrase;
 import urchin.shell.MountEncryptedFolderShellCommand;
 import urchin.shell.MountVirtualFolderShellCommand;
 import urchin.shell.UmountFolderShellCommand;
+import urchin.testutil.H2Application;
 import urchin.testutil.TemporaryFolderUmount;
 
 import java.io.IOException;
@@ -14,35 +17,38 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
 
 import static java.nio.file.Files.exists;
-import static junit.framework.TestCase.assertFalse;
-import static junit.framework.TestCase.assertTrue;
+import static junit.framework.TestCase.*;
 import static urchin.util.EncryptedFolderUtil.getEncryptedFolder;
 
-public class FolderServiceIT {
+public class FolderServiceIT extends H2Application {
 
     public static final Runtime runtime = Runtime.getRuntime();
+    public static final String FILENAME = "test.txt";
 
     @Rule
     public TemporaryFolderUmount temporaryFolderUmount = new TemporaryFolderUmount();
 
     private UmountFolderShellCommand umountFolderShellCommand;
+    private FolderSettingsRepository folderSettingsRepository;
     private FolderService folderService;
     private Path folder_1;
     private Path folder_2;
     private Path virtualFolder;
-    public static final String FILENAME = "test.txt";
 
     @Before
     public void setup() {
         MountEncryptedFolderShellCommand mountEncryptedFolderShellCommand = new MountEncryptedFolderShellCommand(runtime);
         MountVirtualFolderShellCommand mountVirtualFolderShellCommand = new MountVirtualFolderShellCommand(runtime);
         umountFolderShellCommand = new UmountFolderShellCommand(runtime);
+        folderSettingsRepository = new FolderSettingsRepository(jdbcTemplate);
         folderService = new FolderService(
                 mountEncryptedFolderShellCommand,
                 mountVirtualFolderShellCommand,
-                umountFolderShellCommand
+                umountFolderShellCommand,
+                folderSettingsRepository
         );
 
         String tmpFolderPath = temporaryFolderUmount.getRoot().getAbsolutePath();
@@ -64,6 +70,8 @@ public class FolderServiceIT {
         assertTrue(exists(virtualFolder));
         assertTrue(folderContainsFile(folder_1, FILENAME) || folderContainsFile(folder_2, FILENAME));
 
+        List<FolderSettings> allFolderSettings = folderSettingsRepository.getAllFolderSettings();
+        assertEquals(2, allFolderSettings.size());
     }
 
     @Test

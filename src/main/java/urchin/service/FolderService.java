@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import urchin.domain.EncryptedFolder;
+import urchin.domain.FolderSettings;
+import urchin.domain.FolderSettingsRepository;
 import urchin.domain.Passphrase;
 import urchin.shell.MountEncryptedFolderShellCommand;
 import urchin.shell.MountVirtualFolderShellCommand;
@@ -28,16 +30,19 @@ public class FolderService {
     private final MountEncryptedFolderShellCommand mountEncryptedFolderShellCommand;
     private final MountVirtualFolderShellCommand mountVirtualFolderShellCommand;
     private final UmountFolderShellCommand umountFolderShellCommand;
+    private final FolderSettingsRepository folderSettingsRepository;
 
     @Autowired
     public FolderService(
             MountEncryptedFolderShellCommand mountEncryptedFolderShellCommand,
             MountVirtualFolderShellCommand mountVirtualFolderShellCommand,
-            UmountFolderShellCommand umountFolderShellCommand
+            UmountFolderShellCommand umountFolderShellCommand,
+            FolderSettingsRepository folderSettingsRepository
     ) {
         this.mountEncryptedFolderShellCommand = mountEncryptedFolderShellCommand;
         this.mountVirtualFolderShellCommand = mountVirtualFolderShellCommand;
         this.umountFolderShellCommand = umountFolderShellCommand;
+        this.folderSettingsRepository = folderSettingsRepository;
     }
 
     public Passphrase createAndMountEncryptedFolder(Path folder) throws IOException {
@@ -45,6 +50,7 @@ public class FolderService {
         createEncryptionFolderPair(folder, encryptedFolder);
         Passphrase passphrase = generateEcryptfsPassphrase();
         mountEncryptedFolderShellCommand.execute(folder, encryptedFolder, passphrase);
+        folderSettingsRepository.saveFolderSettings(new FolderSettings(folder, encryptedFolder));
         return passphrase;
     }
 
