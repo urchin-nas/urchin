@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static urchin.domain.util.EncryptedFolderUtil.SLASH_HIDDEN_FOLDER;
+import static urchin.domain.util.EncryptedFolderUtil.HIDDEN_FOLDER_DELIMITER;
 
 public class TemporaryFolderUmount extends TemporaryFolder {
 
@@ -30,7 +30,7 @@ public class TemporaryFolderUmount extends TemporaryFolder {
         LOG.info("Unmounting folders in {}", rootPath.toAbsolutePath());
         try (DirectoryStream<Path> directoryStream = Files.newDirectoryStream(rootPath)) {
             for (Path path : directoryStream) {
-                if (Files.isDirectory(path) && !path.toAbsolutePath().toString().contains(SLASH_HIDDEN_FOLDER)) {
+                if (Files.isDirectory(path) && !path.toAbsolutePath().toString().contains(HIDDEN_FOLDER_DELIMITER)) {
                     try {
                         unmountFolderCommand.execute(path);
                     } catch (Exception e) {
