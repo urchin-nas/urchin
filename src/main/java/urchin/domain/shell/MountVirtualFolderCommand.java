@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.nio.file.Path;
-import java.util.Arrays;
 import java.util.List;
 
+import static java.util.Arrays.copyOf;
 import static org.springframework.util.StringUtils.arrayToDelimitedString;
 
 @Repository
@@ -29,9 +29,7 @@ public class MountVirtualFolderCommand {
 
     public void execute(List<Path> folders, Path virtualFolder) {
         LOG.debug("Mounting virtual folder {} for {} folders", virtualFolder.toAbsolutePath(), folders.size());
-        String[] command = Arrays.copyOf(COMMAND, COMMAND.length);
-        command[3] = arrayToDelimitedString(folders.toArray(), ",");
-        command[4] = virtualFolder.toAbsolutePath().toString();
+        String[] command = setupCommand(folders, virtualFolder);
         try {
             Process process = runtime.exec(command);
             process.waitFor();
@@ -42,5 +40,12 @@ public class MountVirtualFolderCommand {
             LOG.error("Failed to execute command");
             throw new CommandException(e);
         }
+    }
+
+    private String[] setupCommand(List<Path> folders, Path virtualFolder) {
+        String[] command = copyOf(COMMAND, COMMAND.length);
+        command[3] = arrayToDelimitedString(folders.toArray(), ",");
+        command[4] = virtualFolder.toAbsolutePath().toString();
+        return command;
     }
 }

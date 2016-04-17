@@ -6,7 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.nio.file.Path;
-import java.util.Arrays;
+
+import static java.util.Arrays.copyOf;
 
 @Repository
 public class UnmountFolderCommand {
@@ -25,8 +26,7 @@ public class UnmountFolderCommand {
 
     public void execute(Path folder) {
         LOG.debug("Unmounting folder {}", folder.toAbsolutePath());
-        String[] command = Arrays.copyOf(COMMAND, COMMAND.length);
-        command[3] = folder.toAbsolutePath().toString();
+        String[] command = setupCommand(folder);
         try {
             Process process = runtime.exec(command);
             process.waitFor();
@@ -37,6 +37,12 @@ public class UnmountFolderCommand {
             LOG.error("Failed to execute command");
             throw new CommandException(e);
         }
+    }
+
+    private String[] setupCommand(Path folder) {
+        String[] command = copyOf(COMMAND, COMMAND.length);
+        command[3] = folder.toAbsolutePath().toString();
+        return command;
     }
 
 }

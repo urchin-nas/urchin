@@ -11,7 +11,8 @@ import java.io.BufferedWriter;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.file.Path;
-import java.util.Arrays;
+
+import static java.util.Arrays.copyOf;
 
 @Repository
 public class MountEncryptedFolderCommand {
@@ -21,7 +22,8 @@ public class MountEncryptedFolderCommand {
     private static final String FOLDER_PATH = "%folderPath%";
     private static final String PASSPHRASE = "%passphrase%";
 
-    private static final String[] COMMAND = new String[]{"sudo", "mount", "-t", "ecryptfs", ENCRYPTED_FOLDER_PATH, FOLDER_PATH, "-o", "key=passphrase:passphrase_passwd=" + PASSPHRASE + ",ecryptfs_cipher=aes,ecryptfs_key_bytes=16,ecryptfs_passthrough=n,no_sig_cache=n,ecryptfs_enable_filename_crypto=y"};
+    private static final String[] COMMAND = new String[]{"sudo", "mount", "-t", "ecryptfs", ENCRYPTED_FOLDER_PATH, FOLDER_PATH, "-o",
+            "key=passphrase:passphrase_passwd=" + PASSPHRASE + ",ecryptfs_cipher=aes,ecryptfs_key_bytes=16,ecryptfs_passthrough=n,no_sig_cache=n,ecryptfs_enable_filename_crypto=y"};
 
     private final Runtime runtime;
 
@@ -50,7 +52,7 @@ public class MountEncryptedFolderCommand {
     }
 
     private String[] setupCommand(Path folder, EncryptedFolder encryptedFolder, Passphrase passphrase) {
-        String[] command = Arrays.copyOf(COMMAND, COMMAND.length);
+        String[] command = copyOf(COMMAND, COMMAND.length);
         command[4] = encryptedFolder.getPath().toAbsolutePath().toString();
         command[5] = folder.toAbsolutePath().toString();
         command[7] = command[7].replace(PASSPHRASE, passphrase.getPassphrase());
