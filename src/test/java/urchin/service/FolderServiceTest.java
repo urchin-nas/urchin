@@ -13,7 +13,7 @@ import urchin.domain.FolderSettingsRepository;
 import urchin.domain.Passphrase;
 import urchin.domain.shell.MountEncryptedFolderShellCommand;
 import urchin.domain.shell.MountVirtualFolderShellCommand;
-import urchin.domain.shell.UmountFolderShellCommand;
+import urchin.domain.shell.UnmountFolderShellCommand;
 import urchin.util.EncryptedFolderUtil;
 
 import java.io.IOException;
@@ -44,7 +44,7 @@ public class FolderServiceTest {
     private MountVirtualFolderShellCommand mountVirtualFolderShellCommand;
 
     @Mock
-    private UmountFolderShellCommand umountFolderShellCommand;
+    private UnmountFolderShellCommand unmountFolderShellCommand;
 
     @Mock
     private FolderSettingsRepository folderSettingsRepository;
@@ -55,7 +55,7 @@ public class FolderServiceTest {
 
     @Before
     public void setup() {
-        folderService = new FolderService(mountEncryptedFolderShellCommand, mountVirtualFolderShellCommand, umountFolderShellCommand, folderSettingsRepository);
+        folderService = new FolderService(mountEncryptedFolderShellCommand, mountVirtualFolderShellCommand, unmountFolderShellCommand, folderSettingsRepository);
         folder = Paths.get(temporaryFolder.getRoot() + FOLDER_NAME);
         encryptedFolder = new EncryptedFolder(Paths.get(temporaryFolder.getRoot() + ENCRYPTED_FOLDER_NAME));
     }
@@ -123,7 +123,7 @@ public class FolderServiceTest {
     @Test
     public void umountEncryptedFolderThatDoesNotExistDoesNothing() throws IOException {
         folderService.umountEncryptedFolder(folder);
-        verifyZeroInteractions(umountFolderShellCommand);
+        verifyZeroInteractions(unmountFolderShellCommand);
     }
 
     @Test(expected = RuntimeException.class)
@@ -133,7 +133,7 @@ public class FolderServiceTest {
 
         folderService.umountEncryptedFolder(folder);
 
-        verify(umountFolderShellCommand).execute(folder);
+        verify(unmountFolderShellCommand).execute(folder);
     }
 
     @Test
@@ -142,7 +142,7 @@ public class FolderServiceTest {
 
         folderService.umountEncryptedFolder(folder);
 
-        verify(umountFolderShellCommand).execute(folder);
+        verify(unmountFolderShellCommand).execute(folder);
         assertFalse(Files.exists(folder));
     }
 

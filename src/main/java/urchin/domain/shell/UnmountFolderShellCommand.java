@@ -9,17 +9,17 @@ import java.nio.file.Path;
 import java.util.Arrays;
 
 @Repository
-public class UmountFolderShellCommand {
+public class UnmountFolderShellCommand {
 
     public static final String FOLDER = "%folder%";
-    private static final Logger LOG = LoggerFactory.getLogger(UmountFolderShellCommand.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UnmountFolderShellCommand.class);
 
     private static final String[] COMMAND = new String[]{"sudo", "umount", "-l", FOLDER};
 
     private final Runtime runtime;
 
     @Autowired
-    public UmountFolderShellCommand(Runtime runtime) {
+    public UnmountFolderShellCommand(Runtime runtime) {
         this.runtime = runtime;
     }
 

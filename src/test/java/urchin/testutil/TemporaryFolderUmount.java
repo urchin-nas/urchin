@@ -3,7 +3,7 @@ package urchin.testutil;
 import org.junit.rules.TemporaryFolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import urchin.domain.shell.UmountFolderShellCommand;
+import urchin.domain.shell.UnmountFolderShellCommand;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -17,7 +17,7 @@ public class TemporaryFolderUmount extends TemporaryFolder {
 
     private static final Logger LOG = LoggerFactory.getLogger(TemporaryFolderUmount.class);
 
-    private UmountFolderShellCommand umountFolderShellCommand = new UmountFolderShellCommand(Runtime.getRuntime());
+    private UnmountFolderShellCommand unmountFolderShellCommand = new UnmountFolderShellCommand(Runtime.getRuntime());
 
     @Override
     protected void after() {
@@ -32,7 +32,7 @@ public class TemporaryFolderUmount extends TemporaryFolder {
             for (Path path : directoryStream) {
                 if (Files.isDirectory(path) && !path.toAbsolutePath().toString().contains(SLASH_HIDDEN_FOLDER)) {
                     try {
-                        umountFolderShellCommand.execute(path);
+                        unmountFolderShellCommand.execute(path);
                     } catch (Exception e) {
                         LOG.error("Error during umount", e);
                     }

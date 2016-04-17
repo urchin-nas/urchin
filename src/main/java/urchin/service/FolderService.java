@@ -10,7 +10,7 @@ import urchin.domain.FolderSettingsRepository;
 import urchin.domain.Passphrase;
 import urchin.domain.shell.MountEncryptedFolderShellCommand;
 import urchin.domain.shell.MountVirtualFolderShellCommand;
-import urchin.domain.shell.UmountFolderShellCommand;
+import urchin.domain.shell.UnmountFolderShellCommand;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -29,19 +29,19 @@ public class FolderService {
 
     private final MountEncryptedFolderShellCommand mountEncryptedFolderShellCommand;
     private final MountVirtualFolderShellCommand mountVirtualFolderShellCommand;
-    private final UmountFolderShellCommand umountFolderShellCommand;
+    private final UnmountFolderShellCommand unmountFolderShellCommand;
     private final FolderSettingsRepository folderSettingsRepository;
 
     @Autowired
     public FolderService(
             MountEncryptedFolderShellCommand mountEncryptedFolderShellCommand,
             MountVirtualFolderShellCommand mountVirtualFolderShellCommand,
-            UmountFolderShellCommand umountFolderShellCommand,
+            UnmountFolderShellCommand unmountFolderShellCommand,
             FolderSettingsRepository folderSettingsRepository
     ) {
         this.mountEncryptedFolderShellCommand = mountEncryptedFolderShellCommand;
         this.mountVirtualFolderShellCommand = mountVirtualFolderShellCommand;
-        this.umountFolderShellCommand = umountFolderShellCommand;
+        this.unmountFolderShellCommand = unmountFolderShellCommand;
         this.folderSettingsRepository = folderSettingsRepository;
     }
 
@@ -69,7 +69,7 @@ public class FolderService {
 
     public void umountEncryptedFolder(Path folder) throws IOException {
         if (Files.exists(folder)) {
-            umountFolderShellCommand.execute(folder);
+            unmountFolderShellCommand.execute(folder);
             if (isEmpty(folder)) {
                 LOG.info("Deleting empty folder {}", folder.toAbsolutePath());
                 Files.delete(folder);
