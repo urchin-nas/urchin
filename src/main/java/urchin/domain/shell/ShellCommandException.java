@@ -1,4 +1,4 @@
-package urchin.shell;
+package urchin.domain.shell;
 
 public class ShellCommandException extends RuntimeException {
 

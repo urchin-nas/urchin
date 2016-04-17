@@ -11,9 +11,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import urchin.domain.EncryptedFolder;
 import urchin.domain.FolderSettingsRepository;
 import urchin.domain.Passphrase;
-import urchin.shell.MountEncryptedFolderShellCommand;
-import urchin.shell.MountVirtualFolderShellCommand;
-import urchin.shell.UmountFolderShellCommand;
+import urchin.domain.shell.MountEncryptedFolderShellCommand;
+import urchin.domain.shell.MountVirtualFolderShellCommand;
+import urchin.domain.shell.UmountFolderShellCommand;
 import urchin.util.EncryptedFolderUtil;
 
 import java.io.IOException;
