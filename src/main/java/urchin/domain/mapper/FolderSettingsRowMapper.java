@@ -18,6 +18,7 @@ public class FolderSettingsRowMapper implements RowMapper<FolderSettings> {
         );
         folderSettings.setId(resultSet.getInt("id"));
         folderSettings.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
+        folderSettings.setAutomount(resultSet.getBoolean("automount"));
         return folderSettings;
     }
 }

@@ -24,8 +24,8 @@ public class FolderSettingsRepository {
 
     public void saveFolderSettings(FolderSettings folderSettings) {
         LOG.info("Saving new folder settings for folder {}", folderSettings.getFolder());
-        jdbcTemplate.update("INSERT INTO folder_settings(encrypted_folder, folder, created) VALUES(?,?,?)",
-                folderSettings.getEncryptedFolder().getPath().toAbsolutePath().toString(), folderSettings.getFolder().toAbsolutePath().toString(), new Date());
+        jdbcTemplate.update("INSERT INTO folder_settings(encrypted_folder, folder, created, automount) VALUES(?,?,?, ?)",
+                folderSettings.getEncryptedFolder().getPath().toAbsolutePath().toString(), folderSettings.getFolder().toAbsolutePath().toString(), new Date(), folderSettings.isAutomount());
     }
 
     public List<FolderSettings> getAllFolderSettings() {

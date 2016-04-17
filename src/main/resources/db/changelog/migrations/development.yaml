@@ -28,3 +28,6 @@ databaseChangeLog:
                   type: datetime
                   constraints:
                     nullable: false
+              - column:
+                  name: automount
+                  type: boolean
