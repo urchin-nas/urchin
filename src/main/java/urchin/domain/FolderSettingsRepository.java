@@ -5,8 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import urchin.domain.mapper.FolderSettingsRowMapper;
 
+import java.nio.file.Paths;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 
@@ -29,11 +31,24 @@ public class FolderSettingsRepository {
     }
 
     public List<FolderSettings> getAllFolderSettings() {
-        return jdbcTemplate.query("SELECT * FROM folder_settings", new FolderSettingsRowMapper());
+        return jdbcTemplate.query("SELECT * FROM folder_settings", (resultSet, i) -> {
+            return getFolderSettings(resultSet);
+        });
     }
 
     public void removeFolderSettings(int id) {
         LOG.info("Removing folder settings for id {}", id);
         jdbcTemplate.update("DELETE FROM folder_settings WHERE id = ?", id);
+    }
+
+    private FolderSettings getFolderSettings(ResultSet resultSet) throws SQLException {
+        FolderSettings folderSettings = new FolderSettings(
+                Paths.get(resultSet.getString("folder")),
+                new EncryptedFolder(Paths.get(resultSet.getString("encrypted_folder")))
+        );
+        folderSettings.setId(resultSet.getInt("id"));
+        folderSettings.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
+        folderSettings.setAutomount(resultSet.getBoolean("automount"));
+        return folderSettings;
     }
 }
