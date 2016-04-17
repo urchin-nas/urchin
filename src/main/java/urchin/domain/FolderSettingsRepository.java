@@ -1,25 +1,24 @@
-package urchin.dao;
+package urchin.domain;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import urchin.dao.mapper.FolderSettingsRowMapper;
-import urchin.domain.FolderSettings;
+import urchin.domain.mapper.FolderSettingsRowMapper;
 
 import java.util.Date;
 import java.util.List;
 
 @Repository
-public class FolderSettingsDao {
+public class FolderSettingsRepository {
 
-    private static final Logger LOG = LoggerFactory.getLogger(FolderSettingsDao.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FolderSettingsRepository.class);
 
     private final JdbcTemplate jdbcTemplate;
 
     @Autowired
-    public FolderSettingsDao(JdbcTemplate jdbcTemplate) {
+    public FolderSettingsRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
 

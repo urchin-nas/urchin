@@ -1,4 +1,4 @@
-package urchin.dao.mapper;
+package urchin.domain.mapper;
 
 import org.springframework.jdbc.core.RowMapper;
 import urchin.domain.EncryptedFolder;

@@ -9,7 +9,7 @@ import urchin.Application;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = Application.class)
-public abstract class DaoApplication {
+public abstract class H2Application {
 
     @Autowired
     protected JdbcTemplate jdbcTemplate;

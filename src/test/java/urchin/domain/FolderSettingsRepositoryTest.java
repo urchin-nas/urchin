@@ -1,10 +1,8 @@
-package urchin.dao;
+package urchin.domain;
 
 import org.junit.Before;
 import org.junit.Test;
-import urchin.domain.EncryptedFolder;
-import urchin.domain.FolderSettings;
-import urchin.testutil.DaoApplication;
+import urchin.testutil.H2Application;
 
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -14,21 +12,21 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 
-public class FolderSettingsDaoTest extends DaoApplication {
+public class FolderSettingsRepositoryTest extends H2Application {
 
-    private FolderSettingsDao folderSettingsDao;
+    private FolderSettingsRepository folderSettingsRepository;
 
     @Before
     public void setup() {
-        folderSettingsDao = new FolderSettingsDao(jdbcTemplate);
+        folderSettingsRepository = new FolderSettingsRepository(jdbcTemplate);
     }
 
     @Test
     public void crd() {
         LocalDateTime now = LocalDateTime.now();
         FolderSettings folderSettings = new FolderSettings(Paths.get("/some/path"), new EncryptedFolder(Paths.get("/some/.path")));
-        folderSettingsDao.saveFolderSettings(folderSettings);
-        List<FolderSettings> allFolderSettings = folderSettingsDao.getAllFolderSettings();
+        folderSettingsRepository.saveFolderSettings(folderSettings);
+        List<FolderSettings> allFolderSettings = folderSettingsRepository.getAllFolderSettings();
 
         assertEquals(1, allFolderSettings.size());
         FolderSettings readFolderSettings = allFolderSettings.get(0);
@@ -37,9 +35,9 @@ public class FolderSettingsDaoTest extends DaoApplication {
         assertEquals(folderSettings.getEncryptedFolder(), readFolderSettings.getEncryptedFolder());
         assertTrue(now.isBefore(readFolderSettings.getCreated()));
 
-        folderSettingsDao.removeFolderSettings(readFolderSettings.getId());
+        folderSettingsRepository.removeFolderSettings(readFolderSettings.getId());
 
-        assertEquals(0, folderSettingsDao.getAllFolderSettings().size());
+        assertEquals(0, folderSettingsRepository.getAllFolderSettings().size());
     }
 
 }
