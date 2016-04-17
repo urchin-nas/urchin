@@ -9,7 +9,7 @@ public class FolderSettings {
     private final Path folder;
     private final EncryptedFolder encryptedFolder;
     private LocalDateTime created;
-    private boolean automount;
+    private boolean autoMount;
 
     public FolderSettings(Path folder, EncryptedFolder encryptedFolder) {
         this.folder = folder;
@@ -40,11 +40,11 @@ public class FolderSettings {
         this.created = created;
     }
 
-    public boolean isAutomount() {
-        return automount;
+    public boolean isAutoMount() {
+        return autoMount;
     }
 
-    public void setAutomount(boolean automount) {
-        this.automount = automount;
+    public void setAutoMount(boolean autoMount) {
+        this.autoMount = autoMount;
     }
 }

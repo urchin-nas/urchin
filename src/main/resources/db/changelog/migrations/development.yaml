@@ -29,5 +29,5 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: automount
+                  name: auto_mount
                   type: boolean

@@ -25,7 +25,7 @@ public class FolderSettingsRepositoryTest extends H2Application {
     public void crd() {
         LocalDateTime now = LocalDateTime.now();
         FolderSettings folderSettings = new FolderSettings(Paths.get("/some/path"), new EncryptedFolder(Paths.get("/some/.path")));
-        folderSettings.setAutomount(true);
+        folderSettings.setAutoMount(true);
         folderSettingsRepository.saveFolderSettings(folderSettings);
         List<FolderSettings> allFolderSettings = folderSettingsRepository.getAllFolderSettings();
 
@@ -35,7 +35,7 @@ public class FolderSettingsRepositoryTest extends H2Application {
         assertEquals(folderSettings.getFolder(), readFolderSettings.getFolder());
         assertEquals(folderSettings.getEncryptedFolder(), readFolderSettings.getEncryptedFolder());
         assertTrue(now.isBefore(readFolderSettings.getCreated()));
-        assertTrue(readFolderSettings.isAutomount());
+        assertTrue(readFolderSettings.isAutoMount());
 
         folderSettingsRepository.removeFolderSettings(readFolderSettings.getId());
 
