@@ -67,7 +67,7 @@ public class FolderService {
         }
     }
 
-    public void umountEncryptedFolder(Path folder) throws IOException {
+    public void unmountEncryptedFolder(Path folder) throws IOException {
         if (Files.exists(folder)) {
             unmountFolderCommand.execute(folder);
             if (isEmpty(folder)) {

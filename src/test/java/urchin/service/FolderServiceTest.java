@@ -122,7 +122,7 @@ public class FolderServiceTest {
 
     @Test
     public void umountEncryptedFolderThatDoesNotExistDoesNothing() throws IOException {
-        folderService.umountEncryptedFolder(folder);
+        folderService.unmountEncryptedFolder(folder);
         verifyZeroInteractions(unmountFolderCommand);
     }
 
@@ -131,7 +131,7 @@ public class FolderServiceTest {
         Files.createDirectories(folder);
         createFileInPath(folder);
 
-        folderService.umountEncryptedFolder(folder);
+        folderService.unmountEncryptedFolder(folder);
 
         verify(unmountFolderCommand).execute(folder);
     }
@@ -140,7 +140,7 @@ public class FolderServiceTest {
     public void umountEncryptedFolderDeletesTargetFolderIfSuccessful() throws IOException {
         Files.createDirectories(folder);
 
-        folderService.umountEncryptedFolder(folder);
+        folderService.unmountEncryptedFolder(folder);
 
         verify(unmountFolderCommand).execute(folder);
         assertFalse(Files.exists(folder));

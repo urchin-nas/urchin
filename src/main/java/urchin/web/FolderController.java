@@ -60,7 +60,7 @@ public class FolderController {
     @RequestMapping(value = "unmount", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseMessage<String>> unmountEncryptedFolder(@Valid @RequestBody EncryptedFolderApi encryptedFolderApi) {
         try {
-            folderService.umountEncryptedFolder(Paths.get(encryptedFolderApi.getFolder()));
+            folderService.unmountEncryptedFolder(Paths.get(encryptedFolderApi.getFolder()));
             return createOkResponse();
         } catch (IOException e) {
             throw unexpectedError(e);

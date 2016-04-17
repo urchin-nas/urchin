@@ -87,7 +87,7 @@ public class FolderServiceIT extends H2Application {
         createFileInFolder(FILENAME, folder_1);
         assertTrue(folderContainsFile(folder_1, FILENAME));
 
-        folderService.umountEncryptedFolder(folder_1);
+        folderService.unmountEncryptedFolder(folder_1);
         assertFalse(Files.exists(folder_1));
 
         folderService.mountEncryptedFolder(getEncryptedFolder(folder_1), passphrase);
