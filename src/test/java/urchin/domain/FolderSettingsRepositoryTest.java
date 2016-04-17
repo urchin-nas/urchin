@@ -26,7 +26,8 @@ public class FolderSettingsRepositoryTest extends H2Application {
     @Test
     public void crd() {
         LocalDateTime now = LocalDateTime.now();
-        FolderSettings folderSettings = new FolderSettings(Paths.get("/some/path"), new EncryptedFolder(Paths.get("/some/.path")));
+        String workDir = System.getProperty("user.dir");
+        FolderSettings folderSettings = new FolderSettings(Paths.get(workDir + "/some/path"), new EncryptedFolder(Paths.get(workDir + "/some/.path")));
         folderSettings.setAutoMount(true);
         folderSettingsRepository.saveFolderSettings(folderSettings);
         List<FolderSettings> allFolderSettings = folderSettingsRepository.getAllFolderSettings();
