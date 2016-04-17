@@ -21,7 +21,7 @@ import static org.springframework.core.io.support.PropertiesLoaderUtils.loadProp
 @SpringApplicationConfiguration(classes = Application.class)
 @IntegrationTest({"server.port=0"})
 @RunWith(SpringJUnit4ClassRunner.class)
-public abstract class SpringApplication {
+public abstract class RestApplication {
 
     @Value("${local.server.port}")
     protected int port;

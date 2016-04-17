@@ -7,7 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import urchin.api.support.error.ExceptionControllerAdvice;
-import urchin.testutil.SpringApplication;
+import urchin.testutil.RestApplication;
 import urchin.testutil.TestController;
 import urchin.testutil.TestRequestApi;
 import urchin.testutil.TestResponseApi;
@@ -15,7 +15,7 @@ import urchin.testutil.TestResponseApi;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-public class ControllerSupportIT extends SpringApplication {
+public class ControllerSupportIT extends RestApplication {
 
     public static final String VALIDATION = "/validation";
 

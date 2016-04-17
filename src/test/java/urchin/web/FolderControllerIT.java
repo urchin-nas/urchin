@@ -13,7 +13,7 @@ import urchin.api.MountEncryptedFolderApi;
 import urchin.api.PassphraseApi;
 import urchin.api.support.ResponseMessage;
 import urchin.domain.EncryptedFolder;
-import urchin.testutil.SpringApplication;
+import urchin.testutil.RestApplication;
 import urchin.testutil.TemporaryFolderUmount;
 
 import java.nio.file.Path;
@@ -23,7 +23,7 @@ import static java.nio.file.Files.exists;
 import static org.junit.Assert.*;
 import static urchin.util.EncryptedFolderUtil.getEncryptedFolder;
 
-public class FolderControllerIT extends SpringApplication {
+public class FolderControllerIT extends RestApplication {
 
     private Path folder;
     private EncryptedFolder encryptedFolder;
