@@ -5,9 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class AutoMountFolderRepository {
+public class PassphraseRepository {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AutoMountFolderRepository.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PassphraseRepository.class);
 
     public void savePassphrase(FolderSettings folderSettings, Passphrase passphrase) {
         //TODO implement - Save at remote location using SSH

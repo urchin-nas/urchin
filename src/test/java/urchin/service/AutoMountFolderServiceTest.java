@@ -5,10 +5,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import urchin.domain.AutoMountFolderRepository;
 import urchin.domain.EncryptedFolder;
 import urchin.domain.FolderSettings;
 import urchin.domain.Passphrase;
+import urchin.domain.PassphraseRepository;
 import urchin.domain.shell.MountEncryptedFolderCommand;
 import urchin.domain.util.PassphraseGenerator;
 
@@ -24,7 +24,7 @@ public class AutoMountFolderServiceTest {
     private static final Passphrase PASSPHRASE = PassphraseGenerator.generateEcryptfsPassphrase();
 
     @Mock
-    private AutoMountFolderRepository autoMountFolderRepository;
+    private PassphraseRepository passphraseRepository;
 
     @Mock
     private MountEncryptedFolderCommand mountEncryptedFolderCommand;
@@ -34,19 +34,19 @@ public class AutoMountFolderServiceTest {
 
     @Before
     public void setup() {
-        autoMountFolderService = new AutoMountFolderService(autoMountFolderRepository, mountEncryptedFolderCommand);
+        autoMountFolderService = new AutoMountFolderService(passphraseRepository, mountEncryptedFolderCommand);
     }
 
     @Test
     public void autoMountFolderRepositoryIsCalledWhenDoingSetup() {
         autoMountFolderService.setup(FOLDER_SETTINGS, PASSPHRASE);
 
-        verify(autoMountFolderRepository).savePassphrase(FOLDER_SETTINGS, PASSPHRASE);
+        verify(passphraseRepository).savePassphrase(FOLDER_SETTINGS, PASSPHRASE);
     }
 
     @Test
     public void mountEncryptedFolderIsCalledWithCorrectly() {
-        when(autoMountFolderRepository.getPassphrase(FOLDER_SETTINGS)).thenReturn(PASSPHRASE);
+        when(passphraseRepository.getPassphrase(FOLDER_SETTINGS)).thenReturn(PASSPHRASE);
 
         autoMountFolderService.mount(FOLDER_SETTINGS);
 
