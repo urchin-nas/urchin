@@ -21,7 +21,9 @@ import java.nio.file.Paths;
 
 import static java.nio.file.Files.exists;
 import static org.junit.Assert.*;
+import static org.junit.Assume.assumeFalse;
 import static urchin.domain.util.EncryptedFolderUtil.getEncryptedFolder;
+import static urchin.testutil.WindowsAssumption.isWindows;
 
 public class FolderControllerIT extends RestApplication {
 
@@ -38,6 +40,7 @@ public class FolderControllerIT extends RestApplication {
 
     @Before
     public void setup() {
+        assumeFalse(isWindows());
         folder = Paths.get(temporaryFolderUmount.getRoot() + "/test_folder");
         encryptedFolder = getEncryptedFolder(folder);
     }
