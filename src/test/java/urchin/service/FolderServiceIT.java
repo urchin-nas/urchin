@@ -11,7 +11,6 @@ import urchin.domain.shell.MountVirtualFolderCommand;
 import urchin.domain.shell.UnmountFolderCommand;
 import urchin.testutil.H2Application;
 import urchin.testutil.TemporaryFolderUmount;
-import urchin.testutil.WindowsAssumption;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -22,10 +21,8 @@ import java.util.List;
 
 import static java.nio.file.Files.exists;
 import static junit.framework.TestCase.*;
-import static org.junit.Assume.assumeFalse;
-import static org.junit.Assume.assumeTrue;
 import static urchin.domain.util.EncryptedFolderUtil.getEncryptedFolder;
-import static urchin.testutil.WindowsAssumption.isWindows;
+import static urchin.testutil.WindowsAssumption.ignoreWhenWindows;
 
 public class FolderServiceIT extends H2Application {
 
@@ -44,7 +41,7 @@ public class FolderServiceIT extends H2Application {
 
     @Before
     public void setup() {
-        assumeFalse(isWindows());
+        ignoreWhenWindows();
 
         MountEncryptedFolderCommand mountEncryptedFolderCommand = new MountEncryptedFolderCommand(runtime);
         MountVirtualFolderCommand mountVirtualFolderCommand = new MountVirtualFolderCommand(runtime);
