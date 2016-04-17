@@ -18,9 +18,9 @@ import java.nio.file.Path;
 import java.util.List;
 
 import static java.nio.file.Files.createDirectories;
-import static urchin.util.EncryptedFolderUtil.getEncryptedFolder;
-import static urchin.util.EncryptedFolderUtil.getFolder;
-import static urchin.util.PassphraseGenerator.generateEcryptfsPassphrase;
+import static urchin.domain.util.EncryptedFolderUtil.getEncryptedFolder;
+import static urchin.domain.util.EncryptedFolderUtil.getFolder;
+import static urchin.domain.util.PassphraseGenerator.generateEcryptfsPassphrase;
 
 @Service
 public class FolderService {

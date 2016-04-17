@@ -21,7 +21,7 @@ import java.util.List;
 
 import static java.nio.file.Files.exists;
 import static junit.framework.TestCase.*;
-import static urchin.util.EncryptedFolderUtil.getEncryptedFolder;
+import static urchin.domain.util.EncryptedFolderUtil.getEncryptedFolder;
 
 public class FolderServiceIT extends H2Application {
 

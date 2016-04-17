@@ -1,4 +1,4 @@
-package urchin.util;
+package urchin.domain.util;
 
 import org.junit.Test;
 import urchin.domain.EncryptedFolder;

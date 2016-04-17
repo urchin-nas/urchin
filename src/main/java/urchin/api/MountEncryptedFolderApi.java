@@ -5,7 +5,7 @@ import javax.validation.constraints.Size;
 
 import static urchin.api.support.validation.ValidationConstants.FIELD_EMPTY;
 import static urchin.api.support.validation.ValidationConstants.FIELD_MISSING;
-import static urchin.util.PassphraseGenerator.ECRYPTFS_MAX_PASSPHRASE_LENGTH;
+import static urchin.domain.util.PassphraseGenerator.ECRYPTFS_MAX_PASSPHRASE_LENGTH;
 
 public class MountEncryptedFolderApi {
 

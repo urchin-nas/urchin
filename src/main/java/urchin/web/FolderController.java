@@ -13,8 +13,8 @@ import urchin.api.PassphraseApi;
 import urchin.api.support.ResponseMessage;
 import urchin.domain.EncryptedFolder;
 import urchin.domain.Passphrase;
+import urchin.domain.util.EncryptedFolderUtil;
 import urchin.service.FolderService;
-import urchin.util.EncryptedFolderUtil;
 
 import javax.validation.Valid;
 import java.io.IOException;

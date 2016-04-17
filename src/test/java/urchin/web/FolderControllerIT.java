@@ -21,7 +21,7 @@ import java.nio.file.Paths;
 
 import static java.nio.file.Files.exists;
 import static org.junit.Assert.*;
-import static urchin.util.EncryptedFolderUtil.getEncryptedFolder;
+import static urchin.domain.util.EncryptedFolderUtil.getEncryptedFolder;
 
 public class FolderControllerIT extends RestApplication {
 

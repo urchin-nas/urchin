@@ -1,4 +1,4 @@
-package urchin.util;
+package urchin.domain.util;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;

@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static urchin.util.EncryptedFolderUtil.SLASH_HIDDEN_FOLDER;
+import static urchin.domain.util.EncryptedFolderUtil.SLASH_HIDDEN_FOLDER;
 
 public class TemporaryFolderUmount extends TemporaryFolder {
 

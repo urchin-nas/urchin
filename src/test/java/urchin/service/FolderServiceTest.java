@@ -14,7 +14,7 @@ import urchin.domain.Passphrase;
 import urchin.domain.shell.MountEncryptedFolderCommand;
 import urchin.domain.shell.MountVirtualFolderCommand;
 import urchin.domain.shell.UnmountFolderCommand;
-import urchin.util.EncryptedFolderUtil;
+import urchin.domain.util.EncryptedFolderUtil;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -25,8 +25,8 @@ import static org.junit.Assert.*;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
-import static urchin.util.EncryptedFolderUtil.getEncryptedFolder;
-import static urchin.util.PassphraseGenerator.generateEcryptfsPassphrase;
+import static urchin.domain.util.EncryptedFolderUtil.getEncryptedFolder;
+import static urchin.domain.util.PassphraseGenerator.generateEcryptfsPassphrase;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FolderServiceTest {
