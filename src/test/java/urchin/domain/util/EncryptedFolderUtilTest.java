@@ -1,7 +1,7 @@
 package urchin.domain.util;
 
 import org.junit.Test;
-import urchin.domain.EncryptedFolder;
+import urchin.domain.model.EncryptedFolder;
 
 import java.io.File;
 import java.nio.file.Path;

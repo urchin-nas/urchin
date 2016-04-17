@@ -2,7 +2,7 @@ package urchin.domain.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import urchin.domain.EncryptedFolder;
+import urchin.domain.model.EncryptedFolder;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

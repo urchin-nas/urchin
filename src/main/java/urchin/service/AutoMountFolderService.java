@@ -4,9 +4,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import urchin.domain.FolderSettings;
-import urchin.domain.Passphrase;
 import urchin.domain.PassphraseRepository;
+import urchin.domain.model.FolderSettings;
+import urchin.domain.model.Passphrase;
 import urchin.domain.shell.MountEncryptedFolderCommand;
 
 @Service

@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import urchin.domain.EncryptedFolder;
-import urchin.domain.Passphrase;
+import urchin.domain.model.EncryptedFolder;
+import urchin.domain.model.Passphrase;
 
 import java.io.BufferedWriter;
 import java.io.OutputStream;

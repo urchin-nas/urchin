@@ -12,7 +12,7 @@ import urchin.api.EncryptedFolderApi;
 import urchin.api.MountEncryptedFolderApi;
 import urchin.api.PassphraseApi;
 import urchin.api.support.ResponseMessage;
-import urchin.domain.EncryptedFolder;
+import urchin.domain.model.EncryptedFolder;
 import urchin.testutil.RestApplication;
 import urchin.testutil.TemporaryFolderUmount;
 

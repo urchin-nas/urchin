@@ -3,7 +3,7 @@ package urchin.domain.util;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import urchin.domain.Passphrase;
+import urchin.domain.model.Passphrase;
 
 public class PassphraseGenerator {
 

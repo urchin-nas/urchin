@@ -11,8 +11,8 @@ import urchin.api.EncryptedFolderApi;
 import urchin.api.MountEncryptedFolderApi;
 import urchin.api.PassphraseApi;
 import urchin.api.support.ResponseMessage;
-import urchin.domain.EncryptedFolder;
-import urchin.domain.Passphrase;
+import urchin.domain.model.EncryptedFolder;
+import urchin.domain.model.Passphrase;
 import urchin.domain.util.EncryptedFolderUtil;
 import urchin.service.FolderService;
 

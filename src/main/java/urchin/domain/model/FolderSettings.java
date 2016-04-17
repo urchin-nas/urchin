@@ -1,4 +1,4 @@
-package urchin.domain;
+package urchin.domain.model;
 
 import java.nio.file.Path;
 import java.time.LocalDateTime;

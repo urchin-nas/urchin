@@ -2,6 +2,8 @@ package urchin.domain;
 
 import org.junit.Before;
 import org.junit.Test;
+import urchin.domain.model.EncryptedFolder;
+import urchin.domain.model.FolderSettings;
 import urchin.testutil.H2Application;
 
 import java.nio.file.Paths;

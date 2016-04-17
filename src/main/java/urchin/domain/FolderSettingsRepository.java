@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
+import urchin.domain.model.EncryptedFolder;
+import urchin.domain.model.FolderSettings;
 
 import java.nio.file.Paths;
 import java.sql.ResultSet;
