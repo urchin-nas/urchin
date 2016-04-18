@@ -22,7 +22,7 @@ import java.util.List;
 import static java.nio.file.Files.exists;
 import static junit.framework.TestCase.*;
 import static urchin.domain.util.EncryptedFolderUtil.getEncryptedFolder;
-import static urchin.testutil.WindowsAssumption.ignoreWhenWindows;
+import static urchin.testutil.OsAssumption.ignoreWhenWindowsOrMac;
 
 public class FolderServiceIT extends H2Application {
 
@@ -41,7 +41,7 @@ public class FolderServiceIT extends H2Application {
 
     @Before
     public void setup() {
-        ignoreWhenWindows();
+        ignoreWhenWindowsOrMac();
 
         MountEncryptedFolderCommand mountEncryptedFolderCommand = new MountEncryptedFolderCommand(runtime);
         MountVirtualFolderCommand mountVirtualFolderCommand = new MountVirtualFolderCommand(runtime);
