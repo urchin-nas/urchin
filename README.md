@@ -12,7 +12,7 @@
 ```
 mvn install
 ```
-It is possible to build application on windows. Integration tests that require `ecryptfs` and `mhddfs` will be ignored.
+It is possible to build application on windows and Mac. Integration tests that require `ecryptfs` and `mhddfs` will be ignored.
 
 ## Run
 ```
