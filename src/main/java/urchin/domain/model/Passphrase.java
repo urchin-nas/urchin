@@ -12,7 +12,7 @@ public class Passphrase {
 
     public Passphrase(String passphrase) {
         if (passphrase.length() < ECRYPTFS_MAX_PASSPHRASE_LENGTH) {
-            throw new IllegalArgumentException("passprase not long enough");
+            throw new IllegalArgumentException("passphrase not long enough");
         }
         this.passphrase = passphrase;
     }
