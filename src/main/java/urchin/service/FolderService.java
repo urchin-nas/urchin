@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import urchin.domain.FolderSettingsRepository;
 import urchin.domain.cli.MountEncryptedFolderCommand;
 import urchin.domain.cli.MountVirtualFolderCommand;
+import urchin.domain.cli.ShareFolderCommand;
 import urchin.domain.cli.UnmountFolderCommand;
 import urchin.domain.model.EncryptedFolder;
 import urchin.domain.model.FolderSettings;
@@ -30,6 +31,7 @@ public class FolderService {
     private final MountEncryptedFolderCommand mountEncryptedFolderCommand;
     private final MountVirtualFolderCommand mountVirtualFolderCommand;
     private final UnmountFolderCommand unmountFolderCommand;
+    private final ShareFolderCommand shareFolderCommand;
     private final FolderSettingsRepository folderSettingsRepository;
 
     @Autowired
@@ -37,11 +39,13 @@ public class FolderService {
             MountEncryptedFolderCommand mountEncryptedFolderCommand,
             MountVirtualFolderCommand mountVirtualFolderCommand,
             UnmountFolderCommand unmountFolderCommand,
+            ShareFolderCommand shareFolderCommand,
             FolderSettingsRepository folderSettingsRepository
     ) {
         this.mountEncryptedFolderCommand = mountEncryptedFolderCommand;
         this.mountVirtualFolderCommand = mountVirtualFolderCommand;
         this.unmountFolderCommand = unmountFolderCommand;
+        this.shareFolderCommand = shareFolderCommand;
         this.folderSettingsRepository = folderSettingsRepository;
     }
 
@@ -83,6 +87,14 @@ public class FolderService {
         //TODO error handling, tests etc
         createVirtualFolder(virtualFolder);
         mountVirtualFolderCommand.execute(folders, virtualFolder);
+    }
+
+    public void shareFolder(Path folder) {
+        if (Files.exists(folder)) {
+            shareFolderCommand.execute(folder);
+        } else {
+            throw new IllegalArgumentException(String.format("Folder %s does not exist", folder));
+        }
     }
 
     private boolean isEmpty(Path folder) {

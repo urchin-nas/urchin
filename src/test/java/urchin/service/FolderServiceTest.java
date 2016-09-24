@@ -11,6 +11,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import urchin.domain.FolderSettingsRepository;
 import urchin.domain.cli.MountEncryptedFolderCommand;
 import urchin.domain.cli.MountVirtualFolderCommand;
+import urchin.domain.cli.ShareFolderCommand;
 import urchin.domain.cli.UnmountFolderCommand;
 import urchin.domain.model.EncryptedFolder;
 import urchin.domain.model.Passphrase;
@@ -31,8 +32,8 @@ import static urchin.domain.util.PassphraseGenerator.generateEcryptfsPassphrase;
 @RunWith(MockitoJUnitRunner.class)
 public class FolderServiceTest {
 
-    public static final String FOLDER_NAME = "/folder";
-    public static final String ENCRYPTED_FOLDER_NAME = "/.folder";
+    private static final String FOLDER_NAME = "/folder";
+    private static final String ENCRYPTED_FOLDER_NAME = "/.folder";
 
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
@@ -47,6 +48,9 @@ public class FolderServiceTest {
     private UnmountFolderCommand unmountFolderCommand;
 
     @Mock
+    private ShareFolderCommand shareFolderCommand;
+
+    @Mock
     private FolderSettingsRepository folderSettingsRepository;
 
     private FolderService folderService;
@@ -55,7 +59,13 @@ public class FolderServiceTest {
 
     @Before
     public void setup() {
-        folderService = new FolderService(mountEncryptedFolderCommand, mountVirtualFolderCommand, unmountFolderCommand, folderSettingsRepository);
+        folderService = new FolderService(
+                mountEncryptedFolderCommand,
+                mountVirtualFolderCommand,
+                unmountFolderCommand,
+                shareFolderCommand,
+                folderSettingsRepository
+        );
         folder = Paths.get(temporaryFolder.getRoot() + FOLDER_NAME);
         encryptedFolder = new EncryptedFolder(Paths.get(temporaryFolder.getRoot() + ENCRYPTED_FOLDER_NAME));
     }
@@ -144,6 +154,20 @@ public class FolderServiceTest {
 
         verify(unmountFolderCommand).execute(folder);
         assertFalse(Files.exists(folder));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void shareFolderThrowsExceptionWhenFolderDoesNotExist() {
+        folderService.shareFolder(folder);
+    }
+
+    @Test
+    public void shareFolderCommandIsCalled() throws IOException {
+        Files.createDirectories(folder);
+
+        folderService.shareFolder(folder);
+
+        verify(shareFolderCommand).execute(eq(folder));
     }
 
     private void createFileInPath(Path path) throws IOException {
