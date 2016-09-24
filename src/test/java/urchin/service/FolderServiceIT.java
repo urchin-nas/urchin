@@ -1,5 +1,6 @@
 package urchin.service;
 
+import jcifs.smb.SmbFile;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -27,8 +28,11 @@ import static urchin.testutil.OsAssumption.ignoreWhenWindowsOrMac;
 
 public class FolderServiceIT extends H2Application {
 
-    public static final Runtime runtime = Runtime.getRuntime();
-    public static final String FILENAME = "test.txt";
+    private static final Runtime runtime = Runtime.getRuntime();
+    private static final String FILENAME = "test_file_for_folder_service_it.txt";
+    private static final String FOLDER1_NAME = "/folder1";
+    private static final String FOLDER2_NAME = "/folder2";
+    private static final String FOLDER_VIRTUAL_NAME = "/virtual";
 
     @Rule
     public TemporaryFolderUmount temporaryFolderUmount = new TemporaryFolderUmount();
@@ -57,21 +61,22 @@ public class FolderServiceIT extends H2Application {
         );
 
         String tmpFolderPath = temporaryFolderUmount.getRoot().getAbsolutePath();
-        folder_1 = Paths.get(tmpFolderPath + "/folder1");
-        folder_2 = Paths.get(tmpFolderPath + "/folder2");
-        virtualFolder = Paths.get(tmpFolderPath + "/virtual");
+        folder_1 = Paths.get(tmpFolderPath + FOLDER1_NAME);
+        folder_2 = Paths.get(tmpFolderPath + FOLDER2_NAME);
+        virtualFolder = Paths.get(tmpFolderPath + FOLDER_VIRTUAL_NAME);
     }
 
     @Test
-    public void encryptedFoldersAreCreatedAndMountedAsVirtualFolder() throws IOException {
+    public void encryptedFoldersAreCreatedAndMountedAsVirtualFolderAndSharedOnNetwork() throws IOException {
         folderService.createAndMountEncryptedFolder(folder_1);
         folderService.createAndMountEncryptedFolder(folder_2);
 
-        folderService.setupVirtualFolder(Arrays.asList(folder_1, folder_2), virtualFolder);
-
-        createFileInFolder(FILENAME, virtualFolder);
         assertTrue(exists(folder_1));
         assertTrue(exists(folder_2));
+
+        folderService.setupVirtualFolder(Arrays.asList(folder_1, folder_2), virtualFolder);
+        createFileInFolder(FILENAME, virtualFolder);
+
         assertTrue(exists(virtualFolder));
         assertTrue(folderContainsFile(folder_1, FILENAME) || folderContainsFile(folder_2, FILENAME));
 
@@ -84,6 +89,12 @@ public class FolderServiceIT extends H2Application {
             }
         }
         assertEquals(2, found);
+
+        folderService.shareFolder(virtualFolder);
+
+        SmbFile sharedFolder = new SmbFile(String.format("smb://127.0.0.1/%s/", FOLDER_VIRTUAL_NAME));
+        assertEquals(1, sharedFolder.list().length);
+        assertEquals(FILENAME, sharedFolder.list()[0]);
     }
 
     @Test

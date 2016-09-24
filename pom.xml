@@ -67,7 +67,12 @@
             <version>2.0.2-beta</version>
             <scope>test</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.samba.jcifs</groupId>
+            <artifactId>jcifs</artifactId>
+            <version>RELEASE</version>
+            <scope>test</scope>
+        </dependency>
 
     </dependencies>
 
