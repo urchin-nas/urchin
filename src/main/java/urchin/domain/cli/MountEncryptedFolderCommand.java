@@ -3,7 +3,7 @@ package urchin.domain.cli;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 import urchin.domain.model.EncryptedFolder;
 import urchin.domain.model.Passphrase;
 
@@ -14,7 +14,7 @@ import java.nio.file.Path;
 
 import static java.util.Arrays.copyOf;
 
-@Repository
+@Component
 public class MountEncryptedFolderCommand {
 
     private static final Logger LOG = LoggerFactory.getLogger(MountEncryptedFolderCommand.class);

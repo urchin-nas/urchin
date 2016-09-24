@@ -1,11 +1,13 @@
 package urchin.domain.cli;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.nio.file.Path;
 
 import static java.util.Arrays.copyOf;
 
+@Component
 public class ShareFolderCommand extends Command {
 
     private static final String FOLDER_PATH = "%folderPath%";
@@ -23,7 +25,7 @@ public class ShareFolderCommand extends Command {
     };
 
     @Autowired
-    protected ShareFolderCommand(Runtime runtime) {
+    public ShareFolderCommand(Runtime runtime) {
         super(runtime);
     }
 

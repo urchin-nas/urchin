@@ -4,9 +4,9 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-import static urchin.domain.util.PassphraseGenerator.ECRYPTFS_MAX_PASSPHRASE_LENGTH;
-
 public class Passphrase {
+
+    public static final int ECRYPTFS_MAX_PASSPHRASE_LENGTH = 64;
 
     private final String passphrase;
 

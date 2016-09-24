@@ -3,7 +3,7 @@ package urchin.domain.cli;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Component;
 
 import java.nio.file.Path;
 import java.util.List;
@@ -11,7 +11,7 @@ import java.util.List;
 import static java.util.Arrays.copyOf;
 import static org.springframework.util.StringUtils.arrayToDelimitedString;
 
-@Repository
+@Component
 public class MountVirtualFolderCommand extends Command {
 
     private static final Logger LOG = LoggerFactory.getLogger(MountVirtualFolderCommand.class);
