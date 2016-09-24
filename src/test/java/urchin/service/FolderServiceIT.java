@@ -6,6 +6,7 @@ import org.junit.Test;
 import urchin.domain.FolderSettingsRepository;
 import urchin.domain.cli.MountEncryptedFolderCommand;
 import urchin.domain.cli.MountVirtualFolderCommand;
+import urchin.domain.cli.ShareFolderCommand;
 import urchin.domain.cli.UnmountFolderCommand;
 import urchin.domain.model.FolderSettings;
 import urchin.domain.model.Passphrase;
@@ -32,7 +33,6 @@ public class FolderServiceIT extends H2Application {
     @Rule
     public TemporaryFolderUmount temporaryFolderUmount = new TemporaryFolderUmount();
 
-    private UnmountFolderCommand unmountFolderCommand;
     private FolderSettingsRepository folderSettingsRepository;
     private FolderService folderService;
     private Path folder_1;
@@ -45,12 +45,14 @@ public class FolderServiceIT extends H2Application {
 
         MountEncryptedFolderCommand mountEncryptedFolderCommand = new MountEncryptedFolderCommand(runtime);
         MountVirtualFolderCommand mountVirtualFolderCommand = new MountVirtualFolderCommand(runtime);
-        unmountFolderCommand = new UnmountFolderCommand(runtime);
+        UnmountFolderCommand unmountFolderCommand = new UnmountFolderCommand(runtime);
+        ShareFolderCommand shareFolderCommand = new ShareFolderCommand(runtime);
         folderSettingsRepository = new FolderSettingsRepository(jdbcTemplate);
         folderService = new FolderService(
                 mountEncryptedFolderCommand,
                 mountVirtualFolderCommand,
                 unmountFolderCommand,
+                shareFolderCommand,
                 folderSettingsRepository
         );
 
