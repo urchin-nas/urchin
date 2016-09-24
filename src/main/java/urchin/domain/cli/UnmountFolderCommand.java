@@ -1,7 +1,5 @@
 package urchin.domain.cli;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +11,6 @@ import static java.util.Arrays.copyOf;
 public class UnmountFolderCommand extends Command {
 
     private static final String FOLDER = "%folder%";
-    private static final Logger LOG = LoggerFactory.getLogger(UnmountFolderCommand.class);
 
     private static final String[] COMMAND = new String[]{
             "sudo",

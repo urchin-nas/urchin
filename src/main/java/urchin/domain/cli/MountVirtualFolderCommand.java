@@ -1,7 +1,5 @@
 package urchin.domain.cli;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,7 +12,6 @@ import static org.springframework.util.StringUtils.arrayToDelimitedString;
 @Component
 public class MountVirtualFolderCommand extends Command {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MountVirtualFolderCommand.class);
     private static final String FOLDER_LIST = "%folderList%";
     private static final String VIRTUAL_FOLDER_PATH = "%virtualFolderPath%";
 
