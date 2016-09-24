@@ -3,24 +3,20 @@ package urchin.testutil;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.IntegrationTest;
-import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.TestRestTemplate;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.client.RestTemplate;
-import urchin.Application;
 
 import java.io.IOException;
 import java.util.Properties;
 
+import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import static org.springframework.core.io.support.PropertiesLoaderUtils.loadProperties;
 
-@WebAppConfiguration
-@SpringApplicationConfiguration(classes = Application.class)
-@IntegrationTest({"server.port=0"})
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public abstract class RestApplication {
 
     @Value("${local.server.port}")
