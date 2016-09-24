@@ -1,13 +1,20 @@
 package urchin.domain.cli;
 
-public class CommandException extends RuntimeException {
+class CommandException extends RuntimeException {
 
-    public CommandException(String message) {
+    private final String commandName;
+
+    CommandException(String commandName, String message) {
         super(message);
+        this.commandName = commandName;
     }
 
-    public CommandException(Exception e) {
+    CommandException(String commandName, Exception e) {
         super(e);
+        this.commandName = commandName;
     }
 
+    public String getCommandName() {
+        return commandName;
+    }
 }

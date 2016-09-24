@@ -22,8 +22,15 @@ public class MountEncryptedFolderCommand {
     private static final String FOLDER_PATH = "%folderPath%";
     private static final String PASSPHRASE = "%passphrase%";
 
-    private static final String[] COMMAND = new String[]{"sudo", "mount", "-t", "ecryptfs", ENCRYPTED_FOLDER_PATH, FOLDER_PATH, "-o",
-            "key=passphrase:passphrase_passwd=" + PASSPHRASE + ",ecryptfs_cipher=aes,ecryptfs_key_bytes=16,ecryptfs_passthrough=n,no_sig_cache=n,ecryptfs_enable_filename_crypto=y"};
+    private static final String[] COMMAND = new String[]{
+            "sudo",
+            "mount",
+            "-t",
+            "ecryptfs",
+            ENCRYPTED_FOLDER_PATH, FOLDER_PATH,
+            "-o",
+            "key=passphrase:passphrase_passwd=" + PASSPHRASE + ",ecryptfs_cipher=aes,ecryptfs_key_bytes=16,ecryptfs_passthrough=n,no_sig_cache=n,ecryptfs_enable_filename_crypto=y"
+    };
 
     private final Runtime runtime;
 
@@ -43,11 +50,11 @@ public class MountEncryptedFolderCommand {
             bufferedWriter.flush();
             process.waitFor();
             if (process.exitValue() != 0) {
-                throw new CommandException("Process returned code: " + process.exitValue());
+                throw new CommandException(this.getClass().getName(), "Process returned code: " + process.exitValue());
             }
         } catch (Exception e) {
             LOG.error("Failed to execute command");
-            throw new CommandException(e);
+            throw new CommandException(this.getClass().getName(), e);
         }
     }
 

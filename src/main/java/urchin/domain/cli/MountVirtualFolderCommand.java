@@ -12,34 +12,28 @@ import static java.util.Arrays.copyOf;
 import static org.springframework.util.StringUtils.arrayToDelimitedString;
 
 @Repository
-public class MountVirtualFolderCommand {
+public class MountVirtualFolderCommand extends Command {
 
     private static final Logger LOG = LoggerFactory.getLogger(MountVirtualFolderCommand.class);
-    public static final String FOLDER_LIST = "%folderList%";
-    public static final String VIRTUAL_FOLDER_PATH = "%virtualFolderPath%";
+    private static final String FOLDER_LIST = "%folderList%";
+    private static final String VIRTUAL_FOLDER_PATH = "%virtualFolderPath%";
 
-    private static final String[] COMMAND = new String[]{"mhddfs", "-o", "allow_other", FOLDER_LIST, VIRTUAL_FOLDER_PATH};
-
-    private final Runtime runtime;
+    private static final String[] COMMAND = new String[]{
+            "mhddfs",
+            "-o",
+            "allow_other",
+            FOLDER_LIST,
+            VIRTUAL_FOLDER_PATH
+    };
 
     @Autowired
     public MountVirtualFolderCommand(Runtime runtime) {
-        this.runtime = runtime;
+        super(runtime);
     }
 
     public void execute(List<Path> folders, Path virtualFolder) {
         LOG.debug("Mounting virtual folder {} for {} folders", virtualFolder.toAbsolutePath(), folders.size());
-        String[] command = setupCommand(folders, virtualFolder);
-        try {
-            Process process = runtime.exec(command);
-            process.waitFor();
-            if (process.exitValue() != 0) {
-                throw new CommandException("Process returned code: " + process.exitValue());
-            }
-        } catch (Exception e) {
-            LOG.error("Failed to execute command");
-            throw new CommandException(e);
-        }
+        executeCommand(setupCommand(folders, virtualFolder));
     }
 
     private String[] setupCommand(List<Path> folders, Path virtualFolder) {
