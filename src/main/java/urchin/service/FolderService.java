@@ -5,12 +5,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import urchin.domain.FolderSettingsRepository;
+import urchin.domain.cli.MountEncryptedFolderCommand;
+import urchin.domain.cli.MountVirtualFolderCommand;
+import urchin.domain.cli.UnmountFolderCommand;
 import urchin.domain.model.EncryptedFolder;
 import urchin.domain.model.FolderSettings;
 import urchin.domain.model.Passphrase;
-import urchin.domain.shell.MountEncryptedFolderCommand;
-import urchin.domain.shell.MountVirtualFolderCommand;
-import urchin.domain.shell.UnmountFolderCommand;
 
 import java.io.IOException;
 import java.nio.file.Files;

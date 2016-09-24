@@ -5,9 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import urchin.domain.PassphraseRepository;
+import urchin.domain.cli.MountEncryptedFolderCommand;
 import urchin.domain.model.FolderSettings;
 import urchin.domain.model.Passphrase;
-import urchin.domain.shell.MountEncryptedFolderCommand;
 
 @Service
 public class AutoMountFolderService {

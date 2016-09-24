@@ -1,4 +1,4 @@
-package urchin.domain.shell;
+package urchin.domain.cli;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

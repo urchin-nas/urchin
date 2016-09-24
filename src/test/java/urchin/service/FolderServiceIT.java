@@ -4,11 +4,11 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import urchin.domain.FolderSettingsRepository;
+import urchin.domain.cli.MountEncryptedFolderCommand;
+import urchin.domain.cli.MountVirtualFolderCommand;
+import urchin.domain.cli.UnmountFolderCommand;
 import urchin.domain.model.FolderSettings;
 import urchin.domain.model.Passphrase;
-import urchin.domain.shell.MountEncryptedFolderCommand;
-import urchin.domain.shell.MountVirtualFolderCommand;
-import urchin.domain.shell.UnmountFolderCommand;
 import urchin.testutil.H2Application;
 import urchin.testutil.TemporaryFolderUmount;
 

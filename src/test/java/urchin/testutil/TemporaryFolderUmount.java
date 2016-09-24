@@ -3,7 +3,7 @@ package urchin.testutil;
 import org.junit.rules.TemporaryFolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import urchin.domain.shell.UnmountFolderCommand;
+import urchin.domain.cli.UnmountFolderCommand;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;

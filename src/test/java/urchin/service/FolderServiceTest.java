@@ -9,11 +9,11 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import urchin.domain.FolderSettingsRepository;
+import urchin.domain.cli.MountEncryptedFolderCommand;
+import urchin.domain.cli.MountVirtualFolderCommand;
+import urchin.domain.cli.UnmountFolderCommand;
 import urchin.domain.model.EncryptedFolder;
 import urchin.domain.model.Passphrase;
-import urchin.domain.shell.MountEncryptedFolderCommand;
-import urchin.domain.shell.MountVirtualFolderCommand;
-import urchin.domain.shell.UnmountFolderCommand;
 import urchin.domain.util.EncryptedFolderUtil;
 
 import java.io.IOException;
