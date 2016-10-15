@@ -9,10 +9,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import urchin.domain.FolderSettingsRepository;
-import urchin.domain.cli.MountEncryptedFolderCommand;
-import urchin.domain.cli.MountVirtualFolderCommand;
-import urchin.domain.cli.ShareFolderCommand;
-import urchin.domain.cli.UnmountFolderCommand;
+import urchin.domain.cli.*;
 import urchin.domain.model.EncryptedFolder;
 import urchin.domain.model.Passphrase;
 import urchin.domain.util.EncryptedFolderUtil;
@@ -37,18 +34,18 @@ public class FolderServiceTest {
 
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
-
     @Mock
     private MountEncryptedFolderCommand mountEncryptedFolderCommand;
-
     @Mock
     private MountVirtualFolderCommand mountVirtualFolderCommand;
-
     @Mock
     private UnmountFolderCommand unmountFolderCommand;
-
     @Mock
     private ShareFolderCommand shareFolderCommand;
+    @Mock
+    private UnshareFolderCommand unshareFolderCommand;
+    @Mock
+    private RestartSambaCommand restartSambaCommand;
 
     @Mock
     private FolderSettingsRepository folderSettingsRepository;
@@ -64,6 +61,8 @@ public class FolderServiceTest {
                 mountVirtualFolderCommand,
                 unmountFolderCommand,
                 shareFolderCommand,
+                unshareFolderCommand,
+                restartSambaCommand,
                 folderSettingsRepository
         );
         folder = Paths.get(temporaryFolder.getRoot() + FOLDER_NAME);
@@ -168,6 +167,21 @@ public class FolderServiceTest {
         folderService.shareFolder(folder);
 
         verify(shareFolderCommand).execute(eq(folder));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void unshareFolderThrowsExceptionWhenFolderDoesNotExist() {
+        folderService.unshareFolder(folder);
+    }
+
+    @Test
+    public void unshareFolderCommandAndRestartSambaCommandAreCalled() throws IOException {
+        Files.createDirectories(folder);
+
+        folderService.unshareFolder(folder);
+
+        verify(unshareFolderCommand).execute(eq(folder));
+        verify(restartSambaCommand).execute();
     }
 
     private void createFileInPath(Path path) throws IOException {

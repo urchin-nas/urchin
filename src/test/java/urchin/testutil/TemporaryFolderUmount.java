@@ -34,7 +34,7 @@ public class TemporaryFolderUmount extends TemporaryFolder {
                     try {
                         unmountFolderCommand.execute(path);
                     } catch (Exception e) {
-                        LOG.error("Error during umount", e);
+                        LOG.debug("Error during unmount", e);
                     }
                 }
             }

@@ -1,20 +1,19 @@
 package urchin.service;
 
+import jcifs.smb.SmbException;
 import jcifs.smb.SmbFile;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import urchin.domain.FolderSettingsRepository;
-import urchin.domain.cli.MountEncryptedFolderCommand;
-import urchin.domain.cli.MountVirtualFolderCommand;
-import urchin.domain.cli.ShareFolderCommand;
-import urchin.domain.cli.UnmountFolderCommand;
+import urchin.domain.cli.*;
 import urchin.domain.model.FolderSettings;
 import urchin.domain.model.Passphrase;
 import urchin.testutil.H2Application;
 import urchin.testutil.TemporaryFolderUmount;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -42,6 +41,7 @@ public class FolderServiceIT extends H2Application {
     private Path folder_1;
     private Path folder_2;
     private Path virtualFolder;
+    private String tmpFolderPath;
 
     @Before
     public void setup() {
@@ -51,16 +51,20 @@ public class FolderServiceIT extends H2Application {
         MountVirtualFolderCommand mountVirtualFolderCommand = new MountVirtualFolderCommand(runtime);
         UnmountFolderCommand unmountFolderCommand = new UnmountFolderCommand(runtime);
         ShareFolderCommand shareFolderCommand = new ShareFolderCommand(runtime);
+        UnshareFolderCommand unshareFolderCommand = new UnshareFolderCommand(runtime);
+        RestartSambaCommand restartSambaCommand = new RestartSambaCommand(runtime);
         folderSettingsRepository = new FolderSettingsRepository(jdbcTemplate);
         folderService = new FolderService(
                 mountEncryptedFolderCommand,
                 mountVirtualFolderCommand,
                 unmountFolderCommand,
                 shareFolderCommand,
+                unshareFolderCommand,
+                restartSambaCommand,
                 folderSettingsRepository
         );
 
-        String tmpFolderPath = temporaryFolderUmount.getRoot().getAbsolutePath();
+        tmpFolderPath = temporaryFolderUmount.getRoot().getAbsolutePath();
         folder_1 = Paths.get(tmpFolderPath + FOLDER1_NAME);
         folder_2 = Paths.get(tmpFolderPath + FOLDER2_NAME);
         virtualFolder = Paths.get(tmpFolderPath + FOLDER_VIRTUAL_NAME);
@@ -68,17 +72,23 @@ public class FolderServiceIT extends H2Application {
 
     @Test
     public void encryptedFoldersAreCreatedAndMountedAsVirtualFolderAndSharedOnNetwork() throws IOException {
+        //1. encrypted folders
+
         folderService.createAndMountEncryptedFolder(folder_1);
         folderService.createAndMountEncryptedFolder(folder_2);
 
         assertTrue(exists(folder_1));
         assertTrue(exists(folder_2));
 
+        //2. virtual folder from encrypted folders
+
         folderService.setupVirtualFolder(Arrays.asList(folder_1, folder_2), virtualFolder);
         createFileInFolder(FILENAME, virtualFolder);
 
         assertTrue(exists(virtualFolder));
         assertTrue(folderContainsFile(folder_1, FILENAME) || folderContainsFile(folder_2, FILENAME));
+
+        //3. folder settings are stored for encrypted folders
 
         List<FolderSettings> allFolderSettings = folderSettingsRepository.getAllFolderSettings();
 
@@ -90,15 +100,17 @@ public class FolderServiceIT extends H2Application {
         }
         assertEquals(2, found);
 
+        //4. virtual folder is shared on the network
+
         folderService.shareFolder(virtualFolder);
 
-        SmbFile sharedFolder = new SmbFile(String.format("smb://127.0.0.1/%s/", FOLDER_VIRTUAL_NAME));
+        SmbFile sharedFolder = getSmbFile(FOLDER_VIRTUAL_NAME);
         assertEquals(1, sharedFolder.list().length);
         assertEquals(FILENAME, sharedFolder.list()[0]);
     }
 
     @Test
-    public void umountAndmountExistingEncryptedFolder() throws IOException {
+    public void createAndMountEncryptedFolderAndThenUnmountItAndThenMountItAgain() throws IOException {
         Passphrase passphrase = folderService.createAndMountEncryptedFolder(folder_1);
         createFileInFolder(FILENAME, folder_1);
         assertTrue(folderContainsFile(folder_1, FILENAME));
@@ -108,6 +120,28 @@ public class FolderServiceIT extends H2Application {
 
         folderService.mountEncryptedFolder(getEncryptedFolder(folder_1), passphrase);
         assertTrue(folderContainsFile(folder_1, FILENAME));
+    }
+
+    @Test
+    public void folderIsSharedAndUnsharedOnNetwork() throws IOException, InterruptedException {
+        String shareFolderName = "/shared_folder";
+        Path shareFolder = Paths.get(tmpFolderPath + shareFolderName);
+        Files.createDirectory(shareFolder);
+        createFileInFolder(FILENAME, shareFolder);
+
+        folderService.shareFolder(shareFolder);
+
+        SmbFile networkShare = getSmbFile(shareFolderName);
+        assertEquals(1, networkShare.list().length);
+        assertEquals(FILENAME, networkShare.list()[0]);
+
+        folderService.unshareFolder(shareFolder);
+
+        try {
+            getSmbFile(shareFolderName).list();
+            fail("expected listing files in network share to fail because network share should have been removed");
+        } catch (SmbException ignore) {
+        }
     }
 
     private Path createFileInFolder(String filename, Path folder) throws IOException {
@@ -122,5 +156,9 @@ public class FolderServiceIT extends H2Application {
             }
         }
         return false;
+    }
+
+    private SmbFile getSmbFile(String shareFolderName) throws MalformedURLException {
+        return new SmbFile(String.format("smb://127.0.0.1/%s/", shareFolderName));
     }
 }
