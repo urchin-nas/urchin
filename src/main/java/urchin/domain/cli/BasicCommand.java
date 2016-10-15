@@ -3,13 +3,13 @@ package urchin.domain.cli;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-abstract class Command {
+abstract class BasicCommand {
 
     protected final Logger LOG = LoggerFactory.getLogger(this.getClass().getName());
 
     protected final Runtime runtime;
 
-    Command(Runtime runtime) {
+    BasicCommand(Runtime runtime) {
         this.runtime = runtime;
     }
 

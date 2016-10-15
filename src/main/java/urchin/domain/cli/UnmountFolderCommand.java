@@ -8,7 +8,7 @@ import java.nio.file.Path;
 import static java.util.Arrays.copyOf;
 
 @Component
-public class UnmountFolderCommand extends Command {
+public class UnmountFolderCommand extends BasicCommand {
 
     private static final String FOLDER = "%folder%";
 

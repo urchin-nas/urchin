@@ -10,7 +10,7 @@ import static java.util.Arrays.copyOf;
 import static org.springframework.util.StringUtils.arrayToDelimitedString;
 
 @Component
-public class MountVirtualFolderCommand extends Command {
+public class MountVirtualFolderCommand extends BasicCommand {
 
     private static final String FOLDER_LIST = "%folderList%";
     private static final String VIRTUAL_FOLDER_PATH = "%virtualFolderPath%";

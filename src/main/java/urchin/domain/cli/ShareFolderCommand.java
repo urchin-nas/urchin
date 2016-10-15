@@ -8,7 +8,7 @@ import java.nio.file.Path;
 import static java.util.Arrays.copyOf;
 
 @Component
-public class ShareFolderCommand extends Command {
+public class ShareFolderCommand extends BasicCommand {
 
     private static final String FOLDER_PATH = "%folderPath%";
     private static final String FOLDER_NAME = "%folderName%";
