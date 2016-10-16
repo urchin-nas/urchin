@@ -3,6 +3,8 @@ package urchin.domain.cli;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.concurrent.TimeUnit;
+
 public abstract class BasicCommand {
 
     protected final Logger LOG = LoggerFactory.getLogger(this.getClass().getName());
@@ -16,7 +18,7 @@ public abstract class BasicCommand {
     protected void executeCommand(String[] command) {
         try {
             Process process = runtime.exec(command);
-            process.waitFor();
+            process.waitFor(3, TimeUnit.SECONDS);
             if (process.exitValue() != 0) {
                 String errorMessage = "Process returned code: " + process.exitValue();
                 LOG.error(errorMessage);
