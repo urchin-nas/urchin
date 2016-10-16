@@ -9,9 +9,9 @@ import urchin.domain.model.EncryptedFolder;
 import urchin.domain.model.Passphrase;
 
 import java.io.BufferedWriter;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.file.Path;
+import java.util.concurrent.TimeUnit;
 
 import static java.util.Arrays.copyOf;
 
@@ -45,11 +45,10 @@ public class MountEncryptedFolderCommand {
         String[] command = setupCommand(folder, encryptedFolder, passphrase);
         try {
             Process process = runtime.exec(command);
-            OutputStream outputStream = process.getOutputStream();
-            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
+            BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
             bufferedWriter.newLine();
             bufferedWriter.flush();
-            process.waitFor();
+            process.waitFor(10, TimeUnit.SECONDS);
             if (process.exitValue() != 0) {
                 throw new CommandException(this.getClass().getName(), "Process returned code: " + process.exitValue());
             }
