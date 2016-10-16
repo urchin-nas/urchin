@@ -11,7 +11,6 @@ import urchin.domain.model.Passphrase;
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 import java.nio.file.Path;
-import java.util.concurrent.TimeUnit;
 
 import static java.util.Arrays.copyOf;
 
@@ -48,7 +47,7 @@ public class MountEncryptedFolderCommand {
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
             bufferedWriter.newLine();
             bufferedWriter.flush();
-            process.waitFor(10, TimeUnit.SECONDS);
+            process.waitFor();
             if (process.exitValue() != 0) {
                 throw new CommandException(this.getClass().getName(), "Process returned code: " + process.exitValue());
             }
