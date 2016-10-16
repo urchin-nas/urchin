@@ -51,17 +51,7 @@ databaseChangeLog:
                   constraints:
                     nullable: false
               - column:
-                  name: first_name
-                  type: varchar(4096)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: last_name
-                  type: varchar(4096)
-                  constraints:
-                    nullable: false
-              - column:
-                  name: modified
+                  name: created
                   type: datetime
                   constraints:
                     nullable: false

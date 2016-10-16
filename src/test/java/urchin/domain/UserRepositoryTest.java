@@ -23,8 +23,6 @@ public class UserRepositoryTest extends H2Application {
     public void crd() {
         LocalDateTime now = LocalDateTime.now();
         User user = new User("username");
-        user.setFirstName("firstName");
-        user.setLastName("lastName");
 
         int id = userRepository.saveUser(user);
         Optional<User> userOptional = userRepository.getUser(id);
@@ -32,9 +30,7 @@ public class UserRepositoryTest extends H2Application {
         assertTrue(userOptional.isPresent());
         User readUser = userOptional.get();
         assertEquals(user.getUsername(), readUser.getUsername());
-        assertEquals(user.getFirstName(), readUser.getFirstName());
-        assertEquals(user.getLastName(), readUser.getLastName());
-        assertTrue(now.isBefore(readUser.getModified()));
+        assertTrue(now.isBefore(readUser.getCreated()));
 
         userRepository.removeUser(id);
 
