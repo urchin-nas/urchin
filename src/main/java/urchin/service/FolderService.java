@@ -4,8 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import urchin.domain.FolderSettingsRepository;
-import urchin.domain.cli.*;
+import urchin.domain.cli.RestartSambaCommand;
+import urchin.domain.cli.folder.*;
 import urchin.domain.model.EncryptedFolder;
 import urchin.domain.model.FolderSettings;
 import urchin.domain.model.Passphrase;
@@ -52,12 +54,13 @@ public class FolderService {
         this.folderSettingsRepository = folderSettingsRepository;
     }
 
+    @Transactional
     public Passphrase createAndMountEncryptedFolder(Path folder) throws IOException {
         EncryptedFolder encryptedFolder = getEncryptedFolder(folder);
         createEncryptionFolderPair(folder, encryptedFolder);
         Passphrase passphrase = generateEcryptfsPassphrase();
-        mountEncryptedFolderCommand.execute(folder, encryptedFolder, passphrase);
         folderSettingsRepository.saveFolderSettings(new FolderSettings(folder, encryptedFolder));
+        mountEncryptedFolderCommand.execute(folder, encryptedFolder, passphrase);
         return passphrase;
     }
 

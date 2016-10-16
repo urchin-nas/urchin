@@ -1,6 +1,7 @@
-package urchin.domain.cli;
+package urchin.domain.cli.folder;
 
 import org.springframework.stereotype.Component;
+import urchin.domain.cli.BasicCommand;
 
 import java.nio.file.Path;
 

@@ -3,17 +3,17 @@ package urchin.domain.cli;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-abstract class BasicCommand {
+public abstract class BasicCommand {
 
     protected final Logger LOG = LoggerFactory.getLogger(this.getClass().getName());
 
     protected final Runtime runtime;
 
-    BasicCommand(Runtime runtime) {
+    protected BasicCommand(Runtime runtime) {
         this.runtime = runtime;
     }
 
-    void executeCommand(String[] command) {
+    protected void executeCommand(String[] command) {
         try {
             Process process = runtime.exec(command);
             process.waitFor();

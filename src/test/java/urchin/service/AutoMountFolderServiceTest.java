@@ -6,7 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import urchin.domain.PassphraseRepository;
-import urchin.domain.cli.MountEncryptedFolderCommand;
+import urchin.domain.cli.folder.MountEncryptedFolderCommand;
 import urchin.domain.model.EncryptedFolder;
 import urchin.domain.model.FolderSettings;
 import urchin.domain.model.Passphrase;
