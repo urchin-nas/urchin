@@ -18,6 +18,9 @@ import java.util.List;
 public class FolderSettingsRepository {
 
     private static final Logger LOG = LoggerFactory.getLogger(FolderSettingsRepository.class);
+    private static final String INSERT_FOLDER_SETTINGS = "INSERT INTO folder_settings(encrypted_folder, folder, created, auto_mount) VALUES(?,?,?,?)";
+    private static final String SELECT_FOLDER_SETTINGS = "SELECT * FROM folder_settings";
+    private static final String DELETE_FOLDER_SETTINGS = "DELETE FROM folder_settings WHERE id = ?";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -28,22 +31,25 @@ public class FolderSettingsRepository {
 
     public void saveFolderSettings(FolderSettings folderSettings) {
         LOG.info("Saving new folder settings for folder {}", folderSettings.getFolder());
-        jdbcTemplate.update("INSERT INTO folder_settings(encrypted_folder, folder, created, auto_mount) VALUES(?,?,?,?)",
-                folderSettings.getEncryptedFolder().getPath().toAbsolutePath().toString(), folderSettings.getFolder().toAbsolutePath().toString(), new Date(), folderSettings.isAutoMount());
+        jdbcTemplate.update(
+                INSERT_FOLDER_SETTINGS,
+                folderSettings.getEncryptedFolder().getPath().toAbsolutePath().toString(),
+                folderSettings.getFolder().toAbsolutePath().toString(),
+                new Date(),
+                folderSettings.isAutoMount()
+        );
     }
 
     public List<FolderSettings> getAllFolderSettings() {
-        return jdbcTemplate.query("SELECT * FROM folder_settings", (resultSet, i) -> {
-            return getFolderSettings(resultSet);
-        });
+        return jdbcTemplate.query(SELECT_FOLDER_SETTINGS, (resultSet, i) -> folderSettingsMapper(resultSet));
     }
 
     public void removeFolderSettings(int id) {
         LOG.info("Removing folder settings for id {}", id);
-        jdbcTemplate.update("DELETE FROM folder_settings WHERE id = ?", id);
+        jdbcTemplate.update(DELETE_FOLDER_SETTINGS, id);
     }
 
-    private FolderSettings getFolderSettings(ResultSet resultSet) throws SQLException {
+    private FolderSettings folderSettingsMapper(ResultSet resultSet) throws SQLException {
         FolderSettings folderSettings = new FolderSettings(
                 Paths.get(resultSet.getString("folder")),
                 new EncryptedFolder(Paths.get(resultSet.getString("encrypted_folder")))

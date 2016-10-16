@@ -34,7 +34,7 @@ public class FolderControllerIT extends RestApplication {
 
     @Override
     protected String getPath() {
-        return "/folder";
+        return "/folders";
     }
 
     @Before
