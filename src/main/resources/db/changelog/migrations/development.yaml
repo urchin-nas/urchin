@@ -31,3 +31,37 @@ databaseChangeLog:
               - column:
                   name: auto_mount
                   type: boolean
+  - changeSet:
+      id: 2
+      author: andhem
+      changes:
+        - createTable:
+            tableName: user
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: varchar(4096)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: last_name
+                  type: varchar(4096)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: modified
+                  type: datetime
+                  constraints:
+                    nullable: false
