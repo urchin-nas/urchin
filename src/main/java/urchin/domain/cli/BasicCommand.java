@@ -18,7 +18,7 @@ public abstract class BasicCommand {
     protected void executeCommand(String[] command) {
         try {
             Process process = runtime.exec(command);
-            process.waitFor(3, TimeUnit.SECONDS);
+            process.waitFor(10, TimeUnit.SECONDS);
             if (process.exitValue() != 0) {
                 String errorMessage = "Process returned code: " + process.exitValue();
                 LOG.error(errorMessage);
