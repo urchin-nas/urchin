@@ -37,7 +37,7 @@ public class FolderSettingsRepositoryTest extends H2Application {
         assertTrue(readFolderSettings.getId() > 0);
         assertEquals(folderSettings.getFolder(), readFolderSettings.getFolder());
         assertEquals(folderSettings.getEncryptedFolder(), readFolderSettings.getEncryptedFolder());
-        assertTrue(now.isBefore(readFolderSettings.getCreated()));
+        assertTrue(now.isBefore(readFolderSettings.getCreated()) || now.isEqual(readFolderSettings.getCreated()));
         assertTrue(readFolderSettings.isAutoMount());
 
         folderSettingsRepository.removeFolderSettings(readFolderSettings.getId());
