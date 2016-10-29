@@ -7,6 +7,7 @@ import urchin.domain.cli.user.AddUserCommand;
 import urchin.domain.cli.user.RemoveUserCommand;
 import urchin.domain.cli.user.SetUserPasswordCommand;
 import urchin.domain.model.User;
+import urchin.domain.model.UserId;
 
 import java.util.Optional;
 
@@ -26,16 +27,17 @@ public class UserService {
         this.removeUserCommand = removeUserCommand;
     }
 
-    public void addUser(User user, String password) {
-        userRepository.saveUser(user);
+    public UserId addUser(User user, String password) {
+        UserId userId = userRepository.saveUser(user);
         addUserCommand.execute(user);
         setUserPasswordCommand.execute(user, password);
+        return userId;
     }
 
-    public void removeUser(int id) {
-        Optional<User> userOptional = userRepository.getUser(id);
+    public void removeUser(UserId userId) {
+        Optional<User> userOptional = userRepository.getUser(userId);
         if (userOptional.isPresent()) {
-            userRepository.removeUser(id);
+            userRepository.removeUser(userId);
             removeUserCommand.execute(userOptional.get());
         }
     }
