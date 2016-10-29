@@ -9,6 +9,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import urchin.domain.model.User;
+import urchin.domain.model.UserId;
 
 import java.sql.*;
 import java.util.Date;
@@ -29,7 +30,7 @@ public class UserRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public int saveUser(User user) {
+    public UserId saveUser(User user) {
         LOG.info("Saving user {}", user.getUsername());
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
@@ -39,29 +40,29 @@ public class UserRepository {
             return preparedStatement;
         }, keyHolder);
 
-        return keyHolder.getKey().intValue();
+        return new UserId(keyHolder.getKey().intValue());
     }
 
-    public Optional<User> getUser(int id) {
+    public Optional<User> getUser(UserId userId) {
         try {
             return Optional.of(
-                    jdbcTemplate.queryForObject(SELECT_USER, new Object[]{id}, (resultSet, i) -> userMapper(resultSet))
+                    jdbcTemplate.queryForObject(SELECT_USER, new Object[]{userId.getId()}, (resultSet, i) -> userMapper(resultSet))
             );
         } catch (EmptyResultDataAccessException e) {
             return Optional.empty();
         }
     }
 
-    public void removeUser(int id) {
-        LOG.info("Removing user with id {}", id);
-        jdbcTemplate.update(DELETE_USER, id);
+    public void removeUser(UserId userId) {
+        LOG.info("Removing user with id {}", userId);
+        jdbcTemplate.update(DELETE_USER, userId.getId());
     }
 
     private User userMapper(ResultSet resultSet) throws SQLException {
-        User user = new User(
-                resultSet.getString("username")
+        return new User(
+                new UserId(resultSet.getInt("id")),
+                resultSet.getString("username"),
+                resultSet.getTimestamp("created").toLocalDateTime()
         );
-        user.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
-        return user;
     }
 }

@@ -3,6 +3,7 @@ package urchin.domain;
 import org.junit.Before;
 import org.junit.Test;
 import urchin.domain.model.User;
+import urchin.domain.model.UserId;
 import urchin.testutil.H2Application;
 
 import java.time.LocalDateTime;
@@ -24,16 +25,16 @@ public class UserRepositoryTest extends H2Application {
         LocalDateTime now = LocalDateTime.now();
         User user = new User("username");
 
-        int id = userRepository.saveUser(user);
-        Optional<User> userOptional = userRepository.getUser(id);
+        UserId userId = userRepository.saveUser(user);
+        Optional<User> userOptional = userRepository.getUser(userId);
 
         assertTrue(userOptional.isPresent());
         User readUser = userOptional.get();
         assertEquals(user.getUsername(), readUser.getUsername());
         assertTrue(now.isBefore(readUser.getCreated()));
 
-        userRepository.removeUser(id);
+        userRepository.removeUser(userId);
 
-        assertFalse(userRepository.getUser(id).isPresent());
+        assertFalse(userRepository.getUser(userId).isPresent());
     }
 }
