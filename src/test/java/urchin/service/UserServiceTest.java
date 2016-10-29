@@ -10,6 +10,7 @@ import urchin.domain.cli.user.AddUserCommand;
 import urchin.domain.cli.user.RemoveUserCommand;
 import urchin.domain.cli.user.SetUserPasswordCommand;
 import urchin.domain.model.User;
+import urchin.domain.model.UserId;
 
 import java.util.Optional;
 
@@ -20,7 +21,7 @@ import static org.mockito.Mockito.when;
 public class UserServiceTest {
 
     private static final String PASSWORD = "password";
-    private static final int USER_ID = 1;
+    private static final UserId USER_ID = new UserId(1);
 
     @Mock
     private UserRepository userRepository;
