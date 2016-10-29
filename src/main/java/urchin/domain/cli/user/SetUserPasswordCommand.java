@@ -46,7 +46,7 @@ public class SetUserPasswordCommand {
             bufferedWriter.flush();
             process.waitFor();
             if (process.exitValue() != 0) {
-                throw new CommandException(this.getClass().getName(), "Process returned code: " + process.exitValue());
+                throw new CommandException(this.getClass().getName(), process.exitValue());
             }
         } catch (Exception e) {
             LOG.error("Failed to execute command");
