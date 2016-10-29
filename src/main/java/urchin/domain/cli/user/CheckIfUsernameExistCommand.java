@@ -28,7 +28,7 @@ public class CheckIfUsernameExistCommand extends BasicCommand {
         try {
             executeCommand(setupCommand(username));
         } catch (CommandException e) {
-            if (e.getErrorCode() == 2) {
+            if (e.getExitValue() == 2) {
                 return false;
             } else {
                 throw e;

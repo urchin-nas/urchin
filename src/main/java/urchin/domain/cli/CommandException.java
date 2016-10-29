@@ -3,25 +3,25 @@ package urchin.domain.cli;
 public class CommandException extends RuntimeException {
 
     private final String commandName;
-    private final Integer errorCode;
+    private final Integer exitValue;
 
-    public CommandException(String commandName, int errorCode) {
-        super("Process returned code: " + errorCode);
+    public CommandException(String commandName, int exitValue) {
+        super("Process returned exit value: " + exitValue);
         this.commandName = commandName;
-        this.errorCode = errorCode;
+        this.exitValue = exitValue;
     }
 
     public CommandException(String commandName, Exception e) {
         super(e);
         this.commandName = commandName;
-        this.errorCode = null;
+        this.exitValue = null;
     }
 
     public String getCommandName() {
         return commandName;
     }
 
-    public Integer getErrorCode() {
-        return errorCode;
+    public Integer getExitValue() {
+        return exitValue;
     }
 }
