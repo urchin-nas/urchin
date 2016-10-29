@@ -1,7 +1,11 @@
 package urchin.domain.cli;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.nio.charset.Charset;
+import java.util.Optional;
 
 public abstract class BasicCommand {
 
@@ -13,15 +17,26 @@ public abstract class BasicCommand {
         this.runtime = runtime;
     }
 
-    protected void executeCommand(String[] command) {
+    protected Optional<String> executeCommand(String[] command) {
         try {
             Process process = runtime.exec(command);
             process.waitFor();
+
             if (process.exitValue() != 0) {
-                String errorMessage = "Process returned code: " + process.exitValue();
-                LOG.error(errorMessage);
-                throw new CommandException(this.getClass().getName(), errorMessage);
+                LOG.error("Process returned code: " + process.exitValue());
+                throw new CommandException(this.getClass().getName(), process.exitValue());
             }
+
+            String response = IOUtils.toString(process.getInputStream(), Charset.defaultCharset());
+            if (response.length() > 0) {
+                LOG.debug("Response: " + response);
+                return Optional.of(response);
+            } else {
+                return Optional.empty();
+            }
+
+        } catch (CommandException e) {
+            throw e;
         } catch (Exception e) {
             LOG.error("Failed to execute command");
             throw new CommandException(this.getClass().getName(), e);
