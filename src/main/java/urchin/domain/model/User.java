@@ -1,23 +1,31 @@
 package urchin.domain.model;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import java.time.LocalDateTime;
 
 public class User {
 
-    private int id;
+    private final UserId userId;
     private final String username;
-    private LocalDateTime created;
+    private final LocalDateTime created;
 
     public User(String username) {
+        this.userId = null;
         this.username = username;
+        this.created = null;
     }
 
-    public int getId() {
-        return id;
+    public User(UserId userId, String username, LocalDateTime created) {
+        this.userId = userId;
+        this.username = username;
+        this.created = created;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public UserId getUserId() {
+        return userId;
     }
 
     public String getUsername() {
@@ -28,7 +36,19 @@ public class User {
         return created;
     }
 
-    public void setCreated(LocalDateTime created) {
-        this.created = created;
+    @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
+    @Override
+    public boolean equals(Object other) {
+        return EqualsBuilder.reflectionEquals(this, other);
+    }
+
+    @Override
+    public int hashCode() {
+        return HashCodeBuilder.reflectionHashCode(this);
+    }
+
+    @Override
+    public String toString() {
+        return ToStringBuilder.reflectionToString(this);
     }
 }
