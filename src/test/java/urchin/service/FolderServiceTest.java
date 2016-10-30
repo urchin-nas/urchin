@@ -8,7 +8,6 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import urchin.cli.RestartSambaCommand;
 import urchin.cli.folder.*;
 import urchin.domain.FolderSettingsRepository;
 import urchin.domain.model.EncryptedFolder;
