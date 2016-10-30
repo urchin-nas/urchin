@@ -1,8 +1,8 @@
-package urchin.domain.cli.group;
+package urchin.cli.group;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import urchin.domain.cli.BasicCommand;
+import urchin.cli.BasicCommand;
 import urchin.domain.model.Group;
 
 import static java.util.Arrays.copyOf;

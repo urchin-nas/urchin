@@ -2,10 +2,10 @@ package urchin.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import urchin.cli.user.AddUserCommand;
+import urchin.cli.user.RemoveUserCommand;
+import urchin.cli.user.SetUserPasswordCommand;
 import urchin.domain.UserRepository;
-import urchin.domain.cli.user.AddUserCommand;
-import urchin.domain.cli.user.RemoveUserCommand;
-import urchin.domain.cli.user.SetUserPasswordCommand;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
 

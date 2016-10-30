@@ -1,4 +1,4 @@
-package urchin.domain.cli;
+package urchin.cli;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;

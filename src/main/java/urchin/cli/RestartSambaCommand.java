@@ -1,4 +1,4 @@
-package urchin.domain.cli;
+package urchin.cli;
 
 import org.springframework.stereotype.Component;
 

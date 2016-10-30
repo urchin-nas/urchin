@@ -1,4 +1,4 @@
-package urchin.domain.cli;
+package urchin.cli;
 
 public class CommandException extends RuntimeException {
 

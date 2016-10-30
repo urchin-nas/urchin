@@ -5,10 +5,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import urchin.cli.user.AddUserCommand;
+import urchin.cli.user.RemoveUserCommand;
+import urchin.cli.user.SetUserPasswordCommand;
 import urchin.domain.UserRepository;
-import urchin.domain.cli.user.AddUserCommand;
-import urchin.domain.cli.user.RemoveUserCommand;
-import urchin.domain.cli.user.SetUserPasswordCommand;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
 

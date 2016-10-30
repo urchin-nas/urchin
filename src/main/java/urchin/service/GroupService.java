@@ -3,9 +3,9 @@ package urchin.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import urchin.cli.group.AddGroupCommand;
+import urchin.cli.group.RemoveGroupCommand;
 import urchin.domain.GroupRepository;
-import urchin.domain.cli.group.AddGroupCommand;
-import urchin.domain.cli.group.RemoveGroupCommand;
 import urchin.domain.model.Group;
 import urchin.domain.model.GroupId;
 

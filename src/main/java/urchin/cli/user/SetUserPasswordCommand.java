@@ -1,10 +1,10 @@
-package urchin.domain.cli.user;
+package urchin.cli.user;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import urchin.domain.cli.CommandException;
+import urchin.cli.CommandException;
 import urchin.domain.model.User;
 
 import java.io.BufferedWriter;

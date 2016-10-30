@@ -5,9 +5,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import urchin.cli.group.AddGroupCommand;
+import urchin.cli.group.RemoveGroupCommand;
 import urchin.domain.GroupRepository;
-import urchin.domain.cli.group.AddGroupCommand;
-import urchin.domain.cli.group.RemoveGroupCommand;
 import urchin.domain.model.Group;
 import urchin.domain.model.GroupId;
 
