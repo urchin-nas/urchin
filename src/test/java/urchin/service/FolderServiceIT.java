@@ -5,9 +5,8 @@ import jcifs.smb.SmbFile;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import urchin.domain.FolderSettingsRepository;
-import urchin.domain.cli.RestartSambaCommand;
-import urchin.domain.cli.folder.*;
 import urchin.domain.model.FolderSettings;
 import urchin.domain.model.Passphrase;
 import urchin.testutil.H2Application;
@@ -28,7 +27,6 @@ import static urchin.testutil.OsAssumption.ignoreWhenWindowsOrMac;
 
 public class FolderServiceIT extends H2Application {
 
-    private static final Runtime runtime = Runtime.getRuntime();
     private static final String FILENAME = "test_file_for_folder_service_it.txt";
     private static final String FOLDER1_NAME = "/folder1";
     private static final String FOLDER2_NAME = "/folder2";
@@ -37,8 +35,11 @@ public class FolderServiceIT extends H2Application {
     @Rule
     public TemporaryFolderUmount temporaryFolderUmount = new TemporaryFolderUmount();
 
+    @Autowired
     private FolderSettingsRepository folderSettingsRepository;
+    @Autowired
     private FolderService folderService;
+
     private Path folder_1;
     private Path folder_2;
     private Path virtualFolder;
@@ -47,24 +48,6 @@ public class FolderServiceIT extends H2Application {
     @Before
     public void setup() {
         ignoreWhenWindowsOrMac();
-
-        MountEncryptedFolderCommand mountEncryptedFolderCommand = new MountEncryptedFolderCommand(runtime);
-        MountVirtualFolderCommand mountVirtualFolderCommand = new MountVirtualFolderCommand(runtime);
-        UnmountFolderCommand unmountFolderCommand = new UnmountFolderCommand(runtime);
-        ShareFolderCommand shareFolderCommand = new ShareFolderCommand(runtime);
-        UnshareFolderCommand unshareFolderCommand = new UnshareFolderCommand(runtime);
-        RestartSambaCommand restartSambaCommand = new RestartSambaCommand(runtime);
-        folderSettingsRepository = new FolderSettingsRepository(jdbcTemplate);
-        folderService = new FolderService(
-                mountEncryptedFolderCommand,
-                mountVirtualFolderCommand,
-                unmountFolderCommand,
-                shareFolderCommand,
-                unshareFolderCommand,
-                restartSambaCommand,
-                folderSettingsRepository
-        );
-
         tmpFolderPath = temporaryFolderUmount.getRoot().getAbsolutePath();
         folder_1 = Paths.get(tmpFolderPath + FOLDER1_NAME);
         folder_2 = Paths.get(tmpFolderPath + FOLDER2_NAME);
