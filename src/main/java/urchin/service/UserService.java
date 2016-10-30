@@ -41,6 +41,8 @@ public class UserService {
         if (userOptional.isPresent()) {
             userRepository.removeUser(userId);
             removeUserCommand.execute(userOptional.get());
+        } else {
+            throw new IllegalArgumentException("Invalid userId");
         }
     }
 

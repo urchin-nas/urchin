@@ -65,4 +65,11 @@ public class UserServiceTest {
         verify(removeUserCommand).execute(user);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void removeUserThatDoesNotExistThrowsException() {
+        when(userRepository.getUser(USER_ID)).thenReturn(Optional.empty());
+
+        userService.removeUser(USER_ID);
+    }
+
 }
