@@ -42,7 +42,7 @@ public class UserService {
             userRepository.removeUser(userId);
             removeUserCommand.execute(userOptional.get());
         } else {
-            throw new IllegalArgumentException("Invalid userId");
+            throw new IllegalArgumentException("Invalid userId: " + userId);
         }
     }
 
