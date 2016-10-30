@@ -1,5 +1,6 @@
 package urchin.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import urchin.cli.user.AddUserCommand;
@@ -20,6 +21,7 @@ public class UserService {
     private final SetUserPasswordCommand setUserPasswordCommand;
     private final RemoveUserCommand removeUserCommand;
 
+    @Autowired
     public UserService(UserRepository userRepository, AddUserCommand addUserCommand, SetUserPasswordCommand setUserPasswordCommand, RemoveUserCommand removeUserCommand) {
         this.userRepository = userRepository;
         this.addUserCommand = addUserCommand;
