@@ -2,46 +2,38 @@ package urchin.service;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import urchin.domain.UserRepository;
-import urchin.domain.cli.user.AddUserCommand;
 import urchin.domain.cli.user.CheckIfUsernameExistCommand;
-import urchin.domain.cli.user.RemoveUserCommand;
-import urchin.domain.cli.user.SetUserPasswordCommand;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
 import urchin.testutil.H2Application;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.junit.Assert.*;
 import static urchin.testutil.OsAssumption.ignoreWhenWindowsOrMac;
 
 public class UserServiceIT extends H2Application {
 
-    private static final Runtime runtime = Runtime.getRuntime();
     private static final String USERNAME_PREFIX = "urchin_";
     private static final String PASSWORD = "superSecret";
 
+    @Autowired
     private UserService userService;
-    private User user;
+
+    @Autowired
     private UserRepository userRepository;
+
+    @Autowired
     private CheckIfUsernameExistCommand checkIfUsernameExistCommand;
+
+    private User user;
 
     @Before
     public void setup() {
         ignoreWhenWindowsOrMac();
-
-        userRepository = new UserRepository(jdbcTemplate);
-        AddUserCommand addUserCommand = new AddUserCommand(runtime);
-        SetUserPasswordCommand setUserPasswordCommand = new SetUserPasswordCommand(runtime);
-        RemoveUserCommand removeUserCommand = new RemoveUserCommand(runtime);
-        checkIfUsernameExistCommand = new CheckIfUsernameExistCommand(runtime);
-
-        userService = new UserService(
-                userRepository,
-                addUserCommand,
-                setUserPasswordCommand,
-                removeUserCommand
-        );
     }
 
     @Test
@@ -57,6 +49,24 @@ public class UserServiceIT extends H2Application {
 
         assertFalse(userRepository.getUser(userId).isPresent());
         assertFalse(checkIfUsernameExistCommand.execute(user.getUsername()));
+    }
+
+    @Test
+    public void addingUserWithoutUsernameShouldFail() {
+        user = new User("");
+
+        try {
+            userService.addUser(user, PASSWORD);
+            fail("expected addUser to throw exception");
+        } catch (Exception e) {
+            List<User> matchingUsers = userService.getUsers().stream()
+                    .filter(foundUser -> foundUser.getUsername().equals(user.getUsername()))
+                    .collect(Collectors.toList());
+
+            assertEquals(0, matchingUsers.size());
+            assertFalse(checkIfUsernameExistCommand.execute(user.getUsername()));
+        }
+
     }
 
 }

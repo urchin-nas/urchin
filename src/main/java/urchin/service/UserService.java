@@ -9,10 +9,10 @@ import urchin.domain.cli.user.SetUserPasswordCommand;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
-@Transactional
 public class UserService {
 
     private final UserRepository userRepository;
@@ -27,6 +27,7 @@ public class UserService {
         this.removeUserCommand = removeUserCommand;
     }
 
+    @Transactional
     public UserId addUser(User user, String password) {
         UserId userId = userRepository.saveUser(user);
         addUserCommand.execute(user);
@@ -34,11 +35,16 @@ public class UserService {
         return userId;
     }
 
+    @Transactional
     public void removeUser(UserId userId) {
         Optional<User> userOptional = userRepository.getUser(userId);
         if (userOptional.isPresent()) {
             userRepository.removeUser(userId);
             removeUserCommand.execute(userOptional.get());
         }
+    }
+
+    public List<User> getUsers() {
+        return userRepository.getUsers();
     }
 }

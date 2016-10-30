@@ -13,6 +13,7 @@ import urchin.domain.model.UserId;
 
 import java.sql.*;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -22,6 +23,7 @@ public class UserRepository {
     private static final String INSERT_USER = "INSERT INTO user(username, created) VALUES(?,?)";
     private static final String SELECT_USER = "SELECT * from user WHERE id = ?";
     private static final String DELETE_USER = "DELETE FROM user WHERE id = ?";
+    private static final String SELECT_USERS = "SELECT * from user";
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -56,6 +58,10 @@ public class UserRepository {
     public void removeUser(UserId userId) {
         LOG.info("Removing user with id {}", userId);
         jdbcTemplate.update(DELETE_USER, userId.getId());
+    }
+
+    public List<User> getUsers() {
+        return jdbcTemplate.query(SELECT_USERS, (resultSet, i) -> userMapper(resultSet));
     }
 
     private User userMapper(ResultSet resultSet) throws SQLException {
