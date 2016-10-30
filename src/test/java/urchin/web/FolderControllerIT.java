@@ -54,7 +54,6 @@ public class FolderControllerIT extends RestApplication {
 
         assertEquals(HttpStatus.OK, createResponse.getStatusCode());
         assertNotNull(createResponse.getBody().getData().getPassphrase());
-        assertNull(createResponse.getBody().getErrors());
         assertTrue(exists(folder));
         assertTrue(exists(encryptedFolder.getPath()));
 
