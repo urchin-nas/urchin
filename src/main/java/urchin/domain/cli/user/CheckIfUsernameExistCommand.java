@@ -24,7 +24,7 @@ public class CheckIfUsernameExistCommand extends BasicCommand {
     }
 
     public boolean execute(String username) {
-        LOG.debug("Creating user {}", username);
+        LOG.debug("Checking if username {} exist", username);
         try {
             executeCommand(setupCommand(username));
         } catch (CommandException e) {
