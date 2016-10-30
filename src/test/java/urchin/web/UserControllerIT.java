@@ -49,7 +49,7 @@ public class UserControllerIT extends RestApplication {
 
         ResponseEntity<ResponseMessage<String>> removeUserResponse = removeUserRequest(userApis.get(0).getUserId());
 
-        assertEquals(HttpStatus.OK, addUserResponse.getStatusCode());
+        assertEquals(HttpStatus.OK, removeUserResponse.getStatusCode());
     }
 
     private ResponseEntity<ResponseMessage<String>> addUserRequest(AddUserApi addUserApi) {
