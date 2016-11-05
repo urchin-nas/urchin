@@ -25,7 +25,7 @@ import static urchin.api.support.DataResponseEntityBuilder.createResponse;
 import static urchin.api.support.error.ResponseExceptionBuilder.unexpectedError;
 
 @RestController
-@RequestMapping("folders")
+@RequestMapping("api/folders")
 public class FolderController {
 
     private final FolderService folderService;
