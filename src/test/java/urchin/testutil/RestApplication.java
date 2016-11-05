@@ -2,13 +2,13 @@ package urchin.testutil;
 
 import org.junit.Before;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.test.TestRestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -21,19 +21,19 @@ import static org.springframework.core.io.support.PropertiesLoaderUtils.loadProp
 public abstract class RestApplication {
 
     @Value("${local.server.port}")
-    protected int port;
-    protected String contextPath;
-    protected String baseUrl;
+    private int port;
+
+    @Autowired
+    protected TestRestTemplate template;
+
     protected String url;
-    protected RestTemplate template;
 
     @Before
     public void setupSpringApplication() throws IOException {
         Properties properties = loadProperties(new ClassPathResource("application.properties"));
-        contextPath = properties.getProperty("server.contextPath");
-        baseUrl = "http://localhost:" + port + contextPath;
+        String contextPath = properties.getProperty("server.contextPath");
+        String baseUrl = "http://localhost:" + port + contextPath;
         url = baseUrl + discoverPath();
-        template = new TestRestTemplate();
     }
 
     protected String discoverPath() {
