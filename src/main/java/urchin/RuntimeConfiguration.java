@@ -1,9 +1,10 @@
 package urchin;
 
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-@org.springframework.context.annotation.Configuration
-public class Configuration {
+@Configuration
+public class RuntimeConfiguration {
 
     @Bean
     public Runtime runtime() {
