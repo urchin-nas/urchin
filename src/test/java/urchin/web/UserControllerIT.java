@@ -23,11 +23,6 @@ public class UserControllerIT extends RestApplication {
     private static final String USERNAME_PREFIX = "urchin_";
     private static final String PASSWORD = "superSecret";
 
-    @Override
-    protected String getPath() {
-        return "/users";
-    }
-
     @Test
     public void addAndRemoveUser() {
         AddUserApi addUserApi = new AddUserApi(USERNAME_PREFIX + System.currentTimeMillis(), PASSWORD);

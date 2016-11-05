@@ -7,6 +7,7 @@ import org.springframework.boot.test.TestRestTemplate;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
@@ -31,9 +32,15 @@ public abstract class RestApplication {
         Properties properties = loadProperties(new ClassPathResource("application.properties"));
         contextPath = properties.getProperty("server.contextPath");
         baseUrl = "http://localhost:" + port + contextPath;
-        url = baseUrl + getPath();
+        url = baseUrl + discoverPath();
         template = new TestRestTemplate();
     }
 
-    protected abstract String getPath();
+    protected String discoverPath() {
+        try {
+            return Class.forName(this.getClass().getName().replace("IT", "")).getAnnotation(RequestMapping.class).value()[0];
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException("Failed to discover path", e);
+        }
+    }
 }

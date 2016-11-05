@@ -22,11 +22,6 @@ public class GroupControllerIT extends RestApplication {
 
     private static final String GROUP_PREFIX = "urchin_";
 
-    @Override
-    protected String getPath() {
-        return "/groups";
-    }
-
     @Test
     public void addAndRemoveGroup() {
         AddGroupApi addGroupApi = new AddGroupApi(GROUP_PREFIX + System.currentTimeMillis());

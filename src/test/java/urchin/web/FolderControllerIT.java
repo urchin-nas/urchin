@@ -32,11 +32,6 @@ public class FolderControllerIT extends RestApplication {
     @Rule
     public TemporaryFolderUmount temporaryFolderUmount = new TemporaryFolderUmount();
 
-    @Override
-    protected String getPath() {
-        return "/folders";
-    }
-
     @Before
     public void setup() {
         ignoreWhenWindowsOrMac();

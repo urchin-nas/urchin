@@ -17,10 +17,10 @@ import static org.junit.Assert.assertNull;
 
 public class ControllerSupportIT extends RestApplication {
 
-    public static final String VALIDATION = "/validation";
+    private static final String VALIDATION = "/validation";
 
     @Override
-    protected String getPath() {
+    protected String discoverPath() {
         return "/test";
     }
 
