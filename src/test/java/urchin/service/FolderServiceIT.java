@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import urchin.domain.FolderSettingsRepository;
 import urchin.domain.model.FolderSettings;
 import urchin.domain.model.Passphrase;
-import urchin.testutil.TemporaryFolderUmount;
+import urchin.testutil.TemporaryFolderUnmount;
 import urchin.testutil.TestApplication;
 
 import java.io.IOException;
@@ -33,7 +33,7 @@ public class FolderServiceIT extends TestApplication {
     private static final String FOLDER_VIRTUAL_NAME = "/virtual";
 
     @Rule
-    public TemporaryFolderUmount temporaryFolderUmount = new TemporaryFolderUmount();
+    public TemporaryFolderUnmount temporaryFolderUnmount = new TemporaryFolderUnmount();
 
     @Autowired
     private FolderSettingsRepository folderSettingsRepository;
@@ -48,7 +48,7 @@ public class FolderServiceIT extends TestApplication {
     @Before
     public void setup() {
         ignoreWhenWindowsOrMac();
-        tmpFolderPath = temporaryFolderUmount.getRoot().getAbsolutePath();
+        tmpFolderPath = temporaryFolderUnmount.getRoot().getAbsolutePath();
         folder_1 = Paths.get(tmpFolderPath + FOLDER1_NAME);
         folder_2 = Paths.get(tmpFolderPath + FOLDER2_NAME);
         virtualFolder = Paths.get(tmpFolderPath + FOLDER_VIRTUAL_NAME);

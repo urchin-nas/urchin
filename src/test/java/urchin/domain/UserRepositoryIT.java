@@ -31,7 +31,7 @@ public class UserRepositoryIT extends TestApplication {
         assertTrue(userOptional.isPresent());
         User readUser = userOptional.get();
         assertEquals(user.getUsername(), readUser.getUsername());
-        assertTrue(now.isBefore(readUser.getCreated()));
+        assertFalse(now.isAfter(readUser.getCreated()));
 
         userRepository.removeUser(userId);
 

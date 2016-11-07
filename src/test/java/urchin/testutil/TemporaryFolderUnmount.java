@@ -13,9 +13,9 @@ import java.nio.file.Paths;
 
 import static urchin.domain.util.EncryptedFolderUtil.HIDDEN_FOLDER_DELIMITER;
 
-public class TemporaryFolderUmount extends TemporaryFolder {
+public class TemporaryFolderUnmount extends TemporaryFolder {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TemporaryFolderUmount.class);
+    private static final Logger LOG = LoggerFactory.getLogger(TemporaryFolderUnmount.class);
 
     private UnmountFolderCommand unmountFolderCommand = new UnmountFolderCommand(Runtime.getRuntime());
 

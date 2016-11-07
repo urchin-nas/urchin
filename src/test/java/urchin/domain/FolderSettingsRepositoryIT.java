@@ -9,6 +9,7 @@ import urchin.testutil.TestApplication;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
@@ -29,11 +30,14 @@ public class FolderSettingsRepositoryIT extends TestApplication {
         String workDir = System.getProperty("user.dir");
         FolderSettings folderSettings = new FolderSettings(Paths.get(workDir + "/some/path"), new EncryptedFolder(Paths.get(workDir + "/some/.path")));
         folderSettings.setAutoMount(true);
-        folderSettingsRepository.saveFolderSettings(folderSettings);
-        List<FolderSettings> allFolderSettings = folderSettingsRepository.getAllFolderSettings();
 
-        assertEquals(1, allFolderSettings.size());
-        FolderSettings readFolderSettings = allFolderSettings.get(0);
+        folderSettingsRepository.saveFolderSettings(folderSettings);
+
+        List<FolderSettings> matchedFolderSettings = folderSettingsRepository.getAllFolderSettings().stream()
+                .filter(folderSetting -> folderSetting.getFolder().startsWith(workDir))
+                .collect(Collectors.toList());
+        assertEquals(1, matchedFolderSettings.size());
+        FolderSettings readFolderSettings = matchedFolderSettings.get(0);
         assertTrue(readFolderSettings.getId() > 0);
         assertEquals(folderSettings.getFolder(), readFolderSettings.getFolder());
         assertEquals(folderSettings.getEncryptedFolder(), readFolderSettings.getEncryptedFolder());
@@ -42,7 +46,9 @@ public class FolderSettingsRepositoryIT extends TestApplication {
 
         folderSettingsRepository.removeFolderSettings(readFolderSettings.getId());
 
-        assertEquals(0, folderSettingsRepository.getAllFolderSettings().size());
+        assertEquals(0, folderSettingsRepository.getAllFolderSettings().stream()
+                .filter(folderSetting -> folderSetting.getFolder().startsWith(workDir))
+                .count());
     }
 
 }

@@ -13,7 +13,7 @@ import urchin.api.MountEncryptedFolderApi;
 import urchin.api.PassphraseApi;
 import urchin.api.support.ResponseMessage;
 import urchin.domain.model.EncryptedFolder;
-import urchin.testutil.TemporaryFolderUmount;
+import urchin.testutil.TemporaryFolderUnmount;
 import urchin.testutil.TestApplication;
 
 import java.nio.file.Path;
@@ -30,13 +30,13 @@ public class FolderControllerIT extends TestApplication {
     private EncryptedFolder encryptedFolder;
 
     @Rule
-    public TemporaryFolderUmount temporaryFolderUmount = new TemporaryFolderUmount();
+    public TemporaryFolderUnmount temporaryFolderUnmount = new TemporaryFolderUnmount();
 
     @Before
     public void setup() {
         ignoreWhenWindowsOrMac();
 
-        folder = Paths.get(temporaryFolderUmount.getRoot() + "/test_folder");
+        folder = Paths.get(temporaryFolderUnmount.getRoot() + "/test_folder");
         encryptedFolder = getEncryptedFolder(folder);
     }
 
