@@ -10,7 +10,7 @@ import urchin.api.AddUserApi;
 import urchin.api.UserApi;
 import urchin.api.UsersApi;
 import urchin.api.support.ResponseMessage;
-import urchin.testutil.RestApplication;
+import urchin.testutil.TestApplication;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-public class UserControllerIT extends RestApplication {
+public class UserControllerIT extends TestApplication {
 
     private static final String USERNAME_PREFIX = "urchin_";
     private static final String PASSWORD = "superSecret";
@@ -48,17 +48,17 @@ public class UserControllerIT extends RestApplication {
     }
 
     private ResponseEntity<ResponseMessage<String>> addUserRequest(AddUserApi addUserApi) {
-        return template.exchange(url + "/add", HttpMethod.POST, new HttpEntity<>(addUserApi), new ParameterizedTypeReference<ResponseMessage<String>>() {
+        return testRestTemplate.exchange(discoverControllerPath() + "/add", HttpMethod.POST, new HttpEntity<>(addUserApi), new ParameterizedTypeReference<ResponseMessage<String>>() {
         });
     }
 
     private ResponseEntity<ResponseMessage<UsersApi>> getUsersRequest() {
-        return template.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<ResponseMessage<UsersApi>>() {
+        return testRestTemplate.exchange(discoverControllerPath(), HttpMethod.GET, null, new ParameterizedTypeReference<ResponseMessage<UsersApi>>() {
         });
     }
 
     private ResponseEntity<ResponseMessage<String>> removeUserRequest(int userId) {
-        return template.exchange(url + "/" + userId, HttpMethod.DELETE, null, new ParameterizedTypeReference<ResponseMessage<String>>() {
+        return testRestTemplate.exchange(discoverControllerPath() + "/" + userId, HttpMethod.DELETE, null, new ParameterizedTypeReference<ResponseMessage<String>>() {
         });
     }
 }

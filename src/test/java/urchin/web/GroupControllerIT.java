@@ -10,7 +10,7 @@ import urchin.api.AddGroupApi;
 import urchin.api.GroupApi;
 import urchin.api.GroupsApi;
 import urchin.api.support.ResponseMessage;
-import urchin.testutil.RestApplication;
+import urchin.testutil.TestApplication;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
-public class GroupControllerIT extends RestApplication {
+public class GroupControllerIT extends TestApplication {
 
     private static final String GROUP_PREFIX = "urchin_";
 
@@ -48,17 +48,17 @@ public class GroupControllerIT extends RestApplication {
     }
 
     private ResponseEntity<ResponseMessage<String>> addGroupRequest(AddGroupApi addGroupApi) {
-        return template.exchange(url + "/add", HttpMethod.POST, new HttpEntity<>(addGroupApi), new ParameterizedTypeReference<ResponseMessage<String>>() {
+        return testRestTemplate.exchange(discoverControllerPath() + "/add", HttpMethod.POST, new HttpEntity<>(addGroupApi), new ParameterizedTypeReference<ResponseMessage<String>>() {
         });
     }
 
     private ResponseEntity<ResponseMessage<GroupsApi>> getGroupsRequest() {
-        return template.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<ResponseMessage<GroupsApi>>() {
+        return testRestTemplate.exchange(discoverControllerPath(), HttpMethod.GET, null, new ParameterizedTypeReference<ResponseMessage<GroupsApi>>() {
         });
     }
 
     private ResponseEntity<ResponseMessage<String>> removeGroupRequest(int groupId) {
-        return template.exchange(url + "/" + groupId, HttpMethod.DELETE, null, new ParameterizedTypeReference<ResponseMessage<String>>() {
+        return testRestTemplate.exchange(discoverControllerPath() + "/" + groupId, HttpMethod.DELETE, null, new ParameterizedTypeReference<ResponseMessage<String>>() {
         });
     }
 }

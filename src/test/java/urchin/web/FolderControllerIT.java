@@ -13,8 +13,8 @@ import urchin.api.MountEncryptedFolderApi;
 import urchin.api.PassphraseApi;
 import urchin.api.support.ResponseMessage;
 import urchin.domain.model.EncryptedFolder;
-import urchin.testutil.RestApplication;
 import urchin.testutil.TemporaryFolderUmount;
+import urchin.testutil.TestApplication;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
 import static urchin.domain.util.EncryptedFolderUtil.getEncryptedFolder;
 import static urchin.testutil.OsAssumption.ignoreWhenWindowsOrMac;
 
-public class FolderControllerIT extends RestApplication {
+public class FolderControllerIT extends TestApplication {
 
     private Path folder;
     private EncryptedFolder encryptedFolder;
@@ -70,17 +70,17 @@ public class FolderControllerIT extends RestApplication {
     }
 
     private ResponseEntity<ResponseMessage<PassphraseApi>> postCreateRequest(EncryptedFolderApi encryptedFolderApi) {
-        return template.exchange(url + "/create", HttpMethod.POST, new HttpEntity<>(encryptedFolderApi), new ParameterizedTypeReference<ResponseMessage<PassphraseApi>>() {
+        return testRestTemplate.exchange(discoverControllerPath() + "/create", HttpMethod.POST, new HttpEntity<>(encryptedFolderApi), new ParameterizedTypeReference<ResponseMessage<PassphraseApi>>() {
         });
     }
 
     private ResponseEntity<ResponseMessage<String>> postUnmountRequest(EncryptedFolderApi encryptedFolderApi) {
-        return template.exchange(url + "/unmount", HttpMethod.POST, new HttpEntity<>(encryptedFolderApi), new ParameterizedTypeReference<ResponseMessage<String>>() {
+        return testRestTemplate.exchange(discoverControllerPath() + "/unmount", HttpMethod.POST, new HttpEntity<>(encryptedFolderApi), new ParameterizedTypeReference<ResponseMessage<String>>() {
         });
     }
 
     private ResponseEntity<ResponseMessage<String>> postMountRequest(MountEncryptedFolderApi mountEncryptedFolderApi) {
-        return template.exchange(url + "/mount", HttpMethod.POST, new HttpEntity<>(mountEncryptedFolderApi), new ParameterizedTypeReference<ResponseMessage<String>>() {
+        return testRestTemplate.exchange(discoverControllerPath() + "/mount", HttpMethod.POST, new HttpEntity<>(mountEncryptedFolderApi), new ParameterizedTypeReference<ResponseMessage<String>>() {
         });
     }
 

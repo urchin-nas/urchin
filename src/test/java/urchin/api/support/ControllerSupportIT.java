@@ -7,7 +7,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import urchin.api.support.error.ExceptionControllerAdvice;
-import urchin.testutil.RestApplication;
+import urchin.testutil.TestApplication;
 import urchin.testutil.TestController;
 import urchin.testutil.TestRequestApi;
 import urchin.testutil.TestResponseApi;
@@ -15,18 +15,18 @@ import urchin.testutil.TestResponseApi;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
-public class ControllerSupportIT extends RestApplication {
+public class ControllerSupportIT extends TestApplication {
 
     private static final String VALIDATION = "/validation";
 
     @Override
-    protected String discoverPath() {
+    protected String discoverControllerPath() {
         return "/test";
     }
 
     @Test
     public void validationFailureReturnsErrorResponse() {
-        ResponseEntity<ResponseMessage<TestResponseApi>> response = postRequest(url + VALIDATION, new TestRequestApi());
+        ResponseEntity<ResponseMessage<TestResponseApi>> response = postRequest(discoverControllerPath() + VALIDATION, new TestRequestApi());
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertNull(response.getBody().getData());
@@ -47,7 +47,7 @@ public class ControllerSupportIT extends RestApplication {
         TestRequestApi requestApi = new TestRequestApi();
         requestApi.setValue("someValue");
         requestApi.setValueWithoutCustomValidationMessage("someOtherValue");
-        ResponseEntity<ResponseMessage<TestResponseApi>> response = postRequest(url + VALIDATION, requestApi);
+        ResponseEntity<ResponseMessage<TestResponseApi>> response = postRequest(discoverControllerPath() + VALIDATION, requestApi);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNull(response.getBody().getErrors());
@@ -56,7 +56,7 @@ public class ControllerSupportIT extends RestApplication {
 
     @Test
     public void thrownResponseExceptionResultsInErrorResponse() {
-        ResponseEntity<ResponseMessage<TestResponseApi>> response = getRequest(url + "/response-exception");
+        ResponseEntity<ResponseMessage<TestResponseApi>> response = getRequest(discoverControllerPath() + "/response-exception");
         assertEquals(HttpStatus.SERVICE_UNAVAILABLE, response.getStatusCode());
         assertNull(response.getBody().getData());
         assertEquals(1, response.getBody().getErrors().size());
@@ -66,7 +66,7 @@ public class ControllerSupportIT extends RestApplication {
 
     @Test
     public void thrownRuntimeExceptionResultsInErrorResponse() {
-        ResponseEntity<ResponseMessage<TestResponseApi>> response = getRequest(url + "/runtime-exception");
+        ResponseEntity<ResponseMessage<TestResponseApi>> response = getRequest(discoverControllerPath() + "/runtime-exception");
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
         assertNull(response.getBody().getData());
         assertEquals(1, response.getBody().getErrors().size());
@@ -75,12 +75,12 @@ public class ControllerSupportIT extends RestApplication {
     }
 
     private ResponseEntity<ResponseMessage<TestResponseApi>> postRequest(String url, TestRequestApi requestApi) {
-        return template.exchange(url, HttpMethod.POST, new HttpEntity<>(requestApi), new ParameterizedTypeReference<ResponseMessage<TestResponseApi>>() {
+        return testRestTemplate.exchange(url, HttpMethod.POST, new HttpEntity<>(requestApi), new ParameterizedTypeReference<ResponseMessage<TestResponseApi>>() {
         });
     }
 
     private ResponseEntity<ResponseMessage<TestResponseApi>> getRequest(String url) {
-        return template.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<ResponseMessage<TestResponseApi>>() {
+        return testRestTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<ResponseMessage<TestResponseApi>>() {
         });
     }
 
