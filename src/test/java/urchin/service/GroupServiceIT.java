@@ -7,7 +7,7 @@ import urchin.cli.group.CheckIfGroupExistCommand;
 import urchin.domain.GroupRepository;
 import urchin.domain.model.Group;
 import urchin.domain.model.GroupId;
-import urchin.testutil.H2Application;
+import urchin.testutil.TestApplication;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import static org.junit.Assert.*;
 import static urchin.testutil.OsAssumption.ignoreWhenWindowsOrMac;
 
-public class GroupServiceIT extends H2Application {
+public class GroupServiceIT extends TestApplication {
 
     private static final String GROUP_PREFIX = "urchin_";
 

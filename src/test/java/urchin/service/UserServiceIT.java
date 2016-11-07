@@ -7,7 +7,7 @@ import urchin.cli.user.CheckIfUsernameExistCommand;
 import urchin.domain.UserRepository;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
-import urchin.testutil.H2Application;
+import urchin.testutil.TestApplication;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import static org.junit.Assert.*;
 import static urchin.testutil.OsAssumption.ignoreWhenWindowsOrMac;
 
-public class UserServiceIT extends H2Application {
+public class UserServiceIT extends TestApplication {
 
     private static final String USERNAME_PREFIX = "urchin_";
     private static final String PASSWORD = "superSecret";

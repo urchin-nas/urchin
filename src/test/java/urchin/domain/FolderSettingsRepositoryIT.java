@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import urchin.domain.model.EncryptedFolder;
 import urchin.domain.model.FolderSettings;
-import urchin.testutil.H2Application;
+import urchin.testutil.TestApplication;
 
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 
-public class FolderSettingsRepositoryTest extends H2Application {
+public class FolderSettingsRepositoryIT extends TestApplication {
 
     private FolderSettingsRepository folderSettingsRepository;
 

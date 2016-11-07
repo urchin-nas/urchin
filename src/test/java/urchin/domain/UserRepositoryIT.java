@@ -4,14 +4,14 @@ import org.junit.Before;
 import org.junit.Test;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
-import urchin.testutil.H2Application;
+import urchin.testutil.TestApplication;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
 
-public class UserRepositoryTest extends H2Application {
+public class UserRepositoryIT extends TestApplication {
 
     private UserRepository userRepository;
 

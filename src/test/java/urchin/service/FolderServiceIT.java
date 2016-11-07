@@ -9,8 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import urchin.domain.FolderSettingsRepository;
 import urchin.domain.model.FolderSettings;
 import urchin.domain.model.Passphrase;
-import urchin.testutil.H2Application;
 import urchin.testutil.TemporaryFolderUmount;
+import urchin.testutil.TestApplication;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -25,7 +25,7 @@ import static junit.framework.TestCase.*;
 import static urchin.domain.util.EncryptedFolderUtil.getEncryptedFolder;
 import static urchin.testutil.OsAssumption.ignoreWhenWindowsOrMac;
 
-public class FolderServiceIT extends H2Application {
+public class FolderServiceIT extends TestApplication {
 
     private static final String FILENAME = "test_file_for_folder_service_it.txt";
     private static final String FOLDER1_NAME = "/folder1";

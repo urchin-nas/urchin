@@ -4,14 +4,14 @@ import org.junit.Before;
 import org.junit.Test;
 import urchin.domain.model.Group;
 import urchin.domain.model.GroupId;
-import urchin.testutil.H2Application;
+import urchin.testutil.TestApplication;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
 
-public class GroupRepositoryTest extends H2Application {
+public class GroupRepositoryIT extends TestApplication {
 
     private GroupRepository groupRepository;
 
