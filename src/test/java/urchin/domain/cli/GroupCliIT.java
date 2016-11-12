@@ -5,7 +5,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
-import urchin.RuntimeConfiguration;
+import urchin.configuration.RuntimeConfiguration;
 import urchin.domain.cli.group.AddGroupCommand;
 import urchin.domain.cli.group.CheckIfGroupExistCommand;
 import urchin.domain.cli.group.RemoveGroupCommand;

@@ -25,6 +25,7 @@ import static junit.framework.TestCase.*;
 import static urchin.domain.util.EncryptedFolderUtil.getEncryptedFolder;
 import static urchin.testutil.OsAssumption.ignoreWhenWindowsOrMac;
 
+//TODO replace with more tests in FolderControllerIT
 public class FolderServiceIT extends TestApplication {
 
     private static final String FILENAME = "test_file_for_folder_service_it.txt";
