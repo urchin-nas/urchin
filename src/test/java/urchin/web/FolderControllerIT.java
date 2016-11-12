@@ -22,7 +22,6 @@ import java.nio.file.Paths;
 import static java.nio.file.Files.exists;
 import static org.junit.Assert.*;
 import static urchin.domain.util.EncryptedFolderUtil.getEncryptedFolder;
-import static urchin.testutil.OsAssumption.ignoreWhenWindowsOrMac;
 
 public class FolderControllerIT extends TestApplication {
 
@@ -34,8 +33,6 @@ public class FolderControllerIT extends TestApplication {
 
     @Before
     public void setup() {
-        ignoreWhenWindowsOrMac();
-
         folder = Paths.get(temporaryFolderUnmount.getRoot() + "/test_folder");
         encryptedFolder = getEncryptedFolder(folder);
     }

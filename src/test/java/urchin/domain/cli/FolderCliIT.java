@@ -19,7 +19,6 @@ import java.nio.file.Paths;
 import java.util.Arrays;
 
 import static urchin.domain.util.PassphraseGenerator.generateEcryptfsPassphrase;
-import static urchin.testutil.OsAssumption.ignoreWhenWindowsOrMac;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = {
@@ -53,8 +52,6 @@ public class FolderCliIT {
 
     @BeforeClass
     public static void setup() throws IOException {
-        ignoreWhenWindowsOrMac();
-
         String tmpFolderPath = temporaryFolderUnmount.getRoot().getAbsolutePath();
 
         folder_1 = Paths.get(tmpFolderPath + FOLDER1_NAME);

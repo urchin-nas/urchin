@@ -23,7 +23,6 @@ import java.util.List;
 import static java.nio.file.Files.exists;
 import static junit.framework.TestCase.*;
 import static urchin.domain.util.EncryptedFolderUtil.getEncryptedFolder;
-import static urchin.testutil.OsAssumption.ignoreWhenWindowsOrMac;
 
 //TODO replace with more tests in FolderControllerIT
 public class FolderServiceIT extends TestApplication {
@@ -48,7 +47,6 @@ public class FolderServiceIT extends TestApplication {
 
     @Before
     public void setup() {
-        ignoreWhenWindowsOrMac();
         tmpFolderPath = temporaryFolderUnmount.getRoot().getAbsolutePath();
         folder_1 = Paths.get(tmpFolderPath + FOLDER1_NAME);
         folder_2 = Paths.get(tmpFolderPath + FOLDER2_NAME);
