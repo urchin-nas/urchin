@@ -4,8 +4,9 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.nio.charset.Charset;
 import java.util.Optional;
+
+import static java.nio.charset.Charset.defaultCharset;
 
 public abstract class BasicCommand {
 
@@ -27,7 +28,7 @@ public abstract class BasicCommand {
                 throw new CommandException(this.getClass().getName(), process.exitValue());
             }
 
-            String response = IOUtils.toString(process.getInputStream(), Charset.defaultCharset());
+            String response = IOUtils.toString(process.getInputStream(), defaultCharset());
             if (response.length() > 0) {
                 LOG.debug("Response: " + response);
                 return Optional.of(response);
