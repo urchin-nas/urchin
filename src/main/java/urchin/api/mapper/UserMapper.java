@@ -14,15 +14,15 @@ public class UserMapper {
         return new User(addUserDto.getUsername());
     }
 
-    public static UsersDto mapToUsersApi(List<User> users) {
+    public static UsersDto mapToUsersDto(List<User> users) {
         return new UsersDto(
                 users.stream()
-                        .map(UserMapper::mapToUserApi)
+                        .map(UserMapper::mapToUserDto)
                         .collect(Collectors.toList())
         );
     }
 
-    public static UserDto mapToUserApi(User user) {
+    private static UserDto mapToUserDto(User user) {
         return new UserDto(
                 user.getUserId().getId(),
                 user.getUsername()

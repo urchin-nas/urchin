@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 import static urchin.api.mapper.GroupMapper.mapToGroup;
-import static urchin.api.mapper.GroupMapper.mapToGroupsApi;
+import static urchin.api.mapper.GroupMapper.mapToGroupsDto;
 import static urchin.api.support.DataResponseEntityBuilder.createOkResponse;
 import static urchin.api.support.DataResponseEntityBuilder.createResponse;
 
@@ -33,7 +33,7 @@ public class GroupController {
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseMessage<GroupsDto>> getGroups() {
         List<Group> groups = groupService.getGroups();
-        return createResponse(mapToGroupsApi(groups));
+        return createResponse(mapToGroupsDto(groups));
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

@@ -14,15 +14,15 @@ public class GroupMapper {
         return new Group(addGroupDto.getName());
     }
 
-    public static GroupsDto mapToGroupsApi(List<Group> groups) {
+    public static GroupsDto mapToGroupsDto(List<Group> groups) {
         return new GroupsDto(
                 groups.stream()
-                        .map(GroupMapper::mapToGroupApi)
+                        .map(GroupMapper::mapToGroupDto)
                         .collect(Collectors.toList())
         );
     }
 
-    public static GroupDto mapToGroupApi(Group group) {
+    private static GroupDto mapToGroupDto(Group group) {
         return new GroupDto(
                 group.getGroupId().getId(),
                 group.getName()

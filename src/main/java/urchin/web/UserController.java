@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 import static urchin.api.mapper.UserMapper.mapToUser;
-import static urchin.api.mapper.UserMapper.mapToUsersApi;
+import static urchin.api.mapper.UserMapper.mapToUsersDto;
 import static urchin.api.support.DataResponseEntityBuilder.createOkResponse;
 import static urchin.api.support.DataResponseEntityBuilder.createResponse;
 
@@ -33,7 +33,7 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseMessage<UsersDto>> getUsers() {
         List<User> users = userService.getUsers();
-        return createResponse(mapToUsersApi(users));
+        return createResponse(mapToUsersDto(users));
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
