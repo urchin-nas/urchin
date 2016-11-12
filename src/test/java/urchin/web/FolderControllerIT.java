@@ -41,7 +41,7 @@ public class FolderControllerIT extends TestApplication {
     }
 
     @Test
-    public void createUnmountAndMountEncryptedFolder() {
+    public void createAndUnmountAndMountEncryptedFolder() {
         EncryptedFolderApi encryptedFolderApi = new EncryptedFolderApi();
         encryptedFolderApi.setFolder(folder.toAbsolutePath().toString());
 
