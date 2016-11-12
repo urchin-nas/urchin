@@ -3,10 +3,8 @@ package urchin.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import urchin.cli.user.AddUserCommand;
-import urchin.cli.user.RemoveUserCommand;
-import urchin.cli.user.SetUserPasswordCommand;
 import urchin.domain.UserRepository;
+import urchin.domain.cli.UserCli;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
 
@@ -17,23 +15,19 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
-    private final AddUserCommand addUserCommand;
-    private final SetUserPasswordCommand setUserPasswordCommand;
-    private final RemoveUserCommand removeUserCommand;
+    private final UserCli userCli;
 
     @Autowired
-    public UserService(UserRepository userRepository, AddUserCommand addUserCommand, SetUserPasswordCommand setUserPasswordCommand, RemoveUserCommand removeUserCommand) {
+    public UserService(UserRepository userRepository, UserCli userCli) {
         this.userRepository = userRepository;
-        this.addUserCommand = addUserCommand;
-        this.setUserPasswordCommand = setUserPasswordCommand;
-        this.removeUserCommand = removeUserCommand;
+        this.userCli = userCli;
     }
 
     @Transactional
     public UserId addUser(User user, String password) {
         UserId userId = userRepository.saveUser(user);
-        addUserCommand.execute(user);
-        setUserPasswordCommand.execute(user, password);
+        userCli.addUser(user);
+        userCli.setSetUserPassword(user, password);
         return userId;
     }
 
@@ -42,7 +36,7 @@ public class UserService {
         Optional<User> userOptional = userRepository.getUser(userId);
         if (userOptional.isPresent()) {
             userRepository.removeUser(userId);
-            removeUserCommand.execute(userOptional.get());
+            userCli.removeUser(userOptional.get());
         } else {
             throw new IllegalArgumentException("Invalid userId: " + userId);
         }

@@ -4,8 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import urchin.cli.folder.MountEncryptedFolderCommand;
 import urchin.domain.PassphraseRepository;
+import urchin.domain.cli.FolderCli;
 import urchin.domain.model.FolderSettings;
 import urchin.domain.model.Passphrase;
 
@@ -15,12 +15,12 @@ public class AutoMountFolderService {
     private static final Logger LOG = LoggerFactory.getLogger(AutoMountFolderService.class);
 
     private final PassphraseRepository passphraseRepository;
-    private final MountEncryptedFolderCommand mountEncryptedFolderCommand;
+    private final FolderCli folderCli;
 
     @Autowired
-    public AutoMountFolderService(PassphraseRepository passphraseRepository, MountEncryptedFolderCommand mountEncryptedFolderCommand) {
+    public AutoMountFolderService(PassphraseRepository passphraseRepository, FolderCli folderCli) {
         this.passphraseRepository = passphraseRepository;
-        this.mountEncryptedFolderCommand = mountEncryptedFolderCommand;
+        this.folderCli = folderCli;
     }
 
     public void setup(FolderSettings folderSettings, Passphrase passphrase) {
@@ -30,6 +30,6 @@ public class AutoMountFolderService {
 
     public void mount(FolderSettings folderSettings) {
         Passphrase passphrase = passphraseRepository.getPassphrase(folderSettings);
-        mountEncryptedFolderCommand.execute(folderSettings.getFolder(), folderSettings.getEncryptedFolder(), passphrase);
+        folderCli.mountEncryptedFolder(folderSettings.getFolder(), folderSettings.getEncryptedFolder(), passphrase);
     }
 }

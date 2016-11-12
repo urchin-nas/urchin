@@ -3,9 +3,8 @@ package urchin.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import urchin.cli.group.AddGroupCommand;
-import urchin.cli.group.RemoveGroupCommand;
 import urchin.domain.GroupRepository;
+import urchin.domain.cli.GroupCli;
 import urchin.domain.model.Group;
 import urchin.domain.model.GroupId;
 
@@ -16,20 +15,18 @@ import java.util.Optional;
 public class GroupService {
 
     private final GroupRepository groupRepository;
-    private final AddGroupCommand addGroupCommand;
-    private final RemoveGroupCommand removeGroupCommand;
+    private final GroupCli groupCli;
 
     @Autowired
-    public GroupService(GroupRepository groupRepository, AddGroupCommand addGroupCommand, RemoveGroupCommand removeGroupCommand) {
+    public GroupService(GroupRepository groupRepository, GroupCli groupCli) {
         this.groupRepository = groupRepository;
-        this.addGroupCommand = addGroupCommand;
-        this.removeGroupCommand = removeGroupCommand;
+        this.groupCli = groupCli;
     }
 
     @Transactional
     public GroupId addGroup(Group group) {
         GroupId groupId = groupRepository.saveGroup(group);
-        addGroupCommand.execute(group);
+        groupCli.addGroup(group);
         return groupId;
     }
 
@@ -38,7 +35,7 @@ public class GroupService {
         Optional<Group> groupOptional = groupRepository.getGroup(groupId);
         if (groupOptional.isPresent()) {
             groupRepository.removeGroup(groupId);
-            removeGroupCommand.execute(groupOptional.get());
+            groupCli.removeGroup(groupOptional.get());
         } else {
             throw new IllegalArgumentException("Invalid GroupId: " + groupId);
         }

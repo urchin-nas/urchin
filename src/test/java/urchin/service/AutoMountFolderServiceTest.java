@@ -5,8 +5,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import urchin.cli.folder.MountEncryptedFolderCommand;
 import urchin.domain.PassphraseRepository;
+import urchin.domain.cli.FolderCli;
 import urchin.domain.model.EncryptedFolder;
 import urchin.domain.model.FolderSettings;
 import urchin.domain.model.Passphrase;
@@ -27,14 +27,14 @@ public class AutoMountFolderServiceTest {
     private PassphraseRepository passphraseRepository;
 
     @Mock
-    private MountEncryptedFolderCommand mountEncryptedFolderCommand;
+    private FolderCli folderCli;
 
     private AutoMountFolderService autoMountFolderService;
 
 
     @Before
     public void setup() {
-        autoMountFolderService = new AutoMountFolderService(passphraseRepository, mountEncryptedFolderCommand);
+        autoMountFolderService = new AutoMountFolderService(passphraseRepository, folderCli);
     }
 
     @Test
@@ -50,7 +50,7 @@ public class AutoMountFolderServiceTest {
 
         autoMountFolderService.mount(FOLDER_SETTINGS);
 
-        verify(mountEncryptedFolderCommand).execute(FOLDER_SETTINGS.getFolder(), FOLDER_SETTINGS.getEncryptedFolder(), PASSPHRASE);
+        verify(folderCli).mountEncryptedFolder(FOLDER_SETTINGS.getFolder(), FOLDER_SETTINGS.getEncryptedFolder(), PASSPHRASE);
     }
 
 }

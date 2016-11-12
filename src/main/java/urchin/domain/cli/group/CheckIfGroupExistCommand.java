@@ -1,32 +1,32 @@
-package urchin.cli.user;
+package urchin.domain.cli.group;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import urchin.cli.BasicCommand;
-import urchin.cli.CommandException;
+import urchin.domain.cli.common.BasicCommand;
+import urchin.domain.cli.common.CommandException;
 
 import static java.util.Arrays.copyOf;
 
 @Component
-public class CheckIfUsernameExistCommand extends BasicCommand {
+public class CheckIfGroupExistCommand extends BasicCommand {
 
-    private static final String USERNAME = "%username%";
+    private static final String GROUP_NAME = "%groupname%";
 
     private static final String[] COMMAND = new String[]{
             "getent",
-            "passwd",
-            USERNAME,
+            "group",
+            GROUP_NAME,
     };
 
     @Autowired
-    public CheckIfUsernameExistCommand(Runtime runtime) {
+    public CheckIfGroupExistCommand(Runtime runtime) {
         super(runtime);
     }
 
-    public boolean execute(String username) {
-        LOG.debug("Checking if username {} exist", username);
+    public boolean execute(String groupName) {
+        LOG.debug("Checking if group name {} exist", groupName);
         try {
-            executeCommand(setupCommand(username));
+            executeCommand(setupCommand(groupName));
         } catch (CommandException e) {
             if (e.getExitValue() == 2) {
                 return false;
@@ -37,9 +37,9 @@ public class CheckIfUsernameExistCommand extends BasicCommand {
         return true;
     }
 
-    private String[] setupCommand(String username) {
+    private String[] setupCommand(String groupName) {
         String[] command = copyOf(COMMAND, COMMAND.length);
-        command[2] = username;
+        command[2] = groupName;
         return command;
     }
 }

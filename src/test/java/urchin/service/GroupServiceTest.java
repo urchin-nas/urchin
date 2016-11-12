@@ -3,11 +3,11 @@ package urchin.service;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import urchin.cli.group.AddGroupCommand;
-import urchin.cli.group.RemoveGroupCommand;
 import urchin.domain.GroupRepository;
+import urchin.domain.cli.GroupCli;
 import urchin.domain.model.Group;
 import urchin.domain.model.GroupId;
 
@@ -26,22 +26,14 @@ public class GroupServiceTest {
     private GroupRepository groupRepository;
 
     @Mock
-    private AddGroupCommand addGroupCommand;
+    private GroupCli groupCli;
 
-    @Mock
-    private RemoveGroupCommand removeGroupCommand;
-
+    @InjectMocks
     private GroupService groupService;
     private Group group;
 
     @Before
     public void setup() {
-        groupService = new GroupService(
-                groupRepository,
-                addGroupCommand,
-                removeGroupCommand
-        );
-
         group = new Group("groupname");
     }
 
@@ -50,7 +42,7 @@ public class GroupServiceTest {
         groupService.addGroup(group);
 
         verify(groupRepository).saveGroup(group);
-        verify(addGroupCommand).execute(group);
+        verify(groupCli).addGroup(group);
     }
 
     @Test
@@ -60,7 +52,7 @@ public class GroupServiceTest {
         groupService.removeGroup(GROUP_ID);
 
         verify(groupRepository).removeGroup(GROUP_ID);
-        verify(removeGroupCommand).execute(group);
+        verify(groupCli).removeGroup(group);
     }
 
     @Test(expected = IllegalArgumentException.class)

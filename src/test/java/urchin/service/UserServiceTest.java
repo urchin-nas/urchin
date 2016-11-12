@@ -3,12 +3,11 @@ package urchin.service;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import urchin.cli.user.AddUserCommand;
-import urchin.cli.user.RemoveUserCommand;
-import urchin.cli.user.SetUserPasswordCommand;
 import urchin.domain.UserRepository;
+import urchin.domain.cli.UserCli;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
 
@@ -25,24 +24,17 @@ public class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
-    @Mock
-    private AddUserCommand addUserCommand;
-    @Mock
-    private SetUserPasswordCommand setUserPasswordCommand;
-    @Mock
-    private RemoveUserCommand removeUserCommand;
 
+    @Mock
+    private UserCli userCli;
+
+    @InjectMocks
     private UserService userService;
+
     private User user;
 
     @Before
     public void setup() {
-        userService = new UserService(
-                userRepository,
-                addUserCommand,
-                setUserPasswordCommand,
-                removeUserCommand
-        );
         user = new User("username");
     }
 
@@ -51,8 +43,8 @@ public class UserServiceTest {
         userService.addUser(user, PASSWORD);
 
         verify(userRepository).saveUser(user);
-        verify(addUserCommand).execute(user);
-        verify(setUserPasswordCommand).execute(user, PASSWORD);
+        verify(userCli).addUser(user);
+        verify(userCli).setSetUserPassword(user, PASSWORD);
     }
 
     @Test
@@ -62,7 +54,7 @@ public class UserServiceTest {
         userService.removeUser(USER_ID);
 
         verify(userRepository).removeUser(USER_ID);
-        verify(removeUserCommand).execute(user);
+        verify(userCli).removeUser(user);
     }
 
     @Test(expected = IllegalArgumentException.class)

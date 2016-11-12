@@ -1,8 +1,8 @@
-package urchin.cli.folder;
+package urchin.domain.cli.folder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import urchin.cli.BasicCommand;
+import urchin.domain.cli.common.BasicCommand;
 
 import java.nio.file.Path;
 import java.util.List;

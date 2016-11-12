@@ -6,10 +6,11 @@ import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import urchin.cli.folder.*;
 import urchin.domain.FolderSettingsRepository;
+import urchin.domain.cli.FolderCli;
 import urchin.domain.model.EncryptedFolder;
 import urchin.domain.model.Passphrase;
 import urchin.domain.util.EncryptedFolderUtil;
@@ -34,37 +35,21 @@ public class FolderServiceTest {
 
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
     @Mock
-    private MountEncryptedFolderCommand mountEncryptedFolderCommand;
-    @Mock
-    private MountVirtualFolderCommand mountVirtualFolderCommand;
-    @Mock
-    private UnmountFolderCommand unmountFolderCommand;
-    @Mock
-    private ShareFolderCommand shareFolderCommand;
-    @Mock
-    private UnshareFolderCommand unshareFolderCommand;
-    @Mock
-    private RestartSambaCommand restartSambaCommand;
+    private FolderCli folderCli;
 
     @Mock
     private FolderSettingsRepository folderSettingsRepository;
 
+    @InjectMocks
     private FolderService folderService;
+
     private Path folder;
     private EncryptedFolder encryptedFolder;
 
     @Before
     public void setup() {
-        folderService = new FolderService(
-                mountEncryptedFolderCommand,
-                mountVirtualFolderCommand,
-                unmountFolderCommand,
-                shareFolderCommand,
-                unshareFolderCommand,
-                restartSambaCommand,
-                folderSettingsRepository
-        );
         folder = Paths.get(temporaryFolder.getRoot() + FOLDER_NAME);
         encryptedFolder = new EncryptedFolder(Paths.get(temporaryFolder.getRoot() + ENCRYPTED_FOLDER_NAME));
     }
@@ -88,7 +73,7 @@ public class FolderServiceTest {
         Passphrase passphrase = folderService.createAndMountEncryptedFolder(folder);
 
         ArgumentCaptor<EncryptedFolder> captor = ArgumentCaptor.forClass(EncryptedFolder.class);
-        verify(mountEncryptedFolderCommand).execute(eq(folder), captor.capture(), eq(passphrase));
+        verify(folderCli).mountEncryptedFolder(eq(folder), captor.capture(), eq(passphrase));
         assertEquals(encryptedFolder.getPath().toAbsolutePath().toString(), captor.getValue().getPath().toAbsolutePath().toString());
         assertNotEqual(encryptedFolder, folder);
         assertTrue(Files.exists(folder));
@@ -122,7 +107,7 @@ public class FolderServiceTest {
         folderService.mountEncryptedFolder(encryptedFolder, passphrase);
 
         ArgumentCaptor<Path> captor = ArgumentCaptor.forClass(Path.class);
-        verify(mountEncryptedFolderCommand).execute(captor.capture(), eq(encryptedFolder), eq(passphrase));
+        verify(folderCli).mountEncryptedFolder(captor.capture(), eq(encryptedFolder), eq(passphrase));
         assertEquals(folder.toAbsolutePath().toString(), captor.getValue().toAbsolutePath().toString());
         assertNotEqual(encryptedFolder, folder);
         assertTrue(Files.exists(folder));
@@ -132,7 +117,7 @@ public class FolderServiceTest {
     @Test
     public void umountEncryptedFolderThatDoesNotExistDoesNothing() throws IOException {
         folderService.unmountEncryptedFolder(folder);
-        verifyZeroInteractions(unmountFolderCommand);
+        verifyZeroInteractions(folderCli);
     }
 
     @Test(expected = RuntimeException.class)
@@ -142,7 +127,7 @@ public class FolderServiceTest {
 
         folderService.unmountEncryptedFolder(folder);
 
-        verify(unmountFolderCommand).execute(folder);
+        verify(folderCli).unmountFolder(folder);
     }
 
     @Test
@@ -151,7 +136,7 @@ public class FolderServiceTest {
 
         folderService.unmountEncryptedFolder(folder);
 
-        verify(unmountFolderCommand).execute(folder);
+        verify(folderCli).unmountFolder(folder);
         assertFalse(Files.exists(folder));
     }
 
@@ -166,7 +151,7 @@ public class FolderServiceTest {
 
         folderService.shareFolder(folder);
 
-        verify(shareFolderCommand).execute(eq(folder));
+        verify(folderCli).shareFolder(eq(folder));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -180,8 +165,8 @@ public class FolderServiceTest {
 
         folderService.unshareFolder(folder);
 
-        verify(unshareFolderCommand).execute(eq(folder));
-        verify(restartSambaCommand).execute();
+        verify(folderCli).unshareFolder(eq(folder));
+        verify(folderCli).restartSamba();
     }
 
     private void createFileInPath(Path path) throws IOException {

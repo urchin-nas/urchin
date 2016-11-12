@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import urchin.cli.folder.*;
 import urchin.domain.FolderSettingsRepository;
+import urchin.domain.cli.FolderCli;
 import urchin.domain.model.EncryptedFolder;
 import urchin.domain.model.FolderSettings;
 import urchin.domain.model.Passphrase;
@@ -26,31 +26,13 @@ public class FolderService {
 
     private static final Logger LOG = LoggerFactory.getLogger(FolderService.class);
 
-    private final MountEncryptedFolderCommand mountEncryptedFolderCommand;
-    private final MountVirtualFolderCommand mountVirtualFolderCommand;
-    private final UnmountFolderCommand unmountFolderCommand;
-    private final ShareFolderCommand shareFolderCommand;
     private final FolderSettingsRepository folderSettingsRepository;
-    private final RestartSambaCommand restartSambaCommand;
-    private final UnshareFolderCommand unshareFolderCommand;
+    private final FolderCli folderCli;
 
     @Autowired
-    public FolderService(
-            MountEncryptedFolderCommand mountEncryptedFolderCommand,
-            MountVirtualFolderCommand mountVirtualFolderCommand,
-            UnmountFolderCommand unmountFolderCommand,
-            ShareFolderCommand shareFolderCommand,
-            UnshareFolderCommand unshareFolderCommand,
-            RestartSambaCommand restartSambaCommand,
-            FolderSettingsRepository folderSettingsRepository
-    ) {
-        this.mountEncryptedFolderCommand = mountEncryptedFolderCommand;
-        this.mountVirtualFolderCommand = mountVirtualFolderCommand;
-        this.unmountFolderCommand = unmountFolderCommand;
-        this.shareFolderCommand = shareFolderCommand;
-        this.unshareFolderCommand = unshareFolderCommand;
-        this.restartSambaCommand = restartSambaCommand;
+    public FolderService(FolderSettingsRepository folderSettingsRepository, FolderCli folderCli) {
         this.folderSettingsRepository = folderSettingsRepository;
+        this.folderCli = folderCli;
     }
 
     @Transactional
@@ -59,7 +41,7 @@ public class FolderService {
         createEncryptionFolderPair(folder, encryptedFolder);
         Passphrase passphrase = generateEcryptfsPassphrase();
         folderSettingsRepository.saveFolderSettings(new FolderSettings(folder, encryptedFolder));
-        mountEncryptedFolderCommand.execute(folder, encryptedFolder, passphrase);
+        folderCli.mountEncryptedFolder(folder, encryptedFolder, passphrase);
         return passphrase;
     }
 
@@ -70,7 +52,7 @@ public class FolderService {
         Path folder = getFolder(encryptedFolder);
         if (!Files.exists(folder) || isEmpty(folder)) {
             Files.createDirectories(folder);
-            mountEncryptedFolderCommand.execute(folder, encryptedFolder, passphrase);
+            folderCli.mountEncryptedFolder(folder, encryptedFolder, passphrase);
         } else {
             throw new IllegalStateException(String.format("Folder %s should not exist", folder));
         }
@@ -78,7 +60,7 @@ public class FolderService {
 
     public void unmountEncryptedFolder(Path folder) throws IOException {
         if (Files.exists(folder)) {
-            unmountFolderCommand.execute(folder);
+            folderCli.unmountFolder(folder);
             if (isEmpty(folder)) {
                 LOG.info("Deleting empty folder {}", folder.toAbsolutePath());
                 Files.delete(folder);
@@ -91,12 +73,12 @@ public class FolderService {
     public void setupVirtualFolder(List<Path> folders, Path virtualFolder) throws IOException {
         //TODO error handling, tests etc
         createVirtualFolder(virtualFolder);
-        mountVirtualFolderCommand.execute(folders, virtualFolder);
+        folderCli.mountVirtualFolder(folders, virtualFolder);
     }
 
     public void shareFolder(Path folder) {
         if (Files.exists(folder)) {
-            shareFolderCommand.execute(folder);
+            folderCli.shareFolder(folder);
         } else {
             throw new IllegalArgumentException(String.format("Folder %s does not exist", folder));
         }
@@ -104,8 +86,8 @@ public class FolderService {
 
     public void unshareFolder(Path folder) {
         if (Files.exists(folder)) {
-            unshareFolderCommand.execute(folder);
-            restartSambaCommand.execute();
+            folderCli.unshareFolder(folder);
+            folderCli.restartSamba();
         } else {
             throw new IllegalArgumentException(String.format("Folder %s does not exist", folder));
         }
