@@ -4,9 +4,9 @@
 ## Requirements
 
 * [Ubuntu] (http://www.ubuntu.com/) (may work on other linux distros)
-* root access (for ecryptfs and mhddfs)
 * [ecryptfs] (http://ecryptfs.org/)
 * [mhddfs] (https://romanrm.net/mhddfs/)
+* root access
 
 ## Build
 ```
