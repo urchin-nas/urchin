@@ -20,19 +20,19 @@ public class TestController {
     public static final String COMMUNICATION_FAILURE = "COMMUNICATION_FAILURE";
 
     @RequestMapping(value = "validation", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<TestResponseApi>> validation(@Valid @RequestBody TestRequestApi testRequestApi) {
-        TestResponseApi testResponseApi = new TestResponseApi();
-        testResponseApi.setValue(testRequestApi.getValue());
-        return new ResponseEntity<>(new ResponseMessage<>(testResponseApi), HttpStatus.OK);
+    public ResponseEntity<ResponseMessage<TestResponseDto>> validation(@Valid @RequestBody TestRequestDto testRequestDto) {
+        TestResponseDto testResponseDto = new TestResponseDto();
+        testResponseDto.setValue(testRequestDto.getValue());
+        return new ResponseEntity<>(new ResponseMessage<>(testResponseDto), HttpStatus.OK);
     }
 
     @RequestMapping(value = "response-exception", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<TestResponseApi>> responseException() {
+    public ResponseEntity<ResponseMessage<TestResponseDto>> responseException() {
         throw new ResponseException(HttpStatus.SERVICE_UNAVAILABLE, new ErrorResponse(COMMUNICATION_FAILURE));
     }
 
     @RequestMapping(value = "runtime-exception", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<TestResponseApi>> runtimeException() {
+    public ResponseEntity<ResponseMessage<TestResponseDto>> runtimeException() {
         throw new RuntimeException("thrown exception");
     }
 }

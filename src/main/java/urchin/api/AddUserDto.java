@@ -8,7 +8,7 @@ import javax.validation.constraints.Size;
 
 import static urchin.api.support.validation.ValidationConstants.FIELD_MISSING;
 
-public class AddUserApi {
+public class AddUserDto {
 
     @NotNull(message = FIELD_MISSING)
     @Size(min = 3, max = 32)
@@ -18,7 +18,7 @@ public class AddUserApi {
     private final String password;
 
     @JsonCreator
-    public AddUserApi(@JsonProperty("username") String username, @JsonProperty("password") String password) {
+    public AddUserDto(@JsonProperty("username") String username, @JsonProperty("password") String password) {
         this.username = username;
         this.password = password;
     }

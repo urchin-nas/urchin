@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import urchin.api.AddUserApi;
-import urchin.api.UsersApi;
+import urchin.api.AddUserDto;
+import urchin.api.UsersDto;
 import urchin.api.support.ResponseMessage;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
@@ -31,14 +31,14 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<UsersApi>> getUsers() {
+    public ResponseEntity<ResponseMessage<UsersDto>> getUsers() {
         List<User> users = userService.getUsers();
         return createResponse(mapToUsersApi(users));
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<String>> addUser(@Valid @RequestBody AddUserApi addUserApi) {
-        userService.addUser(mapToUser(addUserApi), addUserApi.getPassword());
+    public ResponseEntity<ResponseMessage<String>> addUser(@Valid @RequestBody AddUserDto addUserDto) {
+        userService.addUser(mapToUser(addUserDto), addUserDto.getPassword());
         return createOkResponse();
     }
 

@@ -1,14 +1,14 @@
 package urchin.api;
 
-public class GroupApi {
+public class GroupDto {
 
     private int groupId;
     private String name;
 
-    private GroupApi() {
+    private GroupDto() {
     }
 
-    public GroupApi(int groupId, String name) {
+    public GroupDto(int groupId, String name) {
         this.groupId = groupId;
         this.name = name;
     }

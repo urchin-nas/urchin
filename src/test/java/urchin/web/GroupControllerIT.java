@@ -6,9 +6,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import urchin.api.AddGroupApi;
-import urchin.api.GroupApi;
-import urchin.api.GroupsApi;
+import urchin.api.AddGroupDto;
+import urchin.api.GroupDto;
+import urchin.api.GroupsDto;
 import urchin.api.support.ResponseMessage;
 import urchin.testutil.TestApplication;
 
@@ -24,36 +24,36 @@ public class GroupControllerIT extends TestApplication {
 
     @Test
     public void addAndRemoveGroup() {
-        AddGroupApi addGroupApi = new AddGroupApi(GROUP_PREFIX + System.currentTimeMillis());
+        AddGroupDto addGroupDto = new AddGroupDto(GROUP_PREFIX + System.currentTimeMillis());
 
-        ResponseEntity<ResponseMessage<String>> addUserResponse = addGroupRequest(addGroupApi);
+        ResponseEntity<ResponseMessage<String>> addUserResponse = addGroupRequest(addGroupDto);
 
         assertEquals(HttpStatus.OK, addUserResponse.getStatusCode());
 
-        ResponseEntity<ResponseMessage<GroupsApi>> groupsResponse = getGroupsRequest();
+        ResponseEntity<ResponseMessage<GroupsDto>> groupsResponse = getGroupsRequest();
 
         assertEquals(HttpStatus.OK, groupsResponse.getStatusCode());
-        List<GroupApi> groups = groupsResponse.getBody().getData().getGroups();
+        List<GroupDto> groups = groupsResponse.getBody().getData().getGroups();
         assertFalse(groups.isEmpty());
-        List<GroupApi> groupApis = groups.stream()
-                .filter(groupApi -> groupApi.getName().equals(addGroupApi.getName()))
+        List<GroupDto> groupDtos = groups.stream()
+                .filter(groupDto -> groupDto.getName().equals(addGroupDto.getName()))
                 .collect(Collectors.toList());
-        assertEquals(1, groupApis.size());
-        assertEquals(addGroupApi.getName(), groupApis.get(0).getName());
+        assertEquals(1, groupDtos.size());
+        assertEquals(addGroupDto.getName(), groupDtos.get(0).getName());
 
-        ResponseEntity<ResponseMessage<String>> removeGroupResponse = removeGroupRequest(groupApis.get(0).getGroupId());
+        ResponseEntity<ResponseMessage<String>> removeGroupResponse = removeGroupRequest(groupDtos.get(0).getGroupId());
 
         assertEquals(HttpStatus.OK, removeGroupResponse.getStatusCode());
 
     }
 
-    private ResponseEntity<ResponseMessage<String>> addGroupRequest(AddGroupApi addGroupApi) {
-        return testRestTemplate.exchange(discoverControllerPath() + "/add", HttpMethod.POST, new HttpEntity<>(addGroupApi), new ParameterizedTypeReference<ResponseMessage<String>>() {
+    private ResponseEntity<ResponseMessage<String>> addGroupRequest(AddGroupDto addGroupDto) {
+        return testRestTemplate.exchange(discoverControllerPath() + "/add", HttpMethod.POST, new HttpEntity<>(addGroupDto), new ParameterizedTypeReference<ResponseMessage<String>>() {
         });
     }
 
-    private ResponseEntity<ResponseMessage<GroupsApi>> getGroupsRequest() {
-        return testRestTemplate.exchange(discoverControllerPath(), HttpMethod.GET, null, new ParameterizedTypeReference<ResponseMessage<GroupsApi>>() {
+    private ResponseEntity<ResponseMessage<GroupsDto>> getGroupsRequest() {
+        return testRestTemplate.exchange(discoverControllerPath(), HttpMethod.GET, null, new ParameterizedTypeReference<ResponseMessage<GroupsDto>>() {
         });
     }
 

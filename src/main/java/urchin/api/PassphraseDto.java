@@ -3,12 +3,12 @@ package urchin.api;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class PassphraseApi {
+public class PassphraseDto {
 
     private final String passphrase;
 
     @JsonCreator
-    public PassphraseApi(@JsonProperty("passphrase") String passphrase) {
+    public PassphraseDto(@JsonProperty("passphrase") String passphrase) {
         this.passphrase = passphrase;
     }
 

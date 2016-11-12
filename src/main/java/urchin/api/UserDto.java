@@ -1,14 +1,14 @@
 package urchin.api;
 
-public class UserApi {
+public class UserDto {
 
     private int userId;
     private String username;
 
-    private UserApi() {
+    private UserDto() {
     }
 
-    public UserApi(int userId, String username) {
+    public UserDto(int userId, String username) {
         this.userId = userId;
         this.username = username;
     }

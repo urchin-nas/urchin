@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import urchin.api.AddGroupApi;
-import urchin.api.GroupsApi;
+import urchin.api.AddGroupDto;
+import urchin.api.GroupsDto;
 import urchin.api.support.ResponseMessage;
 import urchin.domain.model.Group;
 import urchin.domain.model.GroupId;
@@ -31,14 +31,14 @@ public class GroupController {
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<GroupsApi>> getGroups() {
+    public ResponseEntity<ResponseMessage<GroupsDto>> getGroups() {
         List<Group> groups = groupService.getGroups();
         return createResponse(mapToGroupsApi(groups));
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<String>> addGroup(@Valid @RequestBody AddGroupApi addGroupApi) {
-        groupService.addGroup(mapToGroup(addGroupApi));
+    public ResponseEntity<ResponseMessage<String>> addGroup(@Valid @RequestBody AddGroupDto addGroupDto) {
+        groupService.addGroup(mapToGroup(addGroupDto));
         return createOkResponse();
     }
 

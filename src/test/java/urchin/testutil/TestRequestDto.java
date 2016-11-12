@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 
 import static urchin.api.support.validation.ValidationConstants.FIELD_MISSING;
 
-public class TestRequestApi {
+public class TestRequestDto {
 
     @NotNull(message = FIELD_MISSING)
     private String value;

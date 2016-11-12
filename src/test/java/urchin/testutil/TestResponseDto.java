@@ -1,6 +1,6 @@
 package urchin.testutil;
 
-public class TestResponseApi {
+public class TestResponseDto {
 
     private String value;
 

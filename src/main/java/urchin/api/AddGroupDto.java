@@ -8,14 +8,14 @@ import javax.validation.constraints.Size;
 
 import static urchin.api.support.validation.ValidationConstants.FIELD_MISSING;
 
-public class AddGroupApi {
+public class AddGroupDto {
 
     @NotNull(message = FIELD_MISSING)
     @Size(min = 3, max = 32)
     private final String name;
 
     @JsonCreator
-    public AddGroupApi(@JsonProperty("name") String name) {
+    public AddGroupDto(@JsonProperty("name") String name) {
         this.name = name;
     }
 

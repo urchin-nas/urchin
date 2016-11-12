@@ -9,8 +9,8 @@ import org.springframework.http.ResponseEntity;
 import urchin.api.support.error.ExceptionControllerAdvice;
 import urchin.testutil.TestApplication;
 import urchin.testutil.TestController;
-import urchin.testutil.TestRequestApi;
-import urchin.testutil.TestResponseApi;
+import urchin.testutil.TestRequestDto;
+import urchin.testutil.TestResponseDto;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
@@ -26,7 +26,7 @@ public class ControllerSupportIT extends TestApplication {
 
     @Test
     public void validationFailureReturnsErrorResponse() {
-        ResponseEntity<ResponseMessage<TestResponseApi>> response = postRequest(discoverControllerPath() + VALIDATION, new TestRequestApi());
+        ResponseEntity<ResponseMessage<TestResponseDto>> response = postRequest(discoverControllerPath() + VALIDATION, new TestRequestDto());
 
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertNull(response.getBody().getData());
@@ -44,10 +44,10 @@ public class ControllerSupportIT extends TestApplication {
 
     @Test
     public void successfulValidationRequestReturnsResponseMessage() {
-        TestRequestApi requestApi = new TestRequestApi();
+        TestRequestDto requestApi = new TestRequestDto();
         requestApi.setValue("someValue");
         requestApi.setValueWithoutCustomValidationMessage("someOtherValue");
-        ResponseEntity<ResponseMessage<TestResponseApi>> response = postRequest(discoverControllerPath() + VALIDATION, requestApi);
+        ResponseEntity<ResponseMessage<TestResponseDto>> response = postRequest(discoverControllerPath() + VALIDATION, requestApi);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNull(response.getBody().getErrors());
@@ -56,7 +56,7 @@ public class ControllerSupportIT extends TestApplication {
 
     @Test
     public void thrownResponseExceptionResultsInErrorResponse() {
-        ResponseEntity<ResponseMessage<TestResponseApi>> response = getRequest(discoverControllerPath() + "/response-exception");
+        ResponseEntity<ResponseMessage<TestResponseDto>> response = getRequest(discoverControllerPath() + "/response-exception");
         assertEquals(HttpStatus.SERVICE_UNAVAILABLE, response.getStatusCode());
         assertNull(response.getBody().getData());
         assertEquals(1, response.getBody().getErrors().size());
@@ -66,7 +66,7 @@ public class ControllerSupportIT extends TestApplication {
 
     @Test
     public void thrownRuntimeExceptionResultsInErrorResponse() {
-        ResponseEntity<ResponseMessage<TestResponseApi>> response = getRequest(discoverControllerPath() + "/runtime-exception");
+        ResponseEntity<ResponseMessage<TestResponseDto>> response = getRequest(discoverControllerPath() + "/runtime-exception");
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, response.getStatusCode());
         assertNull(response.getBody().getData());
         assertEquals(1, response.getBody().getErrors().size());
@@ -74,13 +74,13 @@ public class ControllerSupportIT extends TestApplication {
         assertEquals(ExceptionControllerAdvice.UNKNOWN_ERROR, errorResponse.getCode());
     }
 
-    private ResponseEntity<ResponseMessage<TestResponseApi>> postRequest(String url, TestRequestApi requestApi) {
-        return testRestTemplate.exchange(url, HttpMethod.POST, new HttpEntity<>(requestApi), new ParameterizedTypeReference<ResponseMessage<TestResponseApi>>() {
+    private ResponseEntity<ResponseMessage<TestResponseDto>> postRequest(String url, TestRequestDto requestApi) {
+        return testRestTemplate.exchange(url, HttpMethod.POST, new HttpEntity<>(requestApi), new ParameterizedTypeReference<ResponseMessage<TestResponseDto>>() {
         });
     }
 
-    private ResponseEntity<ResponseMessage<TestResponseApi>> getRequest(String url) {
-        return testRestTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<ResponseMessage<TestResponseApi>>() {
+    private ResponseEntity<ResponseMessage<TestResponseDto>> getRequest(String url) {
+        return testRestTemplate.exchange(url, HttpMethod.GET, null, new ParameterizedTypeReference<ResponseMessage<TestResponseDto>>() {
         });
     }
 

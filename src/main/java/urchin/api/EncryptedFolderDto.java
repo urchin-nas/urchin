@@ -6,7 +6,7 @@ import javax.validation.constraints.Size;
 import static urchin.api.support.validation.ValidationConstants.FIELD_EMPTY;
 import static urchin.api.support.validation.ValidationConstants.FIELD_MISSING;
 
-public class EncryptedFolderApi {
+public class EncryptedFolderDto {
 
     @NotNull(message = FIELD_MISSING)
     @Size(min = 1, message = FIELD_EMPTY)
