@@ -57,18 +57,34 @@ public class BasicCommandTest {
         assertFalse(stringOptional.isPresent());
     }
 
-    @Test(expected = CommandException.class)
+    @Test
     public void exceptionIsThrownWhenCommandDoesNotReturnExitValueZero() {
-        when(process.exitValue()).thenReturn(-1);
+        int exitValue = -1;
+        when(process.exitValue()).thenReturn(exitValue);
 
-        testCommand.executeCommand(COMMAND);
+        try {
+            testCommand.executeCommand(COMMAND);
+            fail("Expected CommandException");
+        } catch (CommandException e) {
+            assertEquals(exitValue, e.getExitValue().intValue());
+            assertEquals(TestCommand.class.getCanonicalName(), e.getCommandName());
+            assertEquals(CommandException.PROCESS_RETURNED_EXIT_VALUE + exitValue, e.getMessage());
+        }
     }
 
-    @Test(expected = CommandException.class)
+    @Test
     public void exceptionIsThrownWhenCommandResultsInException() {
-        when(process.exitValue()).thenThrow(new RuntimeException());
+        RuntimeException runtimeException = new RuntimeException("some failure");
+        when(process.exitValue()).thenThrow(runtimeException);
 
-        testCommand.executeCommand(COMMAND);
+        try {
+            testCommand.executeCommand(COMMAND);
+            fail("Expected CommandException");
+        } catch (CommandException e) {
+            assertNull(e.getExitValue());
+            assertEquals(TestCommand.class.getCanonicalName(), e.getCommandName());
+            assertEquals(runtimeException.toString(), e.getMessage());
+        }
     }
 
 
