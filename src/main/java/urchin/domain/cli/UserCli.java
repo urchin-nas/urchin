@@ -2,11 +2,11 @@ package urchin.domain.cli;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import urchin.domain.cli.user.AddUserCommand;
-import urchin.domain.cli.user.CheckIfUsernameExistCommand;
-import urchin.domain.cli.user.RemoveUserCommand;
-import urchin.domain.cli.user.SetUserPasswordCommand;
+import urchin.domain.cli.user.*;
 import urchin.domain.model.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository
 public class UserCli {
@@ -15,18 +15,21 @@ public class UserCli {
     private final CheckIfUsernameExistCommand checkIfUsernameExistCommand;
     private final RemoveUserCommand removeUserCommand;
     private final SetUserPasswordCommand setUserPasswordCommand;
+    private final ListUsersCommand listUsersCommand;
 
     @Autowired
     public UserCli(
             AddUserCommand addUserCommand,
             CheckIfUsernameExistCommand checkIfUsernameExistCommand,
             RemoveUserCommand removeUserCommand,
-            SetUserPasswordCommand setUserPasswordCommand
+            SetUserPasswordCommand setUserPasswordCommand,
+            ListUsersCommand listUsersCommand
     ) {
         this.addUserCommand = addUserCommand;
         this.checkIfUsernameExistCommand = checkIfUsernameExistCommand;
         this.removeUserCommand = removeUserCommand;
         this.setUserPasswordCommand = setUserPasswordCommand;
+        this.listUsersCommand = listUsersCommand;
     }
 
     public void addUser(User user) {
@@ -43,6 +46,17 @@ public class UserCli {
 
     public void setSetUserPassword(User user, String password) {
         setUserPasswordCommand.execute(user, password);
+    }
+
+    public List<String> listUsers() {
+        String response = listUsersCommand.execute().get();
+        String[] users = response.split("\n");
+        List<String> unixUsers = new ArrayList<>();
+        for (String user : users) {
+            String[] userValues = user.split(":");
+            unixUsers.add(userValues[0]);
+        }
+        return unixUsers;
     }
 
 }
