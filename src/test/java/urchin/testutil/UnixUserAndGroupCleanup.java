@@ -18,8 +18,8 @@ public class UnixUserAndGroupCleanup extends ExternalResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(UnixUserAndGroupCleanup.class);
 
-    public static final String GROUP_PREFIX = "urchin_";
-    public static final String USERNAME_PREFIX = "urchin_";
+    public static final String GROUP_PREFIX = "urchin_g_";
+    public static final String USERNAME_PREFIX = "urchin_u_";
 
     private final UserCli userCli;
     private final GroupCli groupCli;
