@@ -3,12 +3,13 @@ package urchin.domain.cli.group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import urchin.domain.cli.common.BasicCommand;
-import urchin.domain.cli.common.CommandException;
+
+import java.util.Optional;
 
 import static java.util.Arrays.copyOf;
 
 @Component
-public class CheckIfGroupExistCommand extends BasicCommand {
+public class GetGroupEntriesCommand extends BasicCommand {
 
     private static final String GROUP_NAME = "%groupname%";
 
@@ -19,22 +20,13 @@ public class CheckIfGroupExistCommand extends BasicCommand {
     };
 
     @Autowired
-    public CheckIfGroupExistCommand(Runtime runtime) {
+    public GetGroupEntriesCommand(Runtime runtime) {
         super(runtime);
     }
 
-    public boolean execute(String groupName) {
-        LOG.debug("Checking if group name {} exist", groupName);
-        try {
-            executeCommand(setupCommand(groupName));
-        } catch (CommandException e) {
-            if (e.getExitValue() == 2) {
-                return false;
-            } else {
-                throw e;
-            }
-        }
-        return true;
+    public Optional<String> execute(String groupName) {
+        LOG.debug("Getting entries for group {}", groupName);
+        return executeCommand(setupCommand(groupName));
     }
 
     private String[] setupCommand(String groupName) {
