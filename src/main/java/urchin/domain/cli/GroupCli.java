@@ -29,7 +29,8 @@ public class GroupCli {
             RemoveGroupCommand removeGroupCommand,
             AddUserToGroupCommand addUserToGroupCommand,
             RemoveUserFromGroupCommand removeUserFromGroupCommand,
-            ListGroupsCommand listGroupsCommand) {
+            ListGroupsCommand listGroupsCommand
+    ) {
         this.addGroupCommand = addGroupCommand;
         this.getGroupEntriesCommand = getGroupEntriesCommand;
         this.removeGroupCommand = removeGroupCommand;
