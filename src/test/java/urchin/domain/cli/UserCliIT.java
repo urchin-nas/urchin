@@ -1,6 +1,5 @@
 package urchin.domain.cli;
 
-import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +7,6 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import urchin.domain.model.User;
 import urchin.testutil.CliTestConfiguration;
-import urchin.testutil.UnixUserAndGroupCleanup;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -19,10 +17,6 @@ public class UserCliIT {
 
     private static final String USERNAME_PREFIX = "urchin_u_";
     private static final String PASSWORD = "superSecret";
-
-    @ClassRule
-    @Autowired
-    public static UnixUserAndGroupCleanup unixUserAndGroupCleanup;
 
     @Autowired
     private UserCli userCli;
