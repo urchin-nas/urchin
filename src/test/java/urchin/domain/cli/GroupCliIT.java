@@ -1,6 +1,7 @@
 package urchin.domain.cli;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,16 +12,22 @@ import urchin.domain.cli.user.RemoveUserCommand;
 import urchin.domain.model.Group;
 import urchin.domain.model.User;
 import urchin.testutil.CliTestConfiguration;
+import urchin.testutil.UnixUserAndGroupCleanup;
+
+import java.util.List;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static urchin.testutil.UnixUserAndGroupCleanup.GROUP_PREFIX;
+import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;
 
 @RunWith(SpringRunner.class)
 @Import(CliTestConfiguration.class)
 public class GroupCliIT {
 
-    private static final String GROUP_PREFIX = "urchin_g_";
-    private static final String USERNAME_PREFIX = "urchin_u_";
+    @Rule
+    @Autowired
+    public UnixUserAndGroupCleanup unixUserAndGroupCleanup;
 
     @Autowired
     private GroupCli groupCli;
@@ -62,6 +69,13 @@ public class GroupCliIT {
         assertFalse(groupCli.checkIfUserIsInGroup(user, group));
 
         removeUserCommand.execute(user);
+    }
+
+    @Test
+    public void listGroupsReturnsListOfGroups() {
+        List<String> groups = groupCli.listGroups();
+
+        assertFalse(groups.isEmpty());
     }
 
 }

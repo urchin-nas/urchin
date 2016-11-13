@@ -7,6 +7,9 @@ import urchin.domain.cli.group.*;
 import urchin.domain.model.Group;
 import urchin.domain.model.User;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static java.util.Arrays.stream;
 
 @Repository
@@ -17,6 +20,7 @@ public class GroupCli {
     private final RemoveGroupCommand removeGroupCommand;
     private final AddUserToGroupCommand addUserToGroupCommand;
     private final RemoveUserFromGroupCommand removeUserFromGroupCommand;
+    private final ListGroupsCommand listGroupsCommand;
 
     @Autowired
     public GroupCli(
@@ -24,13 +28,14 @@ public class GroupCli {
             GetGroupEntriesCommand getGroupEntriesCommand,
             RemoveGroupCommand removeGroupCommand,
             AddUserToGroupCommand addUserToGroupCommand,
-            RemoveUserFromGroupCommand removeUserFromGroupCommand
-    ) {
+            RemoveUserFromGroupCommand removeUserFromGroupCommand,
+            ListGroupsCommand listGroupsCommand) {
         this.addGroupCommand = addGroupCommand;
         this.getGroupEntriesCommand = getGroupEntriesCommand;
         this.removeGroupCommand = removeGroupCommand;
         this.addUserToGroupCommand = addUserToGroupCommand;
         this.removeUserFromGroupCommand = removeUserFromGroupCommand;
+        this.listGroupsCommand = listGroupsCommand;
     }
 
     public void addGroup(Group group) {
@@ -71,5 +76,16 @@ public class GroupCli {
         } catch (CommandException e) {
             return false;
         }
+    }
+
+    public List<String> listGroups() {
+        String response = listGroupsCommand.execute().get();
+        String[] groups = response.split(":\n");
+        List<String> unixGroups = new ArrayList<>();
+        for (String group : groups) {
+            String[] userValues = group.split(":");
+            unixGroups.add(userValues[0]);
+        }
+        return unixGroups;
     }
 }

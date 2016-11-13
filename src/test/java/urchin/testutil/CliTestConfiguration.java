@@ -7,6 +7,6 @@ import urchin.configuration.RuntimeConfiguration;
 
 @TestConfiguration
 @ComponentScan(basePackages = "urchin.domain.cli")
-@Import(RuntimeConfiguration.class)
+@Import({RuntimeConfiguration.class, UnixUserAndGroupCleanup.class})
 public class CliTestConfiguration {
 }
