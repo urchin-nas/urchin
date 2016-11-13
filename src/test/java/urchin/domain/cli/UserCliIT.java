@@ -26,7 +26,7 @@ import static org.junit.Assert.assertTrue;
 })
 public class UserCliIT {
 
-    private static final String USERNAME_PREFIX = "urchin_";
+    private static final String USERNAME_PREFIX = "urchin_u_";
     private static final String PASSWORD = "superSecret";
 
     @Autowired
