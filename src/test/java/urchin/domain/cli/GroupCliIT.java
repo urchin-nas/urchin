@@ -4,10 +4,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
-import urchin.configuration.RuntimeConfiguration;
-import urchin.domain.cli.group.*;
 import urchin.domain.cli.user.AddUserCommand;
 import urchin.domain.cli.user.RemoveUserCommand;
 import urchin.domain.model.Group;
@@ -17,17 +15,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {
-        RuntimeConfiguration.class,
-        GroupCli.class,
-        AddGroupCommand.class,
-        GetGroupEntriesCommand.class,
-        RemoveGroupCommand.class,
-        AddUserToGroupCommand.class,
-        RemoveUserFromGroupCommand.class,
-        AddUserCommand.class,
-        RemoveUserCommand.class
-})
+@Import(CliTestConfiguration.class)
 public class GroupCliIT {
 
     private static final String GROUP_PREFIX = "urchin_g_";

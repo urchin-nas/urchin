@@ -5,10 +5,8 @@ import org.junit.ClassRule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
-import urchin.configuration.RuntimeConfiguration;
-import urchin.domain.cli.folder.*;
 import urchin.domain.model.EncryptedFolder;
 import urchin.testutil.TemporaryFolderUnmount;
 
@@ -21,17 +19,7 @@ import java.util.Arrays;
 import static urchin.domain.util.PassphraseGenerator.generateEcryptfsPassphrase;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {
-        RuntimeConfiguration.class,
-        FolderCli.class,
-        MountEncryptedFolderCommand.class,
-        MountVirtualFolderCommand.class,
-        RestartSambaCommand.class,
-        ShareFolderCommand.class,
-        UnmountFolderCommand.class,
-        UnshareFolderCommand.class
-
-})
+@Import(CliTestConfiguration.class)
 public class FolderCliIT {
 
     private static final String FOLDER1_NAME = "/folder1";

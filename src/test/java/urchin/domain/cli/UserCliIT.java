@@ -3,25 +3,15 @@ package urchin.domain.cli;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
-import urchin.configuration.RuntimeConfiguration;
-import urchin.domain.cli.user.*;
 import urchin.domain.model.User;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(SpringRunner.class)
-@ContextConfiguration(classes = {
-        RuntimeConfiguration.class,
-        UserCli.class,
-        AddUserCommand.class,
-        CheckIfUsernameExistCommand.class,
-        RemoveUserCommand.class,
-        SetUserPasswordCommand.class,
-        ListUsersCommand.class
-})
+@Import(CliTestConfiguration.class)
 public class UserCliIT {
 
     private static final String USERNAME_PREFIX = "urchin_u_";
