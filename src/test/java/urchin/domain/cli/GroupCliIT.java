@@ -10,6 +10,7 @@ import urchin.domain.cli.user.AddUserCommand;
 import urchin.domain.cli.user.RemoveUserCommand;
 import urchin.domain.model.Group;
 import urchin.domain.model.User;
+import urchin.testutil.CliTestConfiguration;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

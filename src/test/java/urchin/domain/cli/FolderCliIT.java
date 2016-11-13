@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import urchin.domain.model.EncryptedFolder;
+import urchin.testutil.CliTestConfiguration;
 import urchin.testutil.TemporaryFolderUnmount;
 
 import java.io.IOException;
