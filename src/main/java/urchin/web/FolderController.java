@@ -7,7 +7,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import urchin.api.*;
+import urchin.api.FolderDto;
+import urchin.api.MountEncryptedFolderDto;
+import urchin.api.PassphraseDto;
+import urchin.api.VirtualFolderDto;
 import urchin.api.support.ResponseMessage;
 import urchin.domain.model.EncryptedFolder;
 import urchin.domain.model.Passphrase;
@@ -37,9 +40,9 @@ public class FolderController {
     }
 
     @RequestMapping(value = "create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<PassphraseDto>> createEncryptedFolder(@Valid @RequestBody EncryptedFolderDto encryptedFolderDto) {
+    public ResponseEntity<ResponseMessage<PassphraseDto>> createEncryptedFolder(@Valid @RequestBody FolderDto folderDto) {
         try {
-            Passphrase passphrase = folderService.createAndMountEncryptedFolder(Paths.get(encryptedFolderDto.getFolder()));
+            Passphrase passphrase = folderService.createAndMountEncryptedFolder(Paths.get(folderDto.getFolder()));
             return createResponse(new PassphraseDto(passphrase.getPassphrase()));
         } catch (IOException e) {
             throw unexpectedError(e);
@@ -59,9 +62,9 @@ public class FolderController {
     }
 
     @RequestMapping(value = "unmount", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<String>> unmountEncryptedFolder(@Valid @RequestBody EncryptedFolderDto encryptedFolderDto) {
+    public ResponseEntity<ResponseMessage<String>> unmountEncryptedFolder(@Valid @RequestBody FolderDto folderDto) {
         try {
-            folderService.unmountFolder(Paths.get(encryptedFolderDto.getFolder()));
+            folderService.unmountFolder(Paths.get(folderDto.getFolder()));
             return createOkResponse();
         } catch (IOException e) {
             throw unexpectedError(e);
@@ -82,9 +85,9 @@ public class FolderController {
     }
 
     @RequestMapping(value = "virtual/unmount", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<String>> unmountVirtualFolder(@Valid @RequestBody UnmountVirtualFolderDto unmountVirtualFolderDto) {
+    public ResponseEntity<ResponseMessage<String>> unmountVirtualFolder(@Valid @RequestBody FolderDto folderDto) {
         try {
-            folderService.unmountFolder(Paths.get(unmountVirtualFolderDto.getFolder()));
+            folderService.unmountFolder(Paths.get(folderDto.getFolder()));
             return createOkResponse();
         } catch (IOException e) {
             throw unexpectedError(e);
@@ -92,14 +95,14 @@ public class FolderController {
     }
 
     @RequestMapping(value = "share", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<String>> shareFolder(@Valid @RequestBody ShareFolderDto shareFolderDto) {
-        folderService.shareFolder(Paths.get(shareFolderDto.getFolder()));
+    public ResponseEntity<ResponseMessage<String>> shareFolder(@Valid @RequestBody FolderDto folderDto) {
+        folderService.shareFolder(Paths.get(folderDto.getFolder()));
         return createOkResponse();
     }
 
     @RequestMapping(value = "unshare", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<String>> unSHareFolder(@Valid @RequestBody ShareFolderDto shareFolderDto) {
-        folderService.unshareFolder(Paths.get(shareFolderDto.getFolder()));
+    public ResponseEntity<ResponseMessage<String>> unSHareFolder(@Valid @RequestBody FolderDto folderDto) {
+        folderService.unshareFolder(Paths.get(folderDto.getFolder()));
         return createOkResponse();
     }
 }
