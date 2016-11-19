@@ -2,7 +2,6 @@ package urchin.api.mapper;
 
 import urchin.api.AddUserDto;
 import urchin.api.UserDto;
-import urchin.api.UsersDto;
 import urchin.domain.model.User;
 
 import java.util.List;
@@ -14,12 +13,11 @@ public class UserMapper {
         return new User(addUserDto.getUsername());
     }
 
-    public static UsersDto mapToUsersDto(List<User> users) {
-        return new UsersDto(
-                users.stream()
-                        .map(UserMapper::mapToUserDto)
-                        .collect(Collectors.toList())
-        );
+    public static List<UserDto> mapToUsersDto(List<User> users) {
+        return users.stream()
+                .map(UserMapper::mapToUserDto)
+                .collect(Collectors.toList());
+
     }
 
     private static UserDto mapToUserDto(User user) {

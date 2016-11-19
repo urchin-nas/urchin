@@ -5,7 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import urchin.api.AddUserDto;
-import urchin.api.UsersDto;
+import urchin.api.UserDto;
 import urchin.api.support.ResponseMessage;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
@@ -31,7 +31,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<UsersDto>> getUsers() {
+    public ResponseEntity<ResponseMessage<List<UserDto>>> getUsers() {
         List<User> users = userService.getUsers();
         return createResponse(mapToUsersDto(users));
     }

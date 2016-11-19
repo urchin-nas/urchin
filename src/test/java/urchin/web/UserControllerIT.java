@@ -8,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import urchin.api.AddUserDto;
 import urchin.api.UserDto;
-import urchin.api.UsersDto;
 import urchin.api.support.ResponseMessage;
 import urchin.testutil.TestApplication;
 
@@ -31,10 +30,10 @@ public class UserControllerIT extends TestApplication {
         assertEquals(HttpStatus.OK, addUserResponse.getStatusCode());
         assertTrue(addUserResponse.getBody().getData() > 0);
 
-        ResponseEntity<ResponseMessage<UsersDto>> usersResponse = getUsersRequest();
+        ResponseEntity<ResponseMessage<List<UserDto>>> usersResponse = getUsersRequest();
 
         assertEquals(HttpStatus.OK, usersResponse.getStatusCode());
-        List<UserDto> users = usersResponse.getBody().getData().getUsers();
+        List<UserDto> users = usersResponse.getBody().getData();
         assertFalse(users.isEmpty());
         List<UserDto> userDtos = users.stream()
                 .filter(userDto -> userDto.getUsername().equals(addUserDto.getUsername()))
@@ -53,8 +52,8 @@ public class UserControllerIT extends TestApplication {
         });
     }
 
-    private ResponseEntity<ResponseMessage<UsersDto>> getUsersRequest() {
-        return testRestTemplate.exchange(discoverControllerPath(), HttpMethod.GET, null, new ParameterizedTypeReference<ResponseMessage<UsersDto>>() {
+    private ResponseEntity<ResponseMessage<List<UserDto>>> getUsersRequest() {
+        return testRestTemplate.exchange(discoverControllerPath(), HttpMethod.GET, null, new ParameterizedTypeReference<ResponseMessage<List<UserDto>>>() {
         });
     }
 
