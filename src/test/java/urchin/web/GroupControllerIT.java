@@ -40,7 +40,10 @@ public class GroupControllerIT extends TestApplication {
     }
 
     @Test
-    public void addGroupAndAddUserToGroupAndRemoveGroup() {
+    public void addGroupAndAddUserToGroupAndRemoveUseFromGroupAndRemoveGroup() {
+
+        //Add group
+
         AddGroupDto addGroupDto = new AddGroupDto(GROUP_PREFIX + System.currentTimeMillis());
 
         ResponseEntity<ResponseMessage<Integer>> addGroupResponse = addGroupRequest(addGroupDto);
@@ -48,6 +51,8 @@ public class GroupControllerIT extends TestApplication {
         assertEquals(HttpStatus.OK, addGroupResponse.getStatusCode());
         GroupId groupId = new GroupId(addGroupResponse.getBody().getData());
         assertTrue(groupId.getId() > 0);
+
+        //Get groups
 
         ResponseEntity<ResponseMessage<List<GroupDto>>> groupsResponse = getGroupsRequest();
 
@@ -58,14 +63,23 @@ public class GroupControllerIT extends TestApplication {
                 .filter(groupDto -> groupDto.getName().equals(addGroupDto.getName()))
                 .collect(Collectors.toList());
         assertEquals(1, groupDtos.size());
-
         assertEquals(groupId.getId(), groupDtos.get(0).getGroupId());
         assertEquals(addGroupDto.getName(), groupDtos.get(0).getName());
+
+        //Add user to group
 
         AddUserToGroupDto addUserToGroupDto = new AddUserToGroupDto(groupId.getId(), userId.getId());
         ResponseEntity<ResponseMessage<String>> addUserToGroupResponse = addUserToGroupRequest(addUserToGroupDto);
 
         assertEquals(HttpStatus.OK, addUserToGroupResponse.getStatusCode());
+
+        //Remove user from group
+
+        ResponseEntity<ResponseMessage<String>> removeUserFromGroupResponse = removeUserFromGroupRequest(userId, groupId);
+
+        assertEquals(HttpStatus.OK, removeUserFromGroupResponse.getStatusCode());
+
+        //Remove group
 
         ResponseEntity<ResponseMessage<String>> removeGroupResponse = removeGroupRequest(groupDtos.get(0).getGroupId());
 
@@ -88,7 +102,12 @@ public class GroupControllerIT extends TestApplication {
     }
 
     private ResponseEntity<ResponseMessage<String>> addUserToGroupRequest(AddUserToGroupDto addUserToGroupDto) {
-        return testRestTemplate.exchange(discoverControllerPath() + "/add-user", HttpMethod.POST, new HttpEntity<>(addUserToGroupDto), new ParameterizedTypeReference<ResponseMessage<String>>() {
+        return testRestTemplate.exchange(discoverControllerPath() + "/user", HttpMethod.POST, new HttpEntity<>(addUserToGroupDto), new ParameterizedTypeReference<ResponseMessage<String>>() {
+        });
+    }
+
+    private ResponseEntity<ResponseMessage<String>> removeUserFromGroupRequest(UserId userId, GroupId groupId) {
+        return testRestTemplate.exchange(discoverControllerPath() + "/" + groupId.getId() + "/user/" + userId.getId(), HttpMethod.DELETE, null, new ParameterizedTypeReference<ResponseMessage<String>>() {
         });
     }
 

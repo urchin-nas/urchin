@@ -97,4 +97,30 @@ public class GroupServiceTest {
         groupService.addUserToGroup(user.getUserId(), GROUP_ID);
     }
 
+    @Test
+    public void removeUserFromGroupCommandIsCalledWhenUserAndGroupExist() {
+        when(userService.getUser(USER_ID)).thenReturn(Optional.of(user));
+        when(groupRepository.getGroup(GROUP_ID)).thenReturn(Optional.of(group));
+
+        groupService.removeUserFromGroup(user.getUserId(), GROUP_ID);
+
+        verify(groupCli).removeUserFromGroup(user, group);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void removeUserFromGroupWhenUserDoesNotExistInRepositoryThrowsException() {
+        when(userService.getUser(USER_ID)).thenReturn(Optional.empty());
+        when(groupRepository.getGroup(GROUP_ID)).thenReturn(Optional.of(group));
+
+        groupService.removeUserFromGroup(user.getUserId(), GROUP_ID);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void removeUserFromGroupWhenGroupDoesNotExistInRepositoryThrowsException() {
+        when(userService.getUser(USER_ID)).thenReturn(Optional.of(user));
+        when(groupRepository.getGroup(GROUP_ID)).thenReturn(Optional.empty());
+
+        groupService.removeUserFromGroup(user.getUserId(), GROUP_ID);
+    }
+
 }

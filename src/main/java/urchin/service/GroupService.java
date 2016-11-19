@@ -56,6 +56,17 @@ public class GroupService {
         }
     }
 
+    public void removeUserFromGroup(UserId userId, GroupId groupId) {
+        Optional<User> userOptional = userService.getUser(userId);
+        Optional<Group> groupOptional = groupRepository.getGroup(groupId);
+
+        if (userOptional.isPresent() && groupOptional.isPresent()) {
+            groupCli.removeUserFromGroup(userOptional.get(), groupOptional.get());
+        } else {
+            throw new IllegalArgumentException(String.format("Invalid UserId %s and/or GroupId %s", userId, groupId));
+        }
+    }
+
     public List<Group> getGroups() {
         return groupRepository.getGroups();
     }

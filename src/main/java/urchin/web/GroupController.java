@@ -44,15 +44,21 @@ public class GroupController {
         return createResponse(groupId.getId());
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<String>> removeGroup(@PathVariable int id) {
-        groupService.removeGroup(new GroupId(id));
+    @RequestMapping(value = "{groupId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseMessage<String>> removeGroup(@PathVariable int groupId) {
+        groupService.removeGroup(new GroupId(groupId));
         return createOkResponse();
     }
 
-    @RequestMapping(value = "add-user", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "user", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseMessage<String>> addUserToGroup(@Valid @RequestBody AddUserToGroupDto addUserToGroupDto) {
         groupService.addUserToGroup(new UserId(addUserToGroupDto.getUserId()), new GroupId(addUserToGroupDto.getGroupId()));
+        return createOkResponse();
+    }
+
+    @RequestMapping(value = "{groupId}/user/{userId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseMessage<String>> removeUserToGroup(@PathVariable int groupId, @PathVariable int userId) {
+        groupService.removeUserFromGroup(new UserId(userId), new GroupId(groupId));
         return createOkResponse();
     }
 
