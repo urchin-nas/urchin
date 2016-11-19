@@ -2,7 +2,6 @@ package urchin.api.mapper;
 
 import urchin.api.AddGroupDto;
 import urchin.api.GroupDto;
-import urchin.api.GroupsDto;
 import urchin.domain.model.Group;
 
 import java.util.List;
@@ -14,12 +13,10 @@ public class GroupMapper {
         return new Group(addGroupDto.getName());
     }
 
-    public static GroupsDto mapToGroupsDto(List<Group> groups) {
-        return new GroupsDto(
-                groups.stream()
-                        .map(GroupMapper::mapToGroupDto)
-                        .collect(Collectors.toList())
-        );
+    public static List<GroupDto> mapToGroupsDto(List<Group> groups) {
+        return groups.stream()
+                .map(GroupMapper::mapToGroupDto)
+                .collect(Collectors.toList());
     }
 
     private static GroupDto mapToGroupDto(Group group) {

@@ -8,7 +8,10 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import urchin.api.*;
+import urchin.api.AddGroupDto;
+import urchin.api.AddUserDto;
+import urchin.api.AddUserToGroupDto;
+import urchin.api.GroupDto;
 import urchin.api.support.ResponseMessage;
 import urchin.domain.model.GroupId;
 import urchin.domain.model.UserId;
@@ -46,10 +49,10 @@ public class GroupControllerIT extends TestApplication {
         GroupId groupId = new GroupId(addGroupResponse.getBody().getData());
         assertTrue(groupId.getId() > 0);
 
-        ResponseEntity<ResponseMessage<GroupsDto>> groupsResponse = getGroupsRequest();
+        ResponseEntity<ResponseMessage<List<GroupDto>>> groupsResponse = getGroupsRequest();
 
         assertEquals(HttpStatus.OK, groupsResponse.getStatusCode());
-        List<GroupDto> groups = groupsResponse.getBody().getData().getGroups();
+        List<GroupDto> groups = groupsResponse.getBody().getData();
         assertFalse(groups.isEmpty());
         List<GroupDto> groupDtos = groups.stream()
                 .filter(groupDto -> groupDto.getName().equals(addGroupDto.getName()))
@@ -74,8 +77,8 @@ public class GroupControllerIT extends TestApplication {
         });
     }
 
-    private ResponseEntity<ResponseMessage<GroupsDto>> getGroupsRequest() {
-        return testRestTemplate.exchange(discoverControllerPath(), HttpMethod.GET, null, new ParameterizedTypeReference<ResponseMessage<GroupsDto>>() {
+    private ResponseEntity<ResponseMessage<List<GroupDto>>> getGroupsRequest() {
+        return testRestTemplate.exchange(discoverControllerPath(), HttpMethod.GET, null, new ParameterizedTypeReference<ResponseMessage<List<GroupDto>>>() {
         });
     }
 

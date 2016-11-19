@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import urchin.api.AddGroupDto;
 import urchin.api.AddUserToGroupDto;
-import urchin.api.GroupsDto;
+import urchin.api.GroupDto;
 import urchin.api.support.ResponseMessage;
 import urchin.domain.model.Group;
 import urchin.domain.model.GroupId;
@@ -33,7 +33,7 @@ public class GroupController {
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<GroupsDto>> getGroups() {
+    public ResponseEntity<ResponseMessage<List<GroupDto>>> getGroups() {
         List<Group> groups = groupService.getGroups();
         return createResponse(mapToGroupsDto(groups));
     }
