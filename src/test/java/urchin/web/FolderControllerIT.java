@@ -101,13 +101,14 @@ public class FolderControllerIT extends TestApplication {
         VirtualFolderDto virtualFolderDto = new VirtualFolderDto(asList(folder_1.toString(), folder_2.toString()), virtualFolder.toString());
 
         ResponseEntity<ResponseMessage<String>> virtualFolderResponse = postSetupVirtualFolderRequest(virtualFolderDto);
+
         assertEquals(HttpStatus.OK, virtualFolderResponse.getStatusCode());
+        assertTrue(exists(virtualFolder));
 
         //.6 create file in virtual folder, which will be located in one of the encrypted folders.
 
         createFileInFolder(FILENAME, virtualFolder);
-
-        assertTrue(exists(virtualFolder));
+        assertTrue(folderContainsFile(virtualFolder, FILENAME));
         assertTrue(folderContainsFile(folder_1, FILENAME) || folderContainsFile(folder_2, FILENAME));
 
         //7. share virtual folder
