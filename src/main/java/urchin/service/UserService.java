@@ -45,4 +45,8 @@ public class UserService {
     public List<User> getUsers() {
         return userRepository.getUsers();
     }
+
+    public Optional<User> getUser(UserId userId) {
+        return userRepository.getUser(userId);
+    }
 }

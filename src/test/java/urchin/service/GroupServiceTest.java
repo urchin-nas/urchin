@@ -10,7 +10,10 @@ import urchin.domain.GroupRepository;
 import urchin.domain.cli.GroupCli;
 import urchin.domain.model.Group;
 import urchin.domain.model.GroupId;
+import urchin.domain.model.User;
+import urchin.domain.model.UserId;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.mockito.Mockito.verify;
@@ -21,6 +24,7 @@ import static org.mockito.Mockito.when;
 public class GroupServiceTest {
 
     private static final GroupId GROUP_ID = new GroupId(1);
+    private static final UserId USER_ID = new UserId(1);
 
     @Mock
     private GroupRepository groupRepository;
@@ -28,13 +32,18 @@ public class GroupServiceTest {
     @Mock
     private GroupCli groupCli;
 
+    @Mock
+    private UserService userService;
+
     @InjectMocks
     private GroupService groupService;
     private Group group;
+    private User user;
 
     @Before
     public void setup() {
         group = new Group("groupname");
+        user = new User(USER_ID, "username", LocalDateTime.now());
     }
 
     @Test
@@ -60,6 +69,32 @@ public class GroupServiceTest {
         when(groupRepository.getGroup(GROUP_ID)).thenReturn(Optional.empty());
 
         groupService.removeGroup(GROUP_ID);
+    }
+
+    @Test
+    public void addUserToGroupCommandIsCalledWhenUserAndGroupExist() {
+        when(userService.getUser(USER_ID)).thenReturn(Optional.of(user));
+        when(groupRepository.getGroup(GROUP_ID)).thenReturn(Optional.of(group));
+
+        groupService.addUserToGroup(user.getUserId(), GROUP_ID);
+
+        verify(groupCli).addUserToGroup(user, group);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void addUserToGroupWhenUserDoesNotExistInRepositoryThrowsException() {
+        when(userService.getUser(USER_ID)).thenReturn(Optional.empty());
+        when(groupRepository.getGroup(GROUP_ID)).thenReturn(Optional.of(group));
+
+        groupService.addUserToGroup(user.getUserId(), GROUP_ID);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void addUserToGroupWhenGroupDoesNotExistInRepositoryThrowsException() {
+        when(userService.getUser(USER_ID)).thenReturn(Optional.of(user));
+        when(groupRepository.getGroup(GROUP_ID)).thenReturn(Optional.empty());
+
+        groupService.addUserToGroup(user.getUserId(), GROUP_ID);
     }
 
 }

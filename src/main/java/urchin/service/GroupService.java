@@ -7,6 +7,8 @@ import urchin.domain.GroupRepository;
 import urchin.domain.cli.GroupCli;
 import urchin.domain.model.Group;
 import urchin.domain.model.GroupId;
+import urchin.domain.model.User;
+import urchin.domain.model.UserId;
 
 import java.util.List;
 import java.util.Optional;
@@ -16,11 +18,13 @@ public class GroupService {
 
     private final GroupRepository groupRepository;
     private final GroupCli groupCli;
+    private final UserService userService;
 
     @Autowired
-    public GroupService(GroupRepository groupRepository, GroupCli groupCli) {
+    public GroupService(GroupRepository groupRepository, GroupCli groupCli, UserService userService) {
         this.groupRepository = groupRepository;
         this.groupCli = groupCli;
+        this.userService = userService;
     }
 
     @Transactional
@@ -38,6 +42,17 @@ public class GroupService {
             groupCli.removeGroup(groupOptional.get());
         } else {
             throw new IllegalArgumentException("Invalid GroupId: " + groupId);
+        }
+    }
+
+    public void addUserToGroup(UserId userId, GroupId groupId) {
+        Optional<User> userOptional = userService.getUser(userId);
+        Optional<Group> groupOptional = groupRepository.getGroup(groupId);
+
+        if (userOptional.isPresent() && groupOptional.isPresent()) {
+            groupCli.addUserToGroup(userOptional.get(), groupOptional.get());
+        } else {
+            throw new IllegalArgumentException(String.format("Invalid UserId %s and/or GroupId %s", userId, groupId));
         }
     }
 
