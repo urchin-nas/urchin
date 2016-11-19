@@ -58,7 +58,7 @@ public class FolderService {
         }
     }
 
-    public void unmountEncryptedFolder(Path folder) throws IOException {
+    public void unmountFolder(Path folder) throws IOException {
         if (Files.exists(folder)) {
             folderCli.unmountFolder(folder);
             if (isEmpty(folder)) {
@@ -71,8 +71,8 @@ public class FolderService {
     }
 
     public void setupVirtualFolder(List<Path> folders, Path virtualFolder) throws IOException {
-        //TODO error handling, tests etc
-        createVirtualFolder(virtualFolder);
+        //TODO add to db, error handling, tests etc
+        setupVirtualFolder(virtualFolder);
         folderCli.mountVirtualFolder(folders, virtualFolder);
     }
 
@@ -97,7 +97,7 @@ public class FolderService {
         return folder.toFile().list().length == 0;
     }
 
-    private void createVirtualFolder(Path virtualFolder) throws IOException {
+    private void setupVirtualFolder(Path virtualFolder) throws IOException {
         if (!Files.exists(virtualFolder)) {
             createDirectories(virtualFolder);
         }
