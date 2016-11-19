@@ -37,9 +37,9 @@ public class GroupController {
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<String>> addGroup(@Valid @RequestBody AddGroupDto addGroupDto) {
-        groupService.addGroup(mapToGroup(addGroupDto));
-        return createOkResponse();
+    public ResponseEntity<ResponseMessage<Integer>> addGroup(@Valid @RequestBody AddGroupDto addGroupDto) {
+        GroupId groupId = groupService.addGroup(mapToGroup(addGroupDto));
+        return createResponse(groupId.getId());
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)

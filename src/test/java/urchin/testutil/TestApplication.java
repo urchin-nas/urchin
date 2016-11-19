@@ -21,8 +21,12 @@ public abstract class TestApplication {
     protected JdbcTemplate jdbcTemplate;
 
     protected String discoverControllerPath() {
+        return discoverControllerPath(this.getClass());
+    }
+
+    protected String discoverControllerPath(Class clazz) {
         try {
-            return "/" + Class.forName(this.getClass().getName().replace("IT", "")).getAnnotation(RequestMapping.class).value()[0];
+            return "/" + Class.forName(clazz.getName().replace("IT", "")).getAnnotation(RequestMapping.class).value()[0];
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("Failed to discover path", e);
         }
