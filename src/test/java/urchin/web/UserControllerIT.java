@@ -15,21 +15,21 @@ import urchin.testutil.TestApplication;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
+import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;
 
 public class UserControllerIT extends TestApplication {
 
-    private static final String USERNAME_PREFIX = "urchin_";
-    private static final String PASSWORD = "superSecret";
+    static final String PASSWORD = "superSecret";
 
     @Test
     public void addAndRemoveUser() {
         AddUserDto addUserDto = new AddUserDto(USERNAME_PREFIX + System.currentTimeMillis(), PASSWORD);
 
-        ResponseEntity<ResponseMessage<String>> addUserResponse = addUserRequest(addUserDto);
+        ResponseEntity<ResponseMessage<Integer>> addUserResponse = addUserRequest(addUserDto);
 
         assertEquals(HttpStatus.OK, addUserResponse.getStatusCode());
+        assertTrue(addUserResponse.getBody().getData() > 0);
 
         ResponseEntity<ResponseMessage<UsersDto>> usersResponse = getUsersRequest();
 
@@ -41,14 +41,15 @@ public class UserControllerIT extends TestApplication {
                 .collect(Collectors.toList());
         assertEquals(1, userDtos.size());
         assertEquals(addUserDto.getUsername(), userDtos.get(0).getUsername());
+        assertEquals(addUserResponse.getBody().getData().intValue(), userDtos.get(0).getUserId());
 
         ResponseEntity<ResponseMessage<String>> removeUserResponse = removeUserRequest(userDtos.get(0).getUserId());
 
         assertEquals(HttpStatus.OK, removeUserResponse.getStatusCode());
     }
 
-    private ResponseEntity<ResponseMessage<String>> addUserRequest(AddUserDto addUserDto) {
-        return testRestTemplate.exchange(discoverControllerPath() + "/add", HttpMethod.POST, new HttpEntity<>(addUserDto), new ParameterizedTypeReference<ResponseMessage<String>>() {
+    private ResponseEntity<ResponseMessage<Integer>> addUserRequest(AddUserDto addUserDto) {
+        return testRestTemplate.exchange(discoverControllerPath() + "/add", HttpMethod.POST, new HttpEntity<>(addUserDto), new ParameterizedTypeReference<ResponseMessage<Integer>>() {
         });
     }
 

@@ -37,9 +37,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<String>> addUser(@Valid @RequestBody AddUserDto addUserDto) {
-        userService.addUser(mapToUser(addUserDto), addUserDto.getPassword());
-        return createOkResponse();
+    public ResponseEntity<ResponseMessage<Integer>> addUser(@Valid @RequestBody AddUserDto addUserDto) {
+        UserId userId = userService.addUser(mapToUser(addUserDto), addUserDto.getPassword());
+        return createResponse(userId.getId());
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
