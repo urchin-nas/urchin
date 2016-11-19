@@ -13,6 +13,7 @@ public class AddUserDto {
     @NotNull(message = FIELD_MISSING)
     @Size(min = 3, max = 32)
     private final String username;
+
     @NotNull(message = FIELD_MISSING)
     @Size(min = 6)
     private final String password;

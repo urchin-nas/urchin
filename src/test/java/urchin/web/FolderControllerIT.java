@@ -39,8 +39,7 @@ public class FolderControllerIT extends TestApplication {
 
     @Test
     public void createAndUnmountAndMountEncryptedFolder() {
-        EncryptedFolderDto encryptedFolderDto = new EncryptedFolderDto();
-        encryptedFolderDto.setFolder(folder.toAbsolutePath().toString());
+        EncryptedFolderDto encryptedFolderDto = new EncryptedFolderDto(folder.toAbsolutePath().toString());
 
         ResponseEntity<ResponseMessage<PassphraseDto>> createResponse = postCreateRequest(encryptedFolderDto);
 
@@ -55,9 +54,10 @@ public class FolderControllerIT extends TestApplication {
         assertFalse(exists(folder));
         assertTrue(exists(encryptedFolder.getPath()));
 
-        MountEncryptedFolderDto mountEncryptedFolderDto = new MountEncryptedFolderDto();
-        mountEncryptedFolderDto.setFolder(folder.toAbsolutePath().toString());
-        mountEncryptedFolderDto.setPassphrase(createResponse.getBody().getData().getPassphrase());
+        MountEncryptedFolderDto mountEncryptedFolderDto = new MountEncryptedFolderDto(
+                folder.toAbsolutePath().toString(),
+                createResponse.getBody().getData().getPassphrase()
+        );
 
         ResponseEntity<ResponseMessage<String>> mountResponse = postMountRequest(mountEncryptedFolderDto);
         assertEquals(HttpStatus.OK, mountResponse.getStatusCode());

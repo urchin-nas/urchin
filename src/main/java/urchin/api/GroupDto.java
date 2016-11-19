@@ -1,14 +1,16 @@
 package urchin.api;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class GroupDto {
 
-    private int groupId;
-    private String name;
+    private final int groupId;
 
-    private GroupDto() {
-    }
+    private final String name;
 
-    public GroupDto(int groupId, String name) {
+    @JsonCreator
+    public GroupDto(@JsonProperty("groupId") int groupId, @JsonProperty("name") String name) {
         this.groupId = groupId;
         this.name = name;
     }

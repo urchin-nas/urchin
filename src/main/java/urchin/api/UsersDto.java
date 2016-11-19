@@ -1,15 +1,16 @@
 package urchin.api;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
 public class UsersDto {
 
-    private List<UserDto> users;
+    private final List<UserDto> users;
 
-    private UsersDto() {
-    }
-
-    public UsersDto(List<UserDto> userDtos) {
+    @JsonCreator
+    public UsersDto(@JsonProperty("users") List<UserDto> userDtos) {
         this.users = userDtos;
     }
 

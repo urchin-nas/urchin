@@ -7,15 +7,16 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import static urchin.api.support.validation.ValidationConstants.FIELD_MISSING;
+import static urchin.api.support.validation.ValidationConstants.FIELD_SMALL_VALUE;
 
 public class AddUserToGroupDto {
 
     @NotNull(message = FIELD_MISSING)
-    @Min(1)
+    @Min(value = 1, message = FIELD_SMALL_VALUE)
     private final int groupId;
 
     @NotNull(message = FIELD_MISSING)
-    @Min(1)
+    @Min(value = 1, message = FIELD_SMALL_VALUE)
     private final int userId;
 
     @JsonCreator

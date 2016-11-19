@@ -1,14 +1,16 @@
 package urchin.api;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class UserDto {
 
-    private int userId;
-    private String username;
+    private final int userId;
 
-    private UserDto() {
-    }
+    private final String username;
 
-    public UserDto(int userId, String username) {
+    @JsonCreator
+    public UserDto(@JsonProperty("userId") int userId, @JsonProperty("username") String username) {
         this.userId = userId;
         this.username = username;
     }
