@@ -58,6 +58,5 @@ public class FolderCli {
 
     public void unshareFolder(Path folder) {
         unshareFolderCommand.execute(folder);
-        restartSamba();
     }
 }
