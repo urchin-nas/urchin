@@ -5,10 +5,12 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import urchin.api.AddGroupDto;
+import urchin.api.AddUserToGroupDto;
 import urchin.api.GroupsDto;
 import urchin.api.support.ResponseMessage;
 import urchin.domain.model.Group;
 import urchin.domain.model.GroupId;
+import urchin.domain.model.UserId;
 import urchin.service.GroupService;
 
 import javax.validation.Valid;
@@ -45,6 +47,12 @@ public class GroupController {
     @RequestMapping(value = "{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseMessage<String>> removeGroup(@PathVariable int id) {
         groupService.removeGroup(new GroupId(id));
+        return createOkResponse();
+    }
+
+    @RequestMapping(value = "add-user", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseMessage<String>> addUserToGroup(@Valid @RequestBody AddUserToGroupDto addUserToGroupDto) {
+        groupService.addUserToGroup(new UserId(addUserToGroupDto.getUserId()), new GroupId(addUserToGroupDto.getGroupId()));
         return createOkResponse();
     }
 

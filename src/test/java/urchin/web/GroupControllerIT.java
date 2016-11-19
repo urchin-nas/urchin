@@ -62,7 +62,7 @@ public class GroupControllerIT extends TestApplication {
         AddUserToGroupDto addUserToGroupDto = new AddUserToGroupDto(groupId.getId(), userId.getId());
         ResponseEntity<ResponseMessage<String>> addUserToGroupResponse = addUserToGroupRequest(addUserToGroupDto);
 
-        assertEquals(HttpStatus.OK, addGroupResponse.getStatusCode());
+        assertEquals(HttpStatus.OK, addUserToGroupResponse.getStatusCode());
 
         ResponseEntity<ResponseMessage<String>> removeGroupResponse = removeGroupRequest(groupDtos.get(0).getGroupId());
 
