@@ -31,7 +31,7 @@ public class GroupRepositoryIT extends TestApplication {
         assertTrue(groupOptional.isPresent());
         Group readGroup = groupOptional.get();
         assertEquals(group.getName(), readGroup.getName());
-        assertTrue(now.isBefore(readGroup.getCreated()));
+        assertFalse(now.isAfter(readGroup.getCreated()));
 
         groupRepository.removeGroup(groupId);
 
