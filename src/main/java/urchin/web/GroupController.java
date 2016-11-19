@@ -57,7 +57,7 @@ public class GroupController {
     }
 
     @RequestMapping(value = "{groupId}/user/{userId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<String>> removeUserToGroup(@PathVariable int groupId, @PathVariable int userId) {
+    public ResponseEntity<ResponseMessage<String>> removeUserFromGroup(@PathVariable int groupId, @PathVariable int userId) {
         groupService.removeUserFromGroup(new UserId(userId), new GroupId(groupId));
         return createOkResponse();
     }
