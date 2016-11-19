@@ -42,9 +42,9 @@ public class UserController {
         return createResponse(userId.getId());
     }
 
-    @RequestMapping(value = "{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<String>> removeUser(@PathVariable int id) {
-        userService.removeUser(new UserId(id));
+    @RequestMapping(value = "{userId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<ResponseMessage<String>> removeUser(@PathVariable int userId) {
+        userService.removeUser(new UserId(userId));
         return createOkResponse();
     }
 
