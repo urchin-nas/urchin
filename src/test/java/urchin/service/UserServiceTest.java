@@ -6,10 +6,10 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import urchin.domain.UserRepository;
 import urchin.domain.cli.UserCli;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
+import urchin.domain.repository.UserRepository;
 
 import java.util.Optional;
 

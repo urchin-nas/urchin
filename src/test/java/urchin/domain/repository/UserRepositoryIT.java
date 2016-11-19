@@ -1,4 +1,4 @@
-package urchin.domain;
+package urchin.domain.repository;
 
 import org.junit.Before;
 import org.junit.Test;

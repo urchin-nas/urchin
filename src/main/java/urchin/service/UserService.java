@@ -3,10 +3,10 @@ package urchin.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import urchin.domain.UserRepository;
 import urchin.domain.cli.UserCli;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
+import urchin.domain.repository.UserRepository;
 
 import java.util.List;
 import java.util.Optional;

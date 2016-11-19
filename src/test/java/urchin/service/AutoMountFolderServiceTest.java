@@ -5,11 +5,11 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import urchin.domain.PassphraseRepository;
 import urchin.domain.cli.FolderCli;
 import urchin.domain.model.EncryptedFolder;
 import urchin.domain.model.FolderSettings;
 import urchin.domain.model.Passphrase;
+import urchin.domain.repository.PassphraseRepository;
 import urchin.domain.util.PassphraseGenerator;
 
 import java.nio.file.Paths;

@@ -6,9 +6,9 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import urchin.domain.FolderSettingsRepository;
 import urchin.domain.model.FolderSettings;
 import urchin.domain.model.Passphrase;
+import urchin.domain.repository.FolderSettingsRepository;
 import urchin.testutil.TemporaryFolderUnmount;
 import urchin.testutil.TestApplication;
 

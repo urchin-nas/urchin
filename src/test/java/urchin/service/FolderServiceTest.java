@@ -9,10 +9,10 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import urchin.domain.FolderSettingsRepository;
 import urchin.domain.cli.FolderCli;
 import urchin.domain.model.EncryptedFolder;
 import urchin.domain.model.Passphrase;
+import urchin.domain.repository.FolderSettingsRepository;
 import urchin.domain.util.EncryptedFolderUtil;
 
 import java.io.IOException;
