@@ -138,7 +138,7 @@ public class FolderControllerIT extends TestApplication {
 
         //9. unmount virtual folder
 
-        ResponseEntity<ResponseMessage<String>> unmountVirtualFOlderResponse = postUnmountVirtualFOlderRequest(new FolderDto(virtualFolder.toString()));
+        ResponseEntity<ResponseMessage<String>> unmountVirtualFOlderResponse = postUnmountVirtualFolderRequest(new FolderDto(virtualFolder.toString()));
 
         assertEquals(HttpStatus.OK, unmountVirtualFOlderResponse.getStatusCode());
         assertFalse(exists(virtualFolder));
@@ -166,8 +166,8 @@ public class FolderControllerIT extends TestApplication {
         });
     }
 
-    private ResponseEntity<ResponseMessage<String>> postUnmountVirtualFOlderRequest(FolderDto folderDto) {
-        return testRestTemplate.exchange(discoverControllerPath() + "/unmount", HttpMethod.POST, new HttpEntity<>(folderDto), new ParameterizedTypeReference<ResponseMessage<String>>() {
+    private ResponseEntity<ResponseMessage<String>> postUnmountVirtualFolderRequest(FolderDto folderDto) {
+        return testRestTemplate.exchange(discoverControllerPath() + "/virtual/unmount", HttpMethod.POST, new HttpEntity<>(folderDto), new ParameterizedTypeReference<ResponseMessage<String>>() {
         });
     }
 
