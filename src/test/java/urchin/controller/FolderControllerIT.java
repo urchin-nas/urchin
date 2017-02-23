@@ -1,4 +1,4 @@
-package urchin.web;
+package urchin.controller;
 
 import jcifs.smb.SmbException;
 import jcifs.smb.SmbFile;

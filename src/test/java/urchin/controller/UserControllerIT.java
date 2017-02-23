@@ -1,4 +1,4 @@
-package urchin.web;
+package urchin.controller;
 
 import org.junit.Test;
 import org.springframework.core.ParameterizedTypeReference;

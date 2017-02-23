@@ -1,4 +1,4 @@
-package urchin.web;
+package urchin.controller;
 
 import org.junit.After;
 import org.junit.Before;
@@ -21,9 +21,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
+import static urchin.controller.UserControllerIT.PASSWORD;
 import static urchin.testutil.UnixUserAndGroupCleanup.GROUP_PREFIX;
 import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;
-import static urchin.web.UserControllerIT.PASSWORD;
 
 public class GroupControllerIT extends TestApplication {
 
