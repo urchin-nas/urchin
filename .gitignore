@@ -1,3 +1,10 @@
+# project
 .idea
 *.iml
-target/
+target
+
+# frontend
+node_modules
+built
+etc
+node
