@@ -1,4 +1,5 @@
 var path = require('path');
+var webpack = require('webpack');
 var APP_DIR = path.resolve(__dirname, 'src/main/js');
 var BUILD_DIR = path.resolve(__dirname, 'src/main/resources/static/built');
 var config = {
@@ -28,6 +29,16 @@ var config = {
         failOnWarning: false,
         failOnError: true
     },
+    plugins: [
+        new webpack.optimize.UglifyJsPlugin({
+            compress: {
+                warnings: false,
+            },
+            output: {
+                comments: false,
+            },
+        })
+    ]
 };
 
 module.exports = config;
