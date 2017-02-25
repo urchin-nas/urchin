@@ -10,24 +10,19 @@ var config = {
         filename: 'bundle.js'
     },
     module: {
-        preLoaders: [
+        rules: [
             {
+                enforce: 'pre',
                 test: /\.jsx$|\.js$/,
-                loader: 'eslint',
+                loader: 'eslint-loader',
                 exclude: /node_modules/
-            }
-        ],
-        loaders: [
+            },
             {
                 test: /\.jsx$|\.js$/,
-                loader: 'babel',
+                loaders: ['react-hot-loader', 'babel-loader'],
                 include: APP_DIR
             }
         ]
-    },
-    eslint: {
-        failOnWarning: false,
-        failOnError: true
     },
     plugins: [
         new webpack.optimize.UglifyJsPlugin({
@@ -37,8 +32,14 @@ var config = {
             output: {
                 comments: false,
             },
-        })
-    ]
+        }),
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NoEmitOnErrorsPlugin()
+    ],
+    devServer: {
+        contentBase: "./src/main/resources/static/",
+        hot: true
+    },
 };
 
 module.exports = config;
