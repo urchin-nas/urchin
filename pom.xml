@@ -134,6 +134,9 @@
                         <goals>
                             <goal>webpack</goal>
                         </goals>
+                        <configuration>
+                            <arguments>--bail</arguments>
+                        </configuration>
                     </execution>
                 </executions>
             </plugin>
