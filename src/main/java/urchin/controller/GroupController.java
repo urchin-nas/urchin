@@ -21,9 +21,7 @@ import java.util.List;
 
 import static urchin.api.mapper.GroupMapper.mapToGroup;
 import static urchin.api.mapper.GroupMapper.mapToGroupsDto;
-import static urchin.api.support.DataResponseEntityBuilder.createOkResponse;
-import static urchin.api.support.DataResponseEntityBuilder.createResponse;
-import static urchin.api.support.error.ErrorResponseEntityBuilder.createErrorResponse;
+import static urchin.api.support.ResponseEntityBuilder.*;
 
 @RestController
 @RequestMapping("api/groups")

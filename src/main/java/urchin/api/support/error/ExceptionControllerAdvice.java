@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-import static urchin.api.support.error.ErrorResponseEntityBuilder.createErrorResponse;
+import static urchin.api.support.ResponseEntityBuilder.createErrorResponse;
 
 @ControllerAdvice
 public class ExceptionControllerAdvice {

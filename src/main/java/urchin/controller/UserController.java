@@ -16,8 +16,8 @@ import java.util.List;
 
 import static urchin.api.mapper.UserMapper.mapToUser;
 import static urchin.api.mapper.UserMapper.mapToUsersDto;
-import static urchin.api.support.DataResponseEntityBuilder.createOkResponse;
-import static urchin.api.support.DataResponseEntityBuilder.createResponse;
+import static urchin.api.support.ResponseEntityBuilder.createOkResponse;
+import static urchin.api.support.ResponseEntityBuilder.createResponse;
 
 @RestController
 @RequestMapping("api/users")

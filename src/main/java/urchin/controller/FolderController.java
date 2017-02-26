@@ -24,8 +24,8 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static urchin.api.support.DataResponseEntityBuilder.createOkResponse;
-import static urchin.api.support.DataResponseEntityBuilder.createResponse;
+import static urchin.api.support.ResponseEntityBuilder.createOkResponse;
+import static urchin.api.support.ResponseEntityBuilder.createResponse;
 import static urchin.api.support.error.ResponseExceptionBuilder.unexpectedError;
 
 @RestController
