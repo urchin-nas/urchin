@@ -18,6 +18,12 @@ mvn install
 java -jar urchin-1.0-SNAPSHOT.jar
 ```
 
+## Development
+
+To start client with `webpack-dev-server` execute:
+```
+npm run start
+```
 ## Build Server
 
 [docker-build-server] (https://github.com/anhem/docker-build-server) contains a docker compose setup with all requirements to test and build application
