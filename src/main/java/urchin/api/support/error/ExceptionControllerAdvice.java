@@ -26,20 +26,20 @@ public class ExceptionControllerAdvice {
     public static final String UNKNOWN_ERROR = "UNKNOWN_ERROR";
 
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
-    protected ResponseEntity<ResponseMessage> handleValidationError(MethodArgumentNotValidException e, WebRequest webRequest) {
+    protected ResponseEntity<ResponseMessage<Void>> handleValidationError(MethodArgumentNotValidException e, WebRequest webRequest) {
         List<ErrorResponse> errorResponses = e.getBindingResult().getFieldErrors().stream().map(this::toErrorResponse).collect(Collectors.toList());
         LOG.debug("Validation error while handling request: {}", webRequest);
         return createErrorResponse(errorResponses, BAD_REQUEST);
     }
 
     @ExceptionHandler(value = {ResponseException.class})
-    protected ResponseEntity<ResponseMessage> handleResponseException(ResponseException e, WebRequest webRequest) {
+    protected ResponseEntity<ResponseMessage<Void>> handleResponseException(ResponseException e, WebRequest webRequest) {
         LOG.warn("ResponseException while handling request: {}", webRequest, e);
         return createErrorResponse(e);
     }
 
     @ExceptionHandler(value = {Exception.class})
-    protected ResponseEntity<ResponseMessage> handleException(Exception e, WebRequest webRequest) {
+    protected ResponseEntity<ResponseMessage<Void>> handleException(Exception e, WebRequest webRequest) {
         LOG.warn("Exception while handler request: {}", webRequest, e);
         ErrorResponse errorResponse = new ErrorResponse(UNKNOWN_ERROR);
         return createErrorResponse(errorResponse, INTERNAL_SERVER_ERROR);

@@ -1,13 +1,16 @@
 package urchin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import urchin.api.AddGroupDto;
 import urchin.api.AddUserToGroupDto;
 import urchin.api.GroupDto;
+import urchin.api.support.ErrorResponse;
 import urchin.api.support.ResponseMessage;
+import urchin.api.support.error.ResponseException;
 import urchin.domain.model.Group;
 import urchin.domain.model.GroupId;
 import urchin.domain.model.UserId;
@@ -20,10 +23,13 @@ import static urchin.api.mapper.GroupMapper.mapToGroup;
 import static urchin.api.mapper.GroupMapper.mapToGroupsDto;
 import static urchin.api.support.DataResponseEntityBuilder.createOkResponse;
 import static urchin.api.support.DataResponseEntityBuilder.createResponse;
+import static urchin.api.support.error.ErrorResponseEntityBuilder.createErrorResponse;
 
 @RestController
 @RequestMapping("api/groups")
 public class GroupController {
+
+    private static final String INVALID_GROUP_ID = "INVALID_GROUP_ID";
 
     private final GroupService groupService;
 
@@ -46,7 +52,11 @@ public class GroupController {
 
     @RequestMapping(value = "{groupId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseMessage<String>> removeGroup(@PathVariable int groupId) {
-        groupService.removeGroup(new GroupId(groupId));
+        try {
+            groupService.removeGroup(new GroupId(groupId));
+        } catch (IllegalArgumentException e) {
+            return createErrorResponse(new ResponseException(HttpStatus.BAD_REQUEST, new ErrorResponse(INVALID_GROUP_ID).setField("groupId").setMessage(e.getMessage()), e));
+        }
         return createOkResponse();
     }
 

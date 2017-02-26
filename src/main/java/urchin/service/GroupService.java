@@ -41,7 +41,7 @@ public class GroupService {
             groupRepository.removeGroup(groupId);
             groupCli.removeGroup(groupOptional.get());
         } else {
-            throw new IllegalArgumentException("Invalid GroupId: " + groupId);
+            throw new IllegalArgumentException("Invalid GroupId: " + groupId.getId());
         }
     }
 
