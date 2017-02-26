@@ -9,6 +9,8 @@
 * root access
 
 ## Build
+
+Build frontend and backend into a self-executable jar:
 ```
 mvn install
 ```
@@ -20,7 +22,7 @@ java -jar urchin-1.0-SNAPSHOT.jar
 
 ## Development
 
-To start client with `webpack-dev-server` execute:
+To start client using `webpack-dev-server` with Hot Module Replacement (HMR) support:
 ```
 npm run start
 ```
