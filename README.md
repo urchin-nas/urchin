@@ -24,7 +24,7 @@ java -jar urchin-1.0-SNAPSHOT.jar
 
 To start client using `webpack-dev-server` with Hot Module Replacement (HMR) support:
 ```
-npm run start
+npm run dev
 ```
 ## Build Server
 
