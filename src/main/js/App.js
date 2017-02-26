@@ -1,9 +1,28 @@
 import React, {Component} from "react";
+import rest from "rest";
+import Groups from "./Groups";
 
-export default class App extends Component {
+class App extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {groups: []};
+    }
+
+    componentDidMount() {
+        rest({
+            method: 'GET',
+            path: '/api/groups'
+        }).then(response => {
+            this.setState({groups: JSON.parse(response.entity).data});
+        });
+    }
+
     render() {
         return (
-            <h1>Hello, world</h1>
+            <Groups groups={this.state.groups}/>
         );
     }
 }
+
+export default App;
