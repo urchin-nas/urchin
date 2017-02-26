@@ -12,15 +12,15 @@
     "url": "https://github.com/anhem/urchin/issues"
   },
   "homepage": "https://github.com/anhem/urchin#readme",
-  "dependencies": {
-    "react": "^15.3.2",
-    "react-dom": "^15.3.2",
-    "rest": "^2.0.0"
-  },
   "scripts": {
     "watch": "webpack --watch -d",
     "dev": "webpack-dev-server --config webpack.config.dev.js",
     "prod": "webpack -p --config webpack.config.prod.js"
+  },
+  "dependencies": {
+    "react": "^15.3.2",
+    "react-dom": "^15.3.2",
+    "rest": "^2.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",
