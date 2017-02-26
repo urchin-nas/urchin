@@ -130,12 +130,12 @@
                         </configuration>
                     </execution>
                     <execution>
-                        <id>webpack build</id>
+                        <id>npm run</id>
                         <goals>
-                            <goal>webpack</goal>
+                            <goal>npm</goal>
                         </goals>
                         <configuration>
-                            <arguments>--bail</arguments>
+                            <arguments>run prod</arguments>
                         </configuration>
                     </execution>
                 </executions>

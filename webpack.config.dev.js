@@ -9,7 +9,7 @@ var config = {
         'webpack/hot/only-dev-server',
         APP_DIR + '/index.js',
     ],
-    devtool: 'sourcemaps',
+    devtool: 'eval',
     output: {
         path: BUILD_DIR,
         pathinfo: true,
@@ -35,15 +35,7 @@ var config = {
     plugins: [
         new webpack.HotModuleReplacementPlugin(),
         new webpack.NamedModulesPlugin(),
-        new webpack.NoEmitOnErrorsPlugin(),
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false,
-            },
-            output: {
-                comments: false,
-            },
-        })
+        new webpack.NoEmitOnErrorsPlugin()
     ],
     devServer: {
         host: 'localhost',
