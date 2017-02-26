@@ -8,3 +8,4 @@ node_modules
 built
 etc
 node
+npm-debug.log
