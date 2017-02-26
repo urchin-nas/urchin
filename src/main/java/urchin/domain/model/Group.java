@@ -14,13 +14,13 @@ public class Group {
 
     public Group(String name) {
         this.groupId = null;
-        this.name = name;
+        this.name = name.toLowerCase().trim();
         this.created = null;
     }
 
     public Group(GroupId groupId, String name, LocalDateTime created) {
         this.groupId = groupId;
-        this.name = name;
+        this.name = name.toLowerCase().trim();
         this.created = created;
     }
 
