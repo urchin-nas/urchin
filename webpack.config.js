@@ -3,12 +3,20 @@ var webpack = require('webpack');
 var APP_DIR = path.resolve(__dirname, 'src/main/js');
 var BUILD_DIR = path.resolve(__dirname, 'src/main/resources/static/built');
 var config = {
-    entry: APP_DIR + '/app.jsx',
+    entry: [
+        'react-hot-loader/patch',
+        'webpack-dev-server/client?http://localhost:3000',
+        'webpack/hot/only-dev-server',
+        APP_DIR + '/index.js',
+    ],
     devtool: 'sourcemaps',
     output: {
         path: BUILD_DIR,
-        filename: 'bundle.js'
+        pathinfo: true,
+        filename: 'bundle.js',
+        publicPath: '/built'
     },
+    context: APP_DIR,
     module: {
         rules: [
             {
@@ -19,12 +27,15 @@ var config = {
             },
             {
                 test: /\.jsx$|\.js$/,
-                loaders: ['react-hot-loader', 'babel-loader'],
-                include: APP_DIR
+                loader: 'babel-loader',
+                exclude: /node_modules/
             }
         ]
     },
     plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NamedModulesPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
         new webpack.optimize.UglifyJsPlugin({
             compress: {
                 warnings: false,
@@ -32,13 +43,19 @@ var config = {
             output: {
                 comments: false,
             },
-        }),
-        new webpack.HotModuleReplacementPlugin(),
-        new webpack.NoEmitOnErrorsPlugin()
+        })
     ],
     devServer: {
-        contentBase: "./src/main/resources/static/",
-        hot: true
+        host: 'localhost',
+        port: 3000,
+        hot: true,
+        contentBase: path.resolve(__dirname, 'src/main/resources/static'),
+        publicPath: '/built',
+        proxy: {
+            '/api': {
+                target: 'http://localhost:8080'
+            }
+        }
     },
 };
 
