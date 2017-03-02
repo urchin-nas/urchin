@@ -1,5 +1,6 @@
 package urchin.domain.cli.folder;
 
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 import java.nio.file.Path;
 
+import static java.nio.charset.Charset.defaultCharset;
 import static java.util.Arrays.copyOf;
 
 @Component
@@ -49,8 +51,12 @@ public class MountEncryptedFolderCommand {
             bufferedWriter.flush();
             process.waitFor();
             if (process.exitValue() != 0) {
+                LOG.debug("Process failed with error: " + IOUtils.toString(process.getErrorStream(), defaultCharset()));
+                LOG.error("Process returned code: " + process.exitValue());
                 throw new CommandException(this.getClass().getName(), process.exitValue());
             }
+        } catch (CommandException e) {
+            throw e;
         } catch (Exception e) {
             LOG.error("Failed to execute command");
             throw new CommandException(this.getClass().getName(), e);
