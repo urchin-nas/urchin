@@ -60,7 +60,9 @@ public class BasicCommandTest {
     @Test
     public void exceptionIsThrownWhenCommandDoesNotReturnExitValueZero() {
         int exitValue = -1;
+        InputStream errorStream = toInputStream("some error occured", defaultCharset());
         when(process.exitValue()).thenReturn(exitValue);
+        when(process.getErrorStream()).thenReturn(errorStream);
 
         try {
             testCommand.executeCommand(COMMAND);
