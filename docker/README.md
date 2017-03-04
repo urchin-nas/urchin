@@ -11,8 +11,13 @@ Command examples for running development version of urchin in a docker container
 docker build -t urchin-dev .
 ```
 ### Run
+Unix:
 ```bash
 docker run -it --privileged --name urchin-dev -p 8080:8080 -v /data/urchin/.m2/:/root/.m2/ -v /data/urchin/node_modules:/workspace/node_modules urchin-dev
+```
+Windows (docker toolbox):
+```bash
+winpty docker run -it --privileged --name urchin-dev -p 8080:8080 -v //c/Users/**logged in user**/urchin/.m2:/root/.m2/ -v //c/Users/**logged in user**/urchin/node_modules:/workspace/node_modules urchin-dev
 ```
 
 ### Start existing container
