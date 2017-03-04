@@ -15,7 +15,6 @@ public class ShareFolderCommand extends BasicCommand {
     private static final String FOLDER_NAME = "%folderName%";
 
     private static final String[] COMMAND = {
-            "sudo",
             "net",
             "usershare",
             "add",
@@ -38,8 +37,8 @@ public class ShareFolderCommand extends BasicCommand {
 
     private String[] setupCommand(Path folder) {
         String[] command = copyOf(COMMAND, COMMAND.length);
-        command[4] = folder.getFileName().toString();
-        command[5] = folder.toAbsolutePath().toString();
+        command[3] = folder.getFileName().toString();
+        command[4] = folder.toAbsolutePath().toString();
         return command;
     }
 

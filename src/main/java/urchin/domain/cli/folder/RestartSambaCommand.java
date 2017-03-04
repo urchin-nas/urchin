@@ -7,7 +7,6 @@ import urchin.domain.cli.common.BasicCommand;
 public class RestartSambaCommand extends BasicCommand {
 
     private static final String[] COMMAND = {
-            "sudo",
             "/etc/init.d/samba",
             "restart"
     };

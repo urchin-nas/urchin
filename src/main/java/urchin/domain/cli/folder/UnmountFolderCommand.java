@@ -14,7 +14,6 @@ public class UnmountFolderCommand extends BasicCommand {
     private static final String FOLDER = "%folder%";
 
     private static final String[] COMMAND = new String[]{
-            "sudo",
             "umount",
             "-l",
             FOLDER
@@ -32,7 +31,7 @@ public class UnmountFolderCommand extends BasicCommand {
 
     private String[] setupCommand(Path folder) {
         String[] command = copyOf(COMMAND, COMMAND.length);
-        command[3] = folder.toAbsolutePath().toString();
+        command[2] = folder.toAbsolutePath().toString();
         return command;
     }
 

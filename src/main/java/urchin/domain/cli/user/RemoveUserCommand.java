@@ -13,7 +13,6 @@ public class RemoveUserCommand extends BasicCommand {
     private static final String USERNAME = "%username%";
 
     private static final String[] COMMAND = new String[]{
-            "sudo",
             "deluser",
             USERNAME,
     };
@@ -30,7 +29,7 @@ public class RemoveUserCommand extends BasicCommand {
 
     private String[] setupCommand(User user) {
         String[] command = copyOf(COMMAND, COMMAND.length);
-        command[2] = user.getUsername();
+        command[1] = user.getUsername();
         return command;
     }
 }
