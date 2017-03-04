@@ -2,6 +2,7 @@
 
 Run Urchin in a docker container that will fetch `development` branch from github, build, test and start application. 
 
+(does not work on on Windows for some reason)
 ## Docker commands
 
 Command examples for running development version of urchin in a docker container.
@@ -15,11 +16,6 @@ Unix:
 ```bash
 docker run -it --privileged --name urchin-dev -p 8080:8080 -v /data/urchin/.m2/:/root/.m2/ -v /data/urchin/node_modules:/workspace/node_modules urchin-dev
 ```
-Windows (docker toolbox):
-```bash
-winpty docker run -it --privileged --name urchin-dev -p 8080:8080 -v //c/Users/**logged in user**/urchin/.m2:/root/.m2/ urchin-dev
-```
-
 ### Start existing container
 ```bash
 docker start -ai urchin-dev
@@ -28,9 +24,4 @@ docker start -ai urchin-dev
 ### Connect to container
 ```bash
 docker exec -it urchin-dev /bin/bash
-```
-
-### Other
-```bash
-eval $("C:\Program Files\Docker Toolbox\docker-machine.exe" env default)
 ```
