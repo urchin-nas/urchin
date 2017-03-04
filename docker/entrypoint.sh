@@ -1,6 +1,9 @@
 #!/bin/bash
 cd /workspace
 
+echo "[Starting Samba]"
+service samba start
+
 echo "[Updating repository]"
 git pull
 
