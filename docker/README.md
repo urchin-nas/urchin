@@ -29,3 +29,8 @@ docker start -ai urchin-dev
 ```bash
 docker exec -it urchin-dev /bin/bash
 ```
+
+### Other
+```bash
+eval $("C:\Program Files\Docker Toolbox\docker-machine.exe" env default)
+```
