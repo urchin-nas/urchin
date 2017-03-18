@@ -1,8 +1,8 @@
-package urchin.api.support.error;
+package urchin.controller.api.support.error;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import urchin.api.support.ErrorResponse;
+import urchin.controller.api.support.ErrorResponse;
 
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 

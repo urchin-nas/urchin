@@ -1,8 +1,8 @@
-package urchin.api.support;
+package urchin.controller.api.support;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import urchin.api.support.error.ResponseException;
+import urchin.controller.api.support.error.ResponseException;
 
 import java.util.List;
 

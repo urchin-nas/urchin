@@ -1,4 +1,4 @@
-package urchin.api.support;
+package urchin.controller.api.support;
 
 import org.junit.Test;
 import org.springframework.core.ParameterizedTypeReference;
@@ -6,7 +6,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import urchin.api.support.error.ExceptionControllerAdvice;
+import urchin.controller.api.support.error.ExceptionControllerAdvice;
 import urchin.testutil.TestApplication;
 import urchin.testutil.TestController;
 import urchin.testutil.TestRequestDto;

@@ -1,4 +1,4 @@
-package urchin.api.support.validation;
+package urchin.controller.api.support.validation;
 
 public class ValidationConstants {
 

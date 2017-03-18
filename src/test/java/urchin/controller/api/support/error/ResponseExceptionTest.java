@@ -1,8 +1,8 @@
-package urchin.api.support.error;
+package urchin.controller.api.support.error;
 
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
-import urchin.api.support.ErrorResponse;
+import urchin.controller.api.support.ErrorResponse;
 
 import java.util.Arrays;
 

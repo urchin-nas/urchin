@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import urchin.api.support.ErrorResponse;
-import urchin.api.support.ResponseMessage;
-import urchin.api.support.error.ResponseException;
+import urchin.controller.api.support.ErrorResponse;
+import urchin.controller.api.support.ResponseMessage;
+import urchin.controller.api.support.error.ResponseException;
 
 import javax.validation.Valid;
 

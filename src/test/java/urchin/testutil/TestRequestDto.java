@@ -4,7 +4,7 @@ package urchin.testutil;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotNull;
 
-import static urchin.api.support.validation.ValidationConstants.FIELD_MISSING;
+import static urchin.controller.api.support.validation.ValidationConstants.FIELD_MISSING;
 
 public class TestRequestDto {
 

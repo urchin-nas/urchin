@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import urchin.api.FolderDto;
-import urchin.api.MountEncryptedFolderDto;
-import urchin.api.PassphraseDto;
-import urchin.api.VirtualFolderDto;
-import urchin.api.support.ResponseMessage;
+import urchin.controller.api.FolderDto;
+import urchin.controller.api.MountEncryptedFolderDto;
+import urchin.controller.api.PassphraseDto;
+import urchin.controller.api.VirtualFolderDto;
+import urchin.controller.api.support.ResponseMessage;
 import urchin.domain.model.EncryptedFolder;
 import urchin.domain.model.Passphrase;
 import urchin.domain.util.EncryptedFolderUtil;
@@ -24,9 +24,9 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static urchin.api.support.ResponseEntityBuilder.createOkResponse;
-import static urchin.api.support.ResponseEntityBuilder.createResponse;
-import static urchin.api.support.error.ResponseExceptionBuilder.unexpectedError;
+import static urchin.controller.api.support.ResponseEntityBuilder.createOkResponse;
+import static urchin.controller.api.support.ResponseEntityBuilder.createResponse;
+import static urchin.controller.api.support.error.ResponseExceptionBuilder.unexpectedError;
 
 @RestController
 @RequestMapping("api/folders")

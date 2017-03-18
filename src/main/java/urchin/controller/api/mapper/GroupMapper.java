@@ -1,7 +1,7 @@
-package urchin.api.mapper;
+package urchin.controller.api.mapper;
 
-import urchin.api.AddGroupDto;
-import urchin.api.GroupDto;
+import urchin.controller.api.AddGroupDto;
+import urchin.controller.api.GroupDto;
 import urchin.domain.model.Group;
 
 import java.util.List;

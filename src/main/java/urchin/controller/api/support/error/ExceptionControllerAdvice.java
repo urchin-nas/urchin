@@ -1,4 +1,4 @@
-package urchin.api.support.error;
+package urchin.controller.api.support.error;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -8,15 +8,15 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
-import urchin.api.support.ErrorResponse;
-import urchin.api.support.ResponseMessage;
+import urchin.controller.api.support.ErrorResponse;
+import urchin.controller.api.support.ResponseMessage;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-import static urchin.api.support.ResponseEntityBuilder.createErrorResponse;
+import static urchin.controller.api.support.ResponseEntityBuilder.createErrorResponse;
 
 @ControllerAdvice
 public class ExceptionControllerAdvice {

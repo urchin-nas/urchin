@@ -6,9 +6,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import urchin.api.AddUserDto;
-import urchin.api.UserDto;
-import urchin.api.support.ResponseMessage;
+import urchin.controller.api.AddUserDto;
+import urchin.controller.api.UserDto;
+import urchin.controller.api.support.ResponseMessage;
 import urchin.testutil.TestApplication;
 
 import java.util.List;

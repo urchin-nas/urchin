@@ -1,4 +1,4 @@
-package urchin.api;
+package urchin.controller.api;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6,8 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import static urchin.api.support.validation.ValidationConstants.FIELD_EMPTY;
-import static urchin.api.support.validation.ValidationConstants.FIELD_MISSING;
+import static urchin.controller.api.support.validation.ValidationConstants.FIELD_EMPTY;
+import static urchin.controller.api.support.validation.ValidationConstants.FIELD_MISSING;
 import static urchin.domain.model.Passphrase.ECRYPTFS_MAX_PASSPHRASE_LENGTH;
 
 public class MountEncryptedFolderDto {

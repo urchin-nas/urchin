@@ -1,4 +1,4 @@
-package urchin.api;
+package urchin.controller.api;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

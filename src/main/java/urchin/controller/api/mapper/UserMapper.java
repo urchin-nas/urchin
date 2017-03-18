@@ -1,7 +1,7 @@
-package urchin.api.mapper;
+package urchin.controller.api.mapper;
 
-import urchin.api.AddUserDto;
-import urchin.api.UserDto;
+import urchin.controller.api.AddUserDto;
+import urchin.controller.api.UserDto;
 import urchin.domain.model.User;
 
 import java.util.List;

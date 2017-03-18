@@ -5,12 +5,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import urchin.api.AddGroupDto;
-import urchin.api.AddUserToGroupDto;
-import urchin.api.GroupDto;
-import urchin.api.support.ErrorResponse;
-import urchin.api.support.ResponseMessage;
-import urchin.api.support.error.ResponseException;
+import urchin.controller.api.AddGroupDto;
+import urchin.controller.api.AddUserToGroupDto;
+import urchin.controller.api.GroupDto;
+import urchin.controller.api.support.ErrorResponse;
+import urchin.controller.api.support.ResponseMessage;
+import urchin.controller.api.support.error.ResponseException;
 import urchin.domain.model.Group;
 import urchin.domain.model.GroupId;
 import urchin.domain.model.UserId;
@@ -19,9 +19,9 @@ import urchin.service.GroupService;
 import javax.validation.Valid;
 import java.util.List;
 
-import static urchin.api.mapper.GroupMapper.mapToGroup;
-import static urchin.api.mapper.GroupMapper.mapToGroupsDto;
-import static urchin.api.support.ResponseEntityBuilder.*;
+import static urchin.controller.api.mapper.GroupMapper.mapToGroup;
+import static urchin.controller.api.mapper.GroupMapper.mapToGroupsDto;
+import static urchin.controller.api.support.ResponseEntityBuilder.*;
 
 @RestController
 @RequestMapping("api/groups")

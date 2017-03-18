@@ -1,4 +1,4 @@
-package urchin.api;
+package urchin.controller.api;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -7,8 +7,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
-import static urchin.api.support.validation.ValidationConstants.FIELD_EMPTY;
-import static urchin.api.support.validation.ValidationConstants.FIELD_MISSING;
+import static urchin.controller.api.support.validation.ValidationConstants.FIELD_EMPTY;
+import static urchin.controller.api.support.validation.ValidationConstants.FIELD_MISSING;
 
 public class VirtualFolderDto {
 

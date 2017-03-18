@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import urchin.api.AddUserDto;
-import urchin.api.UserDto;
-import urchin.api.support.ResponseMessage;
+import urchin.controller.api.AddUserDto;
+import urchin.controller.api.UserDto;
+import urchin.controller.api.support.ResponseMessage;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
 import urchin.service.UserService;
@@ -14,10 +14,10 @@ import urchin.service.UserService;
 import javax.validation.Valid;
 import java.util.List;
 
-import static urchin.api.mapper.UserMapper.mapToUser;
-import static urchin.api.mapper.UserMapper.mapToUsersDto;
-import static urchin.api.support.ResponseEntityBuilder.createOkResponse;
-import static urchin.api.support.ResponseEntityBuilder.createResponse;
+import static urchin.controller.api.mapper.UserMapper.mapToUser;
+import static urchin.controller.api.mapper.UserMapper.mapToUsersDto;
+import static urchin.controller.api.support.ResponseEntityBuilder.createOkResponse;
+import static urchin.controller.api.support.ResponseEntityBuilder.createResponse;
 
 @RestController
 @RequestMapping("api/users")
