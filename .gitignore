@@ -3,9 +3,11 @@
 *.iml
 
 # frontend
-node_modules/
-build/
-node/
+src/main/app/node_modules/
+src/main/app/build/
+src/main/app/node/
+src/main/resources/public/
+yarn-error.log
 
 # backend
 target/
