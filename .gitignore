@@ -1,11 +1,11 @@
 # project
 .idea
 *.iml
-target
 
 # frontend
-node_modules
-built
-etc
-node
-npm-debug.log
+node_modules/
+build/
+node/
+
+# backend
+target/
