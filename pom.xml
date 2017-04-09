@@ -109,7 +109,6 @@
                     <filesets>
                         <fileset>
                             <directory>src/main/app/build</directory>
-                            <directory>src/main/resources/public</directory>
                         </fileset>
                     </filesets>
                 </configuration>
@@ -162,7 +161,7 @@
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>src/main/resources/public</outputDirectory>
+                            <outputDirectory>target/classes/public</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>src/main/app/build</directory>
