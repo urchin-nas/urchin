@@ -6,6 +6,7 @@
 * [Ubuntu] (http://www.ubuntu.com/) (may work on other linux distros)
 * [ecryptfs] (http://ecryptfs.org/)
 * [mhddfs] (https://romanrm.net/mhddfs/)
+* [samba] (https://www.samba.org/)
 * root access
 
 ## Build

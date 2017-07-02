@@ -3,11 +3,10 @@
 *.iml
 
 # frontend
-src/main/app/node_modules/
-src/main/app/build/
-src/main/app/node/
-src/main/resources/public/
-yarn-error.log
+src/main/app/node_modules
+src/main/app/node
+src/main/app/etc
+src/main/app/build
 
 # backend
-target/
+target
