@@ -1,15 +1,17 @@
-import React, { Component } from 'react';
-import './App.css';
-import UserContainer from "./component/user/UserContainer";
+import React, {Component} from 'react';
+import {Switch, Route} from 'react-router-dom'
+import MainContainer from './component/MainContainer';
+import LoginContainer from './component/LoginContainer';
 
 class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <UserContainer/>
-      </div>
-    );
-  }
+    render() {
+        return (
+            <Switch>
+                <Route path='/login' component={LoginContainer}/>
+                <Route path='/' component={MainContainer}/>
+            </Switch>
+        );
+    }
 }
 
 export default App;
