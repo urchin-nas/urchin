@@ -1,9 +1,12 @@
 import {combineReducers} from "redux"
+import userReducer from "./userReducer";
 
-const rootReducer = () => {
-    return combineReducers({
+const appReducer = combineReducers({
+    userData: userReducer
+});
 
-    });
+const rootReducer = (state, action) => {
+    return appReducer(state, action)
 };
 
 export default rootReducer;
