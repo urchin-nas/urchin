@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class UserDto {
 
     private final int userId;
-
     private final String username;
 
     @JsonCreator

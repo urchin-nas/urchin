@@ -2,16 +2,11 @@ package urchin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import urchin.controller.api.FolderDto;
-import urchin.controller.api.MountEncryptedFolderDto;
-import urchin.controller.api.PassphraseDto;
-import urchin.controller.api.VirtualFolderDto;
-import urchin.controller.api.support.ResponseMessage;
+import urchin.controller.api.*;
 import urchin.domain.model.EncryptedFolder;
 import urchin.domain.model.Passphrase;
 import urchin.domain.util.EncryptedFolderUtil;
@@ -23,10 +18,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static urchin.controller.api.support.ResponseEntityBuilder.createOkResponse;
-import static urchin.controller.api.support.ResponseEntityBuilder.createResponse;
-import static urchin.controller.api.support.error.ResponseExceptionBuilder.unexpectedError;
 
 @RestController
 @RequestMapping("api/folders")
@@ -40,69 +31,49 @@ public class FolderController {
     }
 
     @RequestMapping(value = "create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<PassphraseDto>> createEncryptedFolder(@Valid @RequestBody FolderDto folderDto) {
-        try {
-            Passphrase passphrase = folderService.createAndMountEncryptedFolder(Paths.get(folderDto.getFolder()));
-            return createResponse(new PassphraseDto(passphrase.getPassphrase()));
-        } catch (IOException e) {
-            throw unexpectedError(e);
-        }
+    public PassphraseDto createEncryptedFolder(@Valid @RequestBody FolderDto folderDto) throws IOException {
+        Passphrase passphrase = folderService.createAndMountEncryptedFolder(Paths.get(folderDto.getFolder()));
+        return new PassphraseDto(passphrase.getPassphrase());
     }
 
     @RequestMapping(value = "mount", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<String>> mountEncryptedFolder(@Valid @RequestBody MountEncryptedFolderDto mountEncryptedFolderDto) {
+    public MessageDto mountEncryptedFolder(@Valid @RequestBody MountEncryptedFolderDto mountEncryptedFolderDto) throws IOException {
         EncryptedFolder encryptedFolder = EncryptedFolderUtil.getEncryptedFolder(Paths.get(mountEncryptedFolderDto.getFolder()));
         Passphrase passphrase = new Passphrase(mountEncryptedFolderDto.getPassphrase());
-        try {
-            folderService.mountEncryptedFolder(encryptedFolder, passphrase);
-            return createOkResponse();
-        } catch (IOException e) {
-            throw unexpectedError(e);
-        }
+        folderService.mountEncryptedFolder(encryptedFolder, passphrase);
+        return new MessageDto("virtual folder created");
     }
 
     @RequestMapping(value = "unmount", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<String>> unmountEncryptedFolder(@Valid @RequestBody FolderDto folderDto) {
-        try {
-            folderService.unmountFolder(Paths.get(folderDto.getFolder()));
-            return createOkResponse();
-        } catch (IOException e) {
-            throw unexpectedError(e);
-        }
+    public MessageDto unmountEncryptedFolder(@Valid @RequestBody FolderDto folderDto) throws IOException {
+        folderService.unmountFolder(Paths.get(folderDto.getFolder()));
+        return new MessageDto("encrypted folder unmounted");
     }
 
     @RequestMapping(value = "virtual/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<String>> setupVirtualFolder(@Valid @RequestBody VirtualFolderDto virtualFolderDto) {
-        try {
-            List<Path> folders = virtualFolderDto.getFolders().stream()
-                    .map(folder -> Paths.get(folder))
-                    .collect(Collectors.toList());
-            folderService.setupVirtualFolder(folders, Paths.get(virtualFolderDto.getVirtualFolder()));
-            return createOkResponse();
-        } catch (IOException e) {
-            throw unexpectedError(e);
-        }
+    public MessageDto setupVirtualFolder(@Valid @RequestBody VirtualFolderDto virtualFolderDto) throws IOException {
+        List<Path> folders = virtualFolderDto.getFolders().stream()
+                .map(folder -> Paths.get(folder))
+                .collect(Collectors.toList());
+        folderService.setupVirtualFolder(folders, Paths.get(virtualFolderDto.getVirtualFolder()));
+        return new MessageDto("virtual folder created");
     }
 
     @RequestMapping(value = "virtual/unmount", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<String>> unmountVirtualFolder(@Valid @RequestBody FolderDto folderDto) {
-        try {
-            folderService.unmountFolder(Paths.get(folderDto.getFolder()));
-            return createOkResponse();
-        } catch (IOException e) {
-            throw unexpectedError(e);
-        }
+    public MessageDto unmountVirtualFolder(@Valid @RequestBody FolderDto folderDto) throws IOException {
+        folderService.unmountFolder(Paths.get(folderDto.getFolder()));
+        return new MessageDto("virtual folder unmounted");
     }
 
     @RequestMapping(value = "share", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<String>> shareFolder(@Valid @RequestBody FolderDto folderDto) {
+    public MessageDto shareFolder(@Valid @RequestBody FolderDto folderDto) {
         folderService.shareFolder(Paths.get(folderDto.getFolder()));
-        return createOkResponse();
+        return new MessageDto("folder shared");
     }
 
     @RequestMapping(value = "unshare", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<String>> unSHareFolder(@Valid @RequestBody FolderDto folderDto) {
+    public MessageDto unShareFolder(@Valid @RequestBody FolderDto folderDto) {
         folderService.unshareFolder(Paths.get(folderDto.getFolder()));
-        return createOkResponse();
+        return new MessageDto("folder unshared");
     }
 }

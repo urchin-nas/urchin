@@ -6,13 +6,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import static urchin.controller.api.support.validation.ValidationConstants.FIELD_EMPTY;
-import static urchin.controller.api.support.validation.ValidationConstants.FIELD_MISSING;
-
 public class FolderDto {
 
-    @NotNull(message = FIELD_MISSING)
-    @Size(min = 1, message = FIELD_EMPTY)
+    @NotNull
+    @Size(min = 1)
     private final String folder;
 
     @JsonCreator

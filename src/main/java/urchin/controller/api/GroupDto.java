@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class GroupDto {
 
     private final int groupId;
-
     private final String name;
 
     @JsonCreator

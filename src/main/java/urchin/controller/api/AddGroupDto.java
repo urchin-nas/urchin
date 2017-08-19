@@ -6,11 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import static urchin.controller.api.support.validation.ValidationConstants.FIELD_MISSING;
-
 public class AddGroupDto {
 
-    @NotNull(message = FIELD_MISSING)
+    @NotNull
     @Size(min = 3, max = 32)
     private final String name;
 

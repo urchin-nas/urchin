@@ -1,16 +1,9 @@
 package urchin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import urchin.controller.api.AddGroupDto;
-import urchin.controller.api.AddUserToGroupDto;
-import urchin.controller.api.GroupDto;
-import urchin.controller.api.support.ErrorResponse;
-import urchin.controller.api.support.ResponseMessage;
-import urchin.controller.api.support.error.ResponseException;
+import urchin.controller.api.*;
 import urchin.domain.model.Group;
 import urchin.domain.model.GroupId;
 import urchin.domain.model.UserId;
@@ -21,13 +14,10 @@ import java.util.List;
 
 import static urchin.controller.api.mapper.GroupMapper.mapToGroup;
 import static urchin.controller.api.mapper.GroupMapper.mapToGroupsDto;
-import static urchin.controller.api.support.ResponseEntityBuilder.*;
 
 @RestController
 @RequestMapping("api/groups")
 public class GroupController {
-
-    private static final String INVALID_GROUP_ID = "INVALID_GROUP_ID";
 
     private final GroupService groupService;
 
@@ -37,37 +27,33 @@ public class GroupController {
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<List<GroupDto>>> getGroups() {
+    public List<GroupDto> getGroups() {
         List<Group> groups = groupService.getGroups();
-        return createResponse(mapToGroupsDto(groups));
+        return mapToGroupsDto(groups);
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<Integer>> addGroup(@Valid @RequestBody AddGroupDto addGroupDto) {
+    public IdDto addGroup(@Valid @RequestBody AddGroupDto addGroupDto) {
         GroupId groupId = groupService.addGroup(mapToGroup(addGroupDto));
-        return createResponse(groupId.getId());
+        return new IdDto(groupId.getId());
     }
 
     @RequestMapping(value = "{groupId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<String>> removeGroup(@PathVariable int groupId) {
-        try {
-            groupService.removeGroup(new GroupId(groupId));
-        } catch (IllegalArgumentException e) {
-            return createErrorResponse(new ResponseException(HttpStatus.BAD_REQUEST, new ErrorResponse(INVALID_GROUP_ID).setField("groupId").setMessage(e.getMessage()), e));
-        }
-        return createOkResponse();
+    public MessageDto removeGroup(@PathVariable int groupId) {
+        groupService.removeGroup(new GroupId(groupId));
+        return new MessageDto("Group removed");
     }
 
     @RequestMapping(value = "user", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<String>> addUserToGroup(@Valid @RequestBody AddUserToGroupDto addUserToGroupDto) {
+    public MessageDto addUserToGroup(@Valid @RequestBody AddUserToGroupDto addUserToGroupDto) {
         groupService.addUserToGroup(new UserId(addUserToGroupDto.getUserId()), new GroupId(addUserToGroupDto.getGroupId()));
-        return createOkResponse();
+        return new MessageDto("User added to group");
     }
 
     @RequestMapping(value = "{groupId}/user/{userId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<String>> removeUserFromGroup(@PathVariable int groupId, @PathVariable int userId) {
+    public MessageDto removeUserFromGroup(@PathVariable int groupId, @PathVariable int userId) {
         groupService.removeUserFromGroup(new UserId(userId), new GroupId(groupId));
-        return createOkResponse();
+        return new MessageDto("User removed from group");
     }
 
 }

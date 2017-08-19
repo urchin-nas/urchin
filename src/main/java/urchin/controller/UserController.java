@@ -2,11 +2,11 @@ package urchin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import urchin.controller.api.AddUserDto;
+import urchin.controller.api.IdDto;
+import urchin.controller.api.MessageDto;
 import urchin.controller.api.UserDto;
-import urchin.controller.api.support.ResponseMessage;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
 import urchin.service.UserService;
@@ -16,8 +16,6 @@ import java.util.List;
 
 import static urchin.controller.api.mapper.UserMapper.mapToUser;
 import static urchin.controller.api.mapper.UserMapper.mapToUsersDto;
-import static urchin.controller.api.support.ResponseEntityBuilder.createOkResponse;
-import static urchin.controller.api.support.ResponseEntityBuilder.createResponse;
 
 @RestController
 @RequestMapping("api/users")
@@ -31,21 +29,21 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<List<UserDto>>> getUsers() {
+    public List<UserDto> getUsers() {
         List<User> users = userService.getUsers();
-        return createResponse(mapToUsersDto(users));
+        return mapToUsersDto(users);
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<Integer>> addUser(@Valid @RequestBody AddUserDto addUserDto) {
+    public IdDto addUser(@Valid @RequestBody AddUserDto addUserDto) {
         UserId userId = userService.addUser(mapToUser(addUserDto), addUserDto.getPassword());
-        return createResponse(userId.getId());
+        return new IdDto(userId.getId());
     }
 
     @RequestMapping(value = "{userId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseMessage<String>> removeUser(@PathVariable int userId) {
+    public MessageDto removeUser(@PathVariable int userId) {
         userService.removeUser(new UserId(userId));
-        return createOkResponse();
+        return new MessageDto("User removed");
     }
 
 }

@@ -6,17 +6,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
-import static urchin.controller.api.support.validation.ValidationConstants.FIELD_MISSING;
-import static urchin.controller.api.support.validation.ValidationConstants.FIELD_SMALL_VALUE;
-
 public class AddUserToGroupDto {
 
-    @NotNull(message = FIELD_MISSING)
-    @Min(value = 1, message = FIELD_SMALL_VALUE)
+    @NotNull
+    @Min(value = 1)
     private final int groupId;
 
-    @NotNull(message = FIELD_MISSING)
-    @Min(value = 1, message = FIELD_SMALL_VALUE)
+    @NotNull
+    @Min(value = 1)
     private final int userId;
 
     @JsonCreator
