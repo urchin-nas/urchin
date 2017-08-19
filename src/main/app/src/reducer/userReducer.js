@@ -1,8 +1,6 @@
 import {Actions} from '../constants'
 
 const userReducer = (state = {}, action) => {
-    console.log(action);
-    console.log(state);
     switch(action.type) {
         case Actions.Users.GET_USERS:
             return {...state, isFetchingUsers: true};
