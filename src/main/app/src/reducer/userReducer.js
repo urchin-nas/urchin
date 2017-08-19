@@ -5,8 +5,18 @@ const userReducer = (state = {}, action) => {
         case Actions.Users.GET_USERS:
             return {...state, isFetchingUsers: true};
 
-        case Actions.Users.RECEIVED_USERS:
+        case Actions.Users.GET_USERS_SUCCESS:
             return {...state, isFetchingUsers: false, users: action.data};
+
+        case Actions.User.SET_USER:
+            return {...state, user: {...state.user, [action.data.field]: action.data.value}};
+
+        case Actions.User.SAVE_USER:
+            return{...state, isSavingUser: true};
+
+            case Actions.User.SAVE_USER_SUCCESS:
+            return{...state, isSavingUser: false};
+
         default:
             return state;
     }

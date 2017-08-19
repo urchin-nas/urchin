@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Switch, Route, Redirect} from 'react-router-dom'
-import UserContainer from "./user/UserContainer";
+import Users from "./users/Users";
 import MainMenu from "./MainMenu";
 import Home from "./Home";
 
@@ -11,7 +11,7 @@ class MainContainer extends Component {
                 <MainMenu/>
                 <Switch>
                     <Route exact path="/" component={Home}/>
-                    <Route path="/users" component={UserContainer}/>
+                    <Route path="/users" component={Users}/>
                     <Redirect to="/"/>
                 </Switch>
             </div>

@@ -1,17 +1,19 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import UserList from './UserList';
 import {getUsers} from '../../action/userAction'
+import UserList from "./UserList";
 
-class UserContainer extends Component {
+class UserListContainer extends Component {
 
     componentWillMount() {
         this.props.getUsers();
     }
 
     render() {
-        return(
-            <UserList/>
+        return (
+            <UserList
+                users={this.props.users}
+            />
         )
     }
 }
@@ -30,4 +32,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(UserListContainer)
