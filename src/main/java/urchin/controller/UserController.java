@@ -15,6 +15,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 import static urchin.controller.api.mapper.UserMapper.mapToUser;
+import static urchin.controller.api.mapper.UserMapper.mapToUserDto;
 import static urchin.controller.api.mapper.UserMapper.mapToUsersDto;
 
 @RestController
@@ -32,6 +33,14 @@ public class UserController {
     public List<UserDto> getUsers() {
         List<User> users = userService.getUsers();
         return mapToUsersDto(users);
+    }
+
+    @RequestMapping(value = "{userId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public UserDto getUser(@PathVariable int userId) {
+        UserId uid = new UserId(userId);
+        return mapToUserDto(userService.getUser(uid)
+                .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid UserId: %s", uid)))
+        );
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

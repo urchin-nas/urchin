@@ -1,5 +1,6 @@
 package urchin.controller;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
@@ -21,11 +22,15 @@ import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;
 public class UserControllerIT extends TestApplication {
 
     static final String PASSWORD = "superSecret";
+    private AddUserDto addUserDto;
+
+    @Before
+    public void setUp() {
+        addUserDto = new AddUserDto(USERNAME_PREFIX + System.currentTimeMillis(), PASSWORD);
+    }
 
     @Test
     public void addAndRemoveUser() {
-        AddUserDto addUserDto = new AddUserDto(USERNAME_PREFIX + System.currentTimeMillis(), PASSWORD);
-
         ResponseEntity<IdDto> addUserResponse = addUserRequest(addUserDto);
 
         assertEquals(HttpStatus.OK, addUserResponse.getStatusCode());
@@ -48,8 +53,23 @@ public class UserControllerIT extends TestApplication {
         assertEquals(HttpStatus.OK, removeUserResponse.getStatusCode());
     }
 
+    @Test
+    public void getUser() {
+        ResponseEntity<IdDto> addUserResponse = addUserRequest(addUserDto);
+        int userId = addUserResponse.getBody().getId();
+
+        ResponseEntity<UserDto> getUserResponse = getUserRequest(userId);
+
+        assertEquals(HttpStatus.OK, getUserResponse.getStatusCode());
+        assertEquals(userId, getUserResponse.getBody().getUserId());
+    }
+
     private ResponseEntity<IdDto> addUserRequest(AddUserDto addUserDto) {
         return testRestTemplate.postForEntity(discoverControllerPath() + "/add", addUserDto, IdDto.class);
+    }
+
+    private ResponseEntity<UserDto> getUserRequest(int userId) {
+        return testRestTemplate.getForEntity(discoverControllerPath() + "/" + userId, UserDto.class);
     }
 
     private ResponseEntity<UserDto[]> getUsersRequest() {
