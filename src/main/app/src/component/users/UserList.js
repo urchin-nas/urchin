@@ -15,6 +15,7 @@ class UserList extends Component {
                 <ul>
                     {userItems}
                 </ul>
+                <a href="/users/0">new user</a>
             </div>
         )
     }

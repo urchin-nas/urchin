@@ -1,5 +1,6 @@
+import history from '../history'
 import {Actions} from '../constants'
-import {get, post} from './restClient'
+import {get, post, del} from './restClient'
 
 const {Users} = Actions;
 const {User} = Actions;
@@ -8,9 +9,20 @@ export const getUsers = () => (dispatch) => {
     dispatch({
         type: Users.GET_USERS
     });
-    return get('/api/users')
+    get('/api/users')
         .then(json => dispatch({
             type: Users.GET_USERS_SUCCESS,
+            data: json
+        }))
+};
+
+export const getUserData = (userId) => (dispatch) => {
+    dispatch({
+        type: User.GET_USER
+    });
+    get('/api/users/' + userId)
+        .then(json => dispatch({
+            type: User.GET_USER_SUCCESS,
             data: json
         }))
 };
@@ -26,10 +38,31 @@ export const saveUserData = (userId, user) => (dispatch) => {
     dispatch({
         type: User.SAVE_USER
     });
-    return post('/api/users/add', user)
-        .then(json => dispatch({
-            type: User.SAVE_USER_SUCCESS,
-            data: json
-        }))
+    post('/api/users/add', user)
+        .then(json => {
+            dispatch({
+                type: User.SAVE_USER_SUCCESS,
+                data: json
+            });
+            history.push('/users');
+        }, json => (
+            console.log('failed: ' + json)
+        ))
+};
+
+export const deleteUserData = (userId) => (dispatch) => {
+    dispatch({
+        type: User.DELETE_USER
+    });
+    del('/api/users/' + userId)
+        .then(json => {
+            dispatch({
+                type: User.DELETE_USER_SUCCESS,
+                data: json
+            });
+            history.push('/users')
+        }, json => (
+            console.log('failed: ' + json)
+        ))
 
 };

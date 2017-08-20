@@ -17,10 +17,9 @@ public class UserMapper {
         return users.stream()
                 .map(UserMapper::mapToUserDto)
                 .collect(Collectors.toList());
-
     }
 
-    private static UserDto mapToUserDto(User user) {
+    public static UserDto mapToUserDto(User user) {
         return new UserDto(
                 user.getUserId().getId(),
                 user.getUsername()

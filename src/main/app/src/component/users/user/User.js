@@ -15,6 +15,10 @@ class Users extends Component {
         this.props.callbacks.saveUser(this.props.userId || 0);
     };
 
+    delete = () => {
+        this.props.callbacks.deleteUser(this.props.userId);
+    };
+
     render() {
         let username = this.props.user.username || '';
         let password = this.props.user.password || '';
@@ -35,6 +39,9 @@ class Users extends Component {
                     onChange={this.update}
                 />
                 <button onClick={this.save}>Save</button>
+                { this.props.userId > 0 &&
+                <button onClick={this.delete}>Delete</button>
+                }
             </div>
         )
     }
