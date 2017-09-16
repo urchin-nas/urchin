@@ -1,7 +1,7 @@
-import {Actions} from '../constants'
+import {Actions} from "../constants";
 
 const groupReducer = (state = {}, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case Actions.Groups.GET_GROUPS:
             return {...state, isFetchingGroups: true};
 
@@ -18,10 +18,10 @@ const groupReducer = (state = {}, action) => {
             return {...state, group: {...state.group, [action.data.field]: action.data.value}};
 
         case Actions.Group.SAVE_GROUP:
-            return{...state, isSavingGroup: true};
+            return {...state, isSavingGroup: true};
 
-            case Actions.Group.SAVE_GROUP_SUCCESS:
-            return{...state, isSavingGroup: false};
+        case Actions.Group.SAVE_GROUP_SUCCESS:
+            return {...state, isSavingGroup: false};
 
         default:
             return state;
