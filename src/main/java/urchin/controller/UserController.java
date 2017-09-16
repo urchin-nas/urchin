@@ -3,10 +3,10 @@ package urchin.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import urchin.controller.api.AddUserDto;
 import urchin.controller.api.IdDto;
 import urchin.controller.api.MessageDto;
-import urchin.controller.api.UserDto;
+import urchin.controller.api.user.AddUserDto;
+import urchin.controller.api.user.UserDto;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
 import urchin.service.UserService;
@@ -14,9 +14,7 @@ import urchin.service.UserService;
 import javax.validation.Valid;
 import java.util.List;
 
-import static urchin.controller.api.mapper.UserMapper.mapToUser;
-import static urchin.controller.api.mapper.UserMapper.mapToUserDto;
-import static urchin.controller.api.mapper.UserMapper.mapToUsersDto;
+import static urchin.controller.api.mapper.UserMapper.*;
 
 @RestController
 @RequestMapping("api/users")

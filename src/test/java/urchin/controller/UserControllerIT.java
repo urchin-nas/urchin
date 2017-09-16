@@ -6,10 +6,10 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import urchin.controller.api.AddUserDto;
+import urchin.controller.api.user.AddUserDto;
 import urchin.controller.api.IdDto;
 import urchin.controller.api.MessageDto;
-import urchin.controller.api.UserDto;
+import urchin.controller.api.user.UserDto;
 import urchin.testutil.TestApplication;
 
 import java.util.Arrays;
