@@ -6,20 +6,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class GroupDto {
 
     private final int groupId;
-    private final String name;
+    private final String groupName;
 
     @JsonCreator
-    public GroupDto(@JsonProperty("groupId") int groupId, @JsonProperty("name") String name) {
+    public GroupDto(@JsonProperty("groupId") int groupId, @JsonProperty("groupName") String groupName) {
         this.groupId = groupId;
-        this.name = name;
+        this.groupName = groupName;
     }
 
     public int getGroupId() {
         return groupId;
     }
 
-    public String getName() {
-        return name;
+    public String getGroupName() {
+        return groupName;
     }
 
 }

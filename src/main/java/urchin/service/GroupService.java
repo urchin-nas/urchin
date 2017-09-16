@@ -70,4 +70,8 @@ public class GroupService {
     public List<Group> getGroups() {
         return groupRepository.getGroups();
     }
+
+    public Optional<Group> getGroup(GroupId groupId) {
+        return groupRepository.getGroup(groupId);
+    }
 }

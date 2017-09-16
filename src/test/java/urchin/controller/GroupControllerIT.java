@@ -24,10 +24,12 @@ import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;
 public class GroupControllerIT extends TestApplication {
 
     private UserId userId;
+    private AddGroupDto addGroupDto;
 
     @Before
     public void setup() {
         userId = new UserId(addUserRequest(new AddUserDto(USERNAME_PREFIX + System.currentTimeMillis(), PASSWORD)).getBody().getId());
+        addGroupDto = new AddGroupDto(GROUP_PREFIX + System.currentTimeMillis());
     }
 
     @After
@@ -39,9 +41,6 @@ public class GroupControllerIT extends TestApplication {
     public void addGroupAndAddUserToGroupAndRemoveUseFromGroupAndRemoveGroup() {
 
         //Add group
-
-        AddGroupDto addGroupDto = new AddGroupDto(GROUP_PREFIX + System.currentTimeMillis());
-
         ResponseEntity<IdDto> addGroupResponse = addGroupRequest(addGroupDto);
 
         assertEquals(HttpStatus.OK, addGroupResponse.getStatusCode());
@@ -56,11 +55,11 @@ public class GroupControllerIT extends TestApplication {
         List<GroupDto> groups = asList(groupsResponse.getBody());
         assertFalse(groups.isEmpty());
         List<GroupDto> groupDtos = groups.stream()
-                .filter(groupDto -> groupDto.getName().equals(addGroupDto.getName()))
+                .filter(groupDto -> groupDto.getGroupName().equals(addGroupDto.getGroupName()))
                 .collect(Collectors.toList());
         assertEquals(1, groupDtos.size());
         assertEquals(groupId.getId(), groupDtos.get(0).getGroupId());
-        assertEquals(addGroupDto.getName(), groupDtos.get(0).getName());
+        assertEquals(addGroupDto.getGroupName(), groupDtos.get(0).getGroupName());
 
         //Add user to group
 
@@ -82,12 +81,27 @@ public class GroupControllerIT extends TestApplication {
         assertEquals(HttpStatus.OK, removeGroupResponse.getStatusCode());
     }
 
+    @Test
+    public void getGroup() {
+        ResponseEntity<IdDto> addGroupResponse = addGroupRequest(addGroupDto);
+        int groupId = addGroupResponse.getBody().getId();
+
+        ResponseEntity<GroupDto> getGroupResponse = getGroupRequest(groupId);
+
+        assertEquals(HttpStatus.OK, getGroupResponse.getStatusCode());
+        assertEquals(groupId, getGroupResponse.getBody().getGroupId());
+    }
+
     private ResponseEntity<IdDto> addGroupRequest(AddGroupDto addGroupDto) {
         return testRestTemplate.postForEntity(discoverControllerPath() + "/add", addGroupDto, IdDto.class);
     }
 
     private ResponseEntity<GroupDto[]> getGroupsRequest() {
         return testRestTemplate.getForEntity(discoverControllerPath(), GroupDto[].class);
+    }
+
+    private ResponseEntity<GroupDto> getGroupRequest(int groupId) {
+        return testRestTemplate.getForEntity(discoverControllerPath() + "/" + groupId, GroupDto.class);
     }
 
     private ResponseEntity<MessageDto> removeGroupRequest(int groupId) {

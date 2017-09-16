@@ -10,14 +10,14 @@ public class AddGroupDto {
 
     @NotNull
     @Size(min = 3, max = 32)
-    private final String name;
+    private final String groupName;
 
     @JsonCreator
-    public AddGroupDto(@JsonProperty("name") String name) {
-        this.name = name;
+    public AddGroupDto(@JsonProperty("groupName") String groupName) {
+        this.groupName = groupName;
     }
 
-    public String getName() {
-        return name;
+    public String getGroupName() {
+        return groupName;
     }
 }

@@ -11,6 +11,9 @@ class MainMenu extends Component {
                 <ul>
                     <a href="/users">Users</a>
                 </ul>
+                <ul>
+                    <a href="/groups">Groups</a>
+                </ul>
             </div>
         )
     }

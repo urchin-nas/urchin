@@ -13,6 +13,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 import static urchin.controller.api.mapper.GroupMapper.mapToGroup;
+import static urchin.controller.api.mapper.GroupMapper.mapToGroupDto;
 import static urchin.controller.api.mapper.GroupMapper.mapToGroupsDto;
 
 @RestController
@@ -30,6 +31,14 @@ public class GroupController {
     public List<GroupDto> getGroups() {
         List<Group> groups = groupService.getGroups();
         return mapToGroupsDto(groups);
+    }
+
+    @RequestMapping(value = "{groupId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public GroupDto getGroup(@PathVariable int groupId) {
+        GroupId gid = new GroupId(groupId);
+        return mapToGroupDto(groupService.getGroup(gid)
+                .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid GroupId: %s", gid)))
+        );
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

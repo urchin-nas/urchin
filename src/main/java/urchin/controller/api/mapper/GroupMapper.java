@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class GroupMapper {
 
     public static Group mapToGroup(AddGroupDto addGroupDto) {
-        return new Group(addGroupDto.getName());
+        return new Group(addGroupDto.getGroupName());
     }
 
     public static List<GroupDto> mapToGroupsDto(List<Group> groups) {
@@ -19,7 +19,7 @@ public class GroupMapper {
                 .collect(Collectors.toList());
     }
 
-    private static GroupDto mapToGroupDto(Group group) {
+    public static GroupDto mapToGroupDto(Group group) {
         return new GroupDto(
                 group.getGroupId().getId(),
                 group.getName()

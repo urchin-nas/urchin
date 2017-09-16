@@ -1,8 +1,10 @@
-import {combineReducers} from 'redux'
+import {combineReducers} from 'redux';
 import userReducer from './userReducer';
+import groupReducer from './groupReducer';
 
 const appReducer = combineReducers({
-    userData: userReducer
+    userData: userReducer,
+    groupData: groupReducer
 });
 
 const rootReducer = (state, action) => {
