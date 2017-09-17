@@ -16,7 +16,7 @@ export const getGroups = () => (dispatch) => {
         }))
 };
 
-export const getGroupData = (groupId) => (dispatch) => {
+export const getGroup = (groupId) => (dispatch) => {
     dispatch({
         type: Group.GET_GROUP
     });
@@ -27,14 +27,14 @@ export const getGroupData = (groupId) => (dispatch) => {
         }))
 };
 
-export const setGroupData = (group) => (dispatch) => {
+export const setGroup = (group) => (dispatch) => {
     dispatch({
         type: Group.SET_GROUP,
         data: group
     });
 };
 
-export const saveGroupData = (groupId, group) => (dispatch) => {
+export const saveGroup = (groupId, group) => (dispatch) => {
     dispatch({
         type: Group.SAVE_GROUP
     });
@@ -50,7 +50,7 @@ export const saveGroupData = (groupId, group) => (dispatch) => {
         ))
 };
 
-export const deleteGroupData = (groupId) => (dispatch) => {
+export const deleteGroup = (groupId) => (dispatch) => {
     dispatch({
         type: Group.DELETE_GROUP
     });

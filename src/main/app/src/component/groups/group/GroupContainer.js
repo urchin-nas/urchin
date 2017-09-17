@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import Group from './Group';
-import {setGroupData, saveGroupData, getGroupData, deleteGroupData} from '../../../action/groupAction';
+import {setGroup, saveGroup, getGroup, deleteGroup} from '../../../action/groupAction';
 
 class GroupContainer extends Component {
 
@@ -47,16 +47,16 @@ class GroupContainer extends Component {
 const mapDispatchToProps = (dispatch) => {
     return {
         getGroup: (groupId) => {
-            dispatch(getGroupData(groupId))
+            dispatch(getGroup(groupId))
         },
         setGroup: (group) => {
-            dispatch(setGroupData(group))
+            dispatch(setGroup(group))
         },
         saveGroup: (groupId, group) => {
-            dispatch(saveGroupData(groupId, group))
+            dispatch(saveGroup(groupId, group))
         },
         deleteGroup: (groupId) => {
-            dispatch(deleteGroupData(groupId))
+            dispatch(deleteGroup(groupId))
         }
     }
 };

@@ -15,7 +15,7 @@ class Groups extends Component {
         this.props.callbacks.saveGroup(this.props.groupId || 0);
     };
 
-    delete = () => {
+    del = () => {
         this.props.callbacks.deleteGroup(this.props.groupId);
     };
 
@@ -33,7 +33,7 @@ class Groups extends Component {
                 />
                 <button onClick={this.save}>Save</button>
                 { this.props.groupId > 0 &&
-                <button onClick={this.delete}>Delete</button>
+                <button onClick={this.del}>Delete</button>
                 }
             </div>
         )
