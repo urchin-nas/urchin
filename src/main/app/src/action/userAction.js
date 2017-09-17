@@ -16,7 +16,7 @@ export const getUsers = () => (dispatch) => {
         }))
 };
 
-export const getUserData = (userId) => (dispatch) => {
+export const getUser = (userId) => (dispatch) => {
     dispatch({
         type: User.GET_USER
     });
@@ -27,14 +27,14 @@ export const getUserData = (userId) => (dispatch) => {
         }))
 };
 
-export const setUserData = (user) => (dispatch) => {
+export const setUser = (user) => (dispatch) => {
     dispatch({
         type: User.SET_USER,
         data: user
     });
 };
 
-export const saveUserData = (userId, user) => (dispatch) => {
+export const createUser = (user) => (dispatch) => {
     dispatch({
         type: User.SAVE_USER
     });
@@ -50,7 +50,7 @@ export const saveUserData = (userId, user) => (dispatch) => {
         ))
 };
 
-export const deleteUserData = (userId) => (dispatch) => {
+export const deleteUser = (userId) => (dispatch) => {
     dispatch({
         type: User.DELETE_USER
     });
@@ -64,5 +64,24 @@ export const deleteUserData = (userId) => (dispatch) => {
         }, json => (
             console.log('failed: ' + json)
         ))
+};
 
+export const addGroup = (userId, groupId) => (dispatch) => {
+    let body = {
+        userId: userId,
+        groupId: groupId
+    };
+    dispatch({
+        type: User.ADD_GROUP
+    });
+    post('/api/groups/user', body)
+        .then(json => {
+            dispatch({
+                type: User.ADD_GROUP_SUCCESS,
+                data: json
+            });
+            history.push('/users');
+        }, json => (
+            console.log('failed: ' + json)
+        ))
 };

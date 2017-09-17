@@ -64,5 +64,4 @@ export const deleteGroupData = (groupId) => (dispatch) => {
         }, json => (
             console.log('failed: ' + json)
         ))
-
 };

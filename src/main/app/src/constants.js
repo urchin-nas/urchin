@@ -11,6 +11,8 @@ export const Actions = {
         SAVE_USER_SUCCESS: "SAVE_USER_SUCCESS",
         DELETE_USER: "DELETE_USER",
         DELETE_USER_SUCCESS: "DELETE_USER_SUCCESS",
+        ADD_GROUP: "ADD_GROUP_TO_USER",
+        ADD_GROUP_SUCCESS: "ADD_GROUP_TO_USER_SUCCESS",
     },  
     Groups: {
         GET_GROUPS: "GET_GROUPS",

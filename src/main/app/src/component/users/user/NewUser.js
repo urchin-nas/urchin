@@ -1,6 +1,7 @@
-import React, {Component} from 'react'
+import React, {Component} from "react";
+import history from '../../../history'
 
-class Users extends Component {
+class NewUser extends Component {
 
     update = (e) => {
         let data = {
@@ -11,40 +12,39 @@ class Users extends Component {
         this.props.callbacks.setUser(data);
     };
 
-    save = () => {
-        this.props.callbacks.saveUser(this.props.userId || 0);
+    create = () => {
+        this.props.callbacks.createUser(this.props.user);
     };
 
-    delete = () => {
-        this.props.callbacks.deleteUser(this.props.userId);
+    cancel = () => {
+        history.push('/users');
     };
 
     render() {
         let username = this.props.user.username || '';
         let password = this.props.user.password || '';
         return (
-
             <div>
                 <h2>User</h2>
                 <input
                     name="username"
                     type="text"
+                    placeholder="username"
                     value={username}
                     onChange={this.update}
                 />
                 <input
                     name="password"
                     type="password"
+                    placeholder="password"
                     value={password}
                     onChange={this.update}
                 />
-                <button onClick={this.save}>Save</button>
-                { this.props.userId > 0 &&
-                <button onClick={this.delete}>Delete</button>
-                }
+                <button onClick={this.create}>Create User</button>
+                <button onClick={this.cancel}>Cancel</button>
             </div>
         )
     }
 }
 
-export default Users
+export default NewUser
