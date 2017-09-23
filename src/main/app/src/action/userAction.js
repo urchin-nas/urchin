@@ -1,6 +1,7 @@
 import history from '../history'
 import {Actions} from '../constants'
-import {get, post, del} from './restClient'
+import {del, get, post} from './restClient'
+import {notifyBackendError, notifySuccess} from './notificationAction'
 
 const {Users} = Actions;
 const {User} = Actions;
@@ -45,8 +46,9 @@ export const createUser = (user) => (dispatch) => {
                 data: json
             });
             history.push('/users');
-        }, json => (
-            console.log('failed: ' + json)
+            notifySuccess("Success", "User saved")
+        }, error => (
+            notifyBackendError(error)
         ))
 };
 
@@ -60,9 +62,10 @@ export const deleteUser = (userId) => (dispatch) => {
                 type: User.DELETE_USER_SUCCESS,
                 data: json
             });
-            history.push('/users')
-        }, json => (
-            console.log('failed: ' + json)
+            history.push('/users');
+            notifySuccess("Success", "User deleted")
+        }, error => (
+            notifyBackendError(error)
         ))
 };
 
@@ -76,12 +79,14 @@ export const addGroup = (userId, groupId) => (dispatch) => {
     });
     post('/api/groups/user', body)
         .then(json => {
+            console.log('success: ' + json);
             dispatch({
                 type: User.ADD_GROUP_SUCCESS,
                 data: json
             });
             history.push('/users');
-        }, json => (
-            console.log('failed: ' + json)
+            notifySuccess("Success", "User added to group")
+        }, error => (
+            notifyBackendError(error)
         ))
 };

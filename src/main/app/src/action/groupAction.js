@@ -1,6 +1,7 @@
 import history from '../history'
 import {Actions} from '../constants'
 import {get, post, del} from './restClient'
+import {notifySuccess, notifyBackendError} from "./notificationAction";
 
 const {Groups} = Actions;
 const {Group} = Actions;
@@ -45,8 +46,9 @@ export const saveGroup = (groupId, group) => (dispatch) => {
                 data: json
             });
             history.push('/groups');
-        }, json => (
-            console.log('failed: ' + json)
+            notifySuccess("Success", "Group saved")
+        }, error => (
+            notifyBackendError(error)
         ))
 };
 
@@ -61,7 +63,8 @@ export const deleteGroup = (groupId) => (dispatch) => {
                 data: json
             });
             history.push('/groups')
-        }, json => (
-            console.log('failed: ' + json)
+            notifySuccess("Success", "Group deleted")
+        }, error => (
+            notifyBackendError(error)
         ))
 };
