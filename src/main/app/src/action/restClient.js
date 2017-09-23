@@ -1,12 +1,19 @@
 import fetch from 'isomorphic-fetch'
 
+let resolveResponse = (response) => {
+    return response.json().then(json => {
+        if (response.status >= 400) {
+            return Promise.reject(json);
+        } else {
+            return Promise.resolve(json);
+        }
+    });
+};
+
 export const get = (url) => {
     return fetch(url)
         .then(response => {
-            if (response.status >= 400) {
-                throw new Error("Bad response from server");
-            }
-            return response.json();
+            return resolveResponse(response);
         });
 };
 
@@ -20,10 +27,7 @@ export const post = (url, body) => {
         },
         body: JSON.stringify(body)
     }).then(response => {
-        if (response.status >= 400) {
-            throw new Error("Bad response from server");
-        }
-        return response.json();
+        return resolveResponse(response);
     });
 };
 
@@ -32,9 +36,6 @@ export const del = (url) => {
         credentials: 'include',
         method: 'delete',
     }).then(response => {
-        if (response.status >= 400) {
-            throw new Error("Bad response from server");
-        }
-        return response.json();
+        return resolveResponse(response);
     });
 };
