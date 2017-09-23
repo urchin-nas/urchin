@@ -9,6 +9,7 @@ import {Router} from 'react-router-dom'
 import history from './history'
 import App from './App';
 import './index.css';
+import 'react-notifications/lib/notifications.css';
 
 const middleware = [thunk];
 
