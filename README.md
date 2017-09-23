@@ -7,17 +7,26 @@
 * [ecryptfs] (http://ecryptfs.org/)
 * [mhddfs] (https://romanrm.net/mhddfs/)
 * [samba] (https://www.samba.org/)
-* root access
+
+Installation using apt:
+```
+apt install ecryptfs-utils mhddfs samba samba-common-bin
+```
+
+## Permissions
+
+Either run everything as `root` 
+or copy content from `sudoers.d/urchin` to `visudo -f /etc/sudoers.d/urchin` and change the username if necessary
 
 ## Build
 
 Build frontend and backend into a self-executable jar:
-```
+```bash
 mvn install
 ```
 
 ## Run
-```
+```bash
 java -jar urchin-1.0-SNAPSHOT.jar
 ```
 
@@ -25,8 +34,8 @@ Go to http://localhost:8080
 
 ## Development
 
-To start client using `webpack-dev-server` with Hot Module Replacement (HMR) support:
-```
+To start client using `webpack-dev-server`:
+```bash
 npm run dev
 ```
 
