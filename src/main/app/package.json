@@ -6,6 +6,7 @@
     "isomorphic-fetch": "2.2.1",
     "react": "15.6.1",
     "react-dom": "15.6.1",
+    "react-notifications": "1.4.3",
     "react-redux": "5.0.6",
     "react-router-dom": "4.2.2",
     "redux": "3.7.2",
