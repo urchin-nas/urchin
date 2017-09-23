@@ -17,6 +17,7 @@ public class MountVirtualFolderCommand extends BasicCommand {
     private static final String VIRTUAL_FOLDER_PATH = "%virtualFolderPath%";
 
     private static final String[] COMMAND = new String[]{
+            "sudo",
             "mhddfs",
             "-o",
             "allow_other",
@@ -36,8 +37,8 @@ public class MountVirtualFolderCommand extends BasicCommand {
 
     private String[] setupCommand(List<Path> folders, Path virtualFolder) {
         String[] command = copyOf(COMMAND, COMMAND.length);
-        command[3] = arrayToDelimitedString(folders.toArray(), ",");
-        command[4] = virtualFolder.toAbsolutePath().toString();
+        command[4] = arrayToDelimitedString(folders.toArray(), ",");
+        command[5] = virtualFolder.toAbsolutePath().toString();
         return command;
     }
 }

@@ -12,6 +12,7 @@ import urchin.domain.model.Passphrase;
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 import java.nio.file.Path;
+import java.util.Arrays;
 
 import static java.nio.charset.Charset.defaultCharset;
 import static java.util.Arrays.copyOf;
@@ -25,6 +26,7 @@ public class MountEncryptedFolderCommand {
     private static final String PASSPHRASE = "%passphrase%";
 
     private static final String[] COMMAND = new String[]{
+            "sudo",
             "mount",
             "-t",
             "ecryptfs",
@@ -64,9 +66,9 @@ public class MountEncryptedFolderCommand {
 
     private String[] setupCommand(Path folder, EncryptedFolder encryptedFolder, Passphrase passphrase) {
         String[] command = copyOf(COMMAND, COMMAND.length);
-        command[3] = encryptedFolder.getPath().toAbsolutePath().toString();
-        command[4] = folder.toAbsolutePath().toString();
-        command[6] = command[6].replace(PASSPHRASE, passphrase.getPassphrase());
+        command[4] = encryptedFolder.getPath().toAbsolutePath().toString();
+        command[5] = folder.toAbsolutePath().toString();
+        command[7] = command[7].replace(PASSPHRASE, passphrase.getPassphrase());
         return command;
     }
 }

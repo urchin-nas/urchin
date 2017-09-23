@@ -13,6 +13,7 @@ public class AddGroupCommand extends BasicCommand {
     private static final String GROUP = "%group%";
 
     private static final String[] COMMAND = new String[]{
+            "sudo",
             "addgroup",
             GROUP,
     };
@@ -29,7 +30,7 @@ public class AddGroupCommand extends BasicCommand {
 
     private String[] setupCommand(Group group) {
         String[] command = copyOf(COMMAND, COMMAND.length);
-        command[1] = group.getName();
+        command[2] = group.getName();
         return command;
     }
 }

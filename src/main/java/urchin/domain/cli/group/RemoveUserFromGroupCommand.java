@@ -16,6 +16,7 @@ public class RemoveUserFromGroupCommand extends BasicCommand {
 
 
     private static final String[] COMMAND = new String[]{
+            "sudo",
             "deluser",
             USERNAME,
             GROUP
@@ -32,8 +33,8 @@ public class RemoveUserFromGroupCommand extends BasicCommand {
 
     private String[] setupCommand(User user, Group group) {
         String[] command = copyOf(COMMAND, COMMAND.length);
-        command[1] = user.getUsername();
-        command[2] = group.getName();
+        command[2] = user.getUsername();
+        command[3] = group.getName();
         return command;
     }
 }
