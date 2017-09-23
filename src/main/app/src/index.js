@@ -14,7 +14,7 @@ const middleware = [thunk];
 
 const enhancers = compose(
     applyMiddleware(...middleware),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : f => f
 );
 
 const store = createStore(
@@ -25,8 +25,8 @@ const store = createStore(
 
 ReactDOM.render(
     <Provider store={store}>
-        <Router  history={history}>
-            <App />
+        <Router history={history}>
+            <App/>
         </Router>
     </Provider>,
     document.getElementById('root')
