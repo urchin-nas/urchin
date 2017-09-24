@@ -3,15 +3,18 @@ package urchin.domain.repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import urchin.domain.model.Group;
 import urchin.domain.model.GroupId;
 
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -20,48 +23,57 @@ import java.util.Optional;
 public class GroupRepository {
 
     private static final Logger LOG = LoggerFactory.getLogger(GroupRepository.class);
-    private static final String INSERT_GROUP = "INSERT INTO user_group(name, created) VALUES(?,?)";
-    private static final String SELECT_GROUP = "SELECT * from user_group WHERE id = ?";
-    private static final String DELETE_GROUP = "DELETE FROM user_group WHERE id = ?";
+    private static final String INSERT_GROUP = "INSERT INTO user_group(name, created) VALUES(:name, :created)";
+    private static final String SELECT_GROUP = "SELECT * from user_group WHERE id = :groupId";
+    private static final String DELETE_GROUP = "DELETE FROM user_group WHERE id = :groupId";
     private static final String SELECT_GROUPS = "SELECT * from user_group";
+    private static final String SELECT_GROUPS_BY_NAME = "SELECT * FROM user_group WHERE name IN (:names)";
 
-    private final JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
-    public GroupRepository(JdbcTemplate jdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public GroupRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     public GroupId saveGroup(Group group) {
         LOG.info("Saving group {}", group.getName());
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(connection -> {
-            PreparedStatement preparedStatement = connection.prepareStatement(INSERT_GROUP, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, group.getName());
-            preparedStatement.setTimestamp(2, new Timestamp(new Date().getTime()));
-            return preparedStatement;
-        }, keyHolder);
+        MapSqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("name", group.getName())
+                .addValue("created", new Timestamp(new Date().getTime()));
 
+        namedParameterJdbcTemplate.update(INSERT_GROUP, parameters, keyHolder);
         return new GroupId(keyHolder.getKey().intValue());
     }
 
     public Optional<Group> getGroup(GroupId groupId) {
+        MapSqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("groupId", groupId.getId());
         try {
-            return Optional.of(
-                    jdbcTemplate.queryForObject(SELECT_GROUP, new Object[]{groupId.getId()}, (resultSet, i) -> groupMapper(resultSet))
-            );
-        } catch (EmptyResultDataAccessException e) {
+            return Optional.of(namedParameterJdbcTemplate.queryForObject(SELECT_GROUP, parameters, (resultSet, i) -> groupMapper(resultSet)));
+        } catch (IncorrectResultSizeDataAccessException e) {
             return Optional.empty();
         }
     }
 
     public void removeGroup(GroupId groupId) {
         LOG.info("Removing group with id {}", groupId);
-        jdbcTemplate.update(DELETE_GROUP, groupId.getId());
+        MapSqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("groupId", groupId.getId());
+
+        namedParameterJdbcTemplate.update(DELETE_GROUP, parameters);
     }
 
     public List<Group> getGroups() {
-        return jdbcTemplate.query(SELECT_GROUPS, (resultSet, i) -> groupMapper(resultSet));
+        return namedParameterJdbcTemplate.query(SELECT_GROUPS, (resultSet, i) -> groupMapper(resultSet));
+    }
+
+    public List<Group> getGroupsByName(List<String> groupNames) {
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("names", groupNames);
+
+        return namedParameterJdbcTemplate.query(SELECT_GROUPS_BY_NAME, parameters, (resultSet, i) -> groupMapper(resultSet));
     }
 
     private Group groupMapper(ResultSet resultSet) throws SQLException {
