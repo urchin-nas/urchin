@@ -1,5 +1,6 @@
 package urchin.domain.cli;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,8 +13,7 @@ import urchin.testutil.UnixUserAndGroupCleanup;
 
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;
 
 @RunWith(SpringRunner.class)
@@ -29,10 +29,15 @@ public class UserCliIT {
     @Autowired
     private UserCli userCli;
 
+    private User user;
+
+    @Before
+    public void setUp() {
+        user = new User(USERNAME_PREFIX + System.currentTimeMillis());
+    }
+
     @Test
     public void addUserAndSetUserPasswordAndCheckIfUsernameExistAndRemoveUserAreExecutedSuccessfully() {
-        User user = new User(USERNAME_PREFIX + System.currentTimeMillis());
-
         userCli.addUser(user);
         userCli.setSetUserPassword(user, PASSWORD);
 
@@ -48,6 +53,15 @@ public class UserCliIT {
         List<String> strings = userCli.listUsers();
 
         assertFalse(strings.isEmpty());
+    }
+
+    @Test
+    public void listGroupsForUserReturnsGroups() {
+        userCli.addUser(user);
+
+        List<String> groups = userCli.listGroupsForUser(user);
+
+        assertEquals(1, groups.size());
     }
 
 }

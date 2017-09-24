@@ -6,6 +6,7 @@ import urchin.domain.cli.user.*;
 import urchin.domain.model.User;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Repository
@@ -16,6 +17,7 @@ public class UserCli {
     private final RemoveUserCommand removeUserCommand;
     private final SetUserPasswordCommand setUserPasswordCommand;
     private final ListUsersCommand listUsersCommand;
+    private final ListGroupsForUserCommand listGroupsForUserCommand;
 
     @Autowired
     public UserCli(
@@ -23,13 +25,15 @@ public class UserCli {
             CheckIfUsernameExistCommand checkIfUsernameExistCommand,
             RemoveUserCommand removeUserCommand,
             SetUserPasswordCommand setUserPasswordCommand,
-            ListUsersCommand listUsersCommand
+            ListUsersCommand listUsersCommand,
+            ListGroupsForUserCommand listGroupsForUserCommand
     ) {
         this.addUserCommand = addUserCommand;
         this.checkIfUsernameExistCommand = checkIfUsernameExistCommand;
         this.removeUserCommand = removeUserCommand;
         this.setUserPasswordCommand = setUserPasswordCommand;
         this.listUsersCommand = listUsersCommand;
+        this.listGroupsForUserCommand = listGroupsForUserCommand;
     }
 
     public void addUser(User user) {
@@ -57,6 +61,10 @@ public class UserCli {
             unixUsers.add(userValues[0]);
         }
         return unixUsers;
+    }
+
+    public List<String> listGroupsForUser(User user) {
+        return Arrays.asList(listGroupsForUserCommand.execute(user).get().split(":")[1].trim().split(" "));
     }
 
 }
