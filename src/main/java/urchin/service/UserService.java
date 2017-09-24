@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import urchin.domain.cli.UserCli;
+import urchin.domain.model.Group;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
+import urchin.domain.repository.GroupRepository;
 import urchin.domain.repository.UserRepository;
 
 import java.util.List;
@@ -15,11 +17,17 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final GroupRepository groupRepository;
     private final UserCli userCli;
 
     @Autowired
-    public UserService(UserRepository userRepository, UserCli userCli) {
+    public UserService(
+            UserRepository userRepository,
+            GroupRepository groupRepository,
+            UserCli userCli
+    ) {
         this.userRepository = userRepository;
+        this.groupRepository = groupRepository;
         this.userCli = userCli;
     }
 
@@ -48,5 +56,12 @@ public class UserService {
 
     public Optional<User> getUser(UserId userId) {
         return userRepository.getUser(userId);
+    }
+
+    public List<Group> listGroupsForUser(UserId userId) {
+        User user = userRepository.getUser(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid userId " + userId));
+        List<String> unixGroups = userCli.listGroupsForUser(user);
+        return groupRepository.getGroupsByName(unixGroups);
     }
 }

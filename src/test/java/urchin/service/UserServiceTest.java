@@ -7,12 +7,18 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import urchin.domain.cli.UserCli;
+import urchin.domain.model.Group;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
+import urchin.domain.repository.GroupRepository;
 import urchin.domain.repository.UserRepository;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -24,10 +30,10 @@ public class UserServiceTest {
 
     @Mock
     private UserRepository userRepository;
-
+    @Mock
+    private GroupRepository groupRepository;
     @Mock
     private UserCli userCli;
-
     @InjectMocks
     private UserService userService;
 
@@ -62,6 +68,26 @@ public class UserServiceTest {
         when(userRepository.getUser(USER_ID)).thenReturn(Optional.empty());
 
         userService.removeUser(USER_ID);
+    }
+
+    @Test
+    public void listGroupsForUserReturnsGroupsExistingInBothOSAndRepository() {
+        List<String> groupNames = Arrays.asList("group_1", "group_2");
+        when(userRepository.getUser(USER_ID)).thenReturn(Optional.of(user));
+        when(userCli.listGroupsForUser(user)).thenReturn(groupNames);
+        when(groupRepository.getGroupsByName(groupNames)).thenReturn(Collections.singletonList(new Group("group_1")));
+
+        List<Group> groups = userService.listGroupsForUser(USER_ID);
+
+        assertEquals(1, groups.size());
+        assertEquals("group_1", groups.get(0).getName());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void listGroupsForUserThrowsExceptionWhenUserDoesNotExist() {
+        when(userRepository.getUser(USER_ID)).thenReturn(Optional.empty());
+
+        userService.listGroupsForUser(USER_ID);
     }
 
 }
