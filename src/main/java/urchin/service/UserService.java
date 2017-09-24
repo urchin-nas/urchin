@@ -11,7 +11,6 @@ import urchin.domain.repository.GroupRepository;
 import urchin.domain.repository.UserRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService {
@@ -41,26 +40,21 @@ public class UserService {
 
     @Transactional
     public void removeUser(UserId userId) {
-        Optional<User> userOptional = userRepository.getUser(userId);
-        if (userOptional.isPresent()) {
-            userRepository.removeUser(userId);
-            userCli.removeUser(userOptional.get());
-        } else {
-            throw new IllegalArgumentException("Invalid userId: " + userId);
-        }
+        User user = userRepository.getUser(userId);
+        userRepository.removeUser(userId);
+        userCli.removeUser(user);
     }
 
     public List<User> getUsers() {
         return userRepository.getUsers();
     }
 
-    public Optional<User> getUser(UserId userId) {
+    public User getUser(UserId userId) {
         return userRepository.getUser(userId);
     }
 
     public List<Group> listGroupsForUser(UserId userId) {
-        User user = userRepository.getUser(userId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid userId " + userId));
+        User user = userRepository.getUser(userId);
         List<String> unixGroups = userCli.listGroupsForUser(user);
         return groupRepository.getGroupsByName(unixGroups);
     }

@@ -8,13 +8,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import urchin.domain.exception.UserNotFoundException;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
 
 import java.sql.*;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class UserRepository {
@@ -45,13 +45,11 @@ public class UserRepository {
         return new UserId(keyHolder.getKey().intValue());
     }
 
-    public Optional<User> getUser(UserId userId) {
+    public User getUser(UserId userId) {
         try {
-            return Optional.of(
-                    jdbcTemplate.queryForObject(SELECT_USER, new Object[]{userId.getId()}, (resultSet, i) -> userMapper(resultSet))
-            );
+            return jdbcTemplate.queryForObject(SELECT_USER, new Object[]{userId.getId()}, (resultSet, i) -> userMapper(resultSet));
         } catch (EmptyResultDataAccessException e) {
-            return Optional.empty();
+            throw new UserNotFoundException("Invalid userId " + userId);
         }
     }
 

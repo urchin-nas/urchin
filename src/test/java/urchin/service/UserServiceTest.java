@@ -7,6 +7,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import urchin.domain.cli.UserCli;
+import urchin.domain.exception.UserNotFoundException;
 import urchin.domain.model.Group;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
@@ -16,7 +17,6 @@ import urchin.domain.repository.UserRepository;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.verify;
@@ -55,7 +55,7 @@ public class UserServiceTest {
 
     @Test
     public void removeUserRemovesUserFromUserRepositoryAndRemoveUserCommandIsCalled() {
-        when(userRepository.getUser(USER_ID)).thenReturn(Optional.of(user));
+        when(userRepository.getUser(USER_ID)).thenReturn(user);
 
         userService.removeUser(USER_ID);
 
@@ -63,9 +63,9 @@ public class UserServiceTest {
         verify(userCli).removeUser(user);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = UserNotFoundException.class)
     public void removeUserThatDoesNotExistThrowsException() {
-        when(userRepository.getUser(USER_ID)).thenReturn(Optional.empty());
+        when(userRepository.getUser(USER_ID)).thenThrow(new UserNotFoundException(""));
 
         userService.removeUser(USER_ID);
     }
@@ -73,7 +73,7 @@ public class UserServiceTest {
     @Test
     public void listGroupsForUserReturnsGroupsExistingInBothOSAndRepository() {
         List<String> groupNames = Arrays.asList("group_1", "group_2");
-        when(userRepository.getUser(USER_ID)).thenReturn(Optional.of(user));
+        when(userRepository.getUser(USER_ID)).thenReturn(user);
         when(userCli.listGroupsForUser(user)).thenReturn(groupNames);
         when(groupRepository.getGroupsByName(groupNames)).thenReturn(Collections.singletonList(new Group("group_1")));
 
@@ -83,9 +83,9 @@ public class UserServiceTest {
         assertEquals("group_1", groups.get(0).getName());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = UserNotFoundException.class)
     public void listGroupsForUserThrowsExceptionWhenUserDoesNotExist() {
-        when(userRepository.getUser(USER_ID)).thenReturn(Optional.empty());
+        when(userRepository.getUser(USER_ID)).thenThrow(new UserNotFoundException(""));
 
         userService.listGroupsForUser(USER_ID);
     }

@@ -2,12 +2,12 @@ package urchin.domain.repository;
 
 import org.junit.Before;
 import org.junit.Test;
+import urchin.domain.exception.UserNotFoundException;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
 import urchin.testutil.TestApplication;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import static org.junit.Assert.*;
 
@@ -26,15 +26,18 @@ public class UserRepositoryIT extends TestApplication {
         User user = new User("username");
 
         UserId userId = userRepository.saveUser(user);
-        Optional<User> userOptional = userRepository.getUser(userId);
+        User readUser = userRepository.getUser(userId);
 
-        assertTrue(userOptional.isPresent());
-        User readUser = userOptional.get();
         assertEquals(user.getUsername(), readUser.getUsername());
         assertFalse(now.isAfter(readUser.getCreated()));
 
         userRepository.removeUser(userId);
 
-        assertFalse(userRepository.getUser(userId).isPresent());
+        try {
+            userRepository.getUser(userId);
+            fail("expected exception");
+        } catch (UserNotFoundException ignore) {
+
+        }
     }
 }

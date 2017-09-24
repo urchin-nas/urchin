@@ -38,9 +38,7 @@ public class UserController {
     @RequestMapping(value = "{userId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public UserDto getUser(@PathVariable int userId) {
         UserId uid = new UserId(userId);
-        return mapToUserDto(userService.getUser(uid)
-                .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid UserId: %s", uid)))
-        );
+        return mapToUserDto(userService.getUser(uid));
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
