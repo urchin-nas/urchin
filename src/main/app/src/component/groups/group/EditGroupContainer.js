@@ -1,23 +1,16 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
-import Group from './Group';
-import {setGroup, saveGroup, getGroup, deleteGroup} from '../../../action/groupAction';
+import EditGroup from './EditGroup';
+import {deleteGroup, getGroup, saveGroup, setGroup} from '../../../action/groupAction';
 
-class GroupContainer extends Component {
+class EditGroupContainer extends Component {
 
     componentWillMount() {
-        let groupId = this.getGroupId();
-        if (groupId > 0) {
-            this.props.getGroup(groupId);
-        }
+        this.props.getGroup(this.getGroupId());
     }
 
     setGroup = (group) => {
         this.props.setGroup(group);
-    };
-
-    saveGroup = (groupId) => {
-        this.props.saveGroup(groupId, this.props.group);
     };
 
     deleteGroup = (groupId) => {
@@ -31,13 +24,12 @@ class GroupContainer extends Component {
     render() {
         let groupId = this.getGroupId();
         return (
-            <Group
+            <EditGroup
                 groupId={groupId}
                 group={this.props.group}
                 fieldErrors={this.props.fieldErrors}
                 callbacks={{
                     setGroup: this.setGroup,
-                    saveGroup: this.saveGroup,
                     deleteGroup: this.deleteGroup
                 }}
             />
@@ -53,9 +45,6 @@ const mapDispatchToProps = (dispatch) => {
         setGroup: (group) => {
             dispatch(setGroup(group))
         },
-        saveGroup: (groupId, group) => {
-            dispatch(saveGroup(groupId, group))
-        },
         deleteGroup: (groupId) => {
             dispatch(deleteGroup(groupId))
         }
@@ -69,4 +58,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(GroupContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(EditGroupContainer)

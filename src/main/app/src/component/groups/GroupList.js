@@ -15,7 +15,7 @@ class GroupList extends Component {
                 <ul>
                     {groupItems}
                 </ul>
-                <a href="/groups/0">new group</a>
+                <a href="/groups/new">new group</a>
             </div>
         )
     }

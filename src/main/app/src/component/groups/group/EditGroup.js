@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import FieldError from "../../FieldError";
+import history from "../../../history";
 
 class Groups extends Component {
 
@@ -12,12 +13,12 @@ class Groups extends Component {
         this.props.callbacks.setGroup(data);
     };
 
-    save = () => {
-        this.props.callbacks.saveGroup(this.props.groupId || 0);
-    };
-
     del = () => {
         this.props.callbacks.deleteGroup(this.props.groupId);
+    };
+
+    back = () => {
+        history.push('/groups');
     };
 
     render() {
@@ -36,10 +37,8 @@ class Groups extends Component {
                     fieldErrors={this.props.fieldErrors}
                     field="groupName"
                 />
-                <button onClick={this.save}>Save</button>
-                { this.props.groupId > 0 &&
                 <button onClick={this.del}>Delete</button>
-                }
+                <button onClick={this.back}>Back</button>
             </div>
         )
     }

@@ -1,7 +1,8 @@
 import React, {Component} from 'react'
 import {Switch, Route} from 'react-router-dom'
 import GroupListContainer from './GroupListContainer';
-import GroupContainer from './group/GroupContainer';
+import EditGroupContainer from './group/EditGroupContainer';
+import NewGroupContainer from "./group/NewGroupContainer";
 
 class Groups extends Component {
 
@@ -9,7 +10,8 @@ class Groups extends Component {
         return (
             <Switch>
                 <Route exact path="/groups" component={GroupListContainer}/>
-                <Route path="/groups/:id" component={GroupContainer}/>
+                <Route path="/groups/new" component={NewGroupContainer}/>
+                <Route path="/groups/:id" component={EditGroupContainer}/>
             </Switch>
         )
     }

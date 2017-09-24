@@ -35,7 +35,7 @@ export const setGroup = (group) => (dispatch) => {
     });
 };
 
-export const saveGroup = (groupId, group) => (dispatch) => {
+export const createGroup = (group) => (dispatch) => {
     dispatch({
         type: Group.SAVE_GROUP
     });
@@ -46,7 +46,7 @@ export const saveGroup = (groupId, group) => (dispatch) => {
                     data: json
                 });
                 history.push('/groups');
-                notifySuccess("Success", "Group saved")
+                notifySuccess("Success", "Group created")
             }, error => {
                 if (error.errorCode === ErrorCodes.VALIDATION_ERROR) {
                     dispatch({
@@ -70,7 +70,7 @@ export const deleteGroup = (groupId) => (dispatch) => {
                 type: Group.DELETE_GROUP_SUCCESS,
                 data: json
             });
-            history.push('/groups')
+            history.push('/groups');
             notifySuccess("Success", "Group deleted")
         }, error => (
             notifyBackendError(error)
