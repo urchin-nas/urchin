@@ -46,7 +46,7 @@ export const createUser = (user) => (dispatch) => {
                 data: json
             });
             history.push('/users');
-            notifySuccess("Success", "User saved")
+            notifySuccess("Success", "User created")
         }, error => {
             if (error.errorCode === ErrorCodes.VALIDATION_ERROR) {
                 dispatch({
