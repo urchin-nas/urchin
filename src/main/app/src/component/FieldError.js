@@ -4,11 +4,16 @@ class FieldError extends Component {
 
     render() {
         let field = this.props.field;
-        let errorMessage = this.props.fieldErrors[field];
+        let errorMessages = this.props.fieldErrors[field] ? (this.props.fieldErrors[field].map((item, index) =>
+            <div className="fieldError" key={index.toString()}>
+                {item}
+            </div>
+        )) : null;
+
         return (<div>
-            {errorMessage &&
-            <div className="fieldError">
-                {errorMessage}
+            {errorMessages &&
+            <div className="fieldErrors">
+                {errorMessages}
             </div>
             }
         </div>)

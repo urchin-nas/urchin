@@ -1,7 +1,7 @@
 import {Actions} from '../constants'
 
 const userReducer = (state = {}, action) => {
-    switch(action.type) {
+    switch (action.type) {
         case Actions.Users.GET_USERS:
             return {...state, isFetchingUsers: true};
 
@@ -18,10 +18,13 @@ const userReducer = (state = {}, action) => {
             return {...state, user: {...state.user, [action.data.field]: action.data.value}};
 
         case Actions.User.SAVE_USER:
-            return{...state, isSavingUser: true};
+            return {...state, isSavingUser: true};
 
-            case Actions.User.SAVE_USER_SUCCESS:
-            return{...state, isSavingUser: false};
+        case Actions.User.SAVE_USER_SUCCESS:
+            return {...state, isSavingUser: false};
+
+        case Actions.User.SAVE_USER_VALIDATION_ERROR:
+            return {...state, fieldErrors: action.data.fieldErrors};
 
         default:
             return state;

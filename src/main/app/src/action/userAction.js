@@ -1,5 +1,5 @@
 import history from '../history'
-import {Actions} from '../constants'
+import {Actions, ErrorCodes} from '../constants'
 import {del, get, post} from './restClient'
 import {notifyBackendError, notifySuccess} from './notificationAction'
 
@@ -47,9 +47,16 @@ export const createUser = (user) => (dispatch) => {
             });
             history.push('/users');
             notifySuccess("Success", "User saved")
-        }, error => (
-            notifyBackendError(error)
-        ))
+        }, error => {
+            if (error.errorCode === ErrorCodes.VALIDATION_ERROR) {
+                dispatch({
+                    type: User.SAVE_USER_VALIDATION_ERROR,
+                    data: error
+                });
+            } else {
+                notifyBackendError(error)
+            }
+        })
 };
 
 export const deleteUser = (userId) => (dispatch) => {

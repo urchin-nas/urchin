@@ -1,5 +1,5 @@
 import history from '../history'
-import {Actions} from '../constants'
+import {Actions, ErrorCodes} from '../constants'
 import {del, get, post} from './restClient'
 import {notifyBackendError, notifySuccess} from "./notificationAction";
 
@@ -48,7 +48,7 @@ export const saveGroup = (groupId, group) => (dispatch) => {
                 history.push('/groups');
                 notifySuccess("Success", "Group saved")
             }, error => {
-                if (error.errorCode === 'VALIDATION_ERROR') {
+                if (error.errorCode === ErrorCodes.VALIDATION_ERROR) {
                     dispatch({
                         type: Group.SAVE_GROUP_VALIDATION_ERROR,
                         data: error

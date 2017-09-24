@@ -9,6 +9,7 @@ export const Actions = {
         SET_USER: "SET_USER",
         SAVE_USER: "SAVE_USER",
         SAVE_USER_SUCCESS: "SAVE_USER_SUCCESS",
+        SAVE_USER_VALIDATION_ERROR: "SAVE_USER_VALIDATION_ERROR",
         DELETE_USER: "DELETE_USER",
         DELETE_USER_SUCCESS: "DELETE_USER_SUCCESS",
         ADD_GROUP: "ADD_GROUP_TO_USER",
@@ -28,4 +29,8 @@ export const Actions = {
         DELETE_GROUP: "DELETE_GROUP",
         DELETE_GROUP_SUCCESS: "DELETE_GROUP_SUCCESS",
     }
+};
+
+export const ErrorCodes = {
+    VALIDATION_ERROR: 'VALIDATION_ERROR'
 };

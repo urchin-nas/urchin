@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import history from '../../../history'
+import FieldError from "../../FieldError";
 
 class NewUser extends Component {
 
@@ -33,12 +34,20 @@ class NewUser extends Component {
                     value={username}
                     onChange={this.update}
                 />
+                <FieldError
+                    fieldErrors={this.props.fieldErrors}
+                    field="username"
+                />
                 <input
                     name="password"
                     type="password"
                     placeholder="password"
                     value={password}
                     onChange={this.update}
+                />
+                <FieldError
+                    fieldErrors={this.props.fieldErrors}
+                    field="password"
                 />
                 <button onClick={this.create}>Create User</button>
                 <button onClick={this.cancel}>Cancel</button>

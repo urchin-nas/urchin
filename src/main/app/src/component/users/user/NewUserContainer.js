@@ -9,6 +9,7 @@ class NewUserContainer extends Component {
         return (
             <NewUser
                 user={this.props.user}
+                fieldErrors={this.props.fieldErrors}
                 callbacks={{
                     setUser: this.props.setUser,
                     createUser: this.props.createUser
@@ -31,7 +32,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
-        user: state.userData.user || {}
+        user: state.userData.user || {},
+        fieldErrors: state.userData.fieldErrors || {}
     }
 };
 
