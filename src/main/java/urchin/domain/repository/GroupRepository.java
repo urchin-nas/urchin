@@ -9,9 +9,9 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import urchin.domain.exception.GroupNotFoundException;
 import urchin.domain.model.Group;
 import urchin.domain.model.GroupId;
+import urchin.exception.GroupNotFoundException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

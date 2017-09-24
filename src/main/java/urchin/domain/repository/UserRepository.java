@@ -8,9 +8,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import urchin.domain.exception.UserNotFoundException;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
+import urchin.exception.UserNotFoundException;
 
 import java.sql.*;
 import java.util.Date;

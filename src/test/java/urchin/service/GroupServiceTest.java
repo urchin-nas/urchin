@@ -7,13 +7,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import urchin.domain.cli.GroupCli;
-import urchin.domain.exception.GroupNotFoundException;
-import urchin.domain.exception.UserNotFoundException;
 import urchin.domain.model.Group;
 import urchin.domain.model.GroupId;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
 import urchin.domain.repository.GroupRepository;
+import urchin.exception.GroupNotFoundException;
+import urchin.exception.UserNotFoundException;
 
 import java.time.LocalDateTime;
 

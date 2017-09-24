@@ -2,9 +2,9 @@ package urchin.domain.repository;
 
 import org.junit.Before;
 import org.junit.Test;
-import urchin.domain.exception.UserNotFoundException;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
+import urchin.exception.UserNotFoundException;
 import urchin.testutil.TestApplication;
 
 import java.time.LocalDateTime;

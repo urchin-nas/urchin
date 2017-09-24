@@ -7,12 +7,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import urchin.domain.cli.UserCli;
-import urchin.domain.exception.UserNotFoundException;
 import urchin.domain.model.Group;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
 import urchin.domain.repository.GroupRepository;
 import urchin.domain.repository.UserRepository;
+import urchin.exception.UserNotFoundException;
 
 import java.util.Arrays;
 import java.util.Collections;

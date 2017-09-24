@@ -2,9 +2,9 @@ package urchin.domain.repository;
 
 import org.junit.Before;
 import org.junit.Test;
-import urchin.domain.exception.GroupNotFoundException;
 import urchin.domain.model.Group;
 import urchin.domain.model.GroupId;
+import urchin.exception.GroupNotFoundException;
 import urchin.testutil.TestApplication;
 
 import java.time.LocalDateTime;
