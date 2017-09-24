@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import FieldError from "../../FieldError";
 
 class Groups extends Component {
 
@@ -30,6 +31,10 @@ class Groups extends Component {
                     type="text"
                     value={groupName}
                     onChange={this.update}
+                />
+                <FieldError
+                    fieldErrors={this.props.fieldErrors}
+                    field="groupName"
                 />
                 <button onClick={this.save}>Save</button>
                 { this.props.groupId > 0 &&

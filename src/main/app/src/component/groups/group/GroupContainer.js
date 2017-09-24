@@ -34,6 +34,7 @@ class GroupContainer extends Component {
             <Group
                 groupId={groupId}
                 group={this.props.group}
+                fieldErrors={this.props.fieldErrors}
                 callbacks={{
                     setGroup: this.setGroup,
                     saveGroup: this.saveGroup,
@@ -63,7 +64,8 @@ const mapDispatchToProps = (dispatch) => {
 
 const mapStateToProps = (state) => {
     return {
-        group: state.groupData.group || {}
+        group: state.groupData.group || {},
+        fieldErrors: state.groupData.fieldErrors || {}
     }
 };
 

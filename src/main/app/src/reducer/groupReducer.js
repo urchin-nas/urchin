@@ -23,6 +23,9 @@ const groupReducer = (state = {}, action) => {
         case Actions.Group.SAVE_GROUP_SUCCESS:
             return {...state, isSavingGroup: false};
 
+        case Actions.Group.SAVE_GROUP_VALIDATION_ERROR:
+            return {...state, fieldErrors: action.data.fieldErrors};
+
         default:
             return state;
     }

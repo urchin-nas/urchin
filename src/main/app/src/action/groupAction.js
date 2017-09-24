@@ -1,7 +1,7 @@
 import history from '../history'
 import {Actions} from '../constants'
-import {get, post, del} from './restClient'
-import {notifySuccess, notifyBackendError} from "./notificationAction";
+import {del, get, post} from './restClient'
+import {notifyBackendError, notifySuccess} from "./notificationAction";
 
 const {Groups} = Actions;
 const {Group} = Actions;
@@ -41,15 +41,23 @@ export const saveGroup = (groupId, group) => (dispatch) => {
     });
     post('/api/groups/add', group)
         .then(json => {
-            dispatch({
-                type: Group.SAVE_GROUP_SUCCESS,
-                data: json
-            });
-            history.push('/groups');
-            notifySuccess("Success", "Group saved")
-        }, error => (
-            notifyBackendError(error)
-        ))
+                dispatch({
+                    type: Group.SAVE_GROUP_SUCCESS,
+                    data: json
+                });
+                history.push('/groups');
+                notifySuccess("Success", "Group saved")
+            }, error => {
+                if (error.errorCode === 'VALIDATION_ERROR') {
+                    dispatch({
+                        type: Group.SAVE_GROUP_VALIDATION_ERROR,
+                        data: error
+                    });
+                } else {
+                    notifyBackendError(error)
+                }
+            }
+        )
 };
 
 export const deleteGroup = (groupId) => (dispatch) => {

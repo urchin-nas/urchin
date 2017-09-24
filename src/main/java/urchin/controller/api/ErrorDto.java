@@ -1,23 +1,24 @@
 package urchin.controller.api;
 
 import java.util.List;
+import java.util.Map;
 
 public class ErrorDto {
 
     private final ErrorCode errorCode;
     private final String message;
-    private final List<FieldErrorDto> fields;
+    private final Map<String, List<String>> fieldErrors;
 
     public ErrorDto(ErrorCode errorCode, String message) {
         this.errorCode = errorCode;
         this.message = message;
-        this.fields = null;
+        this.fieldErrors = null;
     }
 
-    public ErrorDto(ErrorCode errorCode, String message, List<FieldErrorDto> fields) {
+    public ErrorDto(ErrorCode errorCode, String message, Map<String, List<String>> fieldErrors) {
         this.errorCode = errorCode;
         this.message = message;
-        this.fields = fields;
+        this.fieldErrors = fieldErrors;
     }
 
     public ErrorCode getErrorCode() {
@@ -28,7 +29,7 @@ public class ErrorDto {
         return message;
     }
 
-    public List<FieldErrorDto> getFields() {
-        return fields;
+    public Map<String, List<String>> getFieldErrors() {
+        return fieldErrors;
     }
 }
