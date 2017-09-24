@@ -12,7 +12,7 @@ public abstract class BasicCommand {
 
     protected final Logger LOG = LoggerFactory.getLogger(this.getClass().getName());
 
-    protected final Runtime runtime;
+    private final Runtime runtime;
 
     protected BasicCommand(Runtime runtime) {
         this.runtime = runtime;
