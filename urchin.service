@@ -1,0 +1,14 @@
+[Unit]
+Description=urchin
+After=urchin.target
+
+[Service]
+User=urchin
+ExecStart=/usr/bin/java -jar /srv/urchin/urchin.jar
+SuccessExitStatus=143
+TimeoutStopSec=10
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
