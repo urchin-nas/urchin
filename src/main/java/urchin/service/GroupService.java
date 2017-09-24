@@ -11,7 +11,6 @@ import urchin.domain.model.UserId;
 import urchin.domain.repository.GroupRepository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class GroupService {
@@ -36,42 +35,28 @@ public class GroupService {
 
     @Transactional
     public void removeGroup(GroupId groupId) {
-        Optional<Group> groupOptional = groupRepository.getGroup(groupId);
-        if (groupOptional.isPresent()) {
-            groupRepository.removeGroup(groupId);
-            groupCli.removeGroup(groupOptional.get());
-        } else {
-            throw new IllegalArgumentException("Invalid GroupId: " + groupId.getId());
-        }
+        Group group = groupRepository.getGroup(groupId);
+        groupRepository.removeGroup(groupId);
+        groupCli.removeGroup(group);
     }
 
     public void addUserToGroup(UserId userId, GroupId groupId) {
         User user = userService.getUser(userId);
-        Optional<Group> groupOptional = groupRepository.getGroup(groupId);
-
-        if (groupOptional.isPresent()) {
-            groupCli.addUserToGroup(user, groupOptional.get());
-        } else {
-            throw new IllegalArgumentException(String.format("Invalid UserId %s and/or GroupId %s", userId, groupId));
-        }
+        Group group = groupRepository.getGroup(groupId);
+        groupCli.addUserToGroup(user, group);
     }
 
     public void removeUserFromGroup(UserId userId, GroupId groupId) {
         User user = userService.getUser(userId);
-        Optional<Group> groupOptional = groupRepository.getGroup(groupId);
-
-        if (groupOptional.isPresent()) {
-            groupCli.removeUserFromGroup(user, groupOptional.get());
-        } else {
-            throw new IllegalArgumentException(String.format("Invalid UserId %s and/or GroupId %s", userId, groupId));
-        }
+        Group group = groupRepository.getGroup(groupId);
+        groupCli.removeUserFromGroup(user, group);
     }
 
     public List<Group> getGroups() {
         return groupRepository.getGroups();
     }
 
-    public Optional<Group> getGroup(GroupId groupId) {
+    public Group getGroup(GroupId groupId) {
         return groupRepository.getGroup(groupId);
     }
 }

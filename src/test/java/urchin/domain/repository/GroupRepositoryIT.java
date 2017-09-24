@@ -2,6 +2,7 @@ package urchin.domain.repository;
 
 import org.junit.Before;
 import org.junit.Test;
+import urchin.domain.exception.GroupNotFoundException;
 import urchin.domain.model.Group;
 import urchin.domain.model.GroupId;
 import urchin.testutil.TestApplication;
@@ -9,7 +10,6 @@ import urchin.testutil.TestApplication;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
@@ -29,16 +29,19 @@ public class GroupRepositoryIT extends TestApplication {
         Group group = new Group("groupname");
 
         GroupId groupId = groupRepository.saveGroup(group);
-        Optional<Group> groupOptional = groupRepository.getGroup(groupId);
+        Group readGroup = groupRepository.getGroup(groupId);
 
-        assertTrue(groupOptional.isPresent());
-        Group readGroup = groupOptional.get();
         assertEquals(group.getName(), readGroup.getName());
         assertFalse(now.isAfter(readGroup.getCreated()));
 
         groupRepository.removeGroup(groupId);
 
-        assertFalse(groupRepository.getGroup(groupId).isPresent());
+        try {
+            groupRepository.getGroup(groupId);
+            fail("expected exception");
+        } catch (GroupNotFoundException ignore) {
+
+        }
     }
 
     @Test

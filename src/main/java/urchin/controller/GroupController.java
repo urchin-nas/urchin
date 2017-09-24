@@ -37,10 +37,7 @@ public class GroupController {
 
     @RequestMapping(value = "{groupId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public GroupDto getGroup(@PathVariable int groupId) {
-        GroupId gid = new GroupId(groupId);
-        return mapToGroupDto(groupService.getGroup(gid)
-                .orElseThrow(() -> new IllegalArgumentException(String.format("Invalid GroupId: %s", gid)))
-        );
+        return mapToGroupDto(groupService.getGroup(new GroupId(groupId)));
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)

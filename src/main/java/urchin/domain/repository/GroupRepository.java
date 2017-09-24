@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import urchin.domain.exception.GroupNotFoundException;
 import urchin.domain.model.Group;
 import urchin.domain.model.GroupId;
 
@@ -17,7 +18,6 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public class GroupRepository {
@@ -47,13 +47,13 @@ public class GroupRepository {
         return new GroupId(keyHolder.getKey().intValue());
     }
 
-    public Optional<Group> getGroup(GroupId groupId) {
+    public Group getGroup(GroupId groupId) {
         MapSqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("groupId", groupId.getId());
         try {
-            return Optional.of(namedParameterJdbcTemplate.queryForObject(SELECT_GROUP, parameters, (resultSet, i) -> groupMapper(resultSet)));
+            return namedParameterJdbcTemplate.queryForObject(SELECT_GROUP, parameters, (resultSet, i) -> groupMapper(resultSet));
         } catch (IncorrectResultSizeDataAccessException e) {
-            return Optional.empty();
+            throw new GroupNotFoundException("Invalid groupId " + groupId);
         }
     }
 
