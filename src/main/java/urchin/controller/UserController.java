@@ -5,8 +5,11 @@ import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import urchin.controller.api.IdDto;
 import urchin.controller.api.MessageDto;
+import urchin.controller.api.group.AddUserToGroupDto;
+import urchin.controller.api.group.GroupDto;
 import urchin.controller.api.user.AddUserDto;
 import urchin.controller.api.user.UserDto;
+import urchin.domain.model.GroupId;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
 import urchin.service.UserService;
@@ -14,6 +17,7 @@ import urchin.service.UserService;
 import javax.validation.Valid;
 import java.util.List;
 
+import static urchin.controller.api.mapper.GroupMapper.mapToGroupsDto;
 import static urchin.controller.api.mapper.UserMapper.*;
 
 @RestController
@@ -51,6 +55,11 @@ public class UserController {
     public MessageDto removeUser(@PathVariable int userId) {
         userService.removeUser(new UserId(userId));
         return new MessageDto("User removed");
+    }
+
+    @RequestMapping(value = "{userId}/groups", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<GroupDto> getGroupsForUser(@PathVariable int userId) {
+        return mapToGroupsDto(userService.listGroupsForUser(new UserId(userId)));
     }
 
 }
