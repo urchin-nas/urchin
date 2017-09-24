@@ -12,7 +12,6 @@ import urchin.domain.model.Passphrase;
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 import java.nio.file.Path;
-import java.util.Arrays;
 
 import static java.nio.charset.Charset.defaultCharset;
 import static java.util.Arrays.copyOf;
