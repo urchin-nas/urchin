@@ -1,0 +1,19 @@
+server:
+  port: 8080
+  context-path: /
+
+spring:
+  application:
+    name: urchin
+  datasource:
+    url: jdbc:h2:~/urchindb
+  h2:
+    console:
+      enabled: true
+  output:
+    ansi:
+      enabled: detect
+
+info:
+  name: ${spring.application.name}
+  version: @version@
