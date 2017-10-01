@@ -3,10 +3,10 @@ package urchin.cli;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import urchin.cli.user.*;
-import urchin.model.GroupName;
-import urchin.model.Password;
-import urchin.model.User;
-import urchin.model.Username;
+import urchin.model.group.GroupName;
+import urchin.model.user.Password;
+import urchin.model.user.User;
+import urchin.model.user.Username;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -2,9 +2,9 @@ package urchin.repository;
 
 import org.junit.Before;
 import org.junit.Test;
-import urchin.model.EncryptedFolder;
-import urchin.model.FolderSettings;
-import urchin.model.ImmutableEncryptedFolder;
+import urchin.model.folder.EncryptedFolder;
+import urchin.model.folder.FolderSettings;
+import urchin.model.folder.ImmutableEncryptedFolder;
 import urchin.testutil.TestApplication;
 
 import java.nio.file.Path;

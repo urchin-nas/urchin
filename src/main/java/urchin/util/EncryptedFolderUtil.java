@@ -2,8 +2,8 @@ package urchin.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import urchin.model.EncryptedFolder;
-import urchin.model.ImmutableEncryptedFolder;
+import urchin.model.folder.EncryptedFolder;
+import urchin.model.folder.ImmutableEncryptedFolder;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

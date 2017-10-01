@@ -3,8 +3,8 @@ package urchin.repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import urchin.model.FolderSettings;
-import urchin.model.Passphrase;
+import urchin.model.folder.FolderSettings;
+import urchin.model.folder.Passphrase;
 
 @Repository
 public class PassphraseRepository {

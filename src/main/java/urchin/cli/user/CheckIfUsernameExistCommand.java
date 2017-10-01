@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import urchin.cli.common.BasicCommand;
 import urchin.cli.common.CommandException;
-import urchin.model.Username;
+import urchin.model.user.Username;
 
 import static java.util.Arrays.copyOf;
 

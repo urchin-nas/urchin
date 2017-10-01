@@ -2,8 +2,8 @@ package urchin.cli.permission;
 
 import org.springframework.stereotype.Component;
 import urchin.cli.common.BasicCommand;
-import urchin.model.GroupName;
-import urchin.model.Username;
+import urchin.model.group.GroupName;
+import urchin.model.user.Username;
 
 import java.nio.file.Path;
 

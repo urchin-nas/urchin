@@ -3,8 +3,8 @@ package urchin.cli.group;
 
 import org.springframework.stereotype.Component;
 import urchin.cli.common.BasicCommand;
-import urchin.model.Group;
-import urchin.model.User;
+import urchin.model.group.Group;
+import urchin.model.user.User;
 
 import static java.util.Arrays.copyOf;
 

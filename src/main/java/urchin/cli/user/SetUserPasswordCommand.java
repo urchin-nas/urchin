@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import urchin.cli.common.CommandException;
-import urchin.model.Password;
-import urchin.model.Username;
+import urchin.model.user.Password;
+import urchin.model.user.Username;
 
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;

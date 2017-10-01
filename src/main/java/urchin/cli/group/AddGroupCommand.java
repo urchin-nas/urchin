@@ -3,7 +3,7 @@ package urchin.cli.group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import urchin.cli.common.BasicCommand;
-import urchin.model.GroupName;
+import urchin.model.group.GroupName;
 
 import static java.util.Arrays.copyOf;
 

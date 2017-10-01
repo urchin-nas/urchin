@@ -8,7 +8,14 @@ import org.mockito.runners.MockitoJUnitRunner;
 import urchin.cli.GroupCli;
 import urchin.exception.GroupNotFoundException;
 import urchin.exception.UserNotFoundException;
-import urchin.model.*;
+import urchin.model.group.Group;
+import urchin.model.group.GroupId;
+import urchin.model.group.GroupName;
+import urchin.model.group.ImmutableGroup;
+import urchin.model.user.ImmutableUser;
+import urchin.model.user.User;
+import urchin.model.user.UserId;
+import urchin.model.user.Username;
 import urchin.repository.GroupRepository;
 
 import java.time.LocalDateTime;

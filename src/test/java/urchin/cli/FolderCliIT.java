@@ -7,8 +7,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
-import urchin.model.EncryptedFolder;
-import urchin.model.ImmutableEncryptedFolder;
+import urchin.model.folder.EncryptedFolder;
+import urchin.model.folder.ImmutableEncryptedFolder;
 import urchin.testutil.CliTestConfiguration;
 import urchin.testutil.TemporaryFolderUnmount;
 

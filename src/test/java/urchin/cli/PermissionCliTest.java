@@ -8,7 +8,11 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
-import urchin.model.*;
+import urchin.model.folder.FileModes;
+import urchin.model.folder.FileOwners;
+import urchin.model.folder.ImmutableFileModes;
+import urchin.model.group.GroupName;
+import urchin.model.user.Username;
 import urchin.testutil.CliTestConfiguration;
 import urchin.testutil.UnixUserAndGroupCleanup;
 

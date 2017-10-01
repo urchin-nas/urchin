@@ -6,10 +6,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import urchin.cli.FolderCli;
-import urchin.model.FolderSettings;
-import urchin.model.ImmutableEncryptedFolder;
-import urchin.model.ImmutableFolderSettings;
-import urchin.model.Passphrase;
+import urchin.model.folder.FolderSettings;
+import urchin.model.folder.ImmutableEncryptedFolder;
+import urchin.model.folder.ImmutableFolderSettings;
+import urchin.model.folder.Passphrase;
 import urchin.repository.PassphraseRepository;
 import urchin.util.PassphraseGenerator;
 

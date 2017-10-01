@@ -7,7 +7,11 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import urchin.cli.UserCli;
 import urchin.exception.UserNotFoundException;
-import urchin.model.*;
+import urchin.model.group.Group;
+import urchin.model.group.GroupId;
+import urchin.model.group.GroupName;
+import urchin.model.group.ImmutableGroup;
+import urchin.model.user.*;
 import urchin.repository.GroupRepository;
 import urchin.repository.UserRepository;
 

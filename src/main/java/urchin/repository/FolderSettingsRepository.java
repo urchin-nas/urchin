@@ -5,10 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import urchin.model.EncryptedFolder;
-import urchin.model.FolderSettings;
-import urchin.model.ImmutableEncryptedFolder;
-import urchin.model.ImmutableFolderSettings;
+import urchin.model.folder.EncryptedFolder;
+import urchin.model.folder.FolderSettings;
+import urchin.model.folder.ImmutableEncryptedFolder;
+import urchin.model.folder.ImmutableFolderSettings;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

@@ -3,9 +3,9 @@ package urchin.repository;
 import org.junit.Before;
 import org.junit.Test;
 import urchin.exception.UserNotFoundException;
-import urchin.model.User;
-import urchin.model.UserId;
-import urchin.model.Username;
+import urchin.model.user.User;
+import urchin.model.user.UserId;
+import urchin.model.user.Username;
 import urchin.testutil.TestApplication;
 
 import java.time.LocalDateTime;

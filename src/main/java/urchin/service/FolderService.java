@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import urchin.cli.FolderCli;
-import urchin.model.EncryptedFolder;
-import urchin.model.Passphrase;
+import urchin.model.folder.EncryptedFolder;
+import urchin.model.folder.Passphrase;
 import urchin.repository.FolderSettingsRepository;
 
 import java.io.IOException;

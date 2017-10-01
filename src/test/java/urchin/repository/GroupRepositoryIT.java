@@ -3,9 +3,9 @@ package urchin.repository;
 import org.junit.Before;
 import org.junit.Test;
 import urchin.exception.GroupNotFoundException;
-import urchin.model.Group;
-import urchin.model.GroupId;
-import urchin.model.GroupName;
+import urchin.model.group.Group;
+import urchin.model.group.GroupId;
+import urchin.model.group.GroupName;
 import urchin.testutil.TestApplication;
 
 import java.time.LocalDateTime;

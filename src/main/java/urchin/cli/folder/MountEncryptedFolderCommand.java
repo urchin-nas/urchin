@@ -6,8 +6,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import urchin.cli.common.CommandException;
-import urchin.model.EncryptedFolder;
-import urchin.model.Passphrase;
+import urchin.model.folder.EncryptedFolder;
+import urchin.model.folder.Passphrase;
 
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;

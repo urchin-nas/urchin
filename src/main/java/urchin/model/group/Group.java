@@ -1,15 +1,15 @@
-package urchin.model;
+package urchin.model.group;
 
 import org.immutables.value.Value;
 
 import java.time.LocalDateTime;
 
 @Value.Immutable
-public interface User {
+public interface Group {
 
-    UserId getUserId();
+    GroupId getGroupId();
 
-    Username getUsername();
+    GroupName getName();
 
     LocalDateTime getCreated();
 

@@ -9,10 +9,10 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import urchin.exception.UserNotFoundException;
-import urchin.model.ImmutableUser;
-import urchin.model.User;
-import urchin.model.UserId;
-import urchin.model.Username;
+import urchin.model.user.ImmutableUser;
+import urchin.model.user.User;
+import urchin.model.user.UserId;
+import urchin.model.user.Username;
 
 import java.sql.*;
 import java.util.Date;

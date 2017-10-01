@@ -10,10 +10,10 @@ import urchin.controller.api.MessageDto;
 import urchin.controller.api.group.GroupDto;
 import urchin.controller.api.user.AddUserDto;
 import urchin.controller.api.user.UserDto;
-import urchin.model.Password;
-import urchin.model.User;
-import urchin.model.UserId;
-import urchin.model.Username;
+import urchin.model.user.Password;
+import urchin.model.user.User;
+import urchin.model.user.UserId;
+import urchin.model.user.Username;
 import urchin.service.UserService;
 
 import javax.validation.Valid;

@@ -3,10 +3,10 @@ package urchin.util;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import urchin.model.ImmutablePassphrase;
-import urchin.model.Passphrase;
+import urchin.model.folder.ImmutablePassphrase;
+import urchin.model.folder.Passphrase;
 
-import static urchin.model.Passphrase.ECRYPTFS_MAX_PASSPHRASE_LENGTH;
+import static urchin.model.folder.Passphrase.ECRYPTFS_MAX_PASSPHRASE_LENGTH;
 
 public class PassphraseGenerator {
 

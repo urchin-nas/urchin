@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import urchin.cli.common.CommandException;
 import urchin.cli.group.*;
-import urchin.model.Group;
-import urchin.model.GroupName;
-import urchin.model.User;
+import urchin.model.group.Group;
+import urchin.model.group.GroupName;
+import urchin.model.user.User;
 
 import java.util.ArrayList;
 import java.util.List;

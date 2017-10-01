@@ -3,8 +3,8 @@ package urchin.cli;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import urchin.cli.folder.*;
-import urchin.model.EncryptedFolder;
-import urchin.model.Passphrase;
+import urchin.model.folder.EncryptedFolder;
+import urchin.model.folder.Passphrase;
 
 import java.nio.file.Path;
 import java.util.List;

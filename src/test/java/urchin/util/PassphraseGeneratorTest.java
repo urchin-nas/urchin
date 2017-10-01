@@ -1,7 +1,7 @@
 package urchin.util;
 
 import org.junit.Test;
-import urchin.model.Passphrase;
+import urchin.model.folder.Passphrase;
 
 import static org.junit.Assert.assertEquals;
 

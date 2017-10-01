@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import urchin.controller.api.MessageDto;
 import urchin.controller.api.folder.*;
-import urchin.model.EncryptedFolder;
+import urchin.model.folder.EncryptedFolder;
 import urchin.testutil.TemporaryFolderUnmount;
 import urchin.testutil.TestApplication;
 

@@ -4,7 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import urchin.cli.UserCli;
-import urchin.model.*;
+import urchin.model.group.Group;
+import urchin.model.group.GroupName;
+import urchin.model.user.Password;
+import urchin.model.user.User;
+import urchin.model.user.UserId;
+import urchin.model.user.Username;
 import urchin.repository.GroupRepository;
 import urchin.repository.UserRepository;
 

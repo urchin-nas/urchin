@@ -9,7 +9,14 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import urchin.cli.user.AddUserCommand;
 import urchin.cli.user.RemoveUserCommand;
-import urchin.model.*;
+import urchin.model.group.Group;
+import urchin.model.group.GroupId;
+import urchin.model.group.GroupName;
+import urchin.model.group.ImmutableGroup;
+import urchin.model.user.ImmutableUser;
+import urchin.model.user.User;
+import urchin.model.user.UserId;
+import urchin.model.user.Username;
 import urchin.testutil.CliTestConfiguration;
 import urchin.testutil.UnixUserAndGroupCleanup;
 

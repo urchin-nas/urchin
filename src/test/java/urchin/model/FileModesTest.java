@@ -1,6 +1,8 @@
 package urchin.model;
 
 import org.junit.Test;
+import urchin.model.folder.FileModes;
+import urchin.model.folder.ImmutableFileModes;
 
 import static org.junit.Assert.assertEquals;
 

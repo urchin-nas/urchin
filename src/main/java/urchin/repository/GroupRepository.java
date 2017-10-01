@@ -10,10 +10,10 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import urchin.exception.GroupNotFoundException;
-import urchin.model.Group;
-import urchin.model.GroupId;
-import urchin.model.GroupName;
-import urchin.model.ImmutableGroup;
+import urchin.model.group.Group;
+import urchin.model.group.GroupId;
+import urchin.model.group.GroupName;
+import urchin.model.group.ImmutableGroup;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

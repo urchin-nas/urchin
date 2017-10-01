@@ -3,7 +3,7 @@ package urchin.cli.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import urchin.cli.common.BasicCommand;
-import urchin.model.User;
+import urchin.model.user.User;
 
 import java.util.Optional;
 

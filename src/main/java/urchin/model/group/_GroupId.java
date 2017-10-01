@@ -1,4 +1,4 @@
-package urchin.model;
+package urchin.model.group;
 
 import org.immutables.value.Value;
 import urchin.model.wrapper.Wrapped;
@@ -6,5 +6,5 @@ import urchin.model.wrapper.Wrapper;
 
 @Value.Immutable
 @Wrapped
-abstract class _UserId extends Wrapper<Integer> {
+abstract class _GroupId extends Wrapper<Integer> {
 }

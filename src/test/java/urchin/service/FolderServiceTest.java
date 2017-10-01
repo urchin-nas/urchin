@@ -10,9 +10,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import urchin.cli.FolderCli;
-import urchin.model.EncryptedFolder;
-import urchin.model.ImmutableEncryptedFolder;
-import urchin.model.Passphrase;
+import urchin.model.folder.EncryptedFolder;
+import urchin.model.folder.ImmutableEncryptedFolder;
+import urchin.model.folder.Passphrase;
 import urchin.repository.FolderSettingsRepository;
 import urchin.util.EncryptedFolderUtil;
 

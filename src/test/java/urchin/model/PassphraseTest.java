@@ -1,6 +1,8 @@
 package urchin.model;
 
 import org.junit.Test;
+import urchin.model.folder.ImmutablePassphrase;
+import urchin.model.folder.Passphrase;
 
 public class PassphraseTest {
 

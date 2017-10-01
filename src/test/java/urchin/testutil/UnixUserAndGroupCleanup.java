@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestComponent;
 import urchin.cli.GroupCli;
 import urchin.cli.UserCli;
-import urchin.model.GroupName;
-import urchin.model.Username;
+import urchin.model.group.GroupName;
+import urchin.model.user.Username;
 
 import java.util.List;
 import java.util.stream.Collectors;
