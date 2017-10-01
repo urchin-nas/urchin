@@ -23,7 +23,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class UserServiceTest {
 
-    private static final String PASSWORD = "password";
+    private static final Password PASSWORD = Password.of("password");
     private static final Username USERNAME = Username.of("username");
     private static final UserId USER_ID = UserId.of(1);
     private static final User USER = ImmutableUser.builder()

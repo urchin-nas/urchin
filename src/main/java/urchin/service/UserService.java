@@ -29,7 +29,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserId addUser(Username username, String password) {
+    public UserId addUser(Username username, Password password) {
         UserId userId = userRepository.saveUser(username);
         userCli.addUser(username);
         userCli.setSetUserPassword(username, password);

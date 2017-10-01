@@ -10,6 +10,7 @@ import urchin.controller.api.MessageDto;
 import urchin.controller.api.group.GroupDto;
 import urchin.controller.api.user.AddUserDto;
 import urchin.controller.api.user.UserDto;
+import urchin.model.Password;
 import urchin.model.User;
 import urchin.model.UserId;
 import urchin.model.Username;
@@ -47,7 +48,7 @@ public class UserController {
 
     @RequestMapping(value = "add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public IdDto addUser(@Valid @RequestBody AddUserDto addUserDto) {
-        UserId userId = userService.addUser(Username.of(addUserDto.getUsername()), addUserDto.getPassword());
+        UserId userId = userService.addUser(Username.of(addUserDto.getUsername()), Password.of(addUserDto.getPassword()));
         return ImmutableIdDto.of(userId.getValue());
     }
 

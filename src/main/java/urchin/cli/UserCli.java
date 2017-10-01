@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import urchin.cli.user.*;
 import urchin.model.GroupName;
+import urchin.model.Password;
 import urchin.model.User;
 import urchin.model.Username;
 
@@ -51,7 +52,7 @@ public class UserCli {
         removeUserCommand.execute(username);
     }
 
-    public void setSetUserPassword(Username username, String password) {
+    public void setSetUserPassword(Username username, Password password) {
         setUserPasswordCommand.execute(username, password);
     }
 

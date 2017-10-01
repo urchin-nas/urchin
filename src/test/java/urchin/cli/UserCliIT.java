@@ -21,7 +21,7 @@ import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;
 @Import(CliTestConfiguration.class)
 public class UserCliIT {
 
-    private static final String PASSWORD = "superSecret";
+    private static final Password PASSWORD = Password.of("superSecret");
 
     @Rule
     @Autowired
