@@ -10,61 +10,78 @@ public class FileModesTest {
 
     @Test
     public void getModesReturnStringOfModes() {
-        FileModes fileModes = new FileModes(1, 2, 3);
+        FileModes fileModes = ImmutableFileModes.builder()
+                .owner(1)
+                .group(2)
+                .other(3)
+                .build();
 
         assertEquals(MODES, fileModes.getModes());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void invalidOwnerFileModeThrowsException() {
-        new FileModes(-1, 2, 3);
+        ImmutableFileModes.builder()
+                .owner(-1)
+                .group(2)
+                .other(3)
+                .build();
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void invalidGroupFileModeThrowsException() {
-        new FileModes(1, 8, 3);
+        ImmutableFileModes.builder()
+                .owner(1)
+                .group(8)
+                .other(3)
+                .build();
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void invalidOtherFileModeThrowsException() {
-        new FileModes(1, 2, 8);
+        ImmutableFileModes.builder()
+                .owner(1)
+                .group(2)
+                .other(8)
+                .build();
     }
 
     @Test
     public void fileModesAreCreatedFromString() {
-        FileModes fileModes = new FileModes("-rw-rw-rw-");
+        FileModes fileModes = ImmutableFileModes.from("-rw-rw-rw-");
 
         assertEquals("666", fileModes.getModes());
 
-        fileModes = new FileModes("----rwxr-x");
+        fileModes = ImmutableFileModes.from("----rwxr-x");
 
         assertEquals("075", fileModes.getModes());
 
-        fileModes = new FileModes("-rwxrwxrwx");
+        fileModes = ImmutableFileModes.from("-rwxrwxrwx");
 
         assertEquals("777", fileModes.getModes());
 
-        fileModes = new FileModes("-r--r--rw-");
+        fileModes = ImmutableFileModes.from("-r--r--rw-");
 
         assertEquals("446", fileModes.getModes());
 
-        fileModes = new FileModes("dr--r--rw-");
+        fileModes = ImmutableFileModes.from("dr--r--rw-");
 
         assertEquals("446", fileModes.getModes());
 
-        fileModes = new FileModes("----------");
+        fileModes = ImmutableFileModes.from("----------");
 
         assertEquals("000", fileModes.getModes());
+
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void invalidModeThrowsException() {
-        new FileModes("---a------");
+        ImmutableFileModes.from("---a------");
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void invalidLengthOfStringThrowsException() {
-        new FileModes("--");
+        ImmutableFileModes.from("--");
     }
 
 }

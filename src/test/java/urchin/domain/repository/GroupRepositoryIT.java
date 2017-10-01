@@ -17,6 +17,7 @@ import static org.junit.Assert.*;
 public class GroupRepositoryIT extends TestApplication {
 
     private GroupRepository groupRepository;
+    ;
 
     @Before
     public void setup() {
@@ -26,12 +27,12 @@ public class GroupRepositoryIT extends TestApplication {
     @Test
     public void crd() {
         LocalDateTime now = LocalDateTime.now();
-        Group group = new Group("groupname");
+        String groupName = "groupName";
 
-        GroupId groupId = groupRepository.saveGroup(group);
+        GroupId groupId = groupRepository.saveGroup(groupName);
         Group readGroup = groupRepository.getGroup(groupId);
 
-        assertEquals(group.getName(), readGroup.getName());
+        assertEquals(groupName, readGroup.getName());
         assertFalse(now.isAfter(readGroup.getCreated()));
 
         groupRepository.removeGroup(groupId);
@@ -46,9 +47,9 @@ public class GroupRepositoryIT extends TestApplication {
 
     @Test
     public void getGroupsByNameReturnGroups() {
-        groupRepository.saveGroup(new Group("groupname_1"));
-        groupRepository.saveGroup(new Group("groupname_2"));
-        groupRepository.saveGroup(new Group("groupname_3"));
+        groupRepository.saveGroup("groupname_1");
+        groupRepository.saveGroup("groupname_2");
+        groupRepository.saveGroup("groupname_3");
 
         List<Group> groupsByName = groupRepository.getGroupsByName(Arrays.asList("groupname_1", "groupname_3"));
 

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import urchin.domain.cli.FolderCli;
 import urchin.domain.model.EncryptedFolder;
-import urchin.domain.model.FolderSettings;
 import urchin.domain.model.Passphrase;
 import urchin.domain.repository.FolderSettingsRepository;
 
@@ -40,7 +39,7 @@ public class FolderService {
         EncryptedFolder encryptedFolder = getEncryptedFolder(folder);
         createEncryptionFolderPair(folder, encryptedFolder);
         Passphrase passphrase = generateEcryptfsPassphrase();
-        folderSettingsRepository.saveFolderSettings(new FolderSettings(folder, encryptedFolder));
+        folderSettingsRepository.saveFolderSettings(encryptedFolder, folder);
         folderCli.mountEncryptedFolder(folder, encryptedFolder, passphrase);
         return passphrase;
     }

@@ -13,6 +13,8 @@ import static org.junit.Assert.*;
 
 public class UserRepositoryIT extends TestApplication {
 
+    private static final String USERNAME = "username";
+
     private UserRepository userRepository;
 
     @Before
@@ -23,12 +25,11 @@ public class UserRepositoryIT extends TestApplication {
     @Test
     public void crd() {
         LocalDateTime now = LocalDateTime.now();
-        User user = new User("username");
 
-        UserId userId = userRepository.saveUser(user);
+        UserId userId = userRepository.saveUser(USERNAME);
         User readUser = userRepository.getUser(userId);
 
-        assertEquals(user.getUsername(), readUser.getUsername());
+        assertEquals(USERNAME, readUser.getUsername());
         assertFalse(now.isAfter(readUser.getCreated()));
 
         userRepository.removeUser(userId);

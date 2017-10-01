@@ -1,18 +1,14 @@
 package urchin.controller.api;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.immutables.value.Value;
 
-public class IdDto {
+@Value.Immutable
+@JsonSerialize(as = ImmutableIdDto.class)
+@JsonDeserialize(as = ImmutableIdDto.class)
+public interface IdDto {
 
-    private final int id;
-
-    @JsonCreator
-    public IdDto(@JsonProperty("id") int id) {
-        this.id = id;
-    }
-
-    public int getId() {
-        return id;
-    }
+    @Value.Parameter
+    int getId();
 }

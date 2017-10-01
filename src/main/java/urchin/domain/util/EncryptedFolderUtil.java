@@ -3,6 +3,7 @@ package urchin.domain.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import urchin.domain.model.EncryptedFolder;
+import urchin.domain.model.ImmutableEncryptedFolder;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -26,6 +27,6 @@ public class EncryptedFolderUtil {
         String path = folder.toAbsolutePath().toString();
         String encryptedFolderPath = path.substring(0, path.lastIndexOf(DELIMITER)) + HIDDEN_FOLDER_DELIMITER + path.substring(path.lastIndexOf(DELIMITER) + DELIMITER.length());
         LOG.debug("Encrypted folder path {}", encryptedFolderPath);
-        return new EncryptedFolder(Paths.get(encryptedFolderPath));
+        return ImmutableEncryptedFolder.of(Paths.get(encryptedFolderPath));
     }
 }

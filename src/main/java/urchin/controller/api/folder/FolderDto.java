@@ -1,23 +1,19 @@
 package urchin.controller.api.folder;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.immutables.value.Value;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-public class FolderDto {
+@Value.Immutable
+@JsonSerialize(as = ImmutableFolderDto.class)
+@JsonDeserialize(as = ImmutableFolderDto.class)
+public interface FolderDto {
 
     @NotNull
     @Size(min = 1)
-    private final String folder;
-
-    @JsonCreator
-    public FolderDto(@JsonProperty("folder") String folder) {
-        this.folder = folder;
-    }
-
-    public String getFolder() {
-        return folder;
-    }
+    @Value.Parameter
+    String getFolder();
 }

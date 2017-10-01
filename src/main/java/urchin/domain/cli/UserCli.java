@@ -36,20 +36,20 @@ public class UserCli {
         this.listGroupsForUserCommand = listGroupsForUserCommand;
     }
 
-    public void addUser(User user) {
-        addUserCommand.execute(user);
+    public void addUser(String username) {
+        addUserCommand.execute(username);
     }
 
     public boolean checkIfUsernameExist(String username) {
         return checkIfUsernameExistCommand.execute(username);
     }
 
-    public void removeUser(User user) {
-        removeUserCommand.execute(user);
+    public void removeUser(String username) {
+        removeUserCommand.execute(username);
     }
 
-    public void setSetUserPassword(User user, String password) {
-        setUserPasswordCommand.execute(user, password);
+    public void setSetUserPassword(String username, String password) {
+        setUserPasswordCommand.execute(username, password);
     }
 
     public List<String> listUsers() {

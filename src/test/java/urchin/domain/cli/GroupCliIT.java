@@ -9,11 +9,11 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import urchin.domain.cli.user.AddUserCommand;
 import urchin.domain.cli.user.RemoveUserCommand;
-import urchin.domain.model.Group;
-import urchin.domain.model.User;
+import urchin.domain.model.*;
 import urchin.testutil.CliTestConfiguration;
 import urchin.testutil.UnixUserAndGroupCleanup;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.Assert.assertFalse;
@@ -39,28 +39,38 @@ public class GroupCliIT {
     private RemoveUserCommand removeUserCommand;
 
     private Group group;
+    private String groupName;
 
     @Before
     public void setup() {
-        group = new Group(GROUP_PREFIX + System.currentTimeMillis());
+        groupName = GROUP_PREFIX + System.currentTimeMillis();
+        group = ImmutableGroup.builder()
+                .groupId(ImmutableGroupId.of(1))
+                .name(groupName)
+                .created(LocalDateTime.now())
+                .build();
     }
 
     @Test
     public void addGroupAndCheckIfGroupExistAndRemoveGroupAreExecutedSuccessfully() {
-        groupCli.addGroup(group);
+        groupCli.addGroup(groupName);
 
-        assertTrue(groupCli.checkIfGroupExist(group.getName()));
+        assertTrue(groupCli.checkIfGroupExist(groupName));
 
-        groupCli.removeGroup(group);
+        groupCli.removeGroup(groupName);
 
-        assertFalse(groupCli.checkIfGroupExist(group.getName()));
+        assertFalse(groupCli.checkIfGroupExist(groupName));
     }
 
     @Test
     public void addAndRemoveUserFromGroupAreExecutedSuccessfully() {
-        User user = new User(USERNAME_PREFIX + System.currentTimeMillis());
-        addUserCommand.execute(user);
-        groupCli.addGroup(group);
+        User user = ImmutableUser.builder()
+                .userId(ImmutableUserId.of(1))
+                .username(USERNAME_PREFIX + System.currentTimeMillis())
+                .created(LocalDateTime.now())
+                .build();
+        addUserCommand.execute(user.getUsername());
+        groupCli.addGroup(groupName);
 
         groupCli.addUserToGroup(user, group);
         assertTrue(groupCli.checkIfUserIsInGroup(user, group));
@@ -68,7 +78,7 @@ public class GroupCliIT {
         groupCli.removeUserFromGroup(user, group);
         assertFalse(groupCli.checkIfUserIsInGroup(user, group));
 
-        removeUserCommand.execute(user);
+        removeUserCommand.execute(user.getUsername());
     }
 
     @Test

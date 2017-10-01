@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import urchin.controller.api.ErrorCode;
 import urchin.controller.api.ErrorDto;
+import urchin.controller.api.ImmutableErrorDto;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,13 +31,20 @@ public class ControllerAdvice {
             List<String> errors = fieldErrors.computeIfAbsent(fieldError.getField(), m -> new ArrayList<>());
             errors.add(fieldError.getDefaultMessage());
         });
-        return new ErrorDto(ErrorCode.VALIDATION_ERROR, "validation error", fieldErrors);
+        return ImmutableErrorDto.builder()
+                .errorCode(ErrorCode.VALIDATION_ERROR)
+                .message("validation error")
+                .fieldErrors(fieldErrors)
+                .build();
     }
 
     @ExceptionHandler(value = {Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected ErrorDto handleException(Exception e, WebRequest webRequest) {
         LOG.warn("Exception while handler request: {}", webRequest, e);
-        return new ErrorDto(ErrorCode.UNEXPECTED_ERROR, "an unexpected error occurred. See logs for details");
+        return ImmutableErrorDto.builder()
+                .errorCode(ErrorCode.UNEXPECTED_ERROR)
+                .message("an unexpected error occurred. See logs for details")
+                .build();
     }
 }

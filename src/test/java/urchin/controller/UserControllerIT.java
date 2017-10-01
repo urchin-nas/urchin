@@ -8,10 +8,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import urchin.controller.api.IdDto;
 import urchin.controller.api.MessageDto;
-import urchin.controller.api.group.AddGroupDto;
-import urchin.controller.api.group.AddUserToGroupDto;
-import urchin.controller.api.group.GroupDto;
+import urchin.controller.api.group.*;
 import urchin.controller.api.user.AddUserDto;
+import urchin.controller.api.user.ImmutableAddUserDto;
 import urchin.controller.api.user.UserDto;
 import urchin.testutil.TestApplication;
 
@@ -30,7 +29,10 @@ public class UserControllerIT extends TestApplication {
 
     @Before
     public void setUp() {
-        addUserDto = new AddUserDto(USERNAME_PREFIX + System.currentTimeMillis(), PASSWORD);
+        addUserDto = ImmutableAddUserDto.builder()
+                .username(USERNAME_PREFIX + System.currentTimeMillis())
+                .password(PASSWORD)
+                .build();
     }
 
     @Test
@@ -71,10 +73,13 @@ public class UserControllerIT extends TestApplication {
     @Test
     public void getGroupsForUserReturnsGroups() {
         ResponseEntity<IdDto> addUserResponse = addUserRequest(addUserDto);
-        ResponseEntity<IdDto> addGroupResponse = addGroupRequest(new AddGroupDto(GROUP_PREFIX + System.currentTimeMillis()));
+        ResponseEntity<IdDto> addGroupResponse = addGroupRequest(ImmutableAddGroupDto.of(GROUP_PREFIX + System.currentTimeMillis()));
         int userId = addUserResponse.getBody().getId();
         int groupId = addGroupResponse.getBody().getId();
-        AddUserToGroupDto addUserToGroupDto = new AddUserToGroupDto(groupId, userId);
+        AddUserToGroupDto addUserToGroupDto = ImmutableAddUserToGroupDto.builder()
+                .groupId(groupId)
+                .userId(userId)
+                .build();
         addUserToGroupRequest(addUserToGroupDto);
 
         ResponseEntity<GroupDto[]> getGroupsForUserResponse = getGroupsForUserRequest(userId);

@@ -39,8 +39,8 @@ public class GroupCli {
         this.listGroupsCommand = listGroupsCommand;
     }
 
-    public void addGroup(Group group) {
-        addGroupCommand.execute(group);
+    public void addGroup(String groupName) {
+        addGroupCommand.execute(groupName);
     }
 
     public boolean checkIfGroupExist(String groupName) {
@@ -55,8 +55,8 @@ public class GroupCli {
         }
     }
 
-    public void removeGroup(Group group) {
-        removeGroupCommand.execute(group);
+    public void removeGroup(String groupName) {
+        removeGroupCommand.execute(groupName);
     }
 
     public void addUserToGroup(User user, Group group) {

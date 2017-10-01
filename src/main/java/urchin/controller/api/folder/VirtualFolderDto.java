@@ -1,33 +1,23 @@
 package urchin.controller.api.folder;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.immutables.value.Value;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.List;
+import java.util.Collection;
 
-public class VirtualFolderDto {
+@Value.Immutable
+@JsonSerialize(as = ImmutableVirtualFolderDto.class)
+@JsonDeserialize(as = ImmutableVirtualFolderDto.class)
+public interface VirtualFolderDto {
 
     @NotNull
     @Size(min = 1)
-    private final List<String> folders;
+    Collection<String> getFolders();
 
     @NotNull
     @Size(min = 1)
-    private final String virtualFolder;
-
-    @JsonCreator
-    public VirtualFolderDto(@JsonProperty("folders") List<String> folders, @JsonProperty("virtualFolder") String virtualFolder) {
-        this.folders = folders;
-        this.virtualFolder = virtualFolder;
-    }
-
-    public List<String> getFolders() {
-        return folders;
-    }
-
-    public String getVirtualFolder() {
-        return virtualFolder;
-    }
+    String getVirtualFolder();
 }

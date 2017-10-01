@@ -7,10 +7,13 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
+import urchin.domain.model.ImmutableUser;
+import urchin.domain.model.ImmutableUserId;
 import urchin.domain.model.User;
 import urchin.testutil.CliTestConfiguration;
 import urchin.testutil.UnixUserAndGroupCleanup;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -30,22 +33,28 @@ public class UserCliIT {
     private UserCli userCli;
 
     private User user;
+    private String username;
 
     @Before
     public void setUp() {
-        user = new User(USERNAME_PREFIX + System.currentTimeMillis());
+        username = USERNAME_PREFIX + System.currentTimeMillis();
+        user = ImmutableUser.builder()
+                .userId(ImmutableUserId.of(1))
+                .username(username)
+                .created(LocalDateTime.now())
+                .build();
     }
 
     @Test
     public void addUserAndSetUserPasswordAndCheckIfUsernameExistAndRemoveUserAreExecutedSuccessfully() {
-        userCli.addUser(user);
-        userCli.setSetUserPassword(user, PASSWORD);
+        userCli.addUser(username);
+        userCli.setSetUserPassword(username, PASSWORD);
 
-        assertTrue(userCli.checkIfUsernameExist(user.getUsername()));
+        assertTrue(userCli.checkIfUsernameExist(username));
 
-        userCli.removeUser(user);
+        userCli.removeUser(username);
 
-        assertFalse(userCli.checkIfUsernameExist(user.getUsername()));
+        assertFalse(userCli.checkIfUsernameExist(username));
     }
 
     @Test
@@ -57,7 +66,7 @@ public class UserCliIT {
 
     @Test
     public void listGroupsForUserReturnsGroups() {
-        userCli.addUser(user);
+        userCli.addUser(user.getUsername());
 
         List<String> groups = userCli.listGroupsForUser(user);
 

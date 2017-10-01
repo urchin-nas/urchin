@@ -1,25 +1,16 @@
 package urchin.controller.api.user;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.immutables.value.Value;
 
-public class UserDto {
+@Value.Immutable
+@JsonSerialize(as = ImmutableUserDto.class)
+@JsonDeserialize(as = ImmutableUserDto.class)
+public interface UserDto {
 
-    private final int userId;
-    private final String username;
+    int getUserId();
 
-    @JsonCreator
-    public UserDto(@JsonProperty("userId") int userId, @JsonProperty("username") String username) {
-        this.userId = userId;
-        this.username = username;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
+    String getUsername();
 
 }

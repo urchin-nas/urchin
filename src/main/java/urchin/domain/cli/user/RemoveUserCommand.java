@@ -3,7 +3,6 @@ package urchin.domain.cli.user;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import urchin.domain.cli.common.BasicCommand;
-import urchin.domain.model.User;
 
 import static java.util.Arrays.copyOf;
 
@@ -23,14 +22,14 @@ public class RemoveUserCommand extends BasicCommand {
         super(runtime);
     }
 
-    public void execute(User user) {
-        LOG.debug("Removing user {}", user.getUsername());
-        executeCommand(setupCommand(user));
+    public void execute(String username) {
+        LOG.debug("Removing user {}", username);
+        executeCommand(setupCommand(username));
     }
 
-    private String[] setupCommand(User user) {
+    private String[] setupCommand(String username) {
         String[] command = copyOf(COMMAND, COMMAND.length);
-        command[2] = user.getUsername();
+        command[2] = username;
         return command;
     }
 }

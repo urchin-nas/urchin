@@ -8,6 +8,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import urchin.domain.model.ImmutableUser;
+import urchin.domain.model.ImmutableUserId;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
 import urchin.exception.UserNotFoundException;
@@ -32,22 +34,22 @@ public class UserRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public UserId saveUser(User user) {
-        LOG.info("Saving user {}", user.getUsername());
+    public UserId saveUser(String username) {
+        LOG.info("Saving user {}", username);
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, user.getUsername());
+            preparedStatement.setString(1, username);
             preparedStatement.setTimestamp(2, new Timestamp(new Date().getTime()));
             return preparedStatement;
         }, keyHolder);
 
-        return new UserId(keyHolder.getKey().intValue());
+        return ImmutableUserId.of(keyHolder.getKey().intValue());
     }
 
     public User getUser(UserId userId) {
         try {
-            return jdbcTemplate.queryForObject(SELECT_USER, new Object[]{userId.getId()}, (resultSet, i) -> userMapper(resultSet));
+            return jdbcTemplate.queryForObject(SELECT_USER, new Object[]{userId.getValue()}, (resultSet, i) -> userMapper(resultSet));
         } catch (EmptyResultDataAccessException e) {
             throw new UserNotFoundException("Invalid userId " + userId);
         }
@@ -55,7 +57,7 @@ public class UserRepository {
 
     public void removeUser(UserId userId) {
         LOG.info("Removing user with id {}", userId);
-        jdbcTemplate.update(DELETE_USER, userId.getId());
+        jdbcTemplate.update(DELETE_USER, userId.getValue());
     }
 
     public List<User> getUsers() {
@@ -63,10 +65,10 @@ public class UserRepository {
     }
 
     private User userMapper(ResultSet resultSet) throws SQLException {
-        return new User(
-                new UserId(resultSet.getInt("id")),
-                resultSet.getString("username"),
-                resultSet.getTimestamp("created").toLocalDateTime()
-        );
+        return ImmutableUser.builder()
+                .userId(ImmutableUserId.of(resultSet.getInt("id")))
+                .username(resultSet.getString("username"))
+                .created(resultSet.getTimestamp("created").toLocalDateTime())
+                .build();
     }
 }

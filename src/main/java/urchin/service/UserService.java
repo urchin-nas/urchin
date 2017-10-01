@@ -31,10 +31,10 @@ public class UserService {
     }
 
     @Transactional
-    public UserId addUser(User user, String password) {
-        UserId userId = userRepository.saveUser(user);
-        userCli.addUser(user);
-        userCli.setSetUserPassword(user, password);
+    public UserId addUser(String username, String password) {
+        UserId userId = userRepository.saveUser(username);
+        userCli.addUser(username);
+        userCli.setSetUserPassword(username, password);
         return userId;
     }
 
@@ -42,7 +42,7 @@ public class UserService {
     public void removeUser(UserId userId) {
         User user = userRepository.getUser(userId);
         userRepository.removeUser(userId);
-        userCli.removeUser(user);
+        userCli.removeUser(user.getUsername());
     }
 
     public List<User> getUsers() {

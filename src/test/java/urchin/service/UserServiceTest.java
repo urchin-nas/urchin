@@ -1,19 +1,17 @@
 package urchin.service;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import urchin.domain.cli.UserCli;
-import urchin.domain.model.Group;
-import urchin.domain.model.User;
-import urchin.domain.model.UserId;
+import urchin.domain.model.*;
 import urchin.domain.repository.GroupRepository;
 import urchin.domain.repository.UserRepository;
 import urchin.exception.UserNotFoundException;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -26,7 +24,13 @@ import static org.mockito.Mockito.when;
 public class UserServiceTest {
 
     private static final String PASSWORD = "password";
-    private static final UserId USER_ID = new UserId(1);
+    private static final String USERNAME = "username";
+    private static final UserId USER_ID = ImmutableUserId.of(1);
+    private static final User USER = ImmutableUser.builder()
+            .userId(USER_ID)
+            .username(USERNAME)
+            .created(LocalDateTime.now())
+            .build();
 
     @Mock
     private UserRepository userRepository;
@@ -37,30 +41,23 @@ public class UserServiceTest {
     @InjectMocks
     private UserService userService;
 
-    private User user;
-
-    @Before
-    public void setup() {
-        user = new User("username");
-    }
-
     @Test
     public void addUserIsSavedInUserRepositoryAndCommandForAddingUserAndSettingPasswordAreCalled() {
-        userService.addUser(user, PASSWORD);
+        userService.addUser(USERNAME, PASSWORD);
 
-        verify(userRepository).saveUser(user);
-        verify(userCli).addUser(user);
-        verify(userCli).setSetUserPassword(user, PASSWORD);
+        verify(userRepository).saveUser(USERNAME);
+        verify(userCli).addUser(USERNAME);
+        verify(userCli).setSetUserPassword(USERNAME, PASSWORD);
     }
 
     @Test
     public void removeUserRemovesUserFromUserRepositoryAndRemoveUserCommandIsCalled() {
-        when(userRepository.getUser(USER_ID)).thenReturn(user);
+        when(userRepository.getUser(USER_ID)).thenReturn(USER);
 
         userService.removeUser(USER_ID);
 
         verify(userRepository).removeUser(USER_ID);
-        verify(userCli).removeUser(user);
+        verify(userCli).removeUser(USER.getUsername());
     }
 
     @Test(expected = UserNotFoundException.class)
@@ -73,9 +70,14 @@ public class UserServiceTest {
     @Test
     public void listGroupsForUserReturnsGroupsExistingInBothOSAndRepository() {
         List<String> groupNames = Arrays.asList("group_1", "group_2");
-        when(userRepository.getUser(USER_ID)).thenReturn(user);
-        when(userCli.listGroupsForUser(user)).thenReturn(groupNames);
-        when(groupRepository.getGroupsByName(groupNames)).thenReturn(Collections.singletonList(new Group("group_1")));
+        when(userRepository.getUser(USER_ID)).thenReturn(USER);
+        when(userCli.listGroupsForUser(USER)).thenReturn(groupNames);
+        when(groupRepository.getGroupsByName(groupNames)).thenReturn(Collections.singletonList(ImmutableGroup.builder()
+                .groupId(ImmutableGroupId.of(1))
+                .name("group_1")
+                .created(LocalDateTime.now())
+                .build())
+        );
 
         List<Group> groups = userService.listGroupsForUser(USER_ID);
 

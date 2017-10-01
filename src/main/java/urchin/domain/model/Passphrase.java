@@ -1,39 +1,19 @@
 package urchin.domain.model;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.immutables.value.Value;
 
-public class Passphrase {
+@Value.Immutable
+public abstract class Passphrase {
 
     public static final int ECRYPTFS_MAX_PASSPHRASE_LENGTH = 64;
 
-    private final String passphrase;
+    @Value.Parameter
+    public abstract String getPassphrase();
 
-    public Passphrase(String passphrase) {
-        if (passphrase.length() < ECRYPTFS_MAX_PASSPHRASE_LENGTH) {
-            throw new IllegalArgumentException("passphrase not long enough");
+    @Value.Check
+    void validateLenght() {
+        if (getPassphrase().length() < ECRYPTFS_MAX_PASSPHRASE_LENGTH) {
+            throw new IllegalArgumentException(String.format("passphrase must be at least %d characters but was %d", ECRYPTFS_MAX_PASSPHRASE_LENGTH, getPassphrase().length()));
         }
-        this.passphrase = passphrase;
-    }
-
-    public String getPassphrase() {
-        return passphrase;
-    }
-
-    @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
-    @Override
-    public boolean equals(Object other) {
-        return EqualsBuilder.reflectionEquals(this, other);
-    }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
     }
 }

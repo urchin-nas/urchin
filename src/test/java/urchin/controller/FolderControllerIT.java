@@ -7,11 +7,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import urchin.controller.api.*;
-import urchin.controller.api.folder.FolderDto;
-import urchin.controller.api.folder.MountEncryptedFolderDto;
-import urchin.controller.api.folder.PassphraseDto;
-import urchin.controller.api.folder.VirtualFolderDto;
+import urchin.controller.api.MessageDto;
+import urchin.controller.api.folder.*;
 import urchin.domain.model.EncryptedFolder;
 import urchin.testutil.TemporaryFolderUnmount;
 import urchin.testutil.TestApplication;
@@ -21,9 +18,9 @@ import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 
 import static java.nio.file.Files.exists;
-import static java.util.Arrays.asList;
 import static junit.framework.TestCase.*;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
@@ -58,7 +55,7 @@ public class FolderControllerIT extends TestApplication {
 
     @Test
     public void createAndMountAndUnmountEncryptedAndVirtualFoldersThatAreSharedAndUnsharedOnNetwork() throws Exception {
-        FolderDto encryptedFolderDto = new FolderDto(folder_1.toAbsolutePath().toString());
+        FolderDto encryptedFolderDto = ImmutableFolderDto.of(folder_1.toAbsolutePath().toString());
 
         //1. create encrypted folder
 
@@ -79,10 +76,10 @@ public class FolderControllerIT extends TestApplication {
 
         //3. mount encrypted folder again
 
-        MountEncryptedFolderDto mountEncryptedFolderDto = new MountEncryptedFolderDto(
-                folder_1.toAbsolutePath().toString(),
-                createResponse_1.getBody().getPassphrase()
-        );
+        MountEncryptedFolderDto mountEncryptedFolderDto = ImmutableMountEncryptedFolderDto.builder()
+                .folder(folder_1.toAbsolutePath().toString())
+                .passphrase(createResponse_1.getBody().getPassphrase())
+                .build();
 
         ResponseEntity<MessageDto> mountResponse_1 = postMountRequest(mountEncryptedFolderDto);
         assertEquals(HttpStatus.OK, mountResponse_1.getStatusCode());
@@ -91,14 +88,18 @@ public class FolderControllerIT extends TestApplication {
 
         //4. create 2nd encrypted folder
 
-        ResponseEntity<PassphraseDto> createResponse_2 = postCreateRequest(new FolderDto(folder_2.toAbsolutePath().toString()));
+        ResponseEntity<PassphraseDto> createResponse_2 = postCreateRequest(ImmutableFolderDto.of(folder_2.toAbsolutePath().toString()));
         assertEquals(HttpStatus.OK, createResponse_2.getStatusCode());
         assertTrue(exists(folder_2));
         assertTrue(exists(encryptedFolder_2.getPath()));
 
         //5. setup virtual folder
 
-        VirtualFolderDto virtualFolderDto = new VirtualFolderDto(asList(folder_1.toString(), folder_2.toString()), virtualFolder.toString());
+        VirtualFolderDto virtualFolderDto =
+                ImmutableVirtualFolderDto.builder()
+                        .folders(Arrays.asList(folder_1.toString(), folder_2.toString()))
+                        .virtualFolder(virtualFolder.toString())
+                        .build();
 
         ResponseEntity<MessageDto> virtualFolderResponse = postSetupVirtualFolderRequest(virtualFolderDto);
 
@@ -113,7 +114,7 @@ public class FolderControllerIT extends TestApplication {
 
         //7. share virtual folder
 
-        FolderDto shareFolderDto = new FolderDto(virtualFolder.toString());
+        FolderDto shareFolderDto = ImmutableFolderDto.of(virtualFolder.toString());
 
         ResponseEntity<MessageDto> shareFolderResponse = postShareFolderRequest(shareFolderDto);
         assertEquals(HttpStatus.OK, shareFolderResponse.getStatusCode());
@@ -135,7 +136,7 @@ public class FolderControllerIT extends TestApplication {
 
         //9. unmount virtual folder
 
-        ResponseEntity<MessageDto> unmountVirtualFOlderResponse = postUnmountVirtualFolderRequest(new FolderDto(virtualFolder.toString()));
+        ResponseEntity<MessageDto> unmountVirtualFOlderResponse = postUnmountVirtualFolderRequest(ImmutableFolderDto.of(virtualFolder.toString()));
 
         assertEquals(HttpStatus.OK, unmountVirtualFOlderResponse.getStatusCode());
         assertFalse(exists(virtualFolder));

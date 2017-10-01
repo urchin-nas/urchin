@@ -11,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import urchin.domain.cli.FolderCli;
 import urchin.domain.model.EncryptedFolder;
+import urchin.domain.model.ImmutableEncryptedFolder;
 import urchin.domain.model.Passphrase;
 import urchin.domain.repository.FolderSettingsRepository;
 import urchin.domain.util.EncryptedFolderUtil;
@@ -51,7 +52,7 @@ public class FolderServiceTest {
     @Before
     public void setup() {
         folder = Paths.get(temporaryFolder.getRoot() + FOLDER_NAME);
-        encryptedFolder = new EncryptedFolder(Paths.get(temporaryFolder.getRoot() + ENCRYPTED_FOLDER_NAME));
+        encryptedFolder = ImmutableEncryptedFolder.of(Paths.get(temporaryFolder.getRoot() + ENCRYPTED_FOLDER_NAME));
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -99,7 +100,7 @@ public class FolderServiceTest {
 
     @Test
     public void mountEncryptedFolder() throws IOException {
-        EncryptedFolder encryptedFolder = new EncryptedFolder(Paths.get(temporaryFolder.getRoot() + ENCRYPTED_FOLDER_NAME));
+        EncryptedFolder encryptedFolder = ImmutableEncryptedFolder.of(Paths.get(temporaryFolder.getRoot() + ENCRYPTED_FOLDER_NAME));
         Files.createDirectories(encryptedFolder.getPath());
         Path folder = EncryptedFolderUtil.getFolder(encryptedFolder);
         Passphrase passphrase = generateEcryptfsPassphrase();

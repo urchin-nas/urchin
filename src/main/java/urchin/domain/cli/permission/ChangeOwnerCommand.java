@@ -2,8 +2,6 @@ package urchin.domain.cli.permission;
 
 import org.springframework.stereotype.Component;
 import urchin.domain.cli.common.BasicCommand;
-import urchin.domain.model.Group;
-import urchin.domain.model.User;
 
 import java.nio.file.Path;
 
@@ -29,14 +27,14 @@ public class ChangeOwnerCommand extends BasicCommand {
         super(runtime);
     }
 
-    public void execute(User user, Group group, Path file) {
-        LOG.debug("Change owner of file {} to {}:{}", file, user, group);
-        executeCommand(setupCommand(user, group, file));
+    public void execute(Path file, String username, String groupName) {
+        LOG.debug("Change owner of file {} to {}:{}", file, username, groupName);
+        executeCommand(setupCommand(file, username, groupName));
     }
 
-    private String[] setupCommand(User user, Group group, Path file) {
+    private String[] setupCommand(Path file, String username, String groupName) {
         String[] command = copyOf(COMMAND, COMMAND.length);
-        command[3] = String.format("%s:%s", user.getUsername(), group.getName());
+        command[3] = String.format("%s:%s", username, groupName);
         command[4] = file.toAbsolutePath().toString();
         return command;
     }

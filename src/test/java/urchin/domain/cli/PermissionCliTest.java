@@ -10,8 +10,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import urchin.domain.model.FileModes;
 import urchin.domain.model.FileOwners;
-import urchin.domain.model.Group;
-import urchin.domain.model.User;
+import urchin.domain.model.ImmutableFileModes;
 import urchin.testutil.CliTestConfiguration;
 import urchin.testutil.UnixUserAndGroupCleanup;
 
@@ -58,7 +57,12 @@ public class PermissionCliTest {
         FileModes fileModes = permissionCli.getFileModes(testFile);
         System.out.println("fileModes = " + fileModes);
 
-        permissionCli.changeFileMode(new FileModes(7, 7, 7), testFile);
+        FileModes modes = ImmutableFileModes.builder()
+                .owner(7)
+                .group(7)
+                .other(7)
+                .build();
+        permissionCli.changeFileMode(modes, testFile);
         FileModes newFileModes = permissionCli.getFileModes(testFile);
 
         assertNotEquals(fileModes, newFileModes);
@@ -66,18 +70,13 @@ public class PermissionCliTest {
 
     @Test
     public void ownerIsChanged() {
-        User user = new User(USERNAME_PREFIX + System.currentTimeMillis());
-        Group group = new Group(GROUP_PREFIX + System.currentTimeMillis());
-        userCli.addUser(user);
-        groupCli.addGroup(group);
+        String groupName = GROUP_PREFIX + System.currentTimeMillis();
+        String username = USERNAME_PREFIX + System.currentTimeMillis();
+        userCli.addUser(USERNAME_PREFIX + System.currentTimeMillis());
+        groupCli.addGroup(groupName);
 
         FileOwners fileOwners = permissionCli.getFileOwners(testFile);
-
-        permissionCli.changeOwner(
-                user,
-                group,
-                testFile
-        );
+        permissionCli.changeOwner(testFile, username, groupName);
 
         FileOwners newFileOwners = permissionCli.getFileOwners(testFile);
 

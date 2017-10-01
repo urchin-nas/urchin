@@ -4,15 +4,16 @@ import org.junit.Before;
 import org.junit.Test;
 import urchin.domain.model.EncryptedFolder;
 import urchin.domain.model.FolderSettings;
+import urchin.domain.model.ImmutableEncryptedFolder;
 import urchin.testutil.TestApplication;
 
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 public class FolderSettingsRepositoryIT extends TestApplication {
@@ -28,10 +29,10 @@ public class FolderSettingsRepositoryIT extends TestApplication {
     public void crd() {
         LocalDateTime now = LocalDateTime.now();
         String workDir = System.getProperty("user.dir");
-        FolderSettings folderSettings = new FolderSettings(Paths.get(workDir + "/some/path"), new EncryptedFolder(Paths.get(workDir + "/some/.path")));
-        folderSettings.setAutoMount(true);
+        Path folder = Paths.get(workDir + "/some/path");
+        EncryptedFolder encryptedFolder = ImmutableEncryptedFolder.of(Paths.get(workDir + "/some/.path"));
 
-        folderSettingsRepository.saveFolderSettings(folderSettings);
+        folderSettingsRepository.saveFolderSettings(encryptedFolder, folder);
 
         List<FolderSettings> matchedFolderSettings = folderSettingsRepository.getAllFolderSettings().stream()
                 .filter(folderSetting -> folderSetting.getFolder().startsWith(workDir))
@@ -39,10 +40,10 @@ public class FolderSettingsRepositoryIT extends TestApplication {
         assertEquals(1, matchedFolderSettings.size());
         FolderSettings readFolderSettings = matchedFolderSettings.get(0);
         assertTrue(readFolderSettings.getId() > 0);
-        assertEquals(folderSettings.getFolder(), readFolderSettings.getFolder());
-        assertEquals(folderSettings.getEncryptedFolder(), readFolderSettings.getEncryptedFolder());
+        assertEquals(folder, readFolderSettings.getFolder());
+        assertEquals(encryptedFolder, readFolderSettings.getEncryptedFolder());
         assertTrue(now.isBefore(readFolderSettings.getCreated()) || now.isEqual(readFolderSettings.getCreated()));
-        assertTrue(readFolderSettings.isAutoMount());
+        assertFalse(readFolderSettings.isAutoMount());
 
         folderSettingsRepository.removeFolderSettings(readFolderSettings.getId());
 

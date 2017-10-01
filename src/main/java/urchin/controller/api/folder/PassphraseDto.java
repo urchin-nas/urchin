@@ -1,18 +1,14 @@
 package urchin.controller.api.folder;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.immutables.value.Value;
 
-public class PassphraseDto {
+@Value.Immutable
+@JsonSerialize(as = ImmutablePassphraseDto.class)
+@JsonDeserialize(as = ImmutablePassphraseDto.class)
+public interface PassphraseDto {
 
-    private final String passphrase;
-
-    @JsonCreator
-    public PassphraseDto(@JsonProperty("passphrase") String passphrase) {
-        this.passphrase = passphrase;
-    }
-
-    public String getPassphrase() {
-        return passphrase;
-    }
+    @Value.Parameter
+    String getPassphrase();
 }

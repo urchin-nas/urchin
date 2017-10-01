@@ -27,9 +27,9 @@ public class GroupService {
     }
 
     @Transactional
-    public GroupId addGroup(Group group) {
-        GroupId groupId = groupRepository.saveGroup(group);
-        groupCli.addGroup(group);
+    public GroupId addGroup(String groupName) {
+        GroupId groupId = groupRepository.saveGroup(groupName);
+        groupCli.addGroup(groupName);
         return groupId;
     }
 
@@ -37,7 +37,7 @@ public class GroupService {
     public void removeGroup(GroupId groupId) {
         Group group = groupRepository.getGroup(groupId);
         groupRepository.removeGroup(groupId);
-        groupCli.removeGroup(group);
+        groupCli.removeGroup(group.getName());
     }
 
     public void addUserToGroup(UserId userId, GroupId groupId) {

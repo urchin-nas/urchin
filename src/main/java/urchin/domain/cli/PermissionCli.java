@@ -7,8 +7,8 @@ import urchin.domain.cli.permission.ChangeOwnerCommand;
 import urchin.domain.cli.permission.ListFileInformationCommand;
 import urchin.domain.model.FileModes;
 import urchin.domain.model.FileOwners;
-import urchin.domain.model.Group;
-import urchin.domain.model.User;
+import urchin.domain.model.ImmutableFileModes;
+import urchin.domain.model.ImmutableFileOwners;
 
 import java.nio.file.Path;
 
@@ -33,16 +33,19 @@ public class PermissionCli {
         changeFileModesCommand.execute(fileModes, file);
     }
 
-    public void changeOwner(User user, Group group, Path file) {
-        changeOwnerCommand.execute(user, group, file);
+    public void changeOwner(Path file, String username, String groupName) {
+        changeOwnerCommand.execute(file, username, groupName);
     }
 
     public FileModes getFileModes(Path file) {
-        return new FileModes(listFileInformationCommand.execute(file).get().split(" ")[0]);
+        return ImmutableFileModes.from(listFileInformationCommand.execute(file).get().split(" ")[0]);
     }
 
     public FileOwners getFileOwners(Path file) {
         String[] split = listFileInformationCommand.execute(file).get().split(" ");
-        return new FileOwners(split[2], split[3]);
+        return ImmutableFileOwners.builder()
+                .user(split[2])
+                .group(split[3])
+                .build();
     }
 }

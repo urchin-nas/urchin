@@ -1,18 +1,14 @@
 package urchin.controller.api;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.immutables.value.Value;
 
-public class MessageDto {
+@Value.Immutable
+@JsonSerialize(as = ImmutableMessageDto.class)
+@JsonDeserialize(as = ImmutableMessageDto.class)
+public interface MessageDto {
 
-    private final String message;
-
-    @JsonCreator
-    public MessageDto(@JsonProperty("message") String message) {
-        this.message = message;
-    }
-
-    public String getMessage() {
-        return message;
-    }
+    @Value.Parameter
+    String getMessage();
 }

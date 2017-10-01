@@ -1,54 +1,16 @@
 package urchin.domain.model;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.immutables.value.Value;
 
 import java.time.LocalDateTime;
 
-public class User {
+@Value.Immutable
+public interface User {
 
-    private final UserId userId;
-    private final String username;
-    private final LocalDateTime created;
+    UserId getUserId();
 
-    public User(String username) {
-        this.userId = null;
-        this.username = username;
-        this.created = null;
-    }
+    String getUsername();
 
-    public User(UserId userId, String username, LocalDateTime created) {
-        this.userId = userId;
-        this.username = username;
-        this.created = created;
-    }
+    LocalDateTime getCreated();
 
-    public UserId getUserId() {
-        return userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public LocalDateTime getCreated() {
-        return created;
-    }
-
-    @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
-    @Override
-    public boolean equals(Object other) {
-        return EqualsBuilder.reflectionEquals(this, other);
-    }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
-    }
 }

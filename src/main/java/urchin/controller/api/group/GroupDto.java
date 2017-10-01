@@ -1,25 +1,16 @@
 package urchin.controller.api.group;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.immutables.value.Value;
 
-public class GroupDto {
+@Value.Immutable
+@JsonSerialize(as = ImmutableGroupDto.class)
+@JsonDeserialize(as = ImmutableGroupDto.class)
+public interface GroupDto {
 
-    private final int groupId;
-    private final String groupName;
+    int getGroupId();
 
-    @JsonCreator
-    public GroupDto(@JsonProperty("groupId") int groupId, @JsonProperty("groupName") String groupName) {
-        this.groupId = groupId;
-        this.groupName = groupName;
-    }
-
-    public int getGroupId() {
-        return groupId;
-    }
-
-    public String getGroupName() {
-        return groupName;
-    }
+    String getGroupName();
 
 }

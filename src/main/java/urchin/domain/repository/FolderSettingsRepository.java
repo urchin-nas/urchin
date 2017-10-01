@@ -7,7 +7,10 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import urchin.domain.model.EncryptedFolder;
 import urchin.domain.model.FolderSettings;
+import urchin.domain.model.ImmutableEncryptedFolder;
+import urchin.domain.model.ImmutableFolderSettings;
 
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,14 +32,14 @@ public class FolderSettingsRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public void saveFolderSettings(FolderSettings folderSettings) {
-        LOG.info("Saving new folder settings for folder {}", folderSettings.getFolder());
+    public void saveFolderSettings(EncryptedFolder encryptedFolder, Path folder) {
+        LOG.info("Saving new folder settings for folder {}", folder);
         jdbcTemplate.update(
                 INSERT_FOLDER_SETTINGS,
-                folderSettings.getEncryptedFolder().getPath().toAbsolutePath().toString(),
-                folderSettings.getFolder().toAbsolutePath().toString(),
+                encryptedFolder.getPath().toAbsolutePath().toString(),
+                folder.toAbsolutePath().toString(),
                 new Date(),
-                folderSettings.isAutoMount()
+                false
         );
     }
 
@@ -50,13 +53,12 @@ public class FolderSettingsRepository {
     }
 
     private FolderSettings folderSettingsMapper(ResultSet resultSet) throws SQLException {
-        FolderSettings folderSettings = new FolderSettings(
-                Paths.get(resultSet.getString("folder")),
-                new EncryptedFolder(Paths.get(resultSet.getString("encrypted_folder")))
-        );
-        folderSettings.setId(resultSet.getInt("id"));
-        folderSettings.setCreated(resultSet.getTimestamp("created").toLocalDateTime());
-        folderSettings.setAutoMount(resultSet.getBoolean("auto_mount"));
-        return folderSettings;
+        return ImmutableFolderSettings.builder()
+                .id(resultSet.getInt("id"))
+                .folder(Paths.get(resultSet.getString("folder")))
+                .encryptedFolder(ImmutableEncryptedFolder.of(Paths.get(resultSet.getString("encrypted_folder"))))
+                .isAutoMount(resultSet.getBoolean("auto_mount"))
+                .created(resultSet.getTimestamp("created").toLocalDateTime())
+                .build();
     }
 }

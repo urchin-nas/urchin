@@ -1,35 +1,20 @@
 package urchin.controller.api;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import org.immutables.value.Value;
+
 import java.util.List;
 import java.util.Map;
 
-public class ErrorDto {
+@Value.Immutable
+@JsonSerialize(as = ImmutableErrorDto.class)
+@JsonDeserialize(as = ImmutableErrorDto.class)
+public interface ErrorDto {
 
-    private final ErrorCode errorCode;
-    private final String message;
-    private final Map<String, List<String>> fieldErrors;
+    ErrorCode getErrorCode();
 
-    public ErrorDto(ErrorCode errorCode, String message) {
-        this.errorCode = errorCode;
-        this.message = message;
-        this.fieldErrors = null;
-    }
+    String getMessage();
 
-    public ErrorDto(ErrorCode errorCode, String message, Map<String, List<String>> fieldErrors) {
-        this.errorCode = errorCode;
-        this.message = message;
-        this.fieldErrors = fieldErrors;
-    }
-
-    public ErrorCode getErrorCode() {
-        return errorCode;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public Map<String, List<String>> getFieldErrors() {
-        return fieldErrors;
-    }
+    Map<String, List<String>> getFieldErrors();
 }

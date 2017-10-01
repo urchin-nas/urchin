@@ -1,8 +1,6 @@
 package urchin.domain.model;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.immutables.value.Value;
 
 import static java.lang.String.format;
 
@@ -16,30 +14,31 @@ import static java.lang.String.format;
  * 6	Read and write permission: 4 (read) + 2 (write) = 6	rw-
  * 7	All permissions: 4 (read) + 2 (write) + 1 (execute) = 7	rwx
  */
-public class FileModes {
+@Value.Immutable
+public abstract class FileModes {
 
-    private final int owner;
-    private final int group;
-    private final int other;
+    public abstract int getOwner();
 
-    public FileModes(int owner, int group, int other) {
-        this.owner = owner;
-        this.group = group;
-        this.other = other;
-        validateModes();
+    public abstract int getGroup();
+
+    public abstract int getOther();
+
+    public String getModes() {
+        return format("%d%d%d", getOwner(), getGroup(), getOther());
     }
 
-    public FileModes(String modes) {
+    public static FileModes from(String modes) {
         if (modes.length() != 10) {
             throw new IllegalArgumentException("Invalid file modes. Expected string to be of length 10 but was " + modes.length());
         }
-        this.owner = parseAbsoluteNotation(modes.substring(1, 4));
-        this.group = parseAbsoluteNotation(modes.substring(4, 7));
-        this.other = parseAbsoluteNotation(modes.substring(7, 10));
-        validateModes();
+        return ImmutableFileModes.builder()
+                .owner(parseAbsoluteNotation(modes.substring(1, 4)))
+                .group(parseAbsoluteNotation(modes.substring(4, 7)))
+                .other(parseAbsoluteNotation(modes.substring(7, 10)))
+                .build();
     }
 
-    private int parseAbsoluteNotation(String fileModes) {
+    private static int parseAbsoluteNotation(String fileModes) {
         int absoluteNotation = 0;
         for (String fileMode : fileModes.split("")) {
             absoluteNotation += getAbsoluteNotationValue(fileMode);
@@ -47,7 +46,7 @@ public class FileModes {
         return absoluteNotation;
     }
 
-    private int getAbsoluteNotationValue(String fileMode) {
+    private static int getAbsoluteNotationValue(String fileMode) {
         switch (fileMode) {
             case "-":
                 return 0;
@@ -62,35 +61,16 @@ public class FileModes {
         }
     }
 
-    private void validateModes() {
-        validateMode(owner);
-        validateMode(group);
-        validateMode(other);
+    @Value.Check
+    void validateModes() {
+        validateMode(getOwner());
+        validateMode(getGroup());
+        validateMode(getOther());
     }
 
     private void validateMode(int mode) {
         if (0 > mode || mode > 7) {
             throw new IllegalArgumentException(format("Invalid file mode %d. Must be between 0 and 7", mode));
         }
-    }
-
-    public String getModes() {
-        return format("%d%d%d", owner, group, other);
-    }
-
-    @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
-    @Override
-    public boolean equals(Object other) {
-        return EqualsBuilder.reflectionEquals(this, other);
-    }
-
-    @Override
-    public int hashCode() {
-        return HashCodeBuilder.reflectionHashCode(this);
-    }
-
-    @Override
-    public String toString() {
-        return ToStringBuilder.reflectionToString(this);
     }
 }

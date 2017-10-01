@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import urchin.domain.model.EncryptedFolder;
+import urchin.domain.model.ImmutableEncryptedFolder;
 import urchin.testutil.CliTestConfiguration;
 import urchin.testutil.TemporaryFolderUnmount;
 
@@ -45,7 +46,7 @@ public class FolderCliIT {
 
         folder_1 = Paths.get(tmpFolderPath + FOLDER1_NAME);
         folder_2 = Paths.get(tmpFolderPath + FOLDER2_NAME);
-        encryptedFolder = new EncryptedFolder(Paths.get(tmpFolderPath + ENCRYPTED_FOLDER_NAME));
+        encryptedFolder = ImmutableEncryptedFolder.of(Paths.get(tmpFolderPath + ENCRYPTED_FOLDER_NAME));
         virtualFolder = Paths.get(tmpFolderPath + FOLDER_VIRTUAL_NAME);
 
         Files.createDirectories(folder_1);

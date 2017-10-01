@@ -1,16 +1,12 @@
 package urchin.service;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import urchin.domain.cli.GroupCli;
-import urchin.domain.model.Group;
-import urchin.domain.model.GroupId;
-import urchin.domain.model.User;
-import urchin.domain.model.UserId;
+import urchin.domain.model.*;
 import urchin.domain.repository.GroupRepository;
 import urchin.exception.GroupNotFoundException;
 import urchin.exception.UserNotFoundException;
@@ -24,8 +20,19 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class GroupServiceTest {
 
-    private static final GroupId GROUP_ID = new GroupId(1);
-    private static final UserId USER_ID = new UserId(1);
+    private static final GroupId GROUP_ID = ImmutableGroupId.of(2);
+    private static final UserId USER_ID = ImmutableUserId.of(1);
+    private static final String GROUP_NAME = "groupname";
+    private static final Group GROUP = ImmutableGroup.builder()
+            .groupId(GROUP_ID)
+            .name(GROUP_NAME)
+            .created(LocalDateTime.now())
+            .build();
+    private static final User USER = ImmutableUser.builder()
+            .userId(USER_ID)
+            .username("username")
+            .created(LocalDateTime.now())
+            .build();
 
     @Mock
     private GroupRepository groupRepository;
@@ -38,31 +45,24 @@ public class GroupServiceTest {
 
     @InjectMocks
     private GroupService groupService;
-    private Group group;
-    private User user;
 
-    @Before
-    public void setup() {
-        group = new Group("groupname");
-        user = new User(USER_ID, "username", LocalDateTime.now());
-    }
 
     @Test
     public void addGroupIsSavedInGroupRepositoryAndCommandForAddingGroupIsCalled() {
-        groupService.addGroup(group);
+        groupService.addGroup(GROUP_NAME);
 
-        verify(groupRepository).saveGroup(group);
-        verify(groupCli).addGroup(group);
+        verify(groupRepository).saveGroup(GROUP_NAME);
+        verify(groupCli).addGroup(GROUP_NAME);
     }
 
     @Test
     public void removeGroupRemovesGroupFromGroupRepositoryAndRemoveGroupCommandIsCalled() {
-        when(groupRepository.getGroup(GROUP_ID)).thenReturn(group);
+        when(groupRepository.getGroup(GROUP_ID)).thenReturn(GROUP);
 
         groupService.removeGroup(GROUP_ID);
 
         verify(groupRepository).removeGroup(GROUP_ID);
-        verify(groupCli).removeGroup(group);
+        verify(groupCli).removeGroup(GROUP_NAME);
     }
 
     @Test(expected = GroupNotFoundException.class)
@@ -74,53 +74,53 @@ public class GroupServiceTest {
 
     @Test
     public void addUserToGroupCommandIsCalledWhenUserAndGroupExist() {
-        when(userService.getUser(USER_ID)).thenReturn(user);
-        when(groupRepository.getGroup(GROUP_ID)).thenReturn(group);
+        when(userService.getUser(USER_ID)).thenReturn(USER);
+        when(groupRepository.getGroup(GROUP_ID)).thenReturn(GROUP);
 
-        groupService.addUserToGroup(user.getUserId(), GROUP_ID);
+        groupService.addUserToGroup(USER.getUserId(), GROUP_ID);
 
-        verify(groupCli).addUserToGroup(user, group);
+        verify(groupCli).addUserToGroup(USER, GROUP);
     }
 
     @Test(expected = UserNotFoundException.class)
     public void addUserToGroupWhenUserDoesNotExistInRepositoryThrowsException() {
         when(userService.getUser(USER_ID)).thenThrow(new UserNotFoundException(""));
 
-        groupService.addUserToGroup(user.getUserId(), GROUP_ID);
+        groupService.addUserToGroup(USER.getUserId(), GROUP_ID);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void addUserToGroupWhenGroupDoesNotExistInRepositoryThrowsException() {
-        when(userService.getUser(USER_ID)).thenReturn(user);
+        when(userService.getUser(USER_ID)).thenReturn(USER);
         when(groupRepository.getGroup(GROUP_ID)).thenThrow(new IllegalArgumentException());
 
-        groupService.addUserToGroup(user.getUserId(), GROUP_ID);
+        groupService.addUserToGroup(USER.getUserId(), GROUP_ID);
     }
 
     @Test
     public void removeUserFromGroupCommandIsCalledWhenUserAndGroupExist() {
-        when(userService.getUser(USER_ID)).thenReturn(user);
-        when(groupRepository.getGroup(GROUP_ID)).thenReturn(group);
+        when(userService.getUser(USER_ID)).thenReturn(USER);
+        when(groupRepository.getGroup(GROUP_ID)).thenReturn(GROUP);
 
-        groupService.removeUserFromGroup(user.getUserId(), GROUP_ID);
+        groupService.removeUserFromGroup(USER.getUserId(), GROUP_ID);
 
-        verify(groupCli).removeUserFromGroup(user, group);
+        verify(groupCli).removeUserFromGroup(USER, GROUP);
     }
 
     @Test(expected = UserNotFoundException.class)
     public void removeUserFromGroupWhenUserDoesNotExistInRepositoryThrowsException() {
         when(userService.getUser(USER_ID)).thenThrow(new UserNotFoundException(""));
-        when(groupRepository.getGroup(GROUP_ID)).thenReturn(group);
+        when(groupRepository.getGroup(GROUP_ID)).thenReturn(GROUP);
 
-        groupService.removeUserFromGroup(user.getUserId(), GROUP_ID);
+        groupService.removeUserFromGroup(USER.getUserId(), GROUP_ID);
     }
 
     @Test(expected = GroupNotFoundException.class)
     public void removeUserFromGroupWhenGroupDoesNotExistInRepositoryThrowsException() {
-        when(userService.getUser(USER_ID)).thenReturn(user);
+        when(userService.getUser(USER_ID)).thenReturn(USER);
         when(groupRepository.getGroup(GROUP_ID)).thenThrow(new GroupNotFoundException(""));
 
-        groupService.removeUserFromGroup(user.getUserId(), GROUP_ID);
+        groupService.removeUserFromGroup(USER.getUserId(), GROUP_ID);
     }
 
 }

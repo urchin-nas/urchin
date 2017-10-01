@@ -6,13 +6,15 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import urchin.domain.cli.FolderCli;
-import urchin.domain.model.EncryptedFolder;
 import urchin.domain.model.FolderSettings;
+import urchin.domain.model.ImmutableEncryptedFolder;
+import urchin.domain.model.ImmutableFolderSettings;
 import urchin.domain.model.Passphrase;
 import urchin.domain.repository.PassphraseRepository;
 import urchin.domain.util.PassphraseGenerator;
 
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -20,7 +22,13 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class AutoMountFolderServiceTest {
 
-    private static final FolderSettings FOLDER_SETTINGS = new FolderSettings(Paths.get("/some/path"), new EncryptedFolder(Paths.get("/some/.path")));
+    private static final FolderSettings FOLDER_SETTINGS = ImmutableFolderSettings.builder()
+            .id(1)
+            .folder(Paths.get("/some/path"))
+            .encryptedFolder(ImmutableEncryptedFolder.of(Paths.get("/some/.path")))
+            .created(LocalDateTime.now())
+            .isAutoMount(false)
+            .build();
     private static final Passphrase PASSPHRASE = PassphraseGenerator.generateEcryptfsPassphrase();
 
     @Mock

@@ -11,6 +11,8 @@ import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import urchin.domain.model.Group;
 import urchin.domain.model.GroupId;
+import urchin.domain.model.ImmutableGroup;
+import urchin.domain.model.ImmutableGroupId;
 import urchin.exception.GroupNotFoundException;
 
 import java.sql.ResultSet;
@@ -36,15 +38,15 @@ public class GroupRepository {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
-    public GroupId saveGroup(Group group) {
-        LOG.info("Saving group {}", group.getName());
+    public GroupId saveGroup(String groupName) {
+        LOG.info("Saving group {}", groupName);
         KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("name", group.getName())
+                .addValue("name", groupName)
                 .addValue("created", new Timestamp(new Date().getTime()));
 
         namedParameterJdbcTemplate.update(INSERT_GROUP, parameters, keyHolder);
-        return new GroupId(keyHolder.getKey().intValue());
+        return ImmutableGroupId.of(keyHolder.getKey().intValue());
     }
 
     public Group getGroup(GroupId groupId) {
@@ -77,10 +79,10 @@ public class GroupRepository {
     }
 
     private Group groupMapper(ResultSet resultSet) throws SQLException {
-        return new Group(
-                new GroupId(resultSet.getInt("id")),
-                resultSet.getString("name"),
-                resultSet.getTimestamp("created").toLocalDateTime()
-        );
+        return ImmutableGroup.builder()
+                .groupId(ImmutableGroupId.of(resultSet.getInt("id")))
+                .name(resultSet.getString("name"))
+                .created(resultSet.getTimestamp("created").toLocalDateTime())
+                .build();
     }
 }
