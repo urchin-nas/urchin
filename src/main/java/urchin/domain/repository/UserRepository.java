@@ -9,7 +9,6 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 import urchin.domain.model.ImmutableUser;
-import urchin.domain.model.ImmutableUserId;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
 import urchin.exception.UserNotFoundException;
@@ -44,7 +43,7 @@ public class UserRepository {
             return preparedStatement;
         }, keyHolder);
 
-        return ImmutableUserId.of(keyHolder.getKey().intValue());
+        return UserId.of(keyHolder.getKey().intValue());
     }
 
     public User getUser(UserId userId) {
@@ -66,7 +65,7 @@ public class UserRepository {
 
     private User userMapper(ResultSet resultSet) throws SQLException {
         return ImmutableUser.builder()
-                .userId(ImmutableUserId.of(resultSet.getInt("id")))
+                .userId(UserId.of(resultSet.getInt("id")))
                 .username(resultSet.getString("username"))
                 .created(resultSet.getTimestamp("created").toLocalDateTime())
                 .build();

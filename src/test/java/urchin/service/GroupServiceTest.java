@@ -20,8 +20,8 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class GroupServiceTest {
 
-    private static final GroupId GROUP_ID = ImmutableGroupId.of(2);
-    private static final UserId USER_ID = ImmutableUserId.of(1);
+    private static final GroupId GROUP_ID = GroupId.of(2);
+    private static final UserId USER_ID = UserId.of(1);
     private static final String GROUP_NAME = "groupname";
     private static final Group GROUP = ImmutableGroup.builder()
             .groupId(GROUP_ID)

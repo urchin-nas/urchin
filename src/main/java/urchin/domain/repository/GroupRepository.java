@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import urchin.domain.model.Group;
 import urchin.domain.model.GroupId;
 import urchin.domain.model.ImmutableGroup;
-import urchin.domain.model.ImmutableGroupId;
 import urchin.exception.GroupNotFoundException;
 
 import java.sql.ResultSet;
@@ -46,12 +45,12 @@ public class GroupRepository {
                 .addValue("created", new Timestamp(new Date().getTime()));
 
         namedParameterJdbcTemplate.update(INSERT_GROUP, parameters, keyHolder);
-        return ImmutableGroupId.of(keyHolder.getKey().intValue());
+        return GroupId.of(keyHolder.getKey().intValue());
     }
 
     public Group getGroup(GroupId groupId) {
         MapSqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("groupId", groupId.getId());
+                .addValue("groupId", groupId.getValue());
         try {
             return namedParameterJdbcTemplate.queryForObject(SELECT_GROUP, parameters, (resultSet, i) -> groupMapper(resultSet));
         } catch (IncorrectResultSizeDataAccessException e) {
@@ -62,7 +61,7 @@ public class GroupRepository {
     public void removeGroup(GroupId groupId) {
         LOG.info("Removing group with id {}", groupId);
         MapSqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("groupId", groupId.getId());
+                .addValue("groupId", groupId.getValue());
 
         namedParameterJdbcTemplate.update(DELETE_GROUP, parameters);
     }
@@ -80,7 +79,7 @@ public class GroupRepository {
 
     private Group groupMapper(ResultSet resultSet) throws SQLException {
         return ImmutableGroup.builder()
-                .groupId(ImmutableGroupId.of(resultSet.getInt("id")))
+                .groupId(GroupId.of(resultSet.getInt("id")))
                 .name(resultSet.getString("name"))
                 .created(resultSet.getTimestamp("created").toLocalDateTime())
                 .build();

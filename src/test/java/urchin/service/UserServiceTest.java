@@ -25,7 +25,7 @@ public class UserServiceTest {
 
     private static final String PASSWORD = "password";
     private static final String USERNAME = "username";
-    private static final UserId USER_ID = ImmutableUserId.of(1);
+    private static final UserId USER_ID = UserId.of(1);
     private static final User USER = ImmutableUser.builder()
             .userId(USER_ID)
             .username(USERNAME)
@@ -73,7 +73,7 @@ public class UserServiceTest {
         when(userRepository.getUser(USER_ID)).thenReturn(USER);
         when(userCli.listGroupsForUser(USER)).thenReturn(groupNames);
         when(groupRepository.getGroupsByName(groupNames)).thenReturn(Collections.singletonList(ImmutableGroup.builder()
-                .groupId(ImmutableGroupId.of(1))
+                .groupId(GroupId.of(1))
                 .name("group_1")
                 .created(LocalDateTime.now())
                 .build())

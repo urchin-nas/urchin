@@ -12,8 +12,7 @@ import urchin.controller.api.group.AddUserToGroupDto;
 import urchin.controller.api.group.GroupDto;
 import urchin.domain.model.Group;
 import urchin.domain.model.GroupId;
-import urchin.domain.model.ImmutableGroupId;
-import urchin.domain.model.ImmutableUserId;
+import urchin.domain.model.UserId;
 import urchin.service.GroupService;
 
 import javax.validation.Valid;
@@ -41,33 +40,33 @@ public class GroupController {
 
     @RequestMapping(value = "{groupId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public GroupDto getGroup(@PathVariable int groupId) {
-        return mapToGroupDto(groupService.getGroup(ImmutableGroupId.of(groupId)));
+        return mapToGroupDto(groupService.getGroup(GroupId.of(groupId)));
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public IdDto addGroup(@Valid @RequestBody AddGroupDto addGroupDto) {
         GroupId groupId = groupService.addGroup(addGroupDto.getGroupName());
-        return ImmutableIdDto.of(groupId.getId());
+        return ImmutableIdDto.of(groupId.getValue());
     }
 
     @RequestMapping(value = "{groupId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public MessageDto removeGroup(@PathVariable int groupId) {
-        groupService.removeGroup(ImmutableGroupId.of(groupId));
+        groupService.removeGroup(GroupId.of(groupId));
         return ImmutableMessageDto.of("Group removed");
     }
 
     @RequestMapping(value = "user", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public MessageDto addUserToGroup(@Valid @RequestBody AddUserToGroupDto addUserToGroupDto) {
         groupService.addUserToGroup(
-                ImmutableUserId.of(addUserToGroupDto.getUserId()),
-                ImmutableGroupId.of(addUserToGroupDto.getGroupId())
+                UserId.of(addUserToGroupDto.getUserId()),
+                GroupId.of(addUserToGroupDto.getGroupId())
         );
         return ImmutableMessageDto.of("User added to group");
     }
 
     @RequestMapping(value = "{groupId}/user/{userId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public MessageDto removeUserFromGroup(@PathVariable int groupId, @PathVariable int userId) {
-        groupService.removeUserFromGroup(ImmutableUserId.of(userId), ImmutableGroupId.of(groupId));
+        groupService.removeUserFromGroup(UserId.of(userId), GroupId.of(groupId));
         return ImmutableMessageDto.of("User removed from group");
     }
 

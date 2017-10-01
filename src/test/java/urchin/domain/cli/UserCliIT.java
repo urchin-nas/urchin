@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 import urchin.domain.model.ImmutableUser;
-import urchin.domain.model.ImmutableUserId;
 import urchin.domain.model.User;
+import urchin.domain.model.UserId;
 import urchin.testutil.CliTestConfiguration;
 import urchin.testutil.UnixUserAndGroupCleanup;
 
@@ -39,7 +39,7 @@ public class UserCliIT {
     public void setUp() {
         username = USERNAME_PREFIX + System.currentTimeMillis();
         user = ImmutableUser.builder()
-                .userId(ImmutableUserId.of(1))
+                .userId(UserId.of(1))
                 .username(username)
                 .created(LocalDateTime.now())
                 .build();

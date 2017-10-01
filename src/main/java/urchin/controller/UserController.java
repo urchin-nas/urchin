@@ -10,7 +10,6 @@ import urchin.controller.api.MessageDto;
 import urchin.controller.api.group.GroupDto;
 import urchin.controller.api.user.AddUserDto;
 import urchin.controller.api.user.UserDto;
-import urchin.domain.model.ImmutableUserId;
 import urchin.domain.model.User;
 import urchin.domain.model.UserId;
 import urchin.service.UserService;
@@ -41,7 +40,7 @@ public class UserController {
 
     @RequestMapping(value = "{userId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public UserDto getUser(@PathVariable int userId) {
-        UserId uid = ImmutableUserId.of(userId);
+        UserId uid = UserId.of(userId);
         return mapToUserDto(userService.getUser(uid));
     }
 
@@ -53,13 +52,13 @@ public class UserController {
 
     @RequestMapping(value = "{userId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public MessageDto removeUser(@PathVariable int userId) {
-        userService.removeUser(ImmutableUserId.of(userId));
+        userService.removeUser(UserId.of(userId));
         return ImmutableMessageDto.of("User removed");
     }
 
     @RequestMapping(value = "{userId}/groups", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public List<GroupDto> getGroupsForUser(@PathVariable int userId) {
-        return mapToGroupsDto(userService.listGroupsForUser(ImmutableUserId.of(userId)));
+        return mapToGroupsDto(userService.listGroupsForUser(UserId.of(userId)));
     }
 
 }

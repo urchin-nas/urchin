@@ -45,7 +45,7 @@ public class GroupCliIT {
     public void setup() {
         groupName = GROUP_PREFIX + System.currentTimeMillis();
         group = ImmutableGroup.builder()
-                .groupId(ImmutableGroupId.of(1))
+                .groupId(GroupId.of(1))
                 .name(groupName)
                 .created(LocalDateTime.now())
                 .build();
@@ -65,7 +65,7 @@ public class GroupCliIT {
     @Test
     public void addAndRemoveUserFromGroupAreExecutedSuccessfully() {
         User user = ImmutableUser.builder()
-                .userId(ImmutableUserId.of(1))
+                .userId(UserId.of(1))
                 .username(USERNAME_PREFIX + System.currentTimeMillis())
                 .created(LocalDateTime.now())
                 .build();
