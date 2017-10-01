@@ -5,10 +5,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import urchin.domain.cli.FolderCli;
-import urchin.domain.model.EncryptedFolder;
-import urchin.domain.model.Passphrase;
-import urchin.domain.repository.FolderSettingsRepository;
+import urchin.cli.FolderCli;
+import urchin.model.EncryptedFolder;
+import urchin.model.Passphrase;
+import urchin.repository.FolderSettingsRepository;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,9 +16,9 @@ import java.nio.file.Path;
 import java.util.List;
 
 import static java.nio.file.Files.createDirectories;
-import static urchin.domain.util.EncryptedFolderUtil.getEncryptedFolder;
-import static urchin.domain.util.EncryptedFolderUtil.getFolder;
-import static urchin.domain.util.PassphraseGenerator.generateEcryptfsPassphrase;
+import static urchin.util.EncryptedFolderUtil.getEncryptedFolder;
+import static urchin.util.EncryptedFolderUtil.getFolder;
+import static urchin.util.PassphraseGenerator.generateEcryptfsPassphrase;
 
 @Service
 public class FolderService {

@@ -4,10 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import urchin.domain.cli.FolderCli;
-import urchin.domain.model.FolderSettings;
-import urchin.domain.model.Passphrase;
-import urchin.domain.repository.PassphraseRepository;
+import urchin.cli.FolderCli;
+import urchin.model.FolderSettings;
+import urchin.model.Passphrase;
+import urchin.repository.PassphraseRepository;
 
 @Service
 public class AutoMountFolderService {

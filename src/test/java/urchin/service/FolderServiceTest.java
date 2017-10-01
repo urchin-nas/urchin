@@ -9,12 +9,12 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import urchin.domain.cli.FolderCli;
-import urchin.domain.model.EncryptedFolder;
-import urchin.domain.model.ImmutableEncryptedFolder;
-import urchin.domain.model.Passphrase;
-import urchin.domain.repository.FolderSettingsRepository;
-import urchin.domain.util.EncryptedFolderUtil;
+import urchin.cli.FolderCli;
+import urchin.model.EncryptedFolder;
+import urchin.model.ImmutableEncryptedFolder;
+import urchin.model.Passphrase;
+import urchin.repository.FolderSettingsRepository;
+import urchin.util.EncryptedFolderUtil;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -25,8 +25,8 @@ import static org.junit.Assert.*;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyZeroInteractions;
-import static urchin.domain.util.EncryptedFolderUtil.getEncryptedFolder;
-import static urchin.domain.util.PassphraseGenerator.generateEcryptfsPassphrase;
+import static urchin.util.EncryptedFolderUtil.getEncryptedFolder;
+import static urchin.util.PassphraseGenerator.generateEcryptfsPassphrase;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FolderServiceTest {

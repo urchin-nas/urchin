@@ -2,7 +2,7 @@ package urchin.controller.api.mapper;
 
 import urchin.controller.api.group.GroupDto;
 import urchin.controller.api.group.ImmutableGroupDto;
-import urchin.domain.model.Group;
+import urchin.model.Group;
 
 import java.util.List;
 import java.util.stream.Collectors;

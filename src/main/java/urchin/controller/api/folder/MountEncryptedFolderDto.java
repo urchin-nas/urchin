@@ -7,7 +7,7 @@ import org.immutables.value.Value;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import static urchin.domain.model.Passphrase.ECRYPTFS_MAX_PASSPHRASE_LENGTH;
+import static urchin.model.Passphrase.ECRYPTFS_MAX_PASSPHRASE_LENGTH;
 
 @Value.Immutable
 @JsonSerialize(as = ImmutableMountEncryptedFolderDto.class)

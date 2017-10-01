@@ -5,8 +5,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestComponent;
-import urchin.domain.cli.GroupCli;
-import urchin.domain.cli.UserCli;
+import urchin.cli.GroupCli;
+import urchin.cli.UserCli;
 
 import java.util.List;
 import java.util.stream.Collectors;

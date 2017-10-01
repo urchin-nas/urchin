@@ -9,11 +9,11 @@ import org.springframework.web.bind.annotation.RestController;
 import urchin.controller.api.ImmutableMessageDto;
 import urchin.controller.api.MessageDto;
 import urchin.controller.api.folder.*;
-import urchin.domain.model.EncryptedFolder;
-import urchin.domain.model.ImmutablePassphrase;
-import urchin.domain.model.Passphrase;
-import urchin.domain.util.EncryptedFolderUtil;
+import urchin.model.EncryptedFolder;
+import urchin.model.ImmutablePassphrase;
+import urchin.model.Passphrase;
 import urchin.service.FolderService;
+import urchin.util.EncryptedFolderUtil;
 
 import javax.validation.Valid;
 import java.io.IOException;

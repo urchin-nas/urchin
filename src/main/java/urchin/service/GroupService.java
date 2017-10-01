@@ -3,12 +3,12 @@ package urchin.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import urchin.domain.cli.GroupCli;
-import urchin.domain.model.Group;
-import urchin.domain.model.GroupId;
-import urchin.domain.model.User;
-import urchin.domain.model.UserId;
-import urchin.domain.repository.GroupRepository;
+import urchin.cli.GroupCli;
+import urchin.model.Group;
+import urchin.model.GroupId;
+import urchin.model.User;
+import urchin.model.UserId;
+import urchin.repository.GroupRepository;
 
 import java.util.List;
 

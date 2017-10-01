@@ -5,11 +5,11 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import urchin.domain.cli.UserCli;
-import urchin.domain.model.*;
-import urchin.domain.repository.GroupRepository;
-import urchin.domain.repository.UserRepository;
+import urchin.cli.UserCli;
 import urchin.exception.UserNotFoundException;
+import urchin.model.*;
+import urchin.repository.GroupRepository;
+import urchin.repository.UserRepository;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;

@@ -10,9 +10,9 @@ import urchin.controller.api.MessageDto;
 import urchin.controller.api.group.AddGroupDto;
 import urchin.controller.api.group.AddUserToGroupDto;
 import urchin.controller.api.group.GroupDto;
-import urchin.domain.model.Group;
-import urchin.domain.model.GroupId;
-import urchin.domain.model.UserId;
+import urchin.model.Group;
+import urchin.model.GroupId;
+import urchin.model.UserId;
 import urchin.service.GroupService;
 
 import javax.validation.Valid;

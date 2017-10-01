@@ -12,8 +12,8 @@ import urchin.controller.api.MessageDto;
 import urchin.controller.api.group.*;
 import urchin.controller.api.user.AddUserDto;
 import urchin.controller.api.user.ImmutableAddUserDto;
-import urchin.domain.model.GroupId;
-import urchin.domain.model.UserId;
+import urchin.model.GroupId;
+import urchin.model.UserId;
 import urchin.testutil.TestApplication;
 
 import java.util.List;

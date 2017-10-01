@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import urchin.controller.api.MessageDto;
 import urchin.controller.api.folder.*;
-import urchin.domain.model.EncryptedFolder;
+import urchin.model.EncryptedFolder;
 import urchin.testutil.TemporaryFolderUnmount;
 import urchin.testutil.TestApplication;
 
@@ -24,7 +24,7 @@ import static java.nio.file.Files.exists;
 import static junit.framework.TestCase.*;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static urchin.domain.util.EncryptedFolderUtil.getEncryptedFolder;
+import static urchin.util.EncryptedFolderUtil.getEncryptedFolder;
 
 public class FolderControllerIT extends TestApplication {
 

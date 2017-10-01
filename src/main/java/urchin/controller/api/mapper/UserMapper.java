@@ -2,7 +2,7 @@ package urchin.controller.api.mapper;
 
 import urchin.controller.api.user.ImmutableUserDto;
 import urchin.controller.api.user.UserDto;
-import urchin.domain.model.User;
+import urchin.model.User;
 
 import java.util.List;
 import java.util.stream.Collectors;

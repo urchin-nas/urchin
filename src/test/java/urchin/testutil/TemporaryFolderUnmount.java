@@ -3,7 +3,7 @@ package urchin.testutil;
 import org.junit.rules.TemporaryFolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import urchin.domain.cli.folder.UnmountFolderCommand;
+import urchin.cli.folder.UnmountFolderCommand;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -11,7 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
-import static urchin.domain.util.EncryptedFolderUtil.HIDDEN_FOLDER_DELIMITER;
+import static urchin.util.EncryptedFolderUtil.HIDDEN_FOLDER_DELIMITER;
 
 public class TemporaryFolderUnmount extends TemporaryFolder {
 

@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Import;
 import urchin.configuration.RuntimeConfiguration;
 
 @TestConfiguration
-@ComponentScan(basePackages = "urchin.domain.cli")
+@ComponentScan(basePackages = "urchin.cli")
 @Import({RuntimeConfiguration.class, UnixUserAndGroupCleanup.class})
 public class CliTestConfiguration {
 }
