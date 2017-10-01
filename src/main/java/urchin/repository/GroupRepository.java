@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import urchin.exception.GroupNotFoundException;
 import urchin.model.Group;
 import urchin.model.GroupId;
+import urchin.model.GroupName;
 import urchin.model.ImmutableGroup;
 
 import java.sql.ResultSet;
@@ -19,6 +20,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class GroupRepository {
@@ -37,11 +39,11 @@ public class GroupRepository {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
-    public GroupId saveGroup(String groupName) {
+    public GroupId saveGroup(GroupName groupName) {
         LOG.info("Saving group {}", groupName);
         KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("name", groupName)
+                .addValue("name", groupName.getValue())
                 .addValue("created", new Timestamp(new Date().getTime()));
 
         namedParameterJdbcTemplate.update(INSERT_GROUP, parameters, keyHolder);
@@ -70,9 +72,9 @@ public class GroupRepository {
         return namedParameterJdbcTemplate.query(SELECT_GROUPS, (resultSet, i) -> groupMapper(resultSet));
     }
 
-    public List<Group> getGroupsByName(List<String> groupNames) {
+    public List<Group> getGroupsByName(List<GroupName> groupNames) {
         MapSqlParameterSource parameters = new MapSqlParameterSource();
-        parameters.addValue("names", groupNames);
+        parameters.addValue("names", getGroupNames(groupNames));
 
         return namedParameterJdbcTemplate.query(SELECT_GROUPS_BY_NAME, parameters, (resultSet, i) -> groupMapper(resultSet));
     }
@@ -80,8 +82,14 @@ public class GroupRepository {
     private Group groupMapper(ResultSet resultSet) throws SQLException {
         return ImmutableGroup.builder()
                 .groupId(GroupId.of(resultSet.getInt("id")))
-                .name(resultSet.getString("name"))
+                .name(GroupName.of(resultSet.getString("name")))
                 .created(resultSet.getTimestamp("created").toLocalDateTime())
                 .build();
+    }
+
+    private List<String> getGroupNames(List<GroupName> groupNames) {
+        return groupNames.stream()
+                .map(GroupName::getValue)
+                .collect(Collectors.toList());
     }
 }

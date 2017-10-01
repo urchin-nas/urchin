@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 public class UserServiceTest {
 
     private static final String PASSWORD = "password";
-    private static final String USERNAME = "username";
+    private static final Username USERNAME = Username.of("username");
     private static final UserId USER_ID = UserId.of(1);
     private static final User USER = ImmutableUser.builder()
             .userId(USER_ID)
@@ -69,12 +69,13 @@ public class UserServiceTest {
 
     @Test
     public void listGroupsForUserReturnsGroupsExistingInBothOSAndRepository() {
-        List<String> groupNames = Arrays.asList("group_1", "group_2");
+        GroupName group_1 = GroupName.of("group_1");
+        List<GroupName> groupNames = Arrays.asList(group_1, GroupName.of("group_2"));
         when(userRepository.getUser(USER_ID)).thenReturn(USER);
         when(userCli.listGroupsForUser(USER)).thenReturn(groupNames);
         when(groupRepository.getGroupsByName(groupNames)).thenReturn(Collections.singletonList(ImmutableGroup.builder()
                 .groupId(GroupId.of(1))
-                .name("group_1")
+                .name(group_1)
                 .created(LocalDateTime.now())
                 .build())
         );
@@ -82,7 +83,7 @@ public class UserServiceTest {
         List<Group> groups = userService.listGroupsForUser(USER_ID);
 
         assertEquals(1, groups.size());
-        assertEquals("group_1", groups.get(0).getName());
+        assertEquals(group_1, groups.get(0).getName());
     }
 
     @Test(expected = UserNotFoundException.class)

@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import urchin.cli.common.CommandException;
+import urchin.model.Username;
 
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
@@ -30,7 +31,7 @@ public class SetUserPasswordCommand {
         this.runtime = runtime;
     }
 
-    public void execute(String username, String password) {
+    public void execute(Username username, String password) {
         LOG.info("Setting password for user {}", username);
         String[] command = setupCommand(username);
 
@@ -53,9 +54,9 @@ public class SetUserPasswordCommand {
         }
     }
 
-    private String[] setupCommand(String username) {
+    private String[] setupCommand(Username username) {
         String[] command = copyOf(COMMAND, COMMAND.length);
-        command[2] = username;
+        command[2] = username.getValue();
         return command;
     }
 }

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import urchin.cli.common.BasicCommand;
 import urchin.cli.common.CommandException;
+import urchin.model.Username;
 
 import static java.util.Arrays.copyOf;
 
@@ -23,7 +24,7 @@ public class CheckIfUsernameExistCommand extends BasicCommand {
         super(runtime);
     }
 
-    public boolean execute(String username) {
+    public boolean execute(Username username) {
         LOG.debug("Checking if username {} exist", username);
         try {
             executeCommand(setupCommand(username));
@@ -37,9 +38,9 @@ public class CheckIfUsernameExistCommand extends BasicCommand {
         return true;
     }
 
-    private String[] setupCommand(String username) {
+    private String[] setupCommand(Username username) {
         String[] command = copyOf(COMMAND, COMMAND.length);
-        command[2] = username;
+        command[2] = username.getValue();
         return command;
     }
 }

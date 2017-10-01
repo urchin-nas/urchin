@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import urchin.cli.GroupCli;
-import urchin.model.Group;
-import urchin.model.GroupId;
-import urchin.model.User;
-import urchin.model.UserId;
+import urchin.model.*;
 import urchin.repository.GroupRepository;
 
 import java.util.List;
@@ -27,7 +24,7 @@ public class GroupService {
     }
 
     @Transactional
-    public GroupId addGroup(String groupName) {
+    public GroupId addGroup(GroupName groupName) {
         GroupId groupId = groupRepository.saveGroup(groupName);
         groupCli.addGroup(groupName);
         return groupId;

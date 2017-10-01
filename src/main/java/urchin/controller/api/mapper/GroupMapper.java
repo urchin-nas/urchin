@@ -18,7 +18,7 @@ public class GroupMapper {
     public static GroupDto mapToGroupDto(Group group) {
         return ImmutableGroupDto.builder()
                 .groupId(group.getGroupId().getValue())
-                .groupName(group.getName())
+                .groupName(group.getName().getValue())
                 .build();
     }
 }

@@ -3,6 +3,7 @@ package urchin.cli.group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import urchin.cli.common.BasicCommand;
+import urchin.model.GroupName;
 
 import static java.util.Arrays.copyOf;
 
@@ -22,14 +23,14 @@ public class AddGroupCommand extends BasicCommand {
         super(runtime);
     }
 
-    public void execute(String groupName) {
+    public void execute(GroupName groupName) {
         LOG.debug("Creating group {}", groupName);
         executeCommand(setupCommand(groupName));
     }
 
-    private String[] setupCommand(String groupName) {
+    private String[] setupCommand(GroupName groupName) {
         String[] command = copyOf(COMMAND, COMMAND.length);
-        command[2] = groupName;
+        command[2] = groupName.getValue();
         return command;
     }
 }

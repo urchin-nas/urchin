@@ -12,6 +12,7 @@ import urchin.controller.api.group.AddUserToGroupDto;
 import urchin.controller.api.group.GroupDto;
 import urchin.model.Group;
 import urchin.model.GroupId;
+import urchin.model.GroupName;
 import urchin.model.UserId;
 import urchin.service.GroupService;
 
@@ -45,7 +46,7 @@ public class GroupController {
 
     @RequestMapping(value = "add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public IdDto addGroup(@Valid @RequestBody AddGroupDto addGroupDto) {
-        GroupId groupId = groupService.addGroup(addGroupDto.getGroupName());
+        GroupId groupId = groupService.addGroup(GroupName.of(addGroupDto.getGroupName()));
         return ImmutableIdDto.of(groupId.getValue());
     }
 

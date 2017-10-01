@@ -9,7 +9,7 @@ public interface User {
 
     UserId getUserId();
 
-    String getUsername();
+    Username getUsername();
 
     LocalDateTime getCreated();
 

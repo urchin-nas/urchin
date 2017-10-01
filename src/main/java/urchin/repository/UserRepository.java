@@ -12,6 +12,7 @@ import urchin.exception.UserNotFoundException;
 import urchin.model.ImmutableUser;
 import urchin.model.User;
 import urchin.model.UserId;
+import urchin.model.Username;
 
 import java.sql.*;
 import java.util.Date;
@@ -33,12 +34,12 @@ public class UserRepository {
         this.jdbcTemplate = jdbcTemplate;
     }
 
-    public UserId saveUser(String username) {
+    public UserId saveUser(Username username) {
         LOG.info("Saving user {}", username);
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, username);
+            preparedStatement.setString(1, username.getValue());
             preparedStatement.setTimestamp(2, new Timestamp(new Date().getTime()));
             return preparedStatement;
         }, keyHolder);
@@ -66,7 +67,7 @@ public class UserRepository {
     private User userMapper(ResultSet resultSet) throws SQLException {
         return ImmutableUser.builder()
                 .userId(UserId.of(resultSet.getInt("id")))
-                .username(resultSet.getString("username"))
+                .username(Username.of(resultSet.getString("username")))
                 .created(resultSet.getTimestamp("created").toLocalDateTime())
                 .build();
     }

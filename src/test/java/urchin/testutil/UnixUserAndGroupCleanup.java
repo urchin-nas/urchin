@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestComponent;
 import urchin.cli.GroupCli;
 import urchin.cli.UserCli;
+import urchin.model.GroupName;
+import urchin.model.Username;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -37,16 +39,17 @@ public class UnixUserAndGroupCleanup extends ExternalResource {
     }
 
     private void removeTestUsers() {
-        List<String> usersToRemove = userCli.listUsers().stream()
+        List<Username> usersToRemove = userCli.listUsers().stream()
                 .filter(user -> user.startsWith(USERNAME_PREFIX))
+                .map(Username::of)
                 .collect(Collectors.toList());
 
         usersToRemove.forEach(userCli::removeUser);
     }
 
     private void removeTestGroups() {
-        List<String> groupsToRemove = groupCli.listGroups().stream()
-                .filter(group -> group.startsWith(GROUP_PREFIX))
+        List<GroupName> groupsToRemove = groupCli.listGroups().stream()
+                .filter(group -> group.getValue().startsWith(GROUP_PREFIX))
                 .collect(Collectors.toList());
 
         groupsToRemove.forEach(groupCli::removeGroup);

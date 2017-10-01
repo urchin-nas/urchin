@@ -7,9 +7,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
-import urchin.model.ImmutableUser;
-import urchin.model.User;
-import urchin.model.UserId;
+import urchin.model.*;
 import urchin.testutil.CliTestConfiguration;
 import urchin.testutil.UnixUserAndGroupCleanup;
 
@@ -33,11 +31,11 @@ public class UserCliIT {
     private UserCli userCli;
 
     private User user;
-    private String username;
+    private Username username;
 
     @Before
     public void setUp() {
-        username = USERNAME_PREFIX + System.currentTimeMillis();
+        username = Username.of(USERNAME_PREFIX + System.currentTimeMillis());
         user = ImmutableUser.builder()
                 .userId(UserId.of(1))
                 .username(username)
@@ -68,7 +66,7 @@ public class UserCliIT {
     public void listGroupsForUserReturnsGroups() {
         userCli.addUser(user.getUsername());
 
-        List<String> groups = userCli.listGroupsForUser(user);
+        List<GroupName> groups = userCli.listGroupsForUser(user);
 
         assertEquals(1, groups.size());
     }

@@ -5,6 +5,7 @@ import org.junit.Test;
 import urchin.exception.UserNotFoundException;
 import urchin.model.User;
 import urchin.model.UserId;
+import urchin.model.Username;
 import urchin.testutil.TestApplication;
 
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ import static org.junit.Assert.*;
 
 public class UserRepositoryIT extends TestApplication {
 
-    private static final String USERNAME = "username";
+    private static final Username USERNAME = Username.of("username");
 
     private UserRepository userRepository;
 

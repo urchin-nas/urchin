@@ -33,8 +33,8 @@ public class RemoveUserFromGroupCommand extends BasicCommand {
 
     private String[] setupCommand(User user, Group group) {
         String[] command = copyOf(COMMAND, COMMAND.length);
-        command[2] = user.getUsername();
-        command[3] = group.getName();
+        command[2] = user.getUsername().getValue();
+        command[3] = group.getName().getValue();
         return command;
     }
 }

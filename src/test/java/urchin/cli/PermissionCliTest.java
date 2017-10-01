@@ -8,9 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
-import urchin.model.FileModes;
-import urchin.model.FileOwners;
-import urchin.model.ImmutableFileModes;
+import urchin.model.*;
 import urchin.testutil.CliTestConfiguration;
 import urchin.testutil.UnixUserAndGroupCleanup;
 
@@ -70,9 +68,9 @@ public class PermissionCliTest {
 
     @Test
     public void ownerIsChanged() {
-        String groupName = GROUP_PREFIX + System.currentTimeMillis();
-        String username = USERNAME_PREFIX + System.currentTimeMillis();
-        userCli.addUser(USERNAME_PREFIX + System.currentTimeMillis());
+        GroupName groupName = GroupName.of(GROUP_PREFIX + System.currentTimeMillis());
+        Username username = Username.of(USERNAME_PREFIX + System.currentTimeMillis());
+        userCli.addUser(username);
         groupCli.addGroup(groupName);
 
         FileOwners fileOwners = permissionCli.getFileOwners(testFile);

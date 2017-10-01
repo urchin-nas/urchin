@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import urchin.cli.common.CommandException;
 import urchin.cli.group.*;
 import urchin.model.Group;
+import urchin.model.GroupName;
 import urchin.model.User;
 
 import java.util.ArrayList;
@@ -39,11 +40,11 @@ public class GroupCli {
         this.listGroupsCommand = listGroupsCommand;
     }
 
-    public void addGroup(String groupName) {
+    public void addGroup(GroupName groupName) {
         addGroupCommand.execute(groupName);
     }
 
-    public boolean checkIfGroupExist(String groupName) {
+    public boolean checkIfGroupExist(GroupName groupName) {
         try {
             return getGroupEntriesCommand.execute(groupName).isPresent();
         } catch (CommandException e) {
@@ -55,7 +56,7 @@ public class GroupCli {
         }
     }
 
-    public void removeGroup(String groupName) {
+    public void removeGroup(GroupName groupName) {
         removeGroupCommand.execute(groupName);
     }
 
@@ -72,20 +73,20 @@ public class GroupCli {
             String groupEntries = getGroupEntriesCommand.execute(group.getName()).get();
             String[] users = groupEntries.split(":")[3].split(",");
             return stream(users)
-                    .filter(usr -> usr.replace("\n", "").equals(user.getUsername()))
+                    .filter(usr -> usr.replace("\n", "").equals(user.getUsername().getValue()))
                     .count() == 1;
         } catch (CommandException e) {
             return false;
         }
     }
 
-    public List<String> listGroups() {
+    public List<GroupName> listGroups() {
         String response = listGroupsCommand.execute().get();
         String[] groups = response.split(":\n");
-        List<String> unixGroups = new ArrayList<>();
+        List<GroupName> unixGroups = new ArrayList<>();
         for (String group : groups) {
             String[] userValues = group.split(":");
-            unixGroups.add(userValues[0]);
+            unixGroups.add(GroupName.of(userValues[0]));
         }
         return unixGroups;
     }

@@ -5,10 +5,7 @@ import org.springframework.stereotype.Repository;
 import urchin.cli.permission.ChangeFileModesCommand;
 import urchin.cli.permission.ChangeOwnerCommand;
 import urchin.cli.permission.ListFileInformationCommand;
-import urchin.model.FileModes;
-import urchin.model.FileOwners;
-import urchin.model.ImmutableFileModes;
-import urchin.model.ImmutableFileOwners;
+import urchin.model.*;
 
 import java.nio.file.Path;
 
@@ -33,7 +30,7 @@ public class PermissionCli {
         changeFileModesCommand.execute(fileModes, file);
     }
 
-    public void changeOwner(Path file, String username, String groupName) {
+    public void changeOwner(Path file, Username username, GroupName groupName) {
         changeOwnerCommand.execute(file, username, groupName);
     }
 

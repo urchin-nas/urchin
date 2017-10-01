@@ -22,7 +22,7 @@ public class GroupServiceTest {
 
     private static final GroupId GROUP_ID = GroupId.of(2);
     private static final UserId USER_ID = UserId.of(1);
-    private static final String GROUP_NAME = "groupname";
+    private static final GroupName GROUP_NAME = GroupName.of("groupname");
     private static final Group GROUP = ImmutableGroup.builder()
             .groupId(GROUP_ID)
             .name(GROUP_NAME)
@@ -30,7 +30,7 @@ public class GroupServiceTest {
             .build();
     private static final User USER = ImmutableUser.builder()
             .userId(USER_ID)
-            .username("username")
+            .username(Username.of("username"))
             .created(LocalDateTime.now())
             .build();
 

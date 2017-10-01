@@ -9,7 +9,7 @@ public interface Group {
 
     GroupId getGroupId();
 
-    String getName();
+    GroupName getName();
 
     LocalDateTime getCreated();
 

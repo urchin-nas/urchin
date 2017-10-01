@@ -3,11 +3,14 @@ package urchin.cli;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import urchin.cli.user.*;
+import urchin.model.GroupName;
 import urchin.model.User;
+import urchin.model.Username;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class UserCli {
@@ -36,19 +39,19 @@ public class UserCli {
         this.listGroupsForUserCommand = listGroupsForUserCommand;
     }
 
-    public void addUser(String username) {
+    public void addUser(Username username) {
         addUserCommand.execute(username);
     }
 
-    public boolean checkIfUsernameExist(String username) {
+    public boolean checkIfUsernameExist(Username username) {
         return checkIfUsernameExistCommand.execute(username);
     }
 
-    public void removeUser(String username) {
+    public void removeUser(Username username) {
         removeUserCommand.execute(username);
     }
 
-    public void setSetUserPassword(String username, String password) {
+    public void setSetUserPassword(Username username, String password) {
         setUserPasswordCommand.execute(username, password);
     }
 
@@ -63,8 +66,10 @@ public class UserCli {
         return unixUsers;
     }
 
-    public List<String> listGroupsForUser(User user) {
-        return Arrays.asList(listGroupsForUserCommand.execute(user).get().split(":")[1].trim().split(" "));
+    public List<GroupName> listGroupsForUser(User user) {
+        return Arrays.stream(listGroupsForUserCommand.execute(user).get().split(":")[1].trim().split(" "))
+                .map(GroupName::of)
+                .collect(Collectors.toList());
     }
 
 }

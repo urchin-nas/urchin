@@ -39,11 +39,11 @@ public class GroupCliIT {
     private RemoveUserCommand removeUserCommand;
 
     private Group group;
-    private String groupName;
+    private GroupName groupName;
 
     @Before
     public void setup() {
-        groupName = GROUP_PREFIX + System.currentTimeMillis();
+        groupName = GroupName.of(GROUP_PREFIX + System.currentTimeMillis());
         group = ImmutableGroup.builder()
                 .groupId(GroupId.of(1))
                 .name(groupName)
@@ -66,7 +66,7 @@ public class GroupCliIT {
     public void addAndRemoveUserFromGroupAreExecutedSuccessfully() {
         User user = ImmutableUser.builder()
                 .userId(UserId.of(1))
-                .username(USERNAME_PREFIX + System.currentTimeMillis())
+                .username(Username.of(USERNAME_PREFIX + System.currentTimeMillis()))
                 .created(LocalDateTime.now())
                 .build();
         addUserCommand.execute(user.getUsername());
@@ -83,7 +83,7 @@ public class GroupCliIT {
 
     @Test
     public void listGroupsReturnsListOfGroups() {
-        List<String> groups = groupCli.listGroups();
+        List<GroupName> groups = groupCli.listGroups();
 
         assertFalse(groups.isEmpty());
     }

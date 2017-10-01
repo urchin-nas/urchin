@@ -18,7 +18,7 @@ public class UserMapper {
     public static UserDto mapToUserDto(User user) {
         return ImmutableUserDto.builder()
                 .userId(user.getUserId().getValue())
-                .username(user.getUsername())
+                .username(user.getUsername().getValue())
                 .build();
     }
 }

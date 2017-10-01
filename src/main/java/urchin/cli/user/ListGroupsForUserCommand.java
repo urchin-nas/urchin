@@ -30,7 +30,7 @@ public class ListGroupsForUserCommand extends BasicCommand {
 
     private String[] setupCommand(User user) {
         String[] command = copyOf(COMMAND, COMMAND.length);
-        command[1] = user.getUsername();
+        command[1] = user.getUsername().getValue();
         return command;
     }
 }
