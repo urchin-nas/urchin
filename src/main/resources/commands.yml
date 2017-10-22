@@ -1,0 +1,7 @@
+user:
+  add-user: sudo useradd %username%
+  check-if-username-exist: getent passwd %username%
+  list-groups: groups %user%
+  list-users: cat /etc/passwd
+  remove-user: sudo deluser %username%
+  set-user-password: sudo passwd %username%

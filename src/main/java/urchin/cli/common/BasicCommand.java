@@ -18,6 +18,10 @@ public abstract class BasicCommand {
         this.runtime = runtime;
     }
 
+    protected Optional<String> executeCommand(String command) {
+        return executeCommand(command.split(" "));
+    }
+
     protected Optional<String> executeCommand(String[] command) {
         try {
             Process process = runtime.exec(command);
