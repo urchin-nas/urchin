@@ -1,3 +1,10 @@
+folder:
+  mount-encrypted-folder: sudo mount -t ecryptfs %encryptedFolder% %folder% -o key=passphrase:passphrase_passwd=%passphrase%,ecryptfs_cipher=aes,ecryptfs_key_bytes=16,ecryptfs_passthrough=n,no_sig_cache=n,ecryptfs_enable_filename_crypto=y
+  mount-virtual-folder: sudo mhddfs -o allow_other %folderList% %virtualFolder%
+  restart-samba: sudo /etc/init.d/samba restart
+  share-folder: net usershare add %folderName% %folder% desc everyone:F guest_ok=y
+  unmount-folder: sudo umount -l %folder%
+  unshare-folder: net usershare delete %folder%
 user:
   add-user: sudo useradd %username%
   check-if-username-exist: getent passwd %username%

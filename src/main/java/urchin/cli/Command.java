@@ -13,6 +13,10 @@ public class Command {
         this.propertySource = propertySource;
     }
 
+    public String getFolderCommand(String command) {
+        return propertySource.getProperty("folder." + command).toString();
+    }
+
     public String getUserCommand(String command) {
         return propertySource.getProperty("user." + command).toString();
     }

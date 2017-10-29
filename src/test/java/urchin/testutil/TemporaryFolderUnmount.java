@@ -3,7 +3,9 @@ package urchin.testutil;
 import org.junit.rules.TemporaryFolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import urchin.cli.Command;
 import urchin.cli.folder.UnmountFolderCommand;
+import urchin.configuration.CommandConfiguration;
 
 import java.io.IOException;
 import java.nio.file.DirectoryStream;
@@ -17,7 +19,16 @@ public class TemporaryFolderUnmount extends TemporaryFolder {
 
     private static final Logger LOG = LoggerFactory.getLogger(TemporaryFolderUnmount.class);
 
-    private UnmountFolderCommand unmountFolderCommand = new UnmountFolderCommand(Runtime.getRuntime());
+    private UnmountFolderCommand unmountFolderCommand;
+
+    public TemporaryFolderUnmount() {
+        CommandConfiguration commandConfiguration = new CommandConfiguration();
+        try {
+            unmountFolderCommand = new UnmountFolderCommand(Runtime.getRuntime(), new Command(commandConfiguration.yamlPropertySourceLoader()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     protected void after() {

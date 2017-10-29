@@ -1,24 +1,22 @@
 package urchin.cli.folder;
 
 import org.springframework.stereotype.Component;
+import urchin.cli.Command;
 import urchin.cli.common.BasicCommand;
 
 @Component
 public class RestartSambaCommand extends BasicCommand {
 
-    private static final String[] COMMAND = {
-            "sudo",
-            "/etc/init.d/samba",
-            "restart"
-    };
+    private final Command command;
 
-    public RestartSambaCommand(Runtime runtime) {
+    public RestartSambaCommand(Runtime runtime, Command command) {
         super(runtime);
+        this.command = command;
     }
 
     public void execute() {
         LOG.info("Restarting samba service");
-        executeCommand(COMMAND);
+        executeCommand(command.getFolderCommand("restart-samba"));
     }
 
 }

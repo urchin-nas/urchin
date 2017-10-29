@@ -36,7 +36,7 @@ public class FolderController {
     @RequestMapping(value = "create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public PassphraseDto createEncryptedFolder(@Valid @RequestBody FolderDto folderDto) throws IOException {
         Passphrase passphrase = folderService.createAndMountEncryptedFolder(Paths.get(folderDto.getFolder()));
-        return ImmutablePassphraseDto.of(passphrase.getPassphrase());
+        return ImmutablePassphraseDto.of(passphrase.getValue());
     }
 
     @RequestMapping(value = "mount", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

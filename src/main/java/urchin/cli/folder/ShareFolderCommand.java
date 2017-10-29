@@ -2,44 +2,30 @@ package urchin.cli.folder;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import urchin.cli.Command;
 import urchin.cli.common.BasicCommand;
 
 import java.nio.file.Path;
 
-import static java.util.Arrays.copyOf;
-
 @Component
 public class ShareFolderCommand extends BasicCommand {
 
-    private static final String FOLDER_PATH = "%folderPath%";
+    private static final String FOLDER = "%folder%";
     private static final String FOLDER_NAME = "%folderName%";
 
-    private static final String[] COMMAND = {
-            "net",
-            "usershare",
-            "add",
-            FOLDER_NAME,
-            FOLDER_PATH,
-            "desc",
-            "everyone:F",
-            "guest_ok=y"
-    };
+    private final Command command;
 
     @Autowired
-    public ShareFolderCommand(Runtime runtime) {
+    public ShareFolderCommand(Runtime runtime, Command command) {
         super(runtime);
+        this.command = command;
     }
 
     public void execute(Path folder) {
         LOG.info("Sharing folder {}", folder);
-        executeCommand(setupCommand(folder));
+        executeCommand(command.getFolderCommand("share-folder")
+                .replace(FOLDER_NAME, folder.getFileName().toString())
+                .replace(FOLDER, folder.toAbsolutePath().toString())
+        );
     }
-
-    private String[] setupCommand(Path folder) {
-        String[] command = copyOf(COMMAND, COMMAND.length);
-        command[3] = folder.getFileName().toString();
-        command[4] = folder.toAbsolutePath().toString();
-        return command;
-    }
-
 }
