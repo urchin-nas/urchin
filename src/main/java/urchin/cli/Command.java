@@ -20,4 +20,8 @@ public class Command {
     public String getGroupCommand(String command) {
         return propertySource.getProperty("group." + command).toString();
     }
+
+    public String getPermissionCommand(String command) {
+        return propertySource.getProperty("permission." + command).toString();
+    }
 }

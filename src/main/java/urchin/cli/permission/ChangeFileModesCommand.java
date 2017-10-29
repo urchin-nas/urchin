@@ -1,40 +1,30 @@
 package urchin.cli.permission;
 
 import org.springframework.stereotype.Component;
+import urchin.cli.Command;
 import urchin.cli.common.BasicCommand;
 import urchin.model.folder.FileModes;
 
 import java.nio.file.Path;
 
-import static java.util.Arrays.copyOf;
-
 @Component
 public class ChangeFileModesCommand extends BasicCommand {
 
-    private static final String MODE = "%MODE%";
-    private static final String FILE = "%FILE%";
+    private static final String MODES = "%modes%";
+    private static final String FILE = "%file%";
 
-    private static final String[] COMMAND = new String[]{
-            "chmod",
-            "-R",
-            MODE,
-            FILE
-    };
+    private final Command command;
 
-    protected ChangeFileModesCommand(Runtime runtime) {
+    protected ChangeFileModesCommand(Runtime runtime, Command command) {
         super(runtime);
+        this.command = command;
     }
 
     public void execute(FileModes fileModes, Path file) {
         LOG.debug("Change file mode {}", fileModes);
-        executeCommand(setupCommand(fileModes, file));
+        executeCommand(command.getPermissionCommand("change-file-modes")
+                .replace(MODES, fileModes.getModes())
+                .replace(FILE, file.toAbsolutePath().toString())
+        );
     }
-
-    private String[] setupCommand(FileModes fileModes, Path file) {
-        String[] command = copyOf(COMMAND, COMMAND.length);
-        command[2] = fileModes.getModes();
-        command[3] = file.toAbsolutePath().toString();
-        return command;
-    }
-
 }

@@ -12,3 +12,7 @@ group:
   list-groups: cat /etc/group
   remove-group: sudo delgroup %group%
   remove-user-from-group: sudo deluser %username% %group%
+permission:
+  change-file-modes: chmod -R %modes% %file%
+  change-owner: sudo chown -R %owner%:%group% %file%
+  list-file-information: ls -ld %file%
