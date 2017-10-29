@@ -2,11 +2,10 @@ package urchin.cli.group;
 
 
 import org.springframework.stereotype.Component;
+import urchin.cli.Command;
 import urchin.cli.common.BasicCommand;
 import urchin.model.group.Group;
 import urchin.model.user.User;
-
-import static java.util.Arrays.copyOf;
 
 @Component
 public class RemoveUserFromGroupCommand extends BasicCommand {
@@ -22,19 +21,18 @@ public class RemoveUserFromGroupCommand extends BasicCommand {
             GROUP
     };
 
-    public RemoveUserFromGroupCommand(Runtime runtime) {
+    private final Command command;
+
+    public RemoveUserFromGroupCommand(Runtime runtime, Command command) {
         super(runtime);
+        this.command = command;
     }
 
     public void execute(User user, Group group) {
         LOG.info("Removing user {} to group {}", user, group);
-        executeCommand(setupCommand(user, group));
-    }
-
-    private String[] setupCommand(User user, Group group) {
-        String[] command = copyOf(COMMAND, COMMAND.length);
-        command[2] = user.getUsername().getValue();
-        command[3] = group.getName().getValue();
-        return command;
+        executeCommand(command.getGroupCommand("remove-user-from-group")
+                .replace(USERNAME, user.getUsername().getValue())
+                .replace(GROUP, group.getName().getValue())
+        );
     }
 }

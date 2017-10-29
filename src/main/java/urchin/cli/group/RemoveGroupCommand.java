@@ -2,35 +2,25 @@ package urchin.cli.group;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import urchin.cli.Command;
 import urchin.cli.common.BasicCommand;
 import urchin.model.group.GroupName;
-
-import static java.util.Arrays.copyOf;
 
 @Component
 public class RemoveGroupCommand extends BasicCommand {
 
     private static final String GROUP = "%group%";
 
-    private static final String[] COMMAND = new String[]{
-            "sudo",
-            "delgroup",
-            GROUP,
-    };
+    private final Command command;
 
     @Autowired
-    public RemoveGroupCommand(Runtime runtime) {
+    public RemoveGroupCommand(Runtime runtime, Command command) {
         super(runtime);
+        this.command = command;
     }
 
     public void execute(GroupName groupName) {
         LOG.debug("Removing group {}", groupName);
-        executeCommand(setupCommand(groupName));
-    }
-
-    private String[] setupCommand(GroupName groupName) {
-        String[] command = copyOf(COMMAND, COMMAND.length);
-        command[2] = groupName.getValue();
-        return command;
+        executeCommand(command.getGroupCommand("remove-group").replace(GROUP, groupName.getValue()));
     }
 }

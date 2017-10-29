@@ -16,4 +16,8 @@ public class Command {
     public String getUserCommand(String command) {
         return propertySource.getProperty("user." + command).toString();
     }
+
+    public String getGroupCommand(String command) {
+        return propertySource.getProperty("group." + command).toString();
+    }
 }

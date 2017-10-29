@@ -8,7 +8,6 @@ import urchin.model.group.Group;
 import urchin.model.group.GroupName;
 import urchin.model.user.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.Arrays.stream;
@@ -81,13 +80,6 @@ public class GroupCli {
     }
 
     public List<GroupName> listGroups() {
-        String response = listGroupsCommand.execute().get();
-        String[] groups = response.split(":\n");
-        List<GroupName> unixGroups = new ArrayList<>();
-        for (String group : groups) {
-            String[] userValues = group.split(":");
-            unixGroups.add(GroupName.of(userValues[0]));
-        }
-        return unixGroups;
+        return listGroupsCommand.execute();
     }
 }

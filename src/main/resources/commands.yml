@@ -5,3 +5,10 @@ user:
   list-users: cat /etc/passwd
   remove-user: sudo deluser %username%
   set-user-password: sudo passwd %username%
+group:
+  add-group: sudo addgroup %group%
+  add-user-to-group: sudo adduser %username% %group%
+  get-group-entries: getent group %group%
+  list-groups: cat /etc/group
+  remove-group: sudo delgroup %group%
+  remove-user-from-group: sudo deluser %username% %group%
