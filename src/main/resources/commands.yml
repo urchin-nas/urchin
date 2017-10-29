@@ -5,13 +5,6 @@ folder:
   share-folder: net usershare add %folderName% %folder% desc everyone:F guest_ok=y
   unmount-folder: sudo umount -l %folder%
   unshare-folder: net usershare delete %folder%
-user:
-  add-user: sudo useradd %username%
-  check-if-username-exist: getent passwd %username%
-  list-groups: groups %user%
-  list-users: cat /etc/passwd
-  remove-user: sudo deluser %username%
-  set-user-password: sudo passwd %username%
 group:
   add-group: sudo addgroup %group%
   add-user-to-group: sudo adduser %username% %group%
@@ -19,6 +12,13 @@ group:
   list-groups: cat /etc/group
   remove-group: sudo delgroup %group%
   remove-user-from-group: sudo deluser %username% %group%
+user:
+  add-user: sudo useradd %username%
+  check-if-username-exist: getent passwd %username%
+  list-groups: groups %user%
+  list-users: cat /etc/passwd
+  remove-user: sudo deluser %username%
+  set-user-password: sudo passwd %username%
 permission:
   change-file-modes: chmod -R %modes% %file%
   change-owner: sudo chown -R %owner%:%group% %file%

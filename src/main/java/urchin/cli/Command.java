@@ -17,12 +17,12 @@ public class Command {
         return propertySource.getProperty("folder." + command).toString();
     }
 
-    public String getUserCommand(String command) {
-        return propertySource.getProperty("user." + command).toString();
-    }
-
     public String getGroupCommand(String command) {
         return propertySource.getProperty("group." + command).toString();
+    }
+
+    public String getUserCommand(String command) {
+        return propertySource.getProperty("user." + command).toString();
     }
 
     public String getPermissionCommand(String command) {
