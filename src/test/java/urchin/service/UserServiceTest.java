@@ -51,7 +51,7 @@ public class UserServiceTest {
 
         verify(userRepository).saveUser(USERNAME);
         verify(userCli).addUser(USERNAME);
-        verify(userCli).setSetUserPassword(USERNAME, PASSWORD);
+        verify(userCli).setUserPassword(USERNAME, PASSWORD);
     }
 
     @Test

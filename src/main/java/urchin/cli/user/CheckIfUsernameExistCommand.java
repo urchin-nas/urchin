@@ -2,32 +2,28 @@ package urchin.cli.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import urchin.cli.Command;
 import urchin.cli.common.BasicCommand;
 import urchin.cli.common.CommandException;
 import urchin.model.user.Username;
-
-import static java.util.Arrays.copyOf;
 
 @Component
 public class CheckIfUsernameExistCommand extends BasicCommand {
 
     private static final String USERNAME = "%username%";
 
-    private static final String[] COMMAND = new String[]{
-            "getent",
-            "passwd",
-            USERNAME,
-    };
+    private final Command command;
 
     @Autowired
-    public CheckIfUsernameExistCommand(Runtime runtime) {
+    public CheckIfUsernameExistCommand(Runtime runtime, Command command) {
         super(runtime);
+        this.command = command;
     }
 
     public boolean execute(Username username) {
         LOG.debug("Checking if username {} exist", username);
         try {
-            executeCommand(setupCommand(username));
+            executeCommand(command.getUserCommand("check-if-username-exist").replace(USERNAME, username.getValue()));
         } catch (CommandException e) {
             if (e.getExitValue() == 2) {
                 return false;
@@ -36,11 +32,5 @@ public class CheckIfUsernameExistCommand extends BasicCommand {
             }
         }
         return true;
-    }
-
-    private String[] setupCommand(Username username) {
-        String[] command = copyOf(COMMAND, COMMAND.length);
-        command[2] = username.getValue();
-        return command;
     }
 }

@@ -47,7 +47,7 @@ public class UserCliIT {
     @Test
     public void addUserAndSetUserPasswordAndCheckIfUsernameExistAndRemoveUserAreExecutedSuccessfully() {
         userCli.addUser(username);
-        userCli.setSetUserPassword(username, PASSWORD);
+        userCli.setUserPassword(username, PASSWORD);
 
         assertTrue(userCli.checkIfUsernameExist(username));
 

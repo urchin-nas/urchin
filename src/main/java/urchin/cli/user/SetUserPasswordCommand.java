@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import urchin.cli.Command;
 import urchin.cli.common.CommandException;
 import urchin.model.user.Password;
 import urchin.model.user.Username;
@@ -11,30 +12,24 @@ import urchin.model.user.Username;
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 
-import static java.util.Arrays.copyOf;
-
 @Component
 public class SetUserPasswordCommand {
 
     private static final Logger LOG = LoggerFactory.getLogger(SetUserPasswordCommand.class);
     private static final String USERNAME = "%username%";
 
-    private static final String[] COMMAND = new String[]{
-            "sudo",
-            "passwd",
-            USERNAME,
-    };
-
     private final Runtime runtime;
+    private final Command command;
 
     @Autowired
-    public SetUserPasswordCommand(Runtime runtime) {
+    public SetUserPasswordCommand(Runtime runtime, Command command) {
         this.runtime = runtime;
+        this.command = command;
     }
 
     public void execute(Username username, Password password) {
         LOG.info("Setting password for user {}", username);
-        String[] command = setupCommand(username);
+        String[] command = this.command.getUserCommand("set-user-password").replace(USERNAME, username.getValue()).split(" ");
 
         try {
             Process process = runtime.exec(command);
@@ -53,11 +48,5 @@ public class SetUserPasswordCommand {
             LOG.error("Failed to execute command");
             throw new CommandException(this.getClass().getName(), e);
         }
-    }
-
-    private String[] setupCommand(Username username) {
-        String[] command = copyOf(COMMAND, COMMAND.length);
-        command[2] = username.getValue();
-        return command;
     }
 }

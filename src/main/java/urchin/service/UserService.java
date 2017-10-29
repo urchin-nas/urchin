@@ -37,7 +37,7 @@ public class UserService {
     public UserId addUser(Username username, Password password) {
         UserId userId = userRepository.saveUser(username);
         userCli.addUser(username);
-        userCli.setSetUserPassword(username, password);
+        userCli.setUserPassword(username, password);
         return userId;
     }
 

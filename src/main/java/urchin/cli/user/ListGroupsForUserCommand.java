@@ -2,35 +2,34 @@ package urchin.cli.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import urchin.cli.Command;
 import urchin.cli.common.BasicCommand;
+import urchin.model.group.GroupName;
 import urchin.model.user.User;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
-
-import static java.util.Arrays.copyOf;
+import java.util.stream.Collectors;
 
 @Component
 public class ListGroupsForUserCommand extends BasicCommand {
 
     private static final String USER = "%user%";
 
-    private static final String[] COMMAND = new String[]{
-            "groups",
-            USER,
-    };
+    private final Command command;
 
     @Autowired
-    public ListGroupsForUserCommand(Runtime runtime) {
+    public ListGroupsForUserCommand(Runtime runtime, Command command) {
         super(runtime);
+        this.command = command;
     }
 
-    public Optional<String> execute(User user) {
-        return executeCommand(setupCommand(user));
-    }
+    public List<GroupName> execute(User user) {
+        Optional<String> response = executeCommand(command.getUserCommand("list-groups").replace(USER, user.getUsername().getValue()));
 
-    private String[] setupCommand(User user) {
-        String[] command = copyOf(COMMAND, COMMAND.length);
-        command[1] = user.getUsername().getValue();
-        return command;
+        return Arrays.stream(response.get().split(":")[1].trim().split(" "))
+                .map(GroupName::of)
+                .collect(Collectors.toList());
     }
 }

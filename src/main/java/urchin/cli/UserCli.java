@@ -8,10 +8,7 @@ import urchin.model.user.Password;
 import urchin.model.user.User;
 import urchin.model.user.Username;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 public class UserCli {
@@ -52,25 +49,16 @@ public class UserCli {
         removeUserCommand.execute(username);
     }
 
-    public void setSetUserPassword(Username username, Password password) {
+    public void setUserPassword(Username username, Password password) {
         setUserPasswordCommand.execute(username, password);
     }
 
     public List<String> listUsers() {
-        String response = listUsersCommand.execute().get();
-        String[] users = response.split("\n");
-        List<String> unixUsers = new ArrayList<>();
-        for (String user : users) {
-            String[] userValues = user.split(":");
-            unixUsers.add(userValues[0]);
-        }
-        return unixUsers;
+        return listUsersCommand.execute();
     }
 
     public List<GroupName> listGroupsForUser(User user) {
-        return Arrays.stream(listGroupsForUserCommand.execute(user).get().split(":")[1].trim().split(" "))
-                .map(GroupName::of)
-                .collect(Collectors.toList());
+        return listGroupsForUserCommand.execute(user);
     }
 
 }
