@@ -7,8 +7,10 @@ import urchin.cli.group.*;
 import urchin.model.group.Group;
 import urchin.model.group.GroupName;
 import urchin.model.user.User;
+import urchin.model.user.Username;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.Arrays.stream;
 
@@ -69,8 +71,7 @@ public class GroupCli {
 
     public boolean checkIfUserIsInGroup(User user, Group group) {
         try {
-            String groupEntries = getGroupEntriesCommand.execute(group.getName()).get();
-            String[] users = groupEntries.split(":")[3].split(",");
+            String[] users = getUsers(group);
             return stream(users)
                     .filter(usr -> usr.replace("\n", "").equals(user.getUsername().getValue()))
                     .count() == 1;
@@ -81,5 +82,17 @@ public class GroupCli {
 
     public List<GroupName> listGroups() {
         return listGroupsCommand.execute();
+    }
+
+    public List<Username> listUsersForGroup(Group group) {
+        String[] users = getUsers(group);
+        return stream(users)
+                .map(usr -> Username.of(usr.replace("\n", "")))
+                .collect(Collectors.toList());
+    }
+
+    private String[] getUsers(Group group) {
+        String groupEntries = getGroupEntriesCommand.execute(group.getName()).get();
+        return groupEntries.split(":")[3].split(",");
     }
 }

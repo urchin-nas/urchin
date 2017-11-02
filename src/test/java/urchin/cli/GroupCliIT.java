@@ -23,8 +23,7 @@ import urchin.testutil.UnixUserAndGroupCleanup;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static urchin.testutil.UnixUserAndGroupCleanup.GROUP_PREFIX;
 import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;
 
@@ -47,6 +46,7 @@ public class GroupCliIT {
 
     private Group group;
     private GroupName groupName;
+    private User user;
 
     @Before
     public void setup() {
@@ -54,6 +54,11 @@ public class GroupCliIT {
         group = ImmutableGroup.builder()
                 .groupId(GroupId.of(1))
                 .name(groupName)
+                .created(LocalDateTime.now())
+                .build();
+        user = ImmutableUser.builder()
+                .userId(UserId.of(1))
+                .username(Username.of(USERNAME_PREFIX + System.currentTimeMillis()))
                 .created(LocalDateTime.now())
                 .build();
     }
@@ -71,11 +76,6 @@ public class GroupCliIT {
 
     @Test
     public void addAndRemoveUserFromGroupAreExecutedSuccessfully() {
-        User user = ImmutableUser.builder()
-                .userId(UserId.of(1))
-                .username(Username.of(USERNAME_PREFIX + System.currentTimeMillis()))
-                .created(LocalDateTime.now())
-                .build();
         addUserCommand.execute(user.getUsername());
         groupCli.addGroup(groupName);
 
@@ -93,6 +93,18 @@ public class GroupCliIT {
         List<GroupName> groups = groupCli.listGroups();
 
         assertFalse(groups.isEmpty());
+    }
+
+    @Test
+    public void listUsersForGroupReturnsListOfUsernames() {
+        addUserCommand.execute(user.getUsername());
+        groupCli.addGroup(groupName);
+        groupCli.addUserToGroup(user, group);
+
+        List<Username> usernames = groupCli.listUsersForGroup(group);
+
+        assertEquals(1, usernames.size());
+        assertEquals(user.getUsername(), usernames.get(0));
     }
 
 }
