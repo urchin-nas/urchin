@@ -11,6 +11,7 @@ import urchin.model.user.Username;
 public class CheckIfUsernameExistCommand extends BasicCommand {
 
     private static final String USERNAME = "%username%";
+    private static final String CHECK_IF_USERNAME_EXIST = "check-if-username-exist";
 
     private final Command command;
 
@@ -23,7 +24,8 @@ public class CheckIfUsernameExistCommand extends BasicCommand {
     public boolean execute(Username username) {
         LOG.debug("Checking if username {} exist", username);
         try {
-            executeCommand(command.getUserCommand("check-if-username-exist").replace(USERNAME, username.getValue()));
+            executeCommand(command.getUserCommand(CHECK_IF_USERNAME_EXIST)
+                    .replace(USERNAME, username.getValue()));
         } catch (CommandException e) {
             if (e.getExitValue() == 2) {
                 return false;

@@ -10,6 +10,7 @@ import urchin.model.user.Username;
 public class AddUserCommand extends BasicCommand {
 
     private static final String USERNAME = "%username%";
+    private static final String ADD_USER = "add-user";
 
     private final Command command;
 
@@ -21,6 +22,7 @@ public class AddUserCommand extends BasicCommand {
 
     public void execute(Username username) {
         LOG.debug("Creating user {}", username);
-        executeCommand(command.getUserCommand("add-user").replace(USERNAME, username.getValue()));
+        executeCommand(command.getUserCommand(ADD_USER)
+                .replace(USERNAME, username.getValue()));
     }
 }

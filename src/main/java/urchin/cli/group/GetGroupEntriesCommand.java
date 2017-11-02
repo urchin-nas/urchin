@@ -12,6 +12,7 @@ import java.util.Optional;
 public class GetGroupEntriesCommand extends BasicCommand {
 
     private static final String GROUP = "%group%";
+    private static final String GET_GROUP_ENTRIES = "get-group-entries";
 
     private final Command command;
 
@@ -23,6 +24,7 @@ public class GetGroupEntriesCommand extends BasicCommand {
 
     public Optional<String> execute(GroupName groupName) {
         LOG.debug("Getting entries for group {}", groupName);
-        return executeCommand(command.getGroupCommand("get-group-entries").replace(GROUP, groupName.getValue()));
+        return executeCommand(command.getGroupCommand(GET_GROUP_ENTRIES)
+                .replace(GROUP, groupName.getValue()));
     }
 }

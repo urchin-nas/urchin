@@ -23,6 +23,7 @@ public class MountEncryptedFolderCommand {
     private static final String ENCRYPTED_FOLDER = "%encryptedFolder%";
     private static final String FOLDER = "%folder%";
     private static final String PASSPHRASE = "%passphrase%";
+    private static final String MOUNT_ENCRYPTED_FOLDER = "mount-encrypted-folder";
 
     private final Runtime runtime;
     private final Command command;
@@ -35,11 +36,13 @@ public class MountEncryptedFolderCommand {
 
     public void execute(Path folder, EncryptedFolder encryptedFolder, Passphrase passphrase) {
         LOG.info("Setting up encrypted folder {} and mounting it to {}", encryptedFolder.getPath(), folder);
-        String[] command = this.command.getFolderCommand("mount-encrypted-folder")
+
+        String[] command = this.command.getFolderCommand(MOUNT_ENCRYPTED_FOLDER)
                 .replace(ENCRYPTED_FOLDER, encryptedFolder.getPath().toAbsolutePath().toString())
                 .replace(FOLDER, folder.toAbsolutePath().toString())
                 .replace(PASSPHRASE, passphrase.getValue())
                 .split(" ");
+
         try {
             Process process = runtime.exec(command);
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));

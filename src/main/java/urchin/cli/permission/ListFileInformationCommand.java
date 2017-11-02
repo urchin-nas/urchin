@@ -11,6 +11,7 @@ import java.util.Optional;
 public class ListFileInformationCommand extends BasicCommand {
 
     private static final String FILE = "%file%";
+    private static final String LIST_FILE_INFORMATION = "list-file-information";
 
     private final Command command;
 
@@ -21,6 +22,7 @@ public class ListFileInformationCommand extends BasicCommand {
 
     public Optional<String> execute(Path file) {
         LOG.debug("Listing file modes for {}", file);
-        return executeCommand(command.getPermissionCommand("list-file-information").replace(FILE, file.toAbsolutePath().toString()));
+        return executeCommand(command.getPermissionCommand(LIST_FILE_INFORMATION)
+                .replace(FILE, file.toAbsolutePath().toString()));
     }
 }

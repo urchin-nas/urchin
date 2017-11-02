@@ -12,6 +12,7 @@ import java.util.Optional;
 @Component
 public class ListGroupsCommand extends BasicCommand {
 
+    private static final String LIST_GROUPS = "list-groups";
     private final Command command;
 
     public ListGroupsCommand(Runtime runtime, Command command) {
@@ -21,7 +22,7 @@ public class ListGroupsCommand extends BasicCommand {
 
     public List<GroupName> execute() {
         LOG.debug("Listing groups");
-        Optional<String> response = executeCommand(command.getGroupCommand("list-groups"));
+        Optional<String> response = executeCommand(command.getGroupCommand(LIST_GROUPS));
 
         String[] groups = response.get().split(":\n");
         List<GroupName> unixGroups = new ArrayList<>();

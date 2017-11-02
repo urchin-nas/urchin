@@ -10,6 +10,7 @@ import urchin.model.group.GroupName;
 public class AddGroupCommand extends BasicCommand {
 
     private static final String GROUP = "%group%";
+    private static final String ADD_GROUP = "add-group";
 
     private final Command command;
 
@@ -21,6 +22,7 @@ public class AddGroupCommand extends BasicCommand {
 
     public void execute(GroupName groupName) {
         LOG.debug("Creating group {}", groupName);
-        executeCommand(command.getGroupCommand("add-group").replace(GROUP, groupName.getValue()));
+        executeCommand(command.getGroupCommand(ADD_GROUP)
+                .replace(GROUP, groupName.getValue()));
     }
 }

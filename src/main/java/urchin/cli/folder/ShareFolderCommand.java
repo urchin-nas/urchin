@@ -12,6 +12,7 @@ public class ShareFolderCommand extends BasicCommand {
 
     private static final String FOLDER = "%folder%";
     private static final String FOLDER_NAME = "%folderName%";
+    private static final String SHARE_FOLDER = "share-folder";
 
     private final Command command;
 
@@ -23,7 +24,7 @@ public class ShareFolderCommand extends BasicCommand {
 
     public void execute(Path folder) {
         LOG.info("Sharing folder {}", folder);
-        executeCommand(command.getFolderCommand("share-folder")
+        executeCommand(command.getFolderCommand(SHARE_FOLDER)
                 .replace(FOLDER_NAME, folder.getFileName().toString())
                 .replace(FOLDER, folder.toAbsolutePath().toString())
         );

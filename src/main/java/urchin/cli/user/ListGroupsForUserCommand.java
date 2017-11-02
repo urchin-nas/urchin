@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 public class ListGroupsForUserCommand extends BasicCommand {
 
     private static final String USER = "%user%";
+    private static final String LIST_GROUPS = "list-groups";
 
     private final Command command;
 
@@ -26,7 +27,8 @@ public class ListGroupsForUserCommand extends BasicCommand {
     }
 
     public List<GroupName> execute(User user) {
-        Optional<String> response = executeCommand(command.getUserCommand("list-groups").replace(USER, user.getUsername().getValue()));
+        Optional<String> response = executeCommand(command.getUserCommand(LIST_GROUPS)
+                .replace(USER, user.getUsername().getValue()));
 
         return Arrays.stream(response.get().split(":")[1].trim().split(" "))
                 .map(GroupName::of)

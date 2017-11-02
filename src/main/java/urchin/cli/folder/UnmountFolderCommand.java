@@ -11,6 +11,7 @@ import java.nio.file.Path;
 public class UnmountFolderCommand extends BasicCommand {
 
     private static final String FOLDER = "%folder%";
+    private static final String UNMOUNT_FOLDER = "unmount-folder";
 
     private final Command command;
 
@@ -22,7 +23,7 @@ public class UnmountFolderCommand extends BasicCommand {
 
     public void execute(Path folder) {
         LOG.debug("Unmounting folder {}", folder.toAbsolutePath());
-        executeCommand(command.getFolderCommand("unmount-folder")
+        executeCommand(command.getFolderCommand(UNMOUNT_FOLDER)
                 .replace(FOLDER, folder.toAbsolutePath().toString())
         );
     }

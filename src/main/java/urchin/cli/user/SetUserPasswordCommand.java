@@ -17,6 +17,7 @@ public class SetUserPasswordCommand {
 
     private static final Logger LOG = LoggerFactory.getLogger(SetUserPasswordCommand.class);
     private static final String USERNAME = "%username%";
+    private static final String SET_USER_PASSWORD = "set-user-password";
 
     private final Runtime runtime;
     private final Command command;
@@ -29,7 +30,9 @@ public class SetUserPasswordCommand {
 
     public void execute(Username username, Password password) {
         LOG.info("Setting password for user {}", username);
-        String[] command = this.command.getUserCommand("set-user-password").replace(USERNAME, username.getValue()).split(" ");
+        String[] command = this.command.getUserCommand(SET_USER_PASSWORD)
+                .replace(USERNAME, username.getValue())
+                .split(" ");
 
         try {
             Process process = runtime.exec(command);

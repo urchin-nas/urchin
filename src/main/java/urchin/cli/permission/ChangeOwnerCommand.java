@@ -14,6 +14,7 @@ public class ChangeOwnerCommand extends BasicCommand {
     private static final String OWNER = "%owner%";
     private static final String GROUP = "%group%";
     private static final String FILE = "%file%";
+    private static final String CHANGE_OWNER = "change-owner";
 
     private final Command command;
 
@@ -24,7 +25,7 @@ public class ChangeOwnerCommand extends BasicCommand {
 
     public void execute(Path file, Username username, GroupName groupName) {
         LOG.debug("Change owner of file {} to {}:{}", file, username, groupName);
-        executeCommand(command.getPermissionCommand("change-owner")
+        executeCommand(command.getPermissionCommand(CHANGE_OWNER)
                 .replace(OWNER, username.getValue())
                 .replace(GROUP, groupName.getValue())
                 .replace(FILE, file.toAbsolutePath().toString())

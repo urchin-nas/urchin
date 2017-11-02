@@ -7,6 +7,7 @@ import urchin.cli.common.BasicCommand;
 @Component
 public class RestartSambaCommand extends BasicCommand {
 
+    private static final String RESTART_SAMBA = "restart-samba";
     private final Command command;
 
     public RestartSambaCommand(Runtime runtime, Command command) {
@@ -16,7 +17,7 @@ public class RestartSambaCommand extends BasicCommand {
 
     public void execute() {
         LOG.info("Restarting samba service");
-        executeCommand(command.getFolderCommand("restart-samba"));
+        executeCommand(command.getFolderCommand(RESTART_SAMBA));
     }
 
 }

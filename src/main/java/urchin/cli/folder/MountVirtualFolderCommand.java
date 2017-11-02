@@ -15,6 +15,7 @@ public class MountVirtualFolderCommand extends BasicCommand {
 
     private static final String FOLDER_LIST = "%folderList%";
     private static final String VIRTUAL_FOLDER = "%virtualFolder%";
+    private static final String MOUNT_VIRTUAL_FOLDER = "mount-virtual-folder";
 
     private final Command command;
 
@@ -26,7 +27,7 @@ public class MountVirtualFolderCommand extends BasicCommand {
 
     public void execute(List<Path> folders, Path virtualFolder) {
         LOG.debug("Mounting virtual folder {} for {} folders", virtualFolder.toAbsolutePath(), folders.size());
-        executeCommand(command.getFolderCommand("mount-virtual-folder")
+        executeCommand(command.getFolderCommand(MOUNT_VIRTUAL_FOLDER)
                 .replace(FOLDER_LIST, arrayToDelimitedString(folders.toArray(), ","))
                 .replace(VIRTUAL_FOLDER, virtualFolder.toAbsolutePath().toString())
         );

@@ -10,6 +10,7 @@ import urchin.model.user.Username;
 public class RemoveUserCommand extends BasicCommand {
 
     private static final String USERNAME = "%username%";
+    private static final String REMOVE_USER = "remove-user";
 
     private final Command command;
 
@@ -21,6 +22,7 @@ public class RemoveUserCommand extends BasicCommand {
 
     public void execute(Username username) {
         LOG.debug("Removing user {}", username);
-        executeCommand(command.getUserCommand("remove-user").replace(USERNAME, username.getValue()));
+        executeCommand(command.getUserCommand(REMOVE_USER)
+                .replace(USERNAME, username.getValue()));
     }
 }

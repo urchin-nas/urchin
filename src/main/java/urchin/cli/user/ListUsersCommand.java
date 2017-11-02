@@ -11,6 +11,7 @@ import java.util.Optional;
 @Component
 public class ListUsersCommand extends BasicCommand {
 
+    private static final String LIST_USERS = "list-users";
     private final Command command;
 
     public ListUsersCommand(Runtime runtime, Command command) {
@@ -20,7 +21,9 @@ public class ListUsersCommand extends BasicCommand {
 
     public List<String> execute() {
         LOG.debug("Listing users");
-        Optional<String> response = executeCommand(command.getUserCommand("list-users"));
+
+        Optional<String> response = executeCommand(command.getUserCommand(LIST_USERS));
+
         String[] users = response.get().split("\n");
         List<String> unixUsers = new ArrayList<>();
         for (String user : users) {

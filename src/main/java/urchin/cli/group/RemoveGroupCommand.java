@@ -10,6 +10,7 @@ import urchin.model.group.GroupName;
 public class RemoveGroupCommand extends BasicCommand {
 
     private static final String GROUP = "%group%";
+    private static final String REMOVE_GROUP = "remove-group";
 
     private final Command command;
 
@@ -21,6 +22,7 @@ public class RemoveGroupCommand extends BasicCommand {
 
     public void execute(GroupName groupName) {
         LOG.debug("Removing group {}", groupName);
-        executeCommand(command.getGroupCommand("remove-group").replace(GROUP, groupName.getValue()));
+        executeCommand(command.getGroupCommand(REMOVE_GROUP)
+                .replace(GROUP, groupName.getValue()));
     }
 }
