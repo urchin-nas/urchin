@@ -12,6 +12,7 @@ import urchin.controller.api.MessageDto;
 import urchin.controller.api.group.*;
 import urchin.controller.api.user.AddUserDto;
 import urchin.controller.api.user.ImmutableAddUserDto;
+import urchin.controller.api.user.UserDto;
 import urchin.model.group.GroupId;
 import urchin.model.user.UserId;
 import urchin.testutil.TestApplication;
@@ -32,11 +33,13 @@ public class GroupControllerIT extends TestApplication {
 
     @Before
     public void setup() {
-        ResponseEntity<IdDto> addUserResponse = addUserRequest(ImmutableAddUserDto.builder()
+        AddUserDto addUserDto = ImmutableAddUserDto.builder()
                 .username(USERNAME_PREFIX + System.currentTimeMillis())
                 .password(PASSWORD)
-                .build());
+                .build();
+        ResponseEntity<IdDto> addUserResponse = addUserRequest(addUserDto);
         userId = UserId.of(addUserResponse.getBody().getId());
+
         addGroupDto = ImmutableAddGroupDto.of(GROUP_PREFIX + System.currentTimeMillis());
     }
 
@@ -103,6 +106,23 @@ public class GroupControllerIT extends TestApplication {
         assertEquals(groupId, getGroupResponse.getBody().getGroupId());
     }
 
+    @Test
+    public void getUsersForGroupReturnsUsers() {
+        ResponseEntity<IdDto> addGroupResponse = addGroupRequest(ImmutableAddGroupDto.of(GROUP_PREFIX + System.currentTimeMillis()));
+        int groupId = addGroupResponse.getBody().getId();
+        AddUserToGroupDto addUserToGroupDto = ImmutableAddUserToGroupDto.builder()
+                .groupId(groupId)
+                .userId(userId.getValue())
+                .build();
+        addUserToGroupRequest(addUserToGroupDto);
+
+        ResponseEntity<UserDto[]> usersForGroupResponse = getUsersForGroupRequest(groupId);
+
+        assertEquals(HttpStatus.OK, usersForGroupResponse.getStatusCode());
+        assertNotNull(usersForGroupResponse.getBody());
+        assertTrue(usersForGroupResponse.getBody().length > 0);
+    }
+
     private ResponseEntity<IdDto> addGroupRequest(AddGroupDto addGroupDto) {
         return testRestTemplate.postForEntity(discoverControllerPath() + "/add", addGroupDto, IdDto.class);
     }
@@ -136,5 +156,9 @@ public class GroupControllerIT extends TestApplication {
     private ResponseEntity<MessageDto> removeUserRequest(int userId) {
         return testRestTemplate.exchange(discoverControllerPath(UserController.class) + "/" + userId, HttpMethod.DELETE, null, new ParameterizedTypeReference<MessageDto>() {
         });
+    }
+
+    private ResponseEntity<UserDto[]> getUsersForGroupRequest(int groupId) {
+        return testRestTemplate.getForEntity(discoverControllerPath() + "/" + groupId + "/users", UserDto[].class);
     }
 }

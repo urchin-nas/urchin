@@ -10,6 +10,7 @@ import urchin.controller.api.MessageDto;
 import urchin.controller.api.group.AddGroupDto;
 import urchin.controller.api.group.AddUserToGroupDto;
 import urchin.controller.api.group.GroupDto;
+import urchin.controller.api.user.UserDto;
 import urchin.model.group.Group;
 import urchin.model.group.GroupId;
 import urchin.model.group.GroupName;
@@ -21,6 +22,7 @@ import java.util.List;
 
 import static urchin.controller.api.mapper.GroupMapper.mapToGroupDto;
 import static urchin.controller.api.mapper.GroupMapper.mapToGroupsDto;
+import static urchin.controller.api.mapper.UserMapper.mapToUsersDto;
 
 @RestController
 @RequestMapping("api/groups")
@@ -69,6 +71,11 @@ public class GroupController {
     public MessageDto removeUserFromGroup(@PathVariable int groupId, @PathVariable int userId) {
         groupService.removeUserFromGroup(UserId.of(userId), GroupId.of(groupId));
         return ImmutableMessageDto.of("User removed from group");
+    }
+
+    @RequestMapping(value = "{groupId}/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<UserDto> getGroupsForUser(@PathVariable int groupId) {
+        return mapToUsersDto(groupService.listUsersForGroup(GroupId.of(groupId)));
     }
 
 }

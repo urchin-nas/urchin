@@ -9,7 +9,9 @@ import urchin.model.group.GroupId;
 import urchin.model.group.GroupName;
 import urchin.model.user.User;
 import urchin.model.user.UserId;
+import urchin.model.user.Username;
 import urchin.repository.GroupRepository;
+import urchin.repository.UserRepository;
 
 import java.util.List;
 
@@ -17,12 +19,19 @@ import java.util.List;
 public class GroupService {
 
     private final GroupRepository groupRepository;
+    private final UserRepository userRepository;
     private final GroupCli groupCli;
     private final UserService userService;
 
     @Autowired
-    public GroupService(GroupRepository groupRepository, GroupCli groupCli, UserService userService) {
+    public GroupService(
+            GroupRepository groupRepository,
+            UserRepository userRepository,
+            GroupCli groupCli,
+            UserService userService
+    ) {
         this.groupRepository = groupRepository;
+        this.userRepository = userRepository;
         this.groupCli = groupCli;
         this.userService = userService;
     }
@@ -59,5 +68,11 @@ public class GroupService {
 
     public Group getGroup(GroupId groupId) {
         return groupRepository.getGroup(groupId);
+    }
+
+    public List<User> listUsersForGroup(GroupId groupId) {
+        Group group = groupRepository.getGroup(groupId);
+        List<Username> usernames = groupCli.listUsersForGroup(group);
+        return userRepository.getUsersByUsername(usernames);
     }
 }
