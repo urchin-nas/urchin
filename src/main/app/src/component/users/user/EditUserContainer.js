@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import EditUser from "./EditUser";
-import {addGroup, deleteUser, getUser, setUser} from "../../../action/userAction";
+import {addGroup, deleteUser, getGroupsForUser, getUser, setUser} from "../../../action/userAction";
 import {getGroups} from "../../../action/groupAction";
 
 class UserContainer extends Component {
@@ -9,14 +9,26 @@ class UserContainer extends Component {
     componentWillMount() {
         let userId = parseInt(this.props.match.params.id, 10);
         this.props.getUser(userId);
+        this.props.getGroupsForUser(userId);
         this.props.getGroups();
     }
 
+    filterOutAvailableGroups() {
+        let groupIds = this.props.groupsForUser.map(group => group.groupId);
+
+        return this.props.groups.filter(group =>
+            groupIds.indexOf(group.groupId) === -1
+        );
+    }
+
     render() {
+        let availableGroups = this.filterOutAvailableGroups();
+
         return (
             <EditUser
                 user={this.props.user}
-                availableGroups={this.props.availableGroups}
+                groupsForUser={this.props.groupsForUser}
+                availableGroups={availableGroups}
                 callbacks={{
                     addGroup: this.props.addGroup,
                     deleteUser: this.props.deleteUser,
@@ -38,6 +50,9 @@ const mapDispatchToProps = (dispatch) => {
         deleteUser: (userId) => {
             dispatch(deleteUser(userId))
         },
+        getGroupsForUser: (userId) => {
+            dispatch(getGroupsForUser(userId))
+        },
         getGroups: () => {
             dispatch(getGroups())
         },
@@ -50,7 +65,8 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
     return {
         user: state.userData.user || {},
-        availableGroups: state.groupData.groups || []
+        groupsForUser: state.userData.groupsForUser || [],
+        groups: state.groupData.groups || []
     }
 };
 

@@ -26,6 +26,11 @@ class EditUser extends Component {
 
     render() {
         let username = this.props.user.username;
+        let groupsForUser = this.props.groupsForUser.map((item, index) =>
+            <li key={index.toString()}>
+                <a href={`/groups/${item.groupId}`}>{item.groupName}</a>
+            </li>
+        );
         let availableGroups = this.props.availableGroups;
 
         return (
@@ -43,6 +48,10 @@ class EditUser extends Component {
                 <button onClick={this.addGroup}>Add Group</button>
                 <button onClick={this.del}>Delete</button>
                 <button onClick={this.back}>Back</button>
+                <h2>Member of groups</h2>
+                <ul>
+                    {groupsForUser}
+                </ul>
             </div>
         )
     }

@@ -76,6 +76,17 @@ export const deleteUser = (userId) => (dispatch) => {
         ))
 };
 
+export const getGroupsForUser = (userId) => (dispatch) => {
+    dispatch({
+        type: User.GET_GROUPS_FOR_USER_SUCCESS
+    });
+    get('/api/users/' + userId + "/groups")
+        .then(json => dispatch({
+            type: User.GET_GROUPS_FOR_USER_SUCCESS,
+            data: json
+        }))
+};
+
 export const addGroup = (userId, groupId) => (dispatch) => {
     let body = {
         userId: userId,

@@ -26,6 +26,13 @@ const userReducer = (state = {}, action) => {
         case Actions.User.SAVE_USER_VALIDATION_ERROR:
             return {...state, fieldErrors: action.data.fieldErrors};
 
+        case Actions.User.GET_GROUPS_FOR_USER:
+            return {...state, isFetchingGroupsForUser: true};
+
+        case Actions.User.GET_GROUPS_FOR_USER_SUCCESS:
+            return {...state, isFetchingGroupsForUser: false, groupsForUser: action.data};
+
+
         default:
             return state;
     }
