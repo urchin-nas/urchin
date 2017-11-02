@@ -97,13 +97,27 @@ export const addGroup = (userId, groupId) => (dispatch) => {
     });
     post('/api/groups/user', body)
         .then(json => {
-            console.log('success: ' + json);
             dispatch({
                 type: User.ADD_GROUP_SUCCESS,
                 data: json
             });
-            history.push('/users');
             notifySuccess("Success", "User added to group")
+        }, error => (
+            notifyBackendError(error)
+        ))
+};
+
+export const removeGroup = (userId, groupId) => (dispatch) => {
+    dispatch({
+        type: User.REMOVE_GROUP
+    });
+    del('/api/groups/' + groupId + "/user/" + userId)
+        .then(json => {
+            dispatch({
+                type: User.REMOVE_GROUP_SUCCESS,
+                data: json
+            });
+            notifySuccess("Success", "User was removed from group");
         }, error => (
             notifyBackendError(error)
         ))

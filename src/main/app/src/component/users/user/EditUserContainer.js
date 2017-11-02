@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import EditUser from "./EditUser";
-import {addGroup, deleteUser, getGroupsForUser, getUser, setUser} from "../../../action/userAction";
+import {addGroup, deleteUser, getGroupsForUser, getUser, removeGroup, setUser} from "../../../action/userAction";
 import {getGroups} from "../../../action/groupAction";
 
 class UserContainer extends Component {
@@ -31,6 +31,7 @@ class UserContainer extends Component {
                 availableGroups={availableGroups}
                 callbacks={{
                     addGroup: this.props.addGroup,
+                    removeGroup: this.props.removeGroup,
                     deleteUser: this.props.deleteUser,
                     setUser: this.props.setUser
                 }}
@@ -58,6 +59,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         addGroup: (userId, groupId) => {
             dispatch(addGroup(userId, groupId))
+        },
+        removeGroup: (userId, groupId) => {
+            dispatch(removeGroup(userId, groupId))
         }
     }
 };

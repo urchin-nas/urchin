@@ -16,6 +16,10 @@ class EditUser extends Component {
         this.props.callbacks.addGroup(this.props.user.userId, this.props.user.groupId)
     };
 
+    removeGroup = (groupId) => {
+        this.props.callbacks.removeGroup(this.props.user.userId, groupId)
+    };
+
     del = () => {
         this.props.callbacks.deleteUser(this.props.user.userId);
     };
@@ -29,6 +33,7 @@ class EditUser extends Component {
         let groupsForUser = this.props.groupsForUser.map((item, index) =>
             <li key={index.toString()}>
                 <a href={`/groups/${item.groupId}`}>{item.groupName}</a>
+                <button onClick={() => this.removeGroup(item.groupId)}>Remove Group</button>
             </li>
         );
         let availableGroups = this.props.availableGroups;
