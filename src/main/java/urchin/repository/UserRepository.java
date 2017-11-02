@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
@@ -17,6 +19,7 @@ import urchin.model.user.Username;
 import java.sql.*;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Repository
 public class UserRepository {
@@ -26,12 +29,16 @@ public class UserRepository {
     private static final String SELECT_USER = "SELECT * from user WHERE id = ?";
     private static final String DELETE_USER = "DELETE FROM user WHERE id = ?";
     private static final String SELECT_USERS = "SELECT * from user";
+    private static final String SELECT_USERS_BY_USERNAME = "SELECT * FROM user WHERE username IN (:usernames)";
 
     private final JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
+
 
     @Autowired
-    public UserRepository(JdbcTemplate jdbcTemplate) {
+    public UserRepository(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     public UserId saveUser(Username username) {
@@ -62,6 +69,19 @@ public class UserRepository {
 
     public List<User> getUsers() {
         return jdbcTemplate.query(SELECT_USERS, (resultSet, i) -> userMapper(resultSet));
+    }
+
+    public List<User> getUsersByUsername(List<Username> usernames) {
+        MapSqlParameterSource parameters = new MapSqlParameterSource();
+        parameters.addValue("usernames", getUsernames(usernames));
+
+        return namedParameterJdbcTemplate.query(SELECT_USERS_BY_USERNAME, parameters, (resultSet, i) -> userMapper(resultSet));
+    }
+
+    private List<String> getUsernames(List<Username> usernames) {
+        return usernames.stream()
+                .map(Username::getValue)
+                .collect(Collectors.toList());
     }
 
     private User userMapper(ResultSet resultSet) throws SQLException {
