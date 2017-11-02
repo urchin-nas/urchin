@@ -18,7 +18,6 @@ import static org.junit.Assert.*;
 public class GroupRepositoryIT extends TestApplication {
 
     private GroupRepository groupRepository;
-    ;
 
     @Before
     public void setup() {
