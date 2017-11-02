@@ -76,3 +76,52 @@ export const deleteGroup = (groupId) => (dispatch) => {
             notifyBackendError(error)
         ))
 };
+
+export const getUsersForGroup = (groupId) => (dispatch) => {
+    dispatch({
+        type: Group.GET_USERS_FOR_GROUP
+    });
+    get('/api/groups/' + groupId + "/users")
+        .then(json => dispatch({
+            type: Group.GET_USERS_FOR_GROUP_SUCCESS,
+            data: json
+        }))
+};
+
+export const addUser = (groupId, userId) => (dispatch) => {
+    let body = {
+        userId: userId,
+        groupId: groupId
+    };
+    dispatch({
+        type: Group.ADD_USER
+    });
+    post('/api/groups/user', body)
+        .then(json => {
+            dispatch({
+                type: Group.ADD_USER_SUCCESS,
+                data: json
+            });
+            notifySuccess("Success", "User added to group");
+            dispatch(getUsersForGroup(groupId));
+        }, error => (
+            notifyBackendError(error)
+        ))
+};
+
+export const removeUser = (groupId, userId) => (dispatch) => {
+    dispatch({
+        type: Group.REMOVE_USER
+    });
+    del('/api/groups/' + groupId + "/user/" + userId)
+        .then(json => {
+            dispatch({
+                type: Group.REMOVE_USER_SUCCESS,
+                data: json
+            });
+            notifySuccess("Success", "User was removed from group");
+            dispatch(getUsersForGroup(userId));
+        }, error => (
+            notifyBackendError(error)
+        ))
+};

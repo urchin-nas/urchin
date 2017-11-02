@@ -13,6 +13,10 @@ class Groups extends Component {
         this.props.callbacks.setGroup(data);
     };
 
+    removeUser = (userId) => {
+        this.props.callbacks.removeUser(this.props.group.groupId, userId)
+    };
+
     del = () => {
         this.props.callbacks.deleteGroup(this.props.groupId);
     };
@@ -23,6 +27,12 @@ class Groups extends Component {
 
     render() {
         let groupName = this.props.group.groupName || '';
+        let usersInGroup = this.props.usersInGroup.map((item, index) =>
+            <li key={index.toString()}>
+                <a href={`/users/${item.userId}`}>{item.username}</a>
+                <button onClick={() => this.removeUser(item.userId)}>Remove User</button>
+            </li>
+        );
         return (
 
             <div>
@@ -39,6 +49,10 @@ class Groups extends Component {
                 />
                 <button onClick={this.del}>Delete</button>
                 <button onClick={this.back}>Back</button>
+                <h2>Member of groups</h2>
+                <ul>
+                    {usersInGroup}
+                </ul>
             </div>
         )
     }

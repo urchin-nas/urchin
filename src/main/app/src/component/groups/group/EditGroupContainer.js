@@ -1,12 +1,13 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import EditGroup from './EditGroup';
-import {deleteGroup, getGroup, saveGroup, setGroup} from '../../../action/groupAction';
+import {addUser, deleteGroup, getGroup, getUsersForGroup, removeUser, setGroup} from '../../../action/groupAction';
 
 class EditGroupContainer extends Component {
 
     componentWillMount() {
         this.props.getGroup(this.getGroupId());
+        this.props.getUsersForGroup(this.getGroupId());
     }
 
     setGroup = (group) => {
@@ -27,10 +28,13 @@ class EditGroupContainer extends Component {
             <EditGroup
                 groupId={groupId}
                 group={this.props.group}
+                usersInGroup={this.props.usersInGroup}
                 fieldErrors={this.props.fieldErrors}
                 callbacks={{
                     setGroup: this.setGroup,
-                    deleteGroup: this.deleteGroup
+                    deleteGroup: this.deleteGroup,
+                    addUser: this.props.addUser,
+                    removeUser: this.props.removeUser,
                 }}
             />
         )
@@ -47,6 +51,15 @@ const mapDispatchToProps = (dispatch) => {
         },
         deleteGroup: (groupId) => {
             dispatch(deleteGroup(groupId))
+        },
+        getUsersForGroup: (groupId) => {
+            dispatch(getUsersForGroup(groupId))
+        },
+        addUser: (groupId, userId) => {
+            dispatch(addUser(groupId, userId))
+        },
+        removeUser: (groupId, userId) => {
+            dispatch(removeUser(groupId, userId))
         }
     }
 };
@@ -54,6 +67,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
     return {
         group: state.groupData.group || {},
+        usersInGroup: state.groupData.usersInGroup || [],
         fieldErrors: state.groupData.fieldErrors || {}
     }
 };
