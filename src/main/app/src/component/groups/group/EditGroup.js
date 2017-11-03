@@ -1,5 +1,4 @@
 import React, {Component} from 'react'
-import FieldError from "../../FieldError";
 import history from "../../../history";
 
 class Groups extends Component {
@@ -11,6 +10,10 @@ class Groups extends Component {
         };
 
         this.props.callbacks.setGroup(data);
+    };
+
+    addUser = () => {
+        this.props.callbacks.addUser(this.props.group.groupId, this.props.group.userId);
     };
 
     removeUser = (userId) => {
@@ -26,15 +29,16 @@ class Groups extends Component {
     };
 
     render() {
-        let groupName = this.props.group.groupName || '';
-        let usersInGroup = this.props.usersInGroup.map((item, index) =>
+        let groupName = this.props.group.groupName;
+        let usersInGroup = this.props.usersInGroup.map((user, index) =>
             <li key={index.toString()}>
-                <a href={`/users/${item.userId}`}>{item.username}</a>
-                <button onClick={() => this.removeUser(item.userId)}>Remove User</button>
+                <a href={`/users/${user.userId}`}>{user.username}</a>
+                <button onClick={() => this.removeUser(user.userId)}>Remove User</button>
             </li>
         );
-        return (
+        let availableUsers = this.props.availableUsers;
 
+        return (
             <div>
                 <h2>Group</h2>
                 <input
@@ -43,13 +47,18 @@ class Groups extends Component {
                     value={groupName}
                     onChange={this.update}
                 />
-                <FieldError
-                    fieldErrors={this.props.fieldErrors}
-                    field="groupName"
-                />
+                <select
+                    name="userId"
+                    onChange={this.update}>
+                    <option>-- select user --</option>
+                    {availableUsers.map(user =>
+                        <option key={user.userId} value={user.userId}>{user.username}</option>
+                    )}
+                </select>
+                <button onClick={this.addUser}>Add User</button>
                 <button onClick={this.del}>Delete</button>
                 <button onClick={this.back}>Back</button>
-                <h2>Member of groups</h2>
+                <h2>Members of group</h2>
                 <ul>
                     {usersInGroup}
                 </ul>

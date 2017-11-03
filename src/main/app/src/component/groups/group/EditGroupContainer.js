@@ -2,37 +2,36 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import EditGroup from './EditGroup';
 import {addUser, deleteGroup, getGroup, getUsersForGroup, removeUser, setGroup} from '../../../action/groupAction';
+import {getUsers} from "../../../action/userAction";
 
 class EditGroupContainer extends Component {
 
     componentWillMount() {
-        this.props.getGroup(this.getGroupId());
-        this.props.getUsersForGroup(this.getGroupId());
+        let groupId = parseInt(this.props.match.params.id, 10);
+        this.props.getGroup(groupId);
+        this.props.getUsersForGroup(groupId);
+        this.props.getUsers();
     }
 
-    setGroup = (group) => {
-        this.props.setGroup(group);
-    };
+    filterOutAvailableUsers() {
+        let userIds = this.props.usersInGroup.map(user => user.userId);
 
-    deleteGroup = (groupId) => {
-        this.props.deleteGroup(groupId);
-    };
-
-    getGroupId = () => {
-        return parseInt(this.props.match.params.id, 10);
-    };
+        return this.props.users.filter(user =>
+            userIds.indexOf(user.userId) === -1
+        );
+    }
 
     render() {
-        let groupId = this.getGroupId();
+        let availableUsers = this.filterOutAvailableUsers();
+
         return (
             <EditGroup
-                groupId={groupId}
                 group={this.props.group}
                 usersInGroup={this.props.usersInGroup}
-                fieldErrors={this.props.fieldErrors}
+                availableUsers={availableUsers}
                 callbacks={{
-                    setGroup: this.setGroup,
-                    deleteGroup: this.deleteGroup,
+                    setGroup: this.props.setGroup,
+                    deleteGroup: this.props.deleteGroup,
                     addUser: this.props.addUser,
                     removeUser: this.props.removeUser,
                 }}
@@ -60,6 +59,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         removeUser: (groupId, userId) => {
             dispatch(removeUser(groupId, userId))
+        },
+        getUsers: () => {
+            dispatch(getUsers());
         }
     }
 };
@@ -68,7 +70,7 @@ const mapStateToProps = (state) => {
     return {
         group: state.groupData.group || {},
         usersInGroup: state.groupData.usersInGroup || [],
-        fieldErrors: state.groupData.fieldErrors || {}
+        users: state.userData.users || []
     }
 };
 

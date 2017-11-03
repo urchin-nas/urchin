@@ -120,7 +120,7 @@ export const removeUser = (groupId, userId) => (dispatch) => {
                 data: json
             });
             notifySuccess("Success", "User was removed from group");
-            dispatch(getUsersForGroup(userId));
+            dispatch(getUsersForGroup(groupId));
         }, error => (
             notifyBackendError(error)
         ))
