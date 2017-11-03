@@ -1,7 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import {mount} from 'enzyme'
 import Home from "./Home";
 
-it('renders without crashing', () => {
-    ReactDOM.render(<Home/>, document.createElement('div'));
+describe('Home', () => {
+
+    it('renders without crashing', () => {
+        expect(mount(<Home/>).length).toEqual(1);
+    });
 });

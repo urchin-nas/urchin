@@ -1,7 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import {mount} from 'enzyme'
 import MainMenu from "./MainMenu";
 
-it('renders without crashing', () => {
-    ReactDOM.render(<MainMenu/>, document.createElement('div'));
+describe('MainMenu', () => {
+
+    it('renders without crashing', () => {
+        expect(mount(<MainMenu/>).length).toEqual(1);
+    });
 });

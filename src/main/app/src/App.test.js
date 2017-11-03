@@ -1,7 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import {mount} from 'enzyme'
 import App from './App';
 
-it('renders without crashing', () => {
-    ReactDOM.render(<App/>, document.createElement('div'));
+describe('App', () => {
+
+    it('renders without crashing', () => {
+        expect(mount(<App/>).length).toEqual(1);
+    });
 });
