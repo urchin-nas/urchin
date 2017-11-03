@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import NewUser from "./NewUser";
 import {createUser, setUser} from "../../../action/userAction";
 
-class NewUserContainer extends Component {
+export class NewUserContainer extends Component {
 
     render() {
         return (

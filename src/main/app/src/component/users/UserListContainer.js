@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {getUsers} from '../../action/userAction'
 import UserList from "./UserList";
 
-class UserListContainer extends Component {
+export class UserListContainer extends Component {
 
     componentWillMount() {
         this.props.getUsers();

@@ -4,7 +4,7 @@ import EditUser from "./EditUser";
 import {addGroup, deleteUser, getGroupsForUser, getUser, removeGroup, setUser} from "../../../action/userAction";
 import {getGroups} from "../../../action/groupAction";
 
-class UserContainer extends Component {
+export class EditUserContainer extends Component {
 
     componentWillMount() {
         let userId = parseInt(this.props.match.params.id, 10);
@@ -74,4 +74,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(EditUserContainer)

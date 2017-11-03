@@ -6,12 +6,12 @@ describe('EditGroupContainer', () => {
 
     it('renders without crashing', () => {
         let props = {
-            group: {},
             match: {
                 params: {
                     id: 0
                 }
             },
+            group: {},
             usersInGroup: [],
             users: [],
             getGroup: jest.fn(),
