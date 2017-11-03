@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewGroup match snapshot 1`] = `
+<div>
+  <h2>
+    Group
+  </h2>
+  <input
+    name="groupName"
+    onChange={[Function]}
+    type="text"
+    value=""
+  />
+  <FieldError
+    field="groupName"
+  />
+  <button
+    onClick={[Function]}
+  >
+    Create Group
+  </button>
+  <button
+    onClick={[Function]}
+  >
+    Cancel
+  </button>
+</div>
+`;

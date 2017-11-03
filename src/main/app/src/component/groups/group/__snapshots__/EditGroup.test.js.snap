@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditGroup match snapshot 1`] = `
+<div>
+  <h2>
+    Group
+  </h2>
+  <input
+    name="groupName"
+    onChange={[Function]}
+    type="text"
+  />
+  <select
+    name="userId"
+    onChange={[Function]}
+  >
+    <option>
+      -- select user --
+    </option>
+  </select>
+  <button
+    onClick={[Function]}
+  >
+    Add User
+  </button>
+  <button
+    onClick={[Function]}
+  >
+    Delete
+  </button>
+  <button
+    onClick={[Function]}
+  >
+    Back
+  </button>
+  <h2>
+    Members of group
+  </h2>
+  <ul />
+</div>
+`;

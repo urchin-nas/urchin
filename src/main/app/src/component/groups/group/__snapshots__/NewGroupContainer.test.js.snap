@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewGroupContainer match snapshot 1`] = `
+<NewGroup
+  callbacks={
+    Object {
+      "createGroup": undefined,
+      "setGroup": undefined,
+    }
+  }
+  group={Object {}}
+/>
+`;

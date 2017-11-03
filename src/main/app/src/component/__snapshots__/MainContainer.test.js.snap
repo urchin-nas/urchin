@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainContainer match snapshot 1`] = `
+<div>
+  <MainMenu />
+  <Switch>
+    <Route
+      component={[Function]}
+      exact={true}
+      path="/"
+    />
+    <Route
+      component={[Function]}
+      path="/users"
+    />
+    <Route
+      component={[Function]}
+      path="/groups"
+    />
+    <Redirect
+      push={false}
+      to="/"
+    />
+  </Switch>
+</div>
+`;

@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewUser match snapshot 1`] = `
+<div>
+  <h2>
+    User
+  </h2>
+  <input
+    name="username"
+    onChange={[Function]}
+    placeholder="username"
+    type="text"
+    value=""
+  />
+  <FieldError
+    field="username"
+  />
+  <input
+    name="password"
+    onChange={[Function]}
+    placeholder="password"
+    type="password"
+    value=""
+  />
+  <FieldError
+    field="password"
+  />
+  <button
+    onClick={[Function]}
+  >
+    Create User
+  </button>
+  <button
+    onClick={[Function]}
+  >
+    Cancel
+  </button>
+</div>
+`;

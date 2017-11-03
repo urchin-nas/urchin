@@ -1,12 +1,19 @@
 import React from 'react';
-import {mount} from 'enzyme'
+import {mount, shallow} from 'enzyme'
+import toJson from 'enzyme-to-json';
 import {GroupListContainer} from "./GroupListContainer";
 
 describe('GroupListContainer', () => {
 
-    let getGroups = jest.fn();
+    let props = {
+        getGroups: jest.fn(),
+    };
 
     it('renders without crashing', () => {
-        expect(mount(<GroupListContainer getGroups={getGroups}/>).length).toEqual(1);
+        expect(mount(<GroupListContainer {...props}/>).length).toEqual(1);
+    });
+
+    it('match snapshot', () => {
+        expect(toJson(shallow(<GroupListContainer {...props}/>))).toMatchSnapshot();
     });
 });

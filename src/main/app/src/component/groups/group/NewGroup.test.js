@@ -1,14 +1,19 @@
 import React from 'react';
-import {mount} from 'enzyme'
+import {mount, shallow} from 'enzyme'
+import toJson from 'enzyme-to-json';
 import NewGroup from "./NewGroup";
 
 describe('NewGroup', () => {
 
-    it('renders without crashing', () => {
-        let props = {
-            group: {},
-        };
+    let props = {
+        group: {},
+    };
 
+    it('renders without crashing', () => {
         expect(mount(<NewGroup {...props}/>).length).toEqual(1);
+    });
+
+    it('match snapshot', () => {
+        expect(toJson(shallow(<NewGroup {...props}/>))).toMatchSnapshot();
     });
 });

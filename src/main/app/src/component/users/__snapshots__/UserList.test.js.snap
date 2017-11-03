@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`UserList match snapshot 1`] = `
+<div>
+  <h2>
+    userlist
+  </h2>
+  <ul />
+  <a
+    href="/users/new"
+  >
+    new user
+  </a>
+</div>
+`;

@@ -1,15 +1,20 @@
 import React from 'react';
-import {mount} from 'enzyme'
-import {EditGroupContainer} from "./EditGroupContainer";
+import {mount, shallow} from 'enzyme'
+import toJson from 'enzyme-to-json';
 import {NewGroupContainer} from "./NewGroupContainer";
 
-describe('EditGroupContainer', () => {
+describe('NewGroupContainer', () => {
+
+    let props = {
+        group: {},
+    };
 
     it('renders without crashing', () => {
-        let props = {
-            group: {},
-        };
 
         expect(mount(<NewGroupContainer {...props}/>).length).toEqual(1);
+    });
+
+    it('match snapshot', () => {
+        expect(toJson(shallow(<NewGroupContainer {...props}/>))).toMatchSnapshot();
     });
 });

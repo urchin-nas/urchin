@@ -1,16 +1,21 @@
 import React from 'react';
-import {mount} from 'enzyme'
+import {mount, shallow} from 'enzyme'
+import toJson from 'enzyme-to-json';
 import EditGroup from "./EditGroup";
 
 describe('EditGroup', () => {
 
-    it('renders without crashing', () => {
-        let props = {
-            group: {},
-            usersInGroup: [],
-            availableUsers: []
-        };
+    let props = {
+        group: {},
+        usersInGroup: [],
+        availableUsers: []
+    };
 
+    it('renders without crashing', () => {
         expect(mount(<EditGroup {...props}/>).length).toEqual(1);
+    });
+
+    it('match snapshot', () => {
+        expect(toJson(shallow(<EditGroup {...props}/>))).toMatchSnapshot();
     });
 });

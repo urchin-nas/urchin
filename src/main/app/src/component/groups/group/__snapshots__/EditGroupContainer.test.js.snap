@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditGroupContainer match snapshot 1`] = `
+<Groups
+  availableUsers={Array []}
+  callbacks={
+    Object {
+      "addUser": undefined,
+      "deleteGroup": undefined,
+      "removeUser": undefined,
+      "setGroup": undefined,
+    }
+  }
+  group={Object {}}
+  usersInGroup={Array []}
+/>
+`;

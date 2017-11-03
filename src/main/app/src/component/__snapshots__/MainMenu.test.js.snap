@@ -1,0 +1,28 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MainMenu match snapshot 1`] = `
+<div>
+  MainMenu
+  <ul>
+    <a
+      href="/home"
+    >
+      Home
+    </a>
+  </ul>
+  <ul>
+    <a
+      href="/users"
+    >
+      Users
+    </a>
+  </ul>
+  <ul>
+    <a
+      href="/groups"
+    >
+      Groups
+    </a>
+  </ul>
+</div>
+`;

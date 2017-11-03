@@ -1,6 +1,7 @@
 import React from 'react';
-import {mount} from 'enzyme'
+import {mount, shallow} from 'enzyme'
 import {Router} from "react-router-dom";
+import toJson from 'enzyme-to-json';
 import history from '../../history'
 import Users from "./Users";
 
@@ -13,5 +14,9 @@ describe('Users', () => {
             </Router>
         );
         expect(component.length).toEqual(1);
+    });
+
+    it('match snapshot', () => {
+        expect(toJson(shallow(<Users/>))).toMatchSnapshot();
     });
 });

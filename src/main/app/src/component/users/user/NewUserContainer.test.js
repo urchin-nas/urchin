@@ -1,14 +1,19 @@
 import React from 'react';
-import {mount} from 'enzyme'
+import {mount, shallow} from 'enzyme'
+import toJson from 'enzyme-to-json';
 import {NewUserContainer} from "./NewUserContainer";
 
 describe('NewUserContainer', () => {
 
-    it('renders without crashing', () => {
-        let props = {
-            user: {},
-        };
+    let props = {
+        user: {},
+    };
 
+    it('renders without crashing', () => {
         expect(mount(<NewUserContainer {...props}/>).length).toEqual(1);
+    });
+
+    it('match snapshot', () => {
+        expect(toJson(shallow(<NewUserContainer {...props}/>))).toMatchSnapshot();
     });
 });
