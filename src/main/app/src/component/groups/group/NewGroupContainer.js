@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import NewGroup from './NewGroup';
 import {createGroup, setGroup} from '../../../action/groupAction';
 
-class NewGroupContainer extends Component {
+export class NewGroupContainer extends Component {
 
     render() {
         return (

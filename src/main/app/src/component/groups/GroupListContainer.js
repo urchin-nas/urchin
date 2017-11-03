@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {getGroups} from '../../action/groupAction'
 import GroupList from "./GroupList";
 
-class GroupListContainer extends Component {
+export class GroupListContainer extends Component {
 
     componentWillMount() {
         this.props.getGroups();

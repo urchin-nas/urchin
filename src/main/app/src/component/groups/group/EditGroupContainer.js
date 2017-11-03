@@ -4,7 +4,7 @@ import EditGroup from './EditGroup';
 import {addUser, deleteGroup, getGroup, getUsersForGroup, removeUser, setGroup} from '../../../action/groupAction';
 import {getUsers} from "../../../action/userAction";
 
-class EditGroupContainer extends Component {
+export class EditGroupContainer extends Component {
 
     componentWillMount() {
         let groupId = parseInt(this.props.match.params.id, 10);
