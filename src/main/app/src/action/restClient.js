@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-fetch'
 
-let resolveResponse = (response) => {
+const resolveResponse = (response) => {
     return response.json().then(json => {
         if (response.status >= 400) {
             return Promise.reject(json);
