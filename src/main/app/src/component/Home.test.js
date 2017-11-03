@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import Home from "./Home";
 
 it('renders without crashing', () => {
-    ReactDOM.render(<App/>, document.createElement('div'));
+    ReactDOM.render(<Home/>, document.createElement('div'));
 });

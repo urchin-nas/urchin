@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import MainMenu from "./MainMenu";
 
 it('renders without crashing', () => {
-    ReactDOM.render(<App/>, document.createElement('div'));
+    ReactDOM.render(<MainMenu/>, document.createElement('div'));
 });

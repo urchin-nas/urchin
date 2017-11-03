@@ -4,7 +4,8 @@ class FieldError extends Component {
 
     render() {
         let field = this.props.field;
-        let errorMessages = this.props.fieldErrors[field] ? (this.props.fieldErrors[field].map((item, index) =>
+        let fieldErrors = this.props.fieldErrors || {};
+        let errorMessages = fieldErrors[field] ? (fieldErrors[field].map((item, index) =>
             <div className="fieldError" key={index.toString()}>
                 {item}
             </div>
