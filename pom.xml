@@ -125,6 +125,9 @@
                         <fileset>
                             <directory>src/main/app/etc</directory>
                         </fileset>
+                        <fileset>
+                            <directory>src/main/app/coverage</directory>
+                        </fileset>
                     </filesets>
                 </configuration>
             </plugin>
@@ -163,6 +166,16 @@
                         </goals>
                         <configuration>
                             <arguments>run build</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>test -- --coverage</arguments>
                         </configuration>
                     </execution>
                 </executions>
