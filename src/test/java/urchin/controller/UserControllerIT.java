@@ -62,7 +62,7 @@ public class UserControllerIT extends TestApplication {
     @Test
     public void getUser() {
         ResponseEntity<IdDto> addUserResponse = addUserRequest(addUserDto);
-        int userId = addUserResponse.getBody().getId();
+        Integer userId = addUserResponse.getBody().getId();
 
         ResponseEntity<UserDto> getUserResponse = getUserRequest(userId);
 

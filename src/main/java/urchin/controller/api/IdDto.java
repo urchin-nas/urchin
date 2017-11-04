@@ -10,5 +10,5 @@ import org.immutables.value.Value;
 public interface IdDto {
 
     @Value.Parameter
-    int getId();
+    Integer getId();
 }
