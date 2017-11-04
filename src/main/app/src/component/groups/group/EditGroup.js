@@ -41,12 +41,7 @@ class Groups extends Component {
         return (
             <div>
                 <h2>Group</h2>
-                <input
-                    name="groupName"
-                    type="text"
-                    value={groupName}
-                    onChange={this.update}
-                />
+                <div>name: {groupName}</div>
                 <select
                     name="userId"
                     onChange={this.update}>
