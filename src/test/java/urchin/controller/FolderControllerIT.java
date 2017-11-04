@@ -56,7 +56,7 @@ public class FolderControllerIT extends TestApplication {
     }
 
     @Test
-    public void createEncryptedFoldersAndGetFolderDetailsForFolders() {
+    public void createEncryptedFoldersAndGetFolderDetailsForAllFolders() {
         ResponseEntity<PassphraseDto> createResponse_1 = postCreateRequest(ImmutableFolderDto.of(folder_1.toAbsolutePath().toString()));
         ResponseEntity<PassphraseDto> createResponse_2 = postCreateRequest(ImmutableFolderDto.of(folder_2.toAbsolutePath().toString()));
 
