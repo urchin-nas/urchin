@@ -19,6 +19,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.nio.file.Files.exists;
 import static junit.framework.TestCase.*;
@@ -51,6 +53,25 @@ public class FolderControllerIT extends TestApplication {
         encryptedFolder_1 = getEncryptedFolder(folder_1);
         encryptedFolder_2 = getEncryptedFolder(folder_2);
         virtualFolder = Paths.get(tmpFolderPath + FOLDER_VIRTUAL_NAME);
+    }
+
+    @Test
+    public void createEncryptedFoldersAndGetFolderDetailsForFolders() {
+        ResponseEntity<PassphraseDto> createResponse_1 = postCreateRequest(ImmutableFolderDto.of(folder_1.toAbsolutePath().toString()));
+        ResponseEntity<PassphraseDto> createResponse_2 = postCreateRequest(ImmutableFolderDto.of(folder_2.toAbsolutePath().toString()));
+
+        assertEquals(HttpStatus.OK, createResponse_1.getStatusCode());
+        assertEquals(HttpStatus.OK, createResponse_2.getStatusCode());
+
+        ResponseEntity<FolderDetailsDto[]> getFoldersResponse = getFoldersRequest();
+
+        assertEquals(HttpStatus.OK, getFoldersResponse.getStatusCode());
+        assertTrue(getFoldersResponse.getBody().length > 0);
+        List<String> folders = Arrays.stream(getFoldersResponse.getBody())
+                .map(FolderDetailsDto::getFolder)
+                .collect(Collectors.toList());
+        assertTrue(folders.contains(folder_1.toAbsolutePath().toString()));
+        assertTrue(folders.contains(folder_2.toAbsolutePath().toString()));
     }
 
     @Test
@@ -142,6 +163,11 @@ public class FolderControllerIT extends TestApplication {
         assertFalse(exists(virtualFolder));
         assertTrue(folderContainsFile(folder_1, FILENAME) || folderContainsFile(folder_2, FILENAME));
     }
+
+    private ResponseEntity<FolderDetailsDto[]> getFoldersRequest() {
+        return testRestTemplate.getForEntity(discoverControllerPath(), FolderDetailsDto[].class);
+    }
+
 
     private ResponseEntity<PassphraseDto> postCreateRequest(FolderDto folderDto) {
         return testRestTemplate.postForEntity(discoverControllerPath() + "/create", folderDto, PassphraseDto.class);

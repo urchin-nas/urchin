@@ -5,10 +5,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
-import urchin.model.folder.EncryptedFolder;
-import urchin.model.folder.FolderSettings;
-import urchin.model.folder.ImmutableEncryptedFolder;
-import urchin.model.folder.ImmutableFolderSettings;
+import urchin.model.folder.*;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -47,14 +44,14 @@ public class FolderSettingsRepository {
         return jdbcTemplate.query(SELECT_FOLDER_SETTINGS, (resultSet, i) -> folderSettingsMapper(resultSet));
     }
 
-    public void removeFolderSettings(int id) {
-        LOG.info("Removing folder settings for id {}", id);
-        jdbcTemplate.update(DELETE_FOLDER_SETTINGS, id);
+    public void removeFolderSettings(FolderId folderId) {
+        LOG.info("Removing folder settings for id {}", folderId);
+        jdbcTemplate.update(DELETE_FOLDER_SETTINGS, folderId.getValue());
     }
 
     private FolderSettings folderSettingsMapper(ResultSet resultSet) throws SQLException {
         return ImmutableFolderSettings.builder()
-                .id(resultSet.getInt("id"))
+                .folderId(FolderId.of(resultSet.getInt("id")))
                 .folder(Paths.get(resultSet.getString("folder")))
                 .encryptedFolder(ImmutableEncryptedFolder.of(Paths.get(resultSet.getString("encrypted_folder"))))
                 .isAutoMount(resultSet.getBoolean("auto_mount"))

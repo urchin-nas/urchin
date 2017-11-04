@@ -39,13 +39,13 @@ public class FolderSettingsRepositoryIT extends TestApplication {
                 .collect(Collectors.toList());
         assertEquals(1, matchedFolderSettings.size());
         FolderSettings readFolderSettings = matchedFolderSettings.get(0);
-        assertTrue(readFolderSettings.getId() > 0);
+        assertTrue(readFolderSettings.getFolderId().getValue() > 0);
         assertEquals(folder, readFolderSettings.getFolder());
         assertEquals(encryptedFolder, readFolderSettings.getEncryptedFolder());
         assertTrue(now.isBefore(readFolderSettings.getCreated()) || now.isEqual(readFolderSettings.getCreated()));
         assertFalse(readFolderSettings.isAutoMount());
 
-        folderSettingsRepository.removeFolderSettings(readFolderSettings.getId());
+        folderSettingsRepository.removeFolderSettings(readFolderSettings.getFolderId());
 
         assertEquals(0, folderSettingsRepository.getAllFolderSettings().stream()
                 .filter(folderSetting -> folderSetting.getFolder().startsWith(workDir))

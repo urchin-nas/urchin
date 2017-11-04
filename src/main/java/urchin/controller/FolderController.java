@@ -10,6 +10,7 @@ import urchin.controller.api.ImmutableMessageDto;
 import urchin.controller.api.MessageDto;
 import urchin.controller.api.folder.*;
 import urchin.model.folder.EncryptedFolder;
+import urchin.model.folder.FolderSettings;
 import urchin.model.folder.ImmutablePassphrase;
 import urchin.model.folder.Passphrase;
 import urchin.service.FolderService;
@@ -22,6 +23,8 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static urchin.controller.api.mapper.FolderMapper.mapToFolderDetailsDtos;
+
 @RestController
 @RequestMapping("api/folders")
 public class FolderController {
@@ -31,6 +34,12 @@ public class FolderController {
     @Autowired
     FolderController(FolderService folderService) {
         this.folderService = folderService;
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public List<FolderDetailsDto> getUsers() {
+        List<FolderSettings> folders = folderService.getFolders();
+        return mapToFolderDetailsDtos(folders);
     }
 
     @RequestMapping(value = "create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

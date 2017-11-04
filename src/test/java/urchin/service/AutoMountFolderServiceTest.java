@@ -6,10 +6,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import urchin.cli.FolderCli;
-import urchin.model.folder.FolderSettings;
-import urchin.model.folder.ImmutableEncryptedFolder;
-import urchin.model.folder.ImmutableFolderSettings;
-import urchin.model.folder.Passphrase;
+import urchin.model.folder.*;
 import urchin.repository.PassphraseRepository;
 import urchin.util.PassphraseGenerator;
 
@@ -23,7 +20,7 @@ import static org.mockito.Mockito.when;
 public class AutoMountFolderServiceTest {
 
     private static final FolderSettings FOLDER_SETTINGS = ImmutableFolderSettings.builder()
-            .id(1)
+            .folderId(FolderId.of(1))
             .folder(Paths.get("/some/path"))
             .encryptedFolder(ImmutableEncryptedFolder.of(Paths.get("/some/.path")))
             .created(LocalDateTime.now())

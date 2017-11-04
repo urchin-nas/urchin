@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import urchin.cli.FolderCli;
 import urchin.model.folder.EncryptedFolder;
+import urchin.model.folder.FolderSettings;
 import urchin.model.folder.Passphrase;
 import urchin.repository.FolderSettingsRepository;
 
@@ -110,5 +111,9 @@ public class FolderService {
         } else {
             throw new IllegalArgumentException("At least one folder in folder pair already exist");
         }
+    }
+
+    public List<FolderSettings> getFolders() {
+        return folderSettingsRepository.getAllFolderSettings();
     }
 }

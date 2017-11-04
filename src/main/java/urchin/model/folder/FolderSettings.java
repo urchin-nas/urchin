@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 @Value.Immutable
 public interface FolderSettings {
 
-    int getId();
+    FolderId getFolderId();
 
     Path getFolder();
 
