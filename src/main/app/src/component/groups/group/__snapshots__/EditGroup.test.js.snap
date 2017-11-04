@@ -5,11 +5,9 @@ exports[`EditGroup match snapshot 1`] = `
   <h2>
     Group
   </h2>
-  <input
-    name="groupName"
-    onChange={[Function]}
-    type="text"
-  />
+  <div>
+    name: 
+  </div>
   <select
     name="userId"
     onChange={[Function]}
