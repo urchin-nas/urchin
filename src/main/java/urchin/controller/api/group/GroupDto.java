@@ -9,7 +9,7 @@ import org.immutables.value.Value;
 @JsonDeserialize(as = ImmutableGroupDto.class)
 public interface GroupDto {
 
-    int getGroupId();
+    Integer getGroupId();
 
     String getGroupName();
 

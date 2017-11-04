@@ -69,7 +69,7 @@ public class GroupControllerIT extends TestApplication {
                 .filter(groupDto -> groupDto.getGroupName().equals(addGroupDto.getGroupName()))
                 .collect(Collectors.toList());
         assertEquals(1, groupDtos.size());
-        assertEquals(groupId.getValue().intValue(), groupDtos.get(0).getGroupId());
+        assertEquals(groupId.getValue(), groupDtos.get(0).getGroupId());
         assertEquals(addGroupDto.getGroupName(), groupDtos.get(0).getGroupName());
 
         //Add user to group
@@ -98,7 +98,7 @@ public class GroupControllerIT extends TestApplication {
     @Test
     public void getGroup() {
         ResponseEntity<IdDto> addGroupResponse = addGroupRequest(addGroupDto);
-        int groupId = addGroupResponse.getBody().getId();
+        Integer groupId = addGroupResponse.getBody().getId();
 
         ResponseEntity<GroupDto> getGroupResponse = getGroupRequest(groupId);
 
