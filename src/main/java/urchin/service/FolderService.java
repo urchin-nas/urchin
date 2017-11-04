@@ -6,9 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import urchin.cli.FolderCli;
-import urchin.model.folder.EncryptedFolder;
-import urchin.model.folder.FolderSettings;
-import urchin.model.folder.Passphrase;
+import urchin.model.folder.*;
 import urchin.repository.FolderSettingsRepository;
 
 import java.io.IOException;
@@ -18,7 +16,6 @@ import java.util.List;
 
 import static java.nio.file.Files.createDirectories;
 import static urchin.util.EncryptedFolderUtil.getEncryptedFolder;
-import static urchin.util.EncryptedFolderUtil.getFolder;
 import static urchin.util.PassphraseGenerator.generateEcryptfsPassphrase;
 
 @Service
@@ -36,20 +33,24 @@ public class FolderService {
     }
 
     @Transactional
-    public Passphrase createAndMountEncryptedFolder(Path folder) throws IOException {
+    public CreatedFolder createAndMountEncryptedFolder(Path folder) throws IOException {
         EncryptedFolder encryptedFolder = getEncryptedFolder(folder);
         createEncryptionFolderPair(folder, encryptedFolder);
         Passphrase passphrase = generateEcryptfsPassphrase();
-        folderSettingsRepository.saveFolderSettings(encryptedFolder, folder);
+        FolderId folderId = folderSettingsRepository.saveFolderSettings(encryptedFolder, folder);
         folderCli.mountEncryptedFolder(folder, encryptedFolder, passphrase);
-        return passphrase;
+
+        return ImmutableCreatedFolder.builder()
+                .folderId(folderId)
+                .passphrase(passphrase)
+                .build();
     }
 
     public void mountEncryptedFolder(EncryptedFolder encryptedFolder, Passphrase passphrase) throws IOException {
         if (!Files.exists(encryptedFolder.getPath())) {
             throw new IllegalArgumentException(String.format("Encrypted folder %s does not exist", encryptedFolder.getPath()));
         }
-        Path folder = getFolder(encryptedFolder);
+        Path folder = encryptedFolder.toRegularFolder();
         if (!Files.exists(folder) || isEmpty(folder)) {
             Files.createDirectories(folder);
             folderCli.mountEncryptedFolder(folder, encryptedFolder, passphrase);
@@ -114,6 +115,10 @@ public class FolderService {
     }
 
     public List<FolderSettings> getFolders() {
-        return folderSettingsRepository.getAllFolderSettings();
+        return folderSettingsRepository.getFoldersSettings();
+    }
+
+    public FolderSettings getFolder(FolderId folderId) {
+        return folderSettingsRepository.getFolderSettings(folderId);
     }
 }

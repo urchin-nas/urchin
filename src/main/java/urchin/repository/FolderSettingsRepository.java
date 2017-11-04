@@ -3,14 +3,21 @@ package urchin.repository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import urchin.exception.FolderNotFoundException;
 import urchin.model.folder.*;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -18,30 +25,45 @@ import java.util.List;
 public class FolderSettingsRepository {
 
     private static final Logger LOG = LoggerFactory.getLogger(FolderSettingsRepository.class);
-    private static final String INSERT_FOLDER_SETTINGS = "INSERT INTO folder_settings(encrypted_folder, folder, created, auto_mount) VALUES(?,?,?,?)";
-    private static final String SELECT_FOLDER_SETTINGS = "SELECT * FROM folder_settings";
+    private static final String INSERT_FOLDER_SETTINGS = "INSERT INTO folder_settings(encrypted_folder, folder, created, auto_mount) VALUES(:encryptedFolder,:folder,:created,:autoMount)";
+    private static final String SELECT_FOLDER_SETTINGS = "SELECT * FROM folder_settings WHERE id = ?";
+    private static final String SELECT_FOLDERS_SETTINGS = "SELECT * FROM folder_settings";
     private static final String DELETE_FOLDER_SETTINGS = "DELETE FROM folder_settings WHERE id = ?";
 
     private final JdbcTemplate jdbcTemplate;
+    private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
-    public FolderSettingsRepository(JdbcTemplate jdbcTemplate) {
+    public FolderSettingsRepository(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
+        this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
-    public void saveFolderSettings(EncryptedFolder encryptedFolder, Path folder) {
+    public FolderSettings getFolderSettings(FolderId folderId) {
+        try {
+            return jdbcTemplate.queryForObject(SELECT_FOLDER_SETTINGS, new Object[]{folderId.getValue()}, (resultSet, i) -> folderSettingsMapper(resultSet));
+        } catch (EmptyResultDataAccessException e) {
+            throw new FolderNotFoundException("Invalid folderId " + folderId);
+        }
+    }
+
+    public List<FolderSettings> getFoldersSettings() {
+        return jdbcTemplate.query(SELECT_FOLDERS_SETTINGS, (resultSet, i) -> folderSettingsMapper(resultSet));
+    }
+
+    public FolderId saveFolderSettings(EncryptedFolder encryptedFolder, Path folder) {
         LOG.info("Saving new folder settings for folder {}", folder);
-        jdbcTemplate.update(
-                INSERT_FOLDER_SETTINGS,
-                encryptedFolder.getPath().toAbsolutePath().toString(),
-                folder.toAbsolutePath().toString(),
-                new Date(),
-                false
-        );
-    }
+        KeyHolder keyHolder = new GeneratedKeyHolder();
 
-    public List<FolderSettings> getAllFolderSettings() {
-        return jdbcTemplate.query(SELECT_FOLDER_SETTINGS, (resultSet, i) -> folderSettingsMapper(resultSet));
+        MapSqlParameterSource parameters = new MapSqlParameterSource()
+                .addValue("encryptedFolder", encryptedFolder.getPath().toAbsolutePath().toString())
+                .addValue("folder", folder.toAbsolutePath().toString())
+                .addValue("created", new Timestamp(new Date().getTime()))
+                .addValue("autoMount", false);
+
+        namedParameterJdbcTemplate.update(INSERT_FOLDER_SETTINGS, parameters, keyHolder);
+
+        return FolderId.of(keyHolder.getKey().intValue());
     }
 
     public void removeFolderSettings(FolderId folderId) {

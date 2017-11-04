@@ -1,10 +1,12 @@
 package urchin.repository;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 import urchin.model.folder.EncryptedFolder;
+import urchin.model.folder.FolderId;
 import urchin.model.folder.FolderSettings;
-import urchin.model.folder.ImmutableEncryptedFolder;
 import urchin.testutil.TestApplication;
 
 import java.nio.file.Path;
@@ -14,28 +16,35 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
+import static urchin.util.EncryptedFolderUtil.getEncryptedFolder;
 
 
 public class FolderSettingsRepositoryIT extends TestApplication {
 
+    @Rule
+    public TemporaryFolder temporaryFolder = new TemporaryFolder();
+
     private FolderSettingsRepository folderSettingsRepository;
+
+    private Path folder;
+    private EncryptedFolder encryptedFolder;
+    private LocalDateTime now;
 
     @Before
     public void setup() {
-        folderSettingsRepository = new FolderSettingsRepository(jdbcTemplate);
+        now = LocalDateTime.now();
+        String tmpFolderPath = temporaryFolder.getRoot().getAbsolutePath();
+        folder = Paths.get(tmpFolderPath + "/folder");
+        encryptedFolder = getEncryptedFolder(folder);
+        folderSettingsRepository = new FolderSettingsRepository(jdbcTemplate, namedParameterJdbcTemplate);
     }
 
     @Test
     public void crd() {
-        LocalDateTime now = LocalDateTime.now();
-        String workDir = System.getProperty("user.dir");
-        Path folder = Paths.get(workDir + "/some/path");
-        EncryptedFolder encryptedFolder = ImmutableEncryptedFolder.of(Paths.get(workDir + "/some/.path"));
-
         folderSettingsRepository.saveFolderSettings(encryptedFolder, folder);
 
-        List<FolderSettings> matchedFolderSettings = folderSettingsRepository.getAllFolderSettings().stream()
-                .filter(folderSetting -> folderSetting.getFolder().startsWith(workDir))
+        List<FolderSettings> matchedFolderSettings = folderSettingsRepository.getFoldersSettings().stream()
+                .filter(folderSetting -> folderSetting.getFolder().toAbsolutePath().toString().equals(folder.toAbsolutePath().toString()))
                 .collect(Collectors.toList());
         assertEquals(1, matchedFolderSettings.size());
         FolderSettings readFolderSettings = matchedFolderSettings.get(0);
@@ -47,9 +56,33 @@ public class FolderSettingsRepositoryIT extends TestApplication {
 
         folderSettingsRepository.removeFolderSettings(readFolderSettings.getFolderId());
 
-        assertEquals(0, folderSettingsRepository.getAllFolderSettings().stream()
-                .filter(folderSetting -> folderSetting.getFolder().startsWith(workDir))
+        assertEquals(0, folderSettingsRepository.getFoldersSettings().stream()
+                .filter(folderSetting -> folderSetting.getFolder().toAbsolutePath().toString().equals(folder.toAbsolutePath().toString()))
                 .count());
+    }
+
+    @Test
+    public void getFolders() {
+        folderSettingsRepository.saveFolderSettings(encryptedFolder, folder);
+
+        List<FolderSettings> foldersSettings = folderSettingsRepository.getFoldersSettings();
+
+        assertTrue(foldersSettings.size() > 0);
+    }
+
+    @Test
+    public void getFolder() {
+        FolderId folderId = folderSettingsRepository.saveFolderSettings(encryptedFolder, folder);
+
+        FolderSettings folderSettings = folderSettingsRepository.getFolderSettings(folderId);
+
+        assertNotNull(folderSettings);
+        assertEquals(folderId, folderSettings.getFolderId());
+        assertEquals(encryptedFolder.getPath().toAbsolutePath(), folderSettings.getEncryptedFolder().getPath().toAbsolutePath());
+        assertEquals(folder.toAbsolutePath(), folderSettings.getFolder().toAbsolutePath());
+        assertTrue(now.isBefore(folderSettings.getCreated()) || now.isEqual(folderSettings.getCreated()));
+        assertFalse(folderSettings.isAutoMount());
+
     }
 
 }

@@ -5,10 +5,11 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.immutables.value.Value;
 
 @Value.Immutable
-@JsonSerialize(as = ImmutablePassphraseDto.class)
-@JsonDeserialize(as = ImmutablePassphraseDto.class)
-public interface PassphraseDto {
+@JsonSerialize(as = ImmutableCreatedFolderDto.class)
+@JsonDeserialize(as = ImmutableCreatedFolderDto.class)
+public interface CreatedFolderDto {
 
-    @Value.Parameter
+    Integer getId();
+
     String getPassphrase();
 }

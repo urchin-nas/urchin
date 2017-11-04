@@ -2,17 +2,11 @@ package urchin.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import urchin.controller.api.ImmutableMessageDto;
 import urchin.controller.api.MessageDto;
 import urchin.controller.api.folder.*;
-import urchin.model.folder.EncryptedFolder;
-import urchin.model.folder.FolderSettings;
-import urchin.model.folder.ImmutablePassphrase;
-import urchin.model.folder.Passphrase;
+import urchin.model.folder.*;
 import urchin.service.FolderService;
 import urchin.util.EncryptedFolderUtil;
 
@@ -23,6 +17,8 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static urchin.controller.api.mapper.CreatedFolderMapper.mapToCreatedFolderDto;
+import static urchin.controller.api.mapper.FolderMapper.mapToFolderDetailsDto;
 import static urchin.controller.api.mapper.FolderMapper.mapToFolderDetailsDtos;
 
 @RestController
@@ -37,15 +33,21 @@ public class FolderController {
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public List<FolderDetailsDto> getUsers() {
+    public List<FolderDetailsDto> getFolders() {
         List<FolderSettings> folders = folderService.getFolders();
         return mapToFolderDetailsDtos(folders);
     }
 
+    @RequestMapping(value = "{folderId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public FolderDetailsDto getFolder(@PathVariable int folderId) {
+        FolderId fid = FolderId.of(folderId);
+        return mapToFolderDetailsDto(folderService.getFolder(fid));
+    }
+
     @RequestMapping(value = "create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public PassphraseDto createEncryptedFolder(@Valid @RequestBody FolderDto folderDto) throws IOException {
-        Passphrase passphrase = folderService.createAndMountEncryptedFolder(Paths.get(folderDto.getFolder()));
-        return ImmutablePassphraseDto.of(passphrase.getValue());
+    public CreatedFolderDto createEncryptedFolder(@Valid @RequestBody FolderDto folderDto) throws IOException {
+        CreatedFolder createdFolder = folderService.createAndMountEncryptedFolder(Paths.get(folderDto.getFolder()));
+        return mapToCreatedFolderDto(createdFolder);
     }
 
     @RequestMapping(value = "mount", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)

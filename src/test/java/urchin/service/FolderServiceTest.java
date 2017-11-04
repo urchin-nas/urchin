@@ -10,9 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import urchin.cli.FolderCli;
-import urchin.model.folder.EncryptedFolder;
-import urchin.model.folder.ImmutableEncryptedFolder;
-import urchin.model.folder.Passphrase;
+import urchin.model.folder.*;
 import urchin.repository.FolderSettingsRepository;
 import urchin.util.EncryptedFolderUtil;
 
@@ -23,8 +21,7 @@ import java.nio.file.Paths;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyZeroInteractions;
+import static org.mockito.Mockito.*;
 import static urchin.util.EncryptedFolderUtil.getEncryptedFolder;
 import static urchin.util.PassphraseGenerator.generateEcryptfsPassphrase;
 
@@ -70,11 +67,12 @@ public class FolderServiceTest {
     @Test
     public void FoldersAreCreatedAndShellCommandIsCalledWithCorrectArgumentsWhenCreateAndMountEncryptedFolder() throws IOException {
         EncryptedFolder encryptedFolder = getEncryptedFolder(folder);
+        when(folderSettingsRepository.saveFolderSettings(encryptedFolder, folder)).thenReturn(FolderId.of(1));
 
-        Passphrase passphrase = folderService.createAndMountEncryptedFolder(folder);
+        CreatedFolder createdFolder = folderService.createAndMountEncryptedFolder(folder);
 
         ArgumentCaptor<EncryptedFolder> captor = ArgumentCaptor.forClass(EncryptedFolder.class);
-        verify(folderCli).mountEncryptedFolder(eq(folder), captor.capture(), eq(passphrase));
+        verify(folderCli).mountEncryptedFolder(eq(folder), captor.capture(), eq(createdFolder.getPassphrase()));
         assertEquals(encryptedFolder.getPath().toAbsolutePath().toString(), captor.getValue().getPath().toAbsolutePath().toString());
         assertNotEqual(encryptedFolder, folder);
         assertTrue(Files.exists(folder));

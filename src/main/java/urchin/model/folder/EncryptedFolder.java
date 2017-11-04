@@ -1,13 +1,18 @@
 package urchin.model.folder;
 
 import org.immutables.value.Value;
+import urchin.util.EncryptedFolderUtil;
 
 import java.nio.file.Path;
 
 @Value.Immutable
-public interface EncryptedFolder {
+public abstract class EncryptedFolder {
 
     @Value.Parameter
-    Path getPath();
+    public abstract Path getPath();
+
+    public Path toRegularFolder() {
+        return EncryptedFolderUtil.getFolder(this);
+    }
 
 }

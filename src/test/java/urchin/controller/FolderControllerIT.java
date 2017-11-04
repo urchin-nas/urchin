@@ -56,9 +56,20 @@ public class FolderControllerIT extends TestApplication {
     }
 
     @Test
+    public void createAndGetEncryptedFolder() {
+        ResponseEntity<CreatedFolderDto> createResponse = postCreateRequest(ImmutableFolderDto.of(folder_1.toAbsolutePath().toString()));
+        assertEquals(HttpStatus.OK, createResponse.getStatusCode());
+
+        ResponseEntity<FolderDetailsDto> folderResponse = getFolderRequest(createResponse.getBody().getId());
+
+        assertEquals(HttpStatus.OK, folderResponse.getStatusCode());
+        assertEquals(createResponse.getBody().getId(), folderResponse.getBody().getFolderId());
+    }
+
+    @Test
     public void createEncryptedFoldersAndGetFolderDetailsForAllFolders() {
-        ResponseEntity<PassphraseDto> createResponse_1 = postCreateRequest(ImmutableFolderDto.of(folder_1.toAbsolutePath().toString()));
-        ResponseEntity<PassphraseDto> createResponse_2 = postCreateRequest(ImmutableFolderDto.of(folder_2.toAbsolutePath().toString()));
+        ResponseEntity<CreatedFolderDto> createResponse_1 = postCreateRequest(ImmutableFolderDto.of(folder_1.toAbsolutePath().toString()));
+        ResponseEntity<CreatedFolderDto> createResponse_2 = postCreateRequest(ImmutableFolderDto.of(folder_2.toAbsolutePath().toString()));
 
         assertEquals(HttpStatus.OK, createResponse_1.getStatusCode());
         assertEquals(HttpStatus.OK, createResponse_2.getStatusCode());
@@ -80,7 +91,7 @@ public class FolderControllerIT extends TestApplication {
 
         //1. create encrypted folder
 
-        ResponseEntity<PassphraseDto> createResponse_1 = postCreateRequest(encryptedFolderDto);
+        ResponseEntity<CreatedFolderDto> createResponse_1 = postCreateRequest(encryptedFolderDto);
 
         assertEquals(HttpStatus.OK, createResponse_1.getStatusCode());
         assertNotNull(createResponse_1.getBody().getPassphrase());
@@ -109,7 +120,7 @@ public class FolderControllerIT extends TestApplication {
 
         //4. create 2nd encrypted folder
 
-        ResponseEntity<PassphraseDto> createResponse_2 = postCreateRequest(ImmutableFolderDto.of(folder_2.toAbsolutePath().toString()));
+        ResponseEntity<CreatedFolderDto> createResponse_2 = postCreateRequest(ImmutableFolderDto.of(folder_2.toAbsolutePath().toString()));
         assertEquals(HttpStatus.OK, createResponse_2.getStatusCode());
         assertTrue(exists(folder_2));
         assertTrue(exists(encryptedFolder_2.getPath()));
@@ -168,9 +179,12 @@ public class FolderControllerIT extends TestApplication {
         return testRestTemplate.getForEntity(discoverControllerPath(), FolderDetailsDto[].class);
     }
 
+    private ResponseEntity<FolderDetailsDto> getFolderRequest(int folderId) {
+        return testRestTemplate.getForEntity(discoverControllerPath() + "/" + folderId, FolderDetailsDto.class);
+    }
 
-    private ResponseEntity<PassphraseDto> postCreateRequest(FolderDto folderDto) {
-        return testRestTemplate.postForEntity(discoverControllerPath() + "/create", folderDto, PassphraseDto.class);
+    private ResponseEntity<CreatedFolderDto> postCreateRequest(FolderDto folderDto) {
+        return testRestTemplate.postForEntity(discoverControllerPath() + "/create", folderDto, CreatedFolderDto.class);
     }
 
     private ResponseEntity<MessageDto> postUnmountRequest(FolderDto folderDto) {
