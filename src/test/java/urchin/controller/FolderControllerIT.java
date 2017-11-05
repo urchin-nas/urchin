@@ -144,7 +144,7 @@ public class FolderControllerIT extends TestApplication {
 
         //7. share virtual folder
 
-        FolderDto shareFolderDto = ImmutableFolderDto.of(virtualFolder.toString());
+        FolderDto shareFolderDto = ImmutableFolderDto.of(virtualFolder.toAbsolutePath());
 
         ResponseEntity<MessageDto> shareFolderResponse = postShareFolderRequest(shareFolderDto);
         assertEquals(HttpStatus.OK, shareFolderResponse.getStatusCode());
@@ -166,7 +166,7 @@ public class FolderControllerIT extends TestApplication {
 
         //9. unmount virtual folder
 
-        ResponseEntity<MessageDto> unmountVirtualFOlderResponse = postUnmountVirtualFolderRequest(ImmutableFolderDto.of(virtualFolder.toString()));
+        ResponseEntity<MessageDto> unmountVirtualFOlderResponse = postUnmountVirtualFolderRequest(ImmutableFolderDto.of(virtualFolder.toAbsolutePath()));
 
         assertEquals(HttpStatus.OK, unmountVirtualFOlderResponse.getStatusCode());
         assertFalse(virtualFolder.isExisting());
