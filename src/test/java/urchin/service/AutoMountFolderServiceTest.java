@@ -55,7 +55,7 @@ public class AutoMountFolderServiceTest {
 
         autoMountFolderService.mount(FOLDER_SETTINGS);
 
-        verify(folderCli).mountEncryptedFolder(FOLDER_SETTINGS.getFolder().getPath(), FOLDER_SETTINGS.getEncryptedFolder(), PASSPHRASE);
+        verify(folderCli).mountEncryptedFolder(FOLDER_SETTINGS.getFolder(), FOLDER_SETTINGS.getEncryptedFolder(), PASSPHRASE);
     }
 
 }

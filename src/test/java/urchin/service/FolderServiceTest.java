@@ -12,7 +12,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 import urchin.cli.FolderCli;
 import urchin.model.folder.*;
 import urchin.repository.FolderSettingsRepository;
-import urchin.util.EncryptedFolderUtil;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -43,18 +42,18 @@ public class FolderServiceTest {
     @InjectMocks
     private FolderService folderService;
 
-    private Path folder;
+    private Folder folder;
     private EncryptedFolder encryptedFolder;
 
     @Before
     public void setup() {
-        folder = Paths.get(temporaryFolder.getRoot() + FOLDER_NAME);
+        folder = ImmutableFolder.of(Paths.get(temporaryFolder.getRoot() + FOLDER_NAME));
         encryptedFolder = ImmutableEncryptedFolder.of(Paths.get(temporaryFolder.getRoot() + ENCRYPTED_FOLDER_NAME));
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void createAndMountEncryptedFolderWhereTargetFolderAlreadyExistThrowsException() throws IOException {
-        Files.createDirectories(folder);
+        Files.createDirectories(folder.getPath());
         folderService.createAndMountEncryptedFolder(folder);
     }
 
@@ -74,9 +73,9 @@ public class FolderServiceTest {
         ArgumentCaptor<EncryptedFolder> captor = ArgumentCaptor.forClass(EncryptedFolder.class);
         verify(folderCli).mountEncryptedFolder(eq(folder), captor.capture(), eq(createdFolder.getPassphrase()));
         assertEquals(encryptedFolder.getPath().toAbsolutePath().toString(), captor.getValue().getPath().toAbsolutePath().toString());
-        assertNotEqual(encryptedFolder, folder);
-        assertTrue(Files.exists(folder));
-        assertTrue(Files.exists(encryptedFolder.getPath()));
+        assertPathNotEqual(encryptedFolder, folder.getPath());
+        assertTrue(folder.isExisting());
+        assertTrue(encryptedFolder.isExisting());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -90,8 +89,8 @@ public class FolderServiceTest {
     public void mountEncryptedFolderWhereTargetFolderIsNotEmptyThrowsException() throws IOException {
         Passphrase passphrase = generateEcryptfsPassphrase();
         Files.createDirectories(encryptedFolder.getPath());
-        Files.createDirectories(folder);
-        createFileInPath(folder);
+        Files.createDirectories(folder.getPath());
+        createFileInPath(folder.getPath());
 
         folderService.mountEncryptedFolder(encryptedFolder, passphrase);
     }
@@ -100,17 +99,17 @@ public class FolderServiceTest {
     public void mountEncryptedFolder() throws IOException {
         EncryptedFolder encryptedFolder = ImmutableEncryptedFolder.of(Paths.get(temporaryFolder.getRoot() + ENCRYPTED_FOLDER_NAME));
         Files.createDirectories(encryptedFolder.getPath());
-        Path folder = EncryptedFolderUtil.getFolder(encryptedFolder);
+        Folder folder = encryptedFolder.toRegularFolder();
         Passphrase passphrase = generateEcryptfsPassphrase();
 
         folderService.mountEncryptedFolder(encryptedFolder, passphrase);
 
-        ArgumentCaptor<Path> captor = ArgumentCaptor.forClass(Path.class);
+        ArgumentCaptor<Folder> captor = ArgumentCaptor.forClass(Folder.class);
         verify(folderCli).mountEncryptedFolder(captor.capture(), eq(encryptedFolder), eq(passphrase));
-        assertEquals(folder.toAbsolutePath().toString(), captor.getValue().toAbsolutePath().toString());
-        assertNotEqual(encryptedFolder, folder);
-        assertTrue(Files.exists(folder));
-        assertTrue(Files.exists(encryptedFolder.getPath()));
+        assertEquals(folder.toAbsolutePath(), captor.getValue().toAbsolutePath());
+        assertPathNotEqual(encryptedFolder, folder.getPath());
+        assertTrue(folder.isExisting());
+        assertTrue(encryptedFolder.isExisting());
     }
 
     @Test
@@ -121,8 +120,8 @@ public class FolderServiceTest {
 
     @Test(expected = RuntimeException.class)
     public void umountEncryptedFolderThrowsExceptionWhenTargetFolderIsNotEmptyAfterUmount() throws IOException {
-        Files.createDirectories(folder);
-        createFileInPath(folder);
+        Files.createDirectories(folder.getPath());
+        createFileInPath(folder.getPath());
 
         folderService.unmountFolder(folder);
 
@@ -131,12 +130,12 @@ public class FolderServiceTest {
 
     @Test
     public void umountEncryptedFolderDeletesTargetFolderIfSuccessful() throws IOException {
-        Files.createDirectories(folder);
+        Files.createDirectories(folder.getPath());
 
         folderService.unmountFolder(folder);
 
         verify(folderCli).unmountFolder(folder);
-        assertFalse(Files.exists(folder));
+        assertFalse(folder.isExisting());
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -146,7 +145,7 @@ public class FolderServiceTest {
 
     @Test
     public void shareFolderCommandIsCalled() throws IOException {
-        Files.createDirectories(folder);
+        Files.createDirectories(folder.getPath());
 
         folderService.shareFolder(folder);
 
@@ -160,7 +159,7 @@ public class FolderServiceTest {
 
     @Test
     public void unshareFolderCommandAndRestartSambaCommandAreCalled() throws IOException {
-        Files.createDirectories(folder);
+        Files.createDirectories(folder.getPath());
 
         folderService.unshareFolder(folder);
 
@@ -172,7 +171,7 @@ public class FolderServiceTest {
         Files.createFile(Paths.get(path + "/test.txt"));
     }
 
-    private void assertNotEqual(EncryptedFolder encryptedFolder, Path folder) {
+    private void assertPathNotEqual(EncryptedFolder encryptedFolder, Path folder) {
         assertNotEquals(encryptedFolder.getPath().toAbsolutePath().toString(), folder.toAbsolutePath().toString());
     }
 

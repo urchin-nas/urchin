@@ -13,7 +13,6 @@ import org.springframework.stereotype.Repository;
 import urchin.exception.FolderNotFoundException;
 import urchin.model.folder.*;
 
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -51,13 +50,13 @@ public class FolderSettingsRepository {
         return jdbcTemplate.query(SELECT_FOLDERS_SETTINGS, (resultSet, i) -> folderSettingsMapper(resultSet));
     }
 
-    public FolderId saveFolderSettings(EncryptedFolder encryptedFolder, Path folder) {
+    public FolderId saveFolderSettings(EncryptedFolder encryptedFolder, Folder folder) {
         LOG.info("Saving new folder settings for folder {}", folder);
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         MapSqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("encryptedFolder", encryptedFolder.getPath().toAbsolutePath().toString())
-                .addValue("folder", folder.toAbsolutePath().toString())
+                .addValue("folder", folder.toAbsolutePath())
                 .addValue("created", new Timestamp(new Date().getTime()))
                 .addValue("autoMount", false);
 

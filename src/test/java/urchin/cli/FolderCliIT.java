@@ -7,14 +7,12 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
-import urchin.model.folder.EncryptedFolder;
-import urchin.model.folder.ImmutableEncryptedFolder;
+import urchin.model.folder.*;
 import urchin.testutil.CliTestConfiguration;
 import urchin.testutil.TemporaryFolderUnmount;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 
@@ -35,30 +33,30 @@ public class FolderCliIT {
     @Autowired
     private FolderCli folderCli;
 
-    private static Path folder_1;
-    private static Path folder_2;
+    private static Folder folder_1;
+    private static Folder folder_2;
     private static EncryptedFolder encryptedFolder;
-    private static Path virtualFolder;
+    private static VirtualFolder virtualFolder;
 
     @BeforeClass
     public static void setup() throws IOException {
         String tmpFolderPath = temporaryFolderUnmount.getRoot().getAbsolutePath();
 
-        folder_1 = Paths.get(tmpFolderPath + FOLDER1_NAME);
-        folder_2 = Paths.get(tmpFolderPath + FOLDER2_NAME);
+        folder_1 = ImmutableFolder.of(Paths.get(tmpFolderPath + FOLDER1_NAME));
+        folder_2 = ImmutableFolder.of(Paths.get(tmpFolderPath + FOLDER2_NAME));
         encryptedFolder = ImmutableEncryptedFolder.of(Paths.get(tmpFolderPath + ENCRYPTED_FOLDER_NAME));
-        virtualFolder = Paths.get(tmpFolderPath + FOLDER_VIRTUAL_NAME);
+        virtualFolder = ImmutableVirtualFolder.of(Paths.get(tmpFolderPath + FOLDER_VIRTUAL_NAME));
 
-        Files.createDirectories(folder_1);
-        Files.createDirectories(folder_2);
+        Files.createDirectories(folder_1.getPath());
+        Files.createDirectories(folder_2.getPath());
         Files.createDirectories(encryptedFolder.getPath());
-        Files.createDirectories(virtualFolder);
+        Files.createDirectories(virtualFolder.getPath());
     }
 
     @Test
     public void mountAndUnmountEncryptedFolderAreExecutedSuccessfully() {
         folderCli.mountEncryptedFolder(folder_1, encryptedFolder, generateEcryptfsPassphrase());
-        folderCli.unmountFolder(encryptedFolder.getPath());
+        folderCli.unmountFolder(encryptedFolder);
     }
 
     @Test

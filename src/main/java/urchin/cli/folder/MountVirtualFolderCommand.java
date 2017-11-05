@@ -4,8 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import urchin.cli.Command;
 import urchin.cli.common.BasicCommand;
+import urchin.model.folder.Folder;
+import urchin.model.folder.VirtualFolder;
 
-import java.nio.file.Path;
 import java.util.List;
 
 import static org.springframework.util.StringUtils.arrayToDelimitedString;
@@ -25,11 +26,11 @@ public class MountVirtualFolderCommand extends BasicCommand {
         this.command = command;
     }
 
-    public void execute(List<Path> folders, Path virtualFolder) {
+    public void execute(List<Folder> folders, VirtualFolder virtualFolder) {
         LOG.debug("Mounting virtual folder {} for {} folders", virtualFolder.toAbsolutePath(), folders.size());
         executeCommand(command.getFolderCommand(MOUNT_VIRTUAL_FOLDER)
                 .replace(FOLDER_LIST, arrayToDelimitedString(folders.toArray(), ","))
-                .replace(VIRTUAL_FOLDER, virtualFolder.toAbsolutePath().toString())
+                .replace(VIRTUAL_FOLDER, virtualFolder.toAbsolutePath())
         );
     }
 }

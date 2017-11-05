@@ -8,11 +8,11 @@ import org.springframework.stereotype.Component;
 import urchin.cli.Command;
 import urchin.cli.common.CommandException;
 import urchin.model.folder.EncryptedFolder;
+import urchin.model.folder.Folder;
 import urchin.model.folder.Passphrase;
 
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
-import java.nio.file.Path;
 
 import static java.nio.charset.Charset.defaultCharset;
 
@@ -34,12 +34,12 @@ public class MountEncryptedFolderCommand {
         this.command = command;
     }
 
-    public void execute(Path folder, EncryptedFolder encryptedFolder, Passphrase passphrase) {
+    public void execute(Folder folder, EncryptedFolder encryptedFolder, Passphrase passphrase) {
         LOG.info("Setting up encrypted folder {} and mounting it to {}", encryptedFolder.getPath(), folder);
 
         String[] command = this.command.getFolderCommand(MOUNT_ENCRYPTED_FOLDER)
-                .replace(ENCRYPTED_FOLDER, encryptedFolder.getPath().toAbsolutePath().toString())
-                .replace(FOLDER, folder.toAbsolutePath().toString())
+                .replace(ENCRYPTED_FOLDER, encryptedFolder.toAbsolutePath())
+                .replace(FOLDER, folder.toAbsolutePath())
                 .replace(PASSPHRASE, passphrase.getValue())
                 .split(" ");
 

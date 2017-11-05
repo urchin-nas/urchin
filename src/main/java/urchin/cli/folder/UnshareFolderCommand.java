@@ -3,8 +3,7 @@ package urchin.cli.folder;
 import org.springframework.stereotype.Component;
 import urchin.cli.Command;
 import urchin.cli.common.BasicCommand;
-
-import java.nio.file.Path;
+import urchin.model.folder.Folder;
 
 @Component
 public class UnshareFolderCommand extends BasicCommand {
@@ -19,10 +18,10 @@ public class UnshareFolderCommand extends BasicCommand {
         this.command = command;
     }
 
-    public void execute(Path folder) {
+    public void execute(Folder folder) {
         LOG.info("Unsharing folder {}", folder);
         executeCommand(command.getFolderCommand(UNSHARE_FOLDER)
-                .replace(FOLDER, folder.getFileName().toString())
+                .replace(FOLDER, folder.getPath().getFileName().toString())
         );
     }
 }

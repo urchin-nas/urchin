@@ -4,9 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import urchin.cli.folder.*;
 import urchin.model.folder.EncryptedFolder;
+import urchin.model.folder.Folder;
 import urchin.model.folder.Passphrase;
+import urchin.model.folder.VirtualFolder;
 
-import java.nio.file.Path;
 import java.util.List;
 
 @Repository
@@ -36,11 +37,11 @@ public class FolderCli {
         this.unshareFolderCommand = unshareFolderCommand;
     }
 
-    public void mountEncryptedFolder(Path folder, EncryptedFolder encryptedFolder, Passphrase passphrase) {
+    public void mountEncryptedFolder(Folder folder, EncryptedFolder encryptedFolder, Passphrase passphrase) {
         mountEncryptedFolderCommand.execute(folder, encryptedFolder, passphrase);
     }
 
-    public void mountVirtualFolder(List<Path> folders, Path virtualFolder) {
+    public void mountVirtualFolder(List<Folder> folders, VirtualFolder virtualFolder) {
         mountVirtualFolderCommand.execute(folders, virtualFolder);
     }
 
@@ -48,15 +49,23 @@ public class FolderCli {
         restartSambaCommand.execute();
     }
 
-    public void shareFolder(Path folder) {
+    public void shareFolder(Folder folder) {
         shareFolderCommand.execute(folder);
     }
 
-    public void unmountFolder(Path folder) {
-        unmountFolderCommand.execute(folder);
+    public void unmountFolder(Folder folder) {
+        unmountFolderCommand.execute(folder.getPath());
     }
 
-    public void unshareFolder(Path folder) {
+    public void unmountFolder(EncryptedFolder encryptedFolder) {
+        unmountFolderCommand.execute(encryptedFolder.getPath());
+    }
+
+    public void unmountFolder(VirtualFolder virtualFolder) {
+        unmountFolderCommand.execute(virtualFolder.getPath());
+    }
+
+    public void unshareFolder(Folder folder) {
         unshareFolderCommand.execute(folder);
     }
 }

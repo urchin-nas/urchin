@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import urchin.cli.Command;
 import urchin.cli.common.BasicCommand;
-
-import java.nio.file.Path;
+import urchin.model.folder.Folder;
 
 @Component
 public class ShareFolderCommand extends BasicCommand {
@@ -22,11 +21,11 @@ public class ShareFolderCommand extends BasicCommand {
         this.command = command;
     }
 
-    public void execute(Path folder) {
+    public void execute(Folder folder) {
         LOG.info("Sharing folder {}", folder);
         executeCommand(command.getFolderCommand(SHARE_FOLDER)
-                .replace(FOLDER_NAME, folder.getFileName().toString())
-                .replace(FOLDER, folder.toAbsolutePath().toString())
+                .replace(FOLDER_NAME, folder.getPath().getFileName().toString())
+                .replace(FOLDER, folder.toAbsolutePath())
         );
     }
 }

@@ -30,6 +30,6 @@ public class AutoMountFolderService {
 
     public void mount(FolderSettings folderSettings) {
         Passphrase passphrase = passphraseRepository.getPassphrase(folderSettings);
-        folderCli.mountEncryptedFolder(folderSettings.getFolder().getPath(), folderSettings.getEncryptedFolder(), passphrase);
+        folderCli.mountEncryptedFolder(folderSettings.getFolder(), folderSettings.getEncryptedFolder(), passphrase);
     }
 }
