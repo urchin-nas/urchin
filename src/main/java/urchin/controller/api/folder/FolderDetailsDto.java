@@ -11,5 +11,7 @@ public interface FolderDetailsDto {
 
     Integer getFolderId();
 
-    String getFolder();
+    String getFolderName();
+
+    String getFolderPath();
 }

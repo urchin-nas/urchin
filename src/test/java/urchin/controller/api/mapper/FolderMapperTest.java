@@ -32,7 +32,8 @@ public class FolderMapperTest {
         assertEquals(1, folderDetailsDtos.size());
         FolderDetailsDto folderDetailsDto = folderDetailsDtos.get(0);
         assertEquals(FOLDER_SETTINGS.getFolderId().getValue(), folderDetailsDto.getFolderId());
-        assertEquals(FOLDER_SETTINGS.getFolder().toAbsolutePath().toString(), folderDetailsDto.getFolder());
+        assertEquals(FOLDER_SETTINGS.getFolder().getFileName().toString(), folderDetailsDto.getFolderName());
+        assertEquals(FOLDER_SETTINGS.getFolder().toAbsolutePath().toString(), folderDetailsDto.getFolderPath());
     }
 
 }

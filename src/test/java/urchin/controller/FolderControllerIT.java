@@ -79,7 +79,7 @@ public class FolderControllerIT extends TestApplication {
         assertEquals(HttpStatus.OK, getFoldersResponse.getStatusCode());
         assertTrue(getFoldersResponse.getBody().length > 0);
         List<String> folders = Arrays.stream(getFoldersResponse.getBody())
-                .map(FolderDetailsDto::getFolder)
+                .map(FolderDetailsDto::getFolderPath)
                 .collect(Collectors.toList());
         assertTrue(folders.contains(folder_1.toAbsolutePath().toString()));
         assertTrue(folders.contains(folder_2.toAbsolutePath().toString()));
