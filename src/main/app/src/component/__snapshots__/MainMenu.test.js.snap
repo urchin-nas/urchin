@@ -24,5 +24,12 @@ exports[`MainMenu match snapshot 1`] = `
       Groups
     </a>
   </ul>
+  <ul>
+    <a
+      href="/folders"
+    >
+      Folders
+    </a>
+  </ul>
 </div>
 `;

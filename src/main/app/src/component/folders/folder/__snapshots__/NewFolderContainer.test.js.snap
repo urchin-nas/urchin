@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewFolderContainer match snapshot 1`] = `
+<NewFolder
+  callbacks={
+    Object {
+      "createFolder": undefined,
+      "setFolder": undefined,
+    }
+  }
+  folder={Object {}}
+/>
+`;

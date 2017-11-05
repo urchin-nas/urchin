@@ -14,6 +14,9 @@ class MainMenu extends Component {
                 <ul>
                     <a href="/groups">Groups</a>
                 </ul>
+                <ul>
+                    <a href="/folders">Folders</a>
+                </ul>
             </div>
         )
     }

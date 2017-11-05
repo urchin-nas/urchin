@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditFolderContainer match snapshot 1`] = `
+<Folders
+  callbacks={
+    Object {
+      "deleteFolder": undefined,
+      "setFolder": undefined,
+    }
+  }
+  folder={Object {}}
+/>
+`;

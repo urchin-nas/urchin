@@ -17,6 +17,10 @@ exports[`MainContainer match snapshot 1`] = `
       component={[Function]}
       path="/groups"
     />
+    <Route
+      component={[Function]}
+      path="/folders"
+    />
     <Redirect
       push={false}
       to="/"
