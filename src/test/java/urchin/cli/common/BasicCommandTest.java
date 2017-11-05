@@ -69,7 +69,7 @@ public class BasicCommandTest {
             fail("Expected CommandException");
         } catch (CommandException e) {
             assertEquals(exitValue, e.getExitValue().intValue());
-            assertEquals(TestCommand.class.getCanonicalName(), e.getCommandName());
+            assertEquals(TestCommand.class, e.getCommand());
             assertEquals(CommandException.PROCESS_RETURNED_EXIT_VALUE + exitValue, e.getMessage());
         }
     }
@@ -84,7 +84,7 @@ public class BasicCommandTest {
             fail("Expected CommandException");
         } catch (CommandException e) {
             assertNull(e.getExitValue());
-            assertEquals(TestCommand.class.getCanonicalName(), e.getCommandName());
+            assertEquals(TestCommand.class, e.getCommand());
             assertEquals(runtimeException.toString(), e.getMessage());
         }
     }
