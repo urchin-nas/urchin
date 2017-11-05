@@ -17,8 +17,8 @@ public class FolderMapper {
     public static FolderDetailsDto mapToFolderDetailsDto(FolderSettings folderSettings) {
         return ImmutableFolderDetailsDto.builder()
                 .folderId(folderSettings.getFolderId().getValue())
-                .folderName(folderSettings.getFolder().getFileName().toString())
-                .folderPath(folderSettings.getFolder().toAbsolutePath().toString())
+                .folderName(folderSettings.getFolder().getPath().getFileName().toString())
+                .folderPath(folderSettings.getFolder().toAbsolutePath())
                 .build();
     }
 }

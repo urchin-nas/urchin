@@ -44,7 +44,7 @@ public class FolderSettingsRepositoryIT extends TestApplication {
         folderSettingsRepository.saveFolderSettings(encryptedFolder, folder);
 
         List<FolderSettings> matchedFolderSettings = folderSettingsRepository.getFoldersSettings().stream()
-                .filter(folderSetting -> folderSetting.getFolder().toAbsolutePath().toString().equals(folder.toAbsolutePath().toString()))
+                .filter(folderSetting -> folderSetting.getFolder().toAbsolutePath().equals(folder.toAbsolutePath().toString()))
                 .collect(Collectors.toList());
         assertEquals(1, matchedFolderSettings.size());
         FolderSettings readFolderSettings = matchedFolderSettings.get(0);
@@ -57,7 +57,7 @@ public class FolderSettingsRepositoryIT extends TestApplication {
         folderSettingsRepository.removeFolderSettings(readFolderSettings.getFolderId());
 
         assertEquals(0, folderSettingsRepository.getFoldersSettings().stream()
-                .filter(folderSetting -> folderSetting.getFolder().toAbsolutePath().toString().equals(folder.toAbsolutePath().toString()))
+                .filter(folderSetting -> folderSetting.getFolder().toAbsolutePath().equals(folder.toAbsolutePath().toString()))
                 .count());
     }
 
@@ -79,7 +79,7 @@ public class FolderSettingsRepositoryIT extends TestApplication {
         assertNotNull(folderSettings);
         assertEquals(folderId, folderSettings.getFolderId());
         assertEquals(encryptedFolder.getPath().toAbsolutePath(), folderSettings.getEncryptedFolder().getPath().toAbsolutePath());
-        assertEquals(folder.toAbsolutePath(), folderSettings.getFolder().toAbsolutePath());
+        assertEquals(folder.toAbsolutePath().toString(), folderSettings.getFolder().toAbsolutePath());
         assertTrue(now.isBefore(folderSettings.getCreated()) || now.isEqual(folderSettings.getCreated()));
         assertFalse(folderSettings.isAutoMount());
 

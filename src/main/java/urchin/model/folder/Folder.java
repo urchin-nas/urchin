@@ -6,7 +6,7 @@ import urchin.util.EncryptedFolderUtil;
 import java.nio.file.Path;
 
 @Value.Immutable
-public abstract class EncryptedFolder {
+public abstract class Folder {
 
     @Value.Parameter
     public abstract Path getPath();
@@ -15,8 +15,8 @@ public abstract class EncryptedFolder {
         return getPath().toAbsolutePath().toString();
     }
 
-    public Path toRegularFolder() {
-        return EncryptedFolderUtil.getFolder(this);
+    public EncryptedFolder toEncryptedFolder() {
+        return EncryptedFolderUtil.getEncryptedFolder(this.getPath());
     }
 
 }

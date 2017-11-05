@@ -2,10 +2,7 @@ package urchin.controller.api.mapper;
 
 import org.junit.Test;
 import urchin.controller.api.folder.FolderDetailsDto;
-import urchin.model.folder.FolderId;
-import urchin.model.folder.FolderSettings;
-import urchin.model.folder.ImmutableEncryptedFolder;
-import urchin.model.folder.ImmutableFolderSettings;
+import urchin.model.folder.*;
 
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
@@ -19,7 +16,7 @@ public class FolderMapperTest {
 
     private static final FolderSettings FOLDER_SETTINGS = ImmutableFolderSettings.builder()
             .folderId(FolderId.of(1))
-            .folder(Paths.get("/some/path"))
+            .folder(ImmutableFolder.of(Paths.get("/some/path")))
             .encryptedFolder(ImmutableEncryptedFolder.of(Paths.get("/some/.path")))
             .created(LocalDateTime.now())
             .isAutoMount(true)
@@ -32,8 +29,8 @@ public class FolderMapperTest {
         assertEquals(1, folderDetailsDtos.size());
         FolderDetailsDto folderDetailsDto = folderDetailsDtos.get(0);
         assertEquals(FOLDER_SETTINGS.getFolderId().getValue(), folderDetailsDto.getFolderId());
-        assertEquals(FOLDER_SETTINGS.getFolder().getFileName().toString(), folderDetailsDto.getFolderName());
-        assertEquals(FOLDER_SETTINGS.getFolder().toAbsolutePath().toString(), folderDetailsDto.getFolderPath());
+        assertEquals(FOLDER_SETTINGS.getFolder().getPath().getFileName().toString(), folderDetailsDto.getFolderName());
+        assertEquals(FOLDER_SETTINGS.getFolder().toAbsolutePath(), folderDetailsDto.getFolderPath());
     }
 
 }

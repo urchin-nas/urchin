@@ -21,7 +21,7 @@ public class AutoMountFolderServiceTest {
 
     private static final FolderSettings FOLDER_SETTINGS = ImmutableFolderSettings.builder()
             .folderId(FolderId.of(1))
-            .folder(Paths.get("/some/path"))
+            .folder(ImmutableFolder.of(Paths.get("/some/path")))
             .encryptedFolder(ImmutableEncryptedFolder.of(Paths.get("/some/.path")))
             .created(LocalDateTime.now())
             .isAutoMount(false)
@@ -55,7 +55,7 @@ public class AutoMountFolderServiceTest {
 
         autoMountFolderService.mount(FOLDER_SETTINGS);
 
-        verify(folderCli).mountEncryptedFolder(FOLDER_SETTINGS.getFolder(), FOLDER_SETTINGS.getEncryptedFolder(), PASSPHRASE);
+        verify(folderCli).mountEncryptedFolder(FOLDER_SETTINGS.getFolder().getPath(), FOLDER_SETTINGS.getEncryptedFolder(), PASSPHRASE);
     }
 
 }

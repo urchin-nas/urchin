@@ -74,7 +74,7 @@ public class FolderSettingsRepository {
     private FolderSettings folderSettingsMapper(ResultSet resultSet) throws SQLException {
         return ImmutableFolderSettings.builder()
                 .folderId(FolderId.of(resultSet.getInt("id")))
-                .folder(Paths.get(resultSet.getString("folder")))
+                .folder(ImmutableFolder.of(Paths.get(resultSet.getString("folder"))))
                 .encryptedFolder(ImmutableEncryptedFolder.of(Paths.get(resultSet.getString("encrypted_folder"))))
                 .isAutoMount(resultSet.getBoolean("auto_mount"))
                 .created(resultSet.getTimestamp("created").toLocalDateTime())
