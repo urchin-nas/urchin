@@ -39,14 +39,13 @@ public class FolderControllerIT extends TestApplication {
     private EncryptedFolder encryptedFolder_1;
     private EncryptedFolder encryptedFolder_2;
     private VirtualFolder virtualFolder;
-    private String tmpFolderPath;
 
     @Rule
     public TemporaryFolderUnmount temporaryFolderUnmount = new TemporaryFolderUnmount();
 
     @Before
     public void setup() {
-        tmpFolderPath = temporaryFolderUnmount.getRoot().getAbsolutePath();
+        String tmpFolderPath = temporaryFolderUnmount.getRoot().getAbsolutePath();
         folder_1 = ImmutableFolder.of(Paths.get(tmpFolderPath + FOLDER1_NAME));
         folder_2 = ImmutableFolder.of(Paths.get(tmpFolderPath + FOLDER2_NAME));
         encryptedFolder_1 = getEncryptedFolder(folder_1);
@@ -128,8 +127,8 @@ public class FolderControllerIT extends TestApplication {
 
         VirtualFolderDto virtualFolderDto =
                 ImmutableVirtualFolderDto.builder()
-                        .folders(Arrays.asList(folder_1.toString(), folder_2.toString()))
-                        .virtualFolder(virtualFolder.toString())
+                        .folders(Arrays.asList(folder_1.toAbsolutePath(), folder_2.toAbsolutePath()))
+                        .virtualFolder(virtualFolder.toAbsolutePath())
                         .build();
 
         ResponseEntity<MessageDto> virtualFolderResponse = postSetupVirtualFolderRequest(virtualFolderDto);
