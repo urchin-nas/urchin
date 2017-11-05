@@ -30,7 +30,7 @@ public abstract class BasicCommand {
             if (process.exitValue() != 0) {
                 LOG.debug("Process failed with error: " + IOUtils.toString(process.getErrorStream(), defaultCharset()));
                 LOG.error("Process returned code: " + process.exitValue());
-                throw new CommandException(this.getClass().getCanonicalName(), process.exitValue());
+                throw new CommandException(this.getClass(), process.exitValue());
             }
 
             String response = IOUtils.toString(process.getInputStream(), defaultCharset());
@@ -45,7 +45,7 @@ public abstract class BasicCommand {
             throw e;
         } catch (Exception e) {
             LOG.error("Failed to execute command");
-            throw new CommandException(this.getClass().getCanonicalName(), e);
+            throw new CommandException(this.getClass(), e);
         }
     }
 }

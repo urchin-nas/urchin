@@ -45,11 +45,11 @@ public class SetUserPasswordCommand {
             bufferedWriter.flush();
             process.waitFor();
             if (process.exitValue() != 0) {
-                throw new CommandException(this.getClass().getName(), process.exitValue());
+                throw new CommandException(this.getClass(), process.exitValue());
             }
         } catch (Exception e) {
             LOG.error("Failed to execute command");
-            throw new CommandException(this.getClass().getName(), e);
+            throw new CommandException(this.getClass(), e);
         }
     }
 }

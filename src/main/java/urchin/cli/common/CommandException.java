@@ -4,23 +4,23 @@ public class CommandException extends RuntimeException {
 
     static final String PROCESS_RETURNED_EXIT_VALUE = "Process returned exit value: ";
 
-    private final String commandName;
+    private final Class command;
     private final Integer exitValue;
 
-    public CommandException(String commandName, int exitValue) {
+    public CommandException(Class command, int exitValue) {
         super(PROCESS_RETURNED_EXIT_VALUE + exitValue);
-        this.commandName = commandName;
+        this.command = command;
         this.exitValue = exitValue;
     }
 
-    public CommandException(String commandName, Exception e) {
+    public CommandException(Class command, Exception e) {
         super(e);
-        this.commandName = commandName;
+        this.command = command;
         this.exitValue = null;
     }
 
-    public String getCommandName() {
-        return commandName;
+    public Class getCommand() {
+        return command;
     }
 
     public Integer getExitValue() {

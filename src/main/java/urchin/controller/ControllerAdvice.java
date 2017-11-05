@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
+import urchin.cli.common.CommandException;
 import urchin.controller.api.ErrorCode;
 import urchin.controller.api.ErrorDto;
 import urchin.controller.api.ImmutableErrorDto;
@@ -38,9 +39,29 @@ public class ControllerAdvice {
                 .build();
     }
 
+    @ExceptionHandler(value = {IllegalArgumentException.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected ErrorDto handleIllegalArgumentException(IllegalArgumentException e, WebRequest webRequest) {
+        LOG.warn("Exception while handler request: {}", webRequest, e);
+        return ImmutableErrorDto.builder()
+                .errorCode(ErrorCode.ILLEGAL_ARGUMENT)
+                .message(e.getMessage())
+                .build();
+    }
+
+    @ExceptionHandler(value = {CommandException.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected ErrorDto handleCommandException(CommandException e, WebRequest webRequest) {
+        LOG.warn("Exception while handler request: {}", webRequest, e);
+        return ImmutableErrorDto.builder()
+                .errorCode(ErrorCode.COMMAND_EXECUTION_ERROR)
+                .message(String.format("Failed to execute %s. %s", e.getCommand().getSimpleName(), e.getMessage()))
+                .build();
+    }
+
     @ExceptionHandler(value = {Exception.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    protected ErrorDto handleException(Exception e, WebRequest webRequest) {
+    protected ErrorDto handleUnexpectedException(Exception e, WebRequest webRequest) {
         LOG.warn("Exception while handler request: {}", webRequest, e);
         return ImmutableErrorDto.builder()
                 .errorCode(ErrorCode.UNEXPECTED_ERROR)
