@@ -1,8 +1,8 @@
 package urchin.cli.user;
 
 import org.springframework.stereotype.Component;
+import urchin.cli.BasicCommand;
 import urchin.cli.Command;
-import urchin.cli.common.BasicCommand;
 
 import java.util.ArrayList;
 import java.util.List;

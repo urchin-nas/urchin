@@ -2,8 +2,8 @@ package urchin.cli;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import urchin.cli.common.CommandException;
 import urchin.cli.group.*;
+import urchin.exception.CommandException;
 import urchin.model.group.Group;
 import urchin.model.group.GroupName;
 import urchin.model.user.User;

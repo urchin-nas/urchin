@@ -1,8 +1,9 @@
-package urchin.cli.common;
+package urchin.cli;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import urchin.exception.CommandException;
 
 import java.util.Optional;
 

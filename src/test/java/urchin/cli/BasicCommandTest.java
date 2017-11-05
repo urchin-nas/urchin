@@ -1,10 +1,11 @@
-package urchin.cli.common;
+package urchin.cli;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import urchin.exception.CommandException;
 
 import java.io.IOException;
 import java.io.InputStream;

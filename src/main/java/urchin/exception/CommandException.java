@@ -1,8 +1,8 @@
-package urchin.cli.common;
+package urchin.exception;
 
 public class CommandException extends RuntimeException {
 
-    static final String PROCESS_RETURNED_EXIT_VALUE = "Process returned exit value: ";
+    public static final String PROCESS_RETURNED_EXIT_VALUE = "Process returned exit value: ";
 
     private final Class command;
     private final Integer exitValue;

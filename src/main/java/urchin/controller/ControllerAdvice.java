@@ -8,10 +8,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
-import urchin.cli.common.CommandException;
 import urchin.controller.api.ErrorCode;
 import urchin.controller.api.ErrorDto;
 import urchin.controller.api.ImmutableErrorDto;
+import urchin.exception.CommandException;
 
 import java.util.ArrayList;
 import java.util.HashMap;

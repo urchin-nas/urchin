@@ -1,8 +1,8 @@
 package urchin.cli.folder;
 
 import org.springframework.stereotype.Component;
+import urchin.cli.BasicCommand;
 import urchin.cli.Command;
-import urchin.cli.common.BasicCommand;
 
 @Component
 public class RestartSambaCommand extends BasicCommand {
