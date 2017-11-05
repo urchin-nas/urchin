@@ -30,7 +30,7 @@ public class MountVirtualFolderCommand extends BasicCommand {
     public void execute(List<Folder> folders, VirtualFolder virtualFolder) {
         LOG.debug("Mounting virtual folder {} for {} folders", virtualFolder.toAbsolutePath(), folders.size());
         List<String> folderPaths = folders.stream()
-                .map(Folder::toAbsolutePath)
+                .map(folder -> folder.toAbsolutePath())
                 .collect(Collectors.toList());
         executeCommand(command.getFolderCommand(MOUNT_VIRTUAL_FOLDER)
                 .replace(FOLDER_LIST, arrayToDelimitedString(folderPaths.toArray(), ","))
