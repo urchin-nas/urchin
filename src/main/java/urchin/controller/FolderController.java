@@ -45,7 +45,7 @@ public class FolderController {
 
     @RequestMapping(value = "create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public CreatedFolderDto createEncryptedFolder(@Valid @RequestBody FolderDto folderDto) throws IOException {
-        ImmutableFolder folder = ImmutableFolder.of(Paths.get(folderDto.getFolder()));
+        Folder folder = ImmutableFolder.of(Paths.get(folderDto.getFolder()));
         CreatedFolder createdFolder = folderService.createAndMountEncryptedFolder(folder);
         return mapToCreatedFolderDto(createdFolder);
     }
@@ -60,7 +60,7 @@ public class FolderController {
 
     @RequestMapping(value = "unmount", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public MessageDto unmountEncryptedFolder(@Valid @RequestBody FolderDto folderDto) throws IOException {
-        ImmutableFolder folder = ImmutableFolder.of(Paths.get(folderDto.getFolder()));
+        Folder folder = ImmutableFolder.of(Paths.get(folderDto.getFolder()));
         folderService.unmountFolder(folder);
         return ImmutableMessageDto.of("encrypted folder unmounted");
     }
@@ -77,21 +77,21 @@ public class FolderController {
 
     @RequestMapping(value = "virtual/unmount", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public MessageDto unmountVirtualFolder(@Valid @RequestBody FolderDto folderDto) throws IOException {
-        ImmutableFolder folder = ImmutableFolder.of(Paths.get(folderDto.getFolder()));
+        Folder folder = ImmutableFolder.of(Paths.get(folderDto.getFolder()));
         folderService.unmountFolder(folder);
         return ImmutableMessageDto.of("virtual folder unmounted");
     }
 
     @RequestMapping(value = "share", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public MessageDto shareFolder(@Valid @RequestBody FolderDto folderDto) {
-        ImmutableFolder folder = ImmutableFolder.of(Paths.get(folderDto.getFolder()));
+        Folder folder = ImmutableFolder.of(Paths.get(folderDto.getFolder()));
         folderService.shareFolder(folder);
         return ImmutableMessageDto.of("folder shared");
     }
 
     @RequestMapping(value = "unshare", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public MessageDto unShareFolder(@Valid @RequestBody FolderDto folderDto) {
-        ImmutableFolder folder = ImmutableFolder.of(Paths.get(folderDto.getFolder()));
+        Folder folder = ImmutableFolder.of(Paths.get(folderDto.getFolder()));
         folderService.unshareFolder(folder);
         return ImmutableMessageDto.of("folder unshared");
     }
