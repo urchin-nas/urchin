@@ -18,7 +18,7 @@ public class EncryptedFolderUtil {
     private static final String DELIMITER = separator;
 
     public static Folder getFolder(EncryptedFolder encryptedFolder) {
-        String path = encryptedFolder.getPath().toAbsolutePath().toString();
+        String path = encryptedFolder.toAbsolutePath();
         String folderPath = path.substring(0, path.lastIndexOf(HIDDEN_FOLDER_DELIMITER)) + DELIMITER + path.substring(path.lastIndexOf(HIDDEN_FOLDER_DELIMITER) + HIDDEN_FOLDER_DELIMITER.length());
         LOG.debug("Folder path {}", folderPath);
         return ImmutableFolder.of(Paths.get(folderPath));
