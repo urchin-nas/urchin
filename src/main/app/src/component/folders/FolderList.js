@@ -11,11 +11,11 @@ class FolderList extends Component {
         );
         return (
             <div>
+                <a href="/folders/new">new folder</a>
                 <h2>Folders</h2>
                 <ul>
                     {folderItems}
                 </ul>
-                <a href="/folders/new">new folder</a>
             </div>
         )
     }

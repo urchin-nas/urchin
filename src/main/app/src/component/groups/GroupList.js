@@ -11,11 +11,11 @@ class GroupList extends Component {
         );
         return (
             <div>
+                <a href="/groups/new">new group</a>
                 <h2>grouplist</h2>
                 <ul>
                     {groupItems}
                 </ul>
-                <a href="/groups/new">new group</a>
             </div>
         )
     }

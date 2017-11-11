@@ -2,14 +2,14 @@
 
 exports[`GroupList match snapshot 1`] = `
 <div>
-  <h2>
-    grouplist
-  </h2>
-  <ul />
   <a
     href="/groups/new"
   >
     new group
   </a>
+  <h2>
+    grouplist
+  </h2>
+  <ul />
 </div>
 `;

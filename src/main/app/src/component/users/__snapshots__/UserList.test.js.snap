@@ -2,14 +2,14 @@
 
 exports[`UserList match snapshot 1`] = `
 <div>
-  <h2>
-    userlist
-  </h2>
-  <ul />
   <a
     href="/users/new"
   >
     new user
   </a>
+  <h2>
+    Users
+  </h2>
+  <ul />
 </div>
 `;

@@ -11,11 +11,11 @@ class UserList extends Component {
         );
         return (
             <div>
-                <h2>userlist</h2>
+                <a href="/users/new">new user</a>
+                <h2>Users</h2>
                 <ul>
                     {userItems}
                 </ul>
-                <a href="/users/new">new user</a>
             </div>
         )
     }
