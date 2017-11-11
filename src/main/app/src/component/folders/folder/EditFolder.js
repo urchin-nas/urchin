@@ -22,7 +22,8 @@ class Folders extends Component {
         return (
             <div>
                 <h2>Folder</h2>
-                <div>Folder: <a href={`file:://${folderPath}`}>{folderName}</a></div>
+                <div>Name: {folderName}</div>
+                <div>Path: {folderPath}</div>
                 <button onClick={this.back}>Back</button>
             </div>
         )
