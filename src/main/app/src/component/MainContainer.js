@@ -9,7 +9,7 @@ import Folders from "./folders/Folders";
 class MainContainer extends Component {
     render() {
         return (
-            <div>
+            <div className="main-container">
                 <MainMenu/>
                 <Switch>
                     <Route exact path="/" component={Home}/>

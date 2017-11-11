@@ -39,7 +39,7 @@ class Groups extends Component {
         let availableUsers = this.props.availableUsers;
 
         return (
-            <div>
+            <div className="edit-group">
                 <h2>Group</h2>
                 <div>name: {groupName}</div>
                 <select

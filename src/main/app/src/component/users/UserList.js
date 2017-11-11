@@ -10,7 +10,7 @@ class UserList extends Component {
             </li>
         );
         return (
-            <div>
+            <div className="user-list">
                 <a href="/users/new">new user</a>
                 <h2>Users</h2>
                 <ul>

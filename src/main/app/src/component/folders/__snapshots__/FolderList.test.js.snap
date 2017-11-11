@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`FolderList match snapshot 1`] = `
-<div>
+<div
+  className="folder-list"
+>
   <a
     href="/folders/new"
   >

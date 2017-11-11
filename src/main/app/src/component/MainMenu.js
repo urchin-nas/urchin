@@ -4,7 +4,8 @@ class MainMenu extends Component {
 
     render() {
         return (
-            <div>MainMenu
+            <div className="main-menu">
+                MainMenu
                 <ul>
                     <a href="/home">Home</a>
                 </ul>

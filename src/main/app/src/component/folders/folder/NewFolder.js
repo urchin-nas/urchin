@@ -23,9 +23,9 @@ class NewFolder extends Component {
 
     render() {
         let folder = this.props.folder.folder || '';
-        return (
 
-            <div>
+        return (
+            <div className="new-folder">
                 <h2>Folder</h2>
                 <input
                     name="folder"

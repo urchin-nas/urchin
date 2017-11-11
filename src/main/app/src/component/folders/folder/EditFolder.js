@@ -20,7 +20,7 @@ class Folders extends Component {
         let folderName = this.props.folder.folderName;
         let folderPath = this.props.folder.folderPath;
         return (
-            <div>
+            <div className="edit-folder">
                 <h2>Folder</h2>
                 <div>Name: {folderName}</div>
                 <div>Path: {folderPath}</div>

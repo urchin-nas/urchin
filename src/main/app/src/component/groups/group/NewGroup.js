@@ -25,7 +25,7 @@ class NewGroup extends Component {
         let groupName = this.props.group.groupName || '';
         return (
 
-            <div>
+            <div className="new-group">
                 <h2>Group</h2>
                 <input
                     name="groupName"

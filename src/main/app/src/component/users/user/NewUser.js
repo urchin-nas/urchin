@@ -25,7 +25,7 @@ class NewUser extends Component {
         let username = this.props.user.username || '';
         let password = this.props.user.password || '';
         return (
-            <div>
+            <div className="new-user">
                 <h2>User</h2>
                 <input
                     name="username"

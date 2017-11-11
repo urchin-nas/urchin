@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`GroupList match snapshot 1`] = `
-<div>
+<div
+  className="group-list"
+>
   <a
     href="/groups/new"
   >

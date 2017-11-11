@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`EditGroup match snapshot 1`] = `
-<div>
+<div
+  className="edit-group"
+>
   <h2>
     Group
   </h2>
