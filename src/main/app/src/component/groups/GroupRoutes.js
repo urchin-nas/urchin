@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
-import {Switch, Route} from 'react-router-dom'
+import {Route, Switch} from 'react-router-dom'
 import GroupListContainer from './GroupListContainer';
 import EditGroupContainer from './group/EditGroupContainer';
 import NewGroupContainer from "./group/NewGroupContainer";
 
-class Groups extends Component {
+class GroupRoutes extends Component {
 
     render() {
         return (
@@ -17,4 +17,4 @@ class Groups extends Component {
     }
 }
 
-export default Groups
+export default GroupRoutes

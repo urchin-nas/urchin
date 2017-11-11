@@ -2,10 +2,10 @@ import React from 'react';
 import {mount, shallow} from 'enzyme'
 import {Router} from "react-router-dom";
 import toJson from 'enzyme-to-json';
-import Groups from "./Groups";
+import Groups from "./GroupRoutes";
 import history from '../../history'
 
-describe('Groups', () => {
+describe('GroupRoutes', () => {
 
     it('renders without crashing', () => {
         let component = mount(
