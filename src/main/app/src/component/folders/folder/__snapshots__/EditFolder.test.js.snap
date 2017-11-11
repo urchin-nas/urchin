@@ -6,10 +6,10 @@ exports[`EditFolder match snapshot 1`] = `
     Folder
   </h2>
   <div>
-    Folder: 
-    <a
-      href="file:://undefined"
-    />
+    Name: 
+  </div>
+  <div>
+    Path: 
   </div>
   <button
     onClick={[Function]}

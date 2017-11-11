@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`GroupRoutes match snapshot 1`] = `
+exports[`Groups match snapshot 1`] = `
 <Switch>
   <Route
     component={[Function]}
