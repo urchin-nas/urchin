@@ -21,7 +21,7 @@ class Groups extends Component {
     };
 
     del = () => {
-        this.props.callbacks.deleteGroup(this.props.groupId);
+        this.props.callbacks.deleteGroup(this.props.group.groupId);
     };
 
     back = () => {
