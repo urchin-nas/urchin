@@ -63,6 +63,11 @@ public class FolderServiceTest {
         folderService.createAndMountEncryptedFolder(folder);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void createAndMountEncryptedFolderWhereFolderIsInHomeDirectoryThrowsEception() throws IOException {
+        folderService.createAndMountEncryptedFolder(ImmutableFolder.of(Paths.get("/home/urchin")));
+    }
+
     @Test
     public void FoldersAreCreatedAndShellCommandIsCalledWithCorrectArgumentsWhenCreateAndMountEncryptedFolder() throws IOException {
         EncryptedFolder encryptedFolder = getEncryptedFolder(folder);

@@ -32,6 +32,10 @@ public class FolderService {
 
     @Transactional
     public CreatedFolder createAndMountEncryptedFolder(Folder folder) throws IOException {
+        if (folder.getPath().startsWith("/home/")) {
+            throw new IllegalArgumentException("Folder path must not start with /home/");
+        }
+
         EncryptedFolder encryptedFolder = folder.toEncryptedFolder();
         createEncryptionFolderPair(folder, encryptedFolder);
         Passphrase passphrase = generateEcryptfsPassphrase();
