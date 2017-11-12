@@ -243,6 +243,9 @@
                 </configuration>
                 <executions>
                     <execution>
+                        <configuration>
+                            <argLine>-Dspring.profiles.active=production</argLine>
+                        </configuration>
                         <goals>
                             <goal>integration-test</goal>
                             <goal>verify</goal>
