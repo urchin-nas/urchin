@@ -20,6 +20,7 @@ public class WebDriverConfiguration {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
         options.addArguments("--disable-gpu");
+        options.addArguments("--no-sandbox");
 
         return new ChromeDriver(options);
     }
