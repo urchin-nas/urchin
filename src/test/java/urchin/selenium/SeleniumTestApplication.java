@@ -1,26 +1,31 @@
 package urchin.selenium;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.embedded.LocalServerPort;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
-import urchin.selenium.configuration.WebDriverConfiguration;
+import urchin.selenium.configuration.SeleniumPortConfiguration;
+import urchin.selenium.configuration.SeleniumWebDriverConfiguration;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Import(WebDriverConfiguration.class)
+@Import({JarExecutor.class, SeleniumPortConfiguration.class, SeleniumWebDriverConfiguration.class})
 public abstract class SeleniumTestApplication {
 
-    @LocalServerPort
-    private int port;
+    @Autowired
+    @Qualifier("seleniumWebDriver")
+    WebDriver webDriver;
 
     @Autowired
-    protected WebDriver webDriver;
+    @Qualifier("seleniumPort")
+    private Integer port;
 
+    @Rule
+    @Autowired
+    public JarExecutor jarExecutor;
 
     static String url;
 

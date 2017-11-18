@@ -12,13 +12,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 
 @TestConfiguration
-public class WebDriverConfiguration {
+public class SeleniumWebDriverConfiguration {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
-    @Bean
+    @Bean("seleniumWebDriver")
     @Profile("production")
-    public WebDriver webDriver() {
+    public WebDriver headlessWebDriver() {
         log.info("Configuring webDriver to execute in headless mode");
         BrowserManager browserManager = ChromeDriverManager.getInstance();
         browserManager.setup();
@@ -31,9 +31,9 @@ public class WebDriverConfiguration {
         return new ChromeDriver(options);
     }
 
-    @Bean
+    @Bean("seleniumWebDriver")
     @Profile("!production")
-    public WebDriver devWebDriver() {
+    public WebDriver webDriver() {
         log.info("Configuring webDriver to execute in normal mode");
         BrowserManager browserManager = ChromeDriverManager.getInstance();
         browserManager.setup();
