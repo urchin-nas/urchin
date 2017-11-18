@@ -63,6 +63,8 @@ public class JarExecutor extends ExternalResource {
         String executable = System.getenv("JAVA_HOME");
         if (executable == null || executable.isEmpty()) {
             executable = "java";
+        } else {
+            executable = executable + "/bin/java";
         }
         log.info("java executable {}", executable);
         return executable;
