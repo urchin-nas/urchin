@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(properties = "spring.datasource.url=jdbc:h2:mem:", webEnvironment = WebEnvironment.RANDOM_PORT)
 public abstract class TestApplication {
 
     @Autowired
