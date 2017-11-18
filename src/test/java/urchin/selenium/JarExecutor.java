@@ -43,7 +43,7 @@ public class JarExecutor extends ExternalResource {
         if (executeJar) {
             Path jar = findJar();
             log.info("Starting jar " + jar.toAbsolutePath());
-            jarProcess = Runtime.getRuntime().exec("java -jar " + jar.toAbsolutePath().toString());
+            jarProcess = Runtime.getRuntime().exec(getJavaExecutable() + " -jar " + jar.toAbsolutePath().toString());
             startProcessOutputReader();
             waitForJarToStart();
         } else {
@@ -57,6 +57,15 @@ public class JarExecutor extends ExternalResource {
             log.info("Shutting down jar " + JAR_PATTERN);
             jarProcess.destroyForcibly();
         }
+    }
+
+    private String getJavaExecutable() {
+        String executable = System.getenv("JAVA_HOME");
+        if (executable == null || executable.isEmpty()) {
+            executable = "java";
+        }
+        log.info("java executable {}", executable);
+        return executable;
     }
 
     private void startProcessOutputReader() {
