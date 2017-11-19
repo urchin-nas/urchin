@@ -25,7 +25,7 @@ class NewUser extends Component {
         let username = this.props.user.username || '';
         let password = this.props.user.password || '';
         return (
-            <div className="new-user">
+            <div id="new-user">
                 <h2>User</h2>
                 <input
                     name="username"
@@ -49,8 +49,8 @@ class NewUser extends Component {
                     fieldErrors={this.props.fieldErrors}
                     field="password"
                 />
-                <button onClick={this.create}>Create User</button>
-                <button onClick={this.cancel}>Cancel</button>
+                <button id="new-user__create-btn" onClick={this.create}>Create User</button>
+                <button id="new-user__cancel-btn" onClick={this.cancel}>Cancel</button>
             </div>
         )
     }

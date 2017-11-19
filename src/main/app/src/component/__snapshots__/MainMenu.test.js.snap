@@ -2,12 +2,13 @@
 
 exports[`MainMenu match snapshot 1`] = `
 <div
-  className="main-menu"
+  id="main-menu"
 >
   MainMenu
   <ul>
     <a
       href="/home"
+      id="main-menu__home"
     >
       Home
     </a>
@@ -15,6 +16,7 @@ exports[`MainMenu match snapshot 1`] = `
   <ul>
     <a
       href="/users"
+      id="main-menu__users"
     >
       Users
     </a>
@@ -22,6 +24,7 @@ exports[`MainMenu match snapshot 1`] = `
   <ul>
     <a
       href="/groups"
+      id="main-menu__groups"
     >
       Groups
     </a>
@@ -29,6 +32,7 @@ exports[`MainMenu match snapshot 1`] = `
   <ul>
     <a
       href="/folders"
+      id="main-menu__folders"
     >
       Folders
     </a>

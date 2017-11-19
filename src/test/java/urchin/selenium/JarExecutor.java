@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import static urchin.selenium.configuration.SeleniumPortConfiguration.PORT;
+import static urchin.selenium.configuration.SeleniumUrlConfiguration.PORT;
 
 @TestComponent
 public class JarExecutor extends ExternalResource {

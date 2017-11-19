@@ -2,7 +2,7 @@
 
 exports[`Home match snapshot 1`] = `
 <div
-  className="home"
+  id="home"
 >
   Home
 </div>

@@ -4,19 +4,19 @@ class MainMenu extends Component {
 
     render() {
         return (
-            <div className="main-menu">
+            <div id="main-menu">
                 MainMenu
                 <ul>
-                    <a href="/home">Home</a>
+                    <a id="main-menu__home" href="/home">Home</a>
                 </ul>
                 <ul>
-                    <a href="/users">Users</a>
+                    <a id="main-menu__users" href="/users">Users</a>
                 </ul>
                 <ul>
-                    <a href="/groups">Groups</a>
+                    <a id="main-menu__groups" href="/groups">Groups</a>
                 </ul>
                 <ul>
-                    <a href="/folders">Folders</a>
+                    <a id="main-menu__folders" href="/folders">Folders</a>
                 </ul>
             </div>
         )

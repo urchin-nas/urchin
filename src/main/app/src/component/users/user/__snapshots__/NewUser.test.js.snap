@@ -2,7 +2,7 @@
 
 exports[`NewUser match snapshot 1`] = `
 <div
-  className="new-user"
+  id="new-user"
 >
   <h2>
     User
@@ -28,11 +28,13 @@ exports[`NewUser match snapshot 1`] = `
     field="password"
   />
   <button
+    id="new-user__create-btn"
     onClick={[Function]}
   >
     Create User
   </button>
   <button
+    id="new-user__cancel-btn"
     onClick={[Function]}
   >
     Cancel

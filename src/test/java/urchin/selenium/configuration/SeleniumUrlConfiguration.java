@@ -8,23 +8,25 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 
 @TestConfiguration
-public class SeleniumPortConfiguration {
+public class SeleniumUrlConfiguration {
 
     public static final int PORT = 8080;
     private static final int WEBPACK_PORT = 3000;
+    private static final String URL = "http://localhost:";
+
     private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
     @Bean
-    @Qualifier("seleniumPort")
+    @Qualifier("seleniumUrl")
     @Profile("production")
-    public Integer jarPort() {
-        return PORT;
+    public String jarUrl() {
+        return URL + PORT;
     }
 
-    @Bean("seleniumPort")
+    @Bean("seleniumUrl")
     @Profile("!production")
-    public Integer webpackPort() {
+    public String webpackUrl() {
         log.info("Expecting webpack-dev-server to be running and listening on port " + WEBPACK_PORT);
-        return WEBPACK_PORT;
+        return URL + WEBPACK_PORT;
     }
 }

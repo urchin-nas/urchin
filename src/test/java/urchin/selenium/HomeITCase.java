@@ -7,8 +7,8 @@ public class HomeITCase extends SeleniumTestApplication {
 
     @Test
     public void homeIsDisplayedAsFirstPageWhenLoggedIn() {
-        webDriver.get(url);
+        driver.get(url);
 
-        webDriver.findElement(By.className("home"));
+        driver.findElement(By.id("home"));
     }
 }
