@@ -245,6 +245,22 @@
                     <execution>
                         <configuration>
                             <argLine>-Dspring.profiles.active=production</argLine>
+                            <excludes>
+                                <exclude>**/*ITCase.java</exclude>
+                            </excludes>
+                        </configuration>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>Selenium tests</id>
+                        <configuration>
+                            <argLine>-Dspring.profiles.active=production</argLine>
+                            <excludes>
+                                <exclude>**/*IT.java</exclude>
+                            </excludes>
                         </configuration>
                         <goals>
                             <goal>integration-test</goal>
