@@ -256,7 +256,7 @@
                     <execution>
                         <id>Selenium tests</id>
                         <configuration>
-                            <argLine>-Dspring.profiles.active=production</argLine>
+                            <argLine>-Dspring.profiles.active=production -Dspring.datasource.url=jdbc:h2:mem:</argLine>
                             <excludes>
                                 <exclude>**/*IT.java</exclude>
                             </excludes>
