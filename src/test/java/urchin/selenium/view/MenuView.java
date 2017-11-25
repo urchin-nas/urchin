@@ -19,6 +19,9 @@ public class MenuView extends PageView {
 
     public void clickGroupsLink() {
         driver.findElement(By.id("main-menu__groups")).click();
+    }
 
+    public void clickFoldersLink() {
+        driver.findElement(By.id("main-menu__folders")).click();
     }
 }

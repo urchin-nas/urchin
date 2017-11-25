@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Import;
 import urchin.selenium.view.HomeView;
 import urchin.selenium.view.MenuView;
 import urchin.selenium.view.PageView;
+import urchin.selenium.view.folders.FoldersView;
+import urchin.selenium.view.folders.folder.EditFolderView;
+import urchin.selenium.view.folders.folder.NewFolderView;
 import urchin.selenium.view.groups.GroupsView;
 import urchin.selenium.view.groups.group.EditGroupView;
 import urchin.selenium.view.groups.group.NewGroupView;
@@ -40,5 +43,11 @@ public abstract class SeleniumTestApplication {
     protected NewUserView newUserView;
     @Autowired
     protected EditUserView editUserView;
+    @Autowired
+    protected FoldersView foldersView;
+    @Autowired
+    protected NewFolderView newFolderView;
+    @Autowired
+    protected EditFolderView editFolderView;
 
 }
