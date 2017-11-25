@@ -1,5 +1,6 @@
 package urchin.selenium.testutil;
 
+import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +19,20 @@ import urchin.selenium.view.groups.group.NewGroupView;
 import urchin.selenium.view.users.UsersView;
 import urchin.selenium.view.users.user.EditUserView;
 import urchin.selenium.view.users.user.NewUserView;
+import urchin.testutil.CliTestConfiguration;
+import urchin.testutil.UnixUserAndGroupCleanup;
 
 @RunWith(SeleniumRunner.class)
 @ComponentScan(basePackageClasses = PageView.class)
-@Import(HomeView.class)
+@Import(CliTestConfiguration.class)
 public abstract class SeleniumTestApplication {
 
     protected final WebDriver driver = SeleniumDriver.getDriver();
     protected final String url = SeleniumUrl.getUrl();
 
+    @Rule
+    @Autowired
+    public UnixUserAndGroupCleanup unixUserAndGroupCleanup;
     @Autowired
     protected HomeView homeView;
     @Autowired
