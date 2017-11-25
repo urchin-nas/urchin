@@ -10,6 +10,6 @@ public class HomeITCase extends SeleniumTestApplication {
     public void homeIsDisplayedAsFirstPageWhenLoggedIn() {
         driver.get(url);
 
-        driver.findElement(By.id("home"));
+        homeView.verifyAtView();
     }
 }
