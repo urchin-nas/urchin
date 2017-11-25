@@ -1,4 +1,4 @@
-package urchin.selenium;
+package urchin.selenium.testutil;
 
 import org.junit.Rule;
 import org.junit.runner.RunWith;
@@ -19,11 +19,11 @@ public abstract class SeleniumTestApplication {
 
     @Autowired
     @Qualifier("seleniumWebDriver")
-    WebDriver driver;
+    protected WebDriver driver;
 
     @Autowired
     @Qualifier("seleniumUrl")
-    String url;
+    protected String url;
 
     @Rule
     @Autowired

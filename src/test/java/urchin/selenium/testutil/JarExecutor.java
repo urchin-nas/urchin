@@ -1,4 +1,4 @@
-package urchin.selenium;
+package urchin.selenium.testutil;
 
 import org.junit.rules.ExternalResource;
 import org.slf4j.Logger;

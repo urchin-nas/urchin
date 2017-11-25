@@ -2,6 +2,7 @@ package urchin.selenium;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import urchin.selenium.testutil.SeleniumTestApplication;
 import urchin.selenium.view.*;
 import urchin.selenium.view.users.UsersView;
 import urchin.selenium.view.users.user.EditUserView;
