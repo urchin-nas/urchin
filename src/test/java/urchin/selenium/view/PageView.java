@@ -4,23 +4,20 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
+import urchin.selenium.testutil.SeleniumDriver;
+import urchin.selenium.testutil.SeleniumUrl;
 
 public abstract class PageView<T> {
 
-    @Autowired
-    @Qualifier("seleniumWebDriver")
-    protected WebDriver driver;
+    private static final int TIME_OUT_IN_SECONDS = 3;
 
-    @Autowired
-    @Qualifier("seleniumUrl")
-    protected String url;
+    protected final WebDriver driver = SeleniumDriver.getDriver();
+    protected final String url = SeleniumUrl.getUrl();
 
     public abstract T verifyAtView();
 
     protected WebElement waitUntil(ExpectedCondition<WebElement> webElementExpectedCondition) {
-        WebDriverWait wait = new WebDriverWait(driver, 3);
+        WebDriverWait wait = new WebDriverWait(driver, TIME_OUT_IN_SECONDS);
         return wait.until(webElementExpectedCondition);
     }
 }

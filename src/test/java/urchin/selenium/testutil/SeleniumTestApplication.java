@@ -1,32 +1,44 @@
 package urchin.selenium.testutil;
 
-import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
-import org.springframework.test.context.junit4.SpringRunner;
-import urchin.selenium.configuration.SeleniumUrlConfiguration;
-import urchin.selenium.configuration.SeleniumWebDriverConfiguration;
+import urchin.selenium.view.HomeView;
+import urchin.selenium.view.MenuView;
 import urchin.selenium.view.PageView;
+import urchin.selenium.view.groups.GroupsView;
+import urchin.selenium.view.groups.group.EditGroupView;
+import urchin.selenium.view.groups.group.NewGroupView;
+import urchin.selenium.view.users.UsersView;
+import urchin.selenium.view.users.user.EditUserView;
+import urchin.selenium.view.users.user.NewUserView;
 
-@RunWith(SpringRunner.class)
-@Import({JarExecutor.class, SeleniumUrlConfiguration.class, SeleniumWebDriverConfiguration.class})
+@RunWith(SeleniumRunner.class)
 @ComponentScan(basePackageClasses = PageView.class)
+@Import(HomeView.class)
 public abstract class SeleniumTestApplication {
 
-    @Autowired
-    @Qualifier("seleniumWebDriver")
-    protected WebDriver driver;
+    protected final WebDriver driver = SeleniumDriver.getDriver();
+    protected final String url = SeleniumUrl.getUrl();
 
     @Autowired
-    @Qualifier("seleniumUrl")
-    protected String url;
-
-    @Rule
+    protected HomeView homeView;
     @Autowired
-    public JarExecutor jarExecutor;
+    protected MenuView menuView;
+    @Autowired
+    protected GroupsView groupsView;
+    @Autowired
+    protected NewGroupView newGroupView;
+    @Autowired
+    protected EditGroupView editGroupView;
+    @Autowired
+    protected UsersView usersView;
+    @Autowired
+    protected NewUserView newUserView;
+    @Autowired
+    protected EditUserView editUserView;
 
 }

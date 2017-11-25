@@ -1,11 +1,7 @@
 package urchin.selenium.testutil;
 
-import org.junit.rules.ExternalResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.TestComponent;
-import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.client.RestTemplate;
 
@@ -15,32 +11,29 @@ import java.io.InputStreamReader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import static urchin.selenium.configuration.SeleniumUrlConfiguration.PORT;
+import static org.openqa.selenium.firefox.FirefoxDriver.PROFILE;
+import static urchin.selenium.testutil.ProfileEvaluator.isProduction;
+import static urchin.selenium.testutil.SeleniumUrl.PORT;
 
-@TestComponent
-public class JarExecutor extends ExternalResource {
+class JarExecutor {
 
     private static final String JAR_PATTERN = "urchin-.*.jar";
     private static final String HEALTH_ENDPOINT = "http://localhost:" + PORT + "/health";
-    private static final String PROFILE = "production";
 
     private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
     private final boolean executeJar;
 
     private Process jarProcess;
 
-    @Autowired
-    public JarExecutor(Environment environment) {
-        executeJar = Arrays.asList(environment.getActiveProfiles()).contains(PROFILE);
+    JarExecutor() {
+        executeJar = isProduction();
     }
 
-    @Override
-    protected void before() throws Throwable {
-        if (executeJar) {
+    void start() throws Exception {
+        if (executeJar && (jarProcess == null || !jarProcess.isAlive())) {
             Path jar = findJar();
             log.info("Starting jar " + jar.toAbsolutePath());
             jarProcess = Runtime.getRuntime().exec(getJavaExecutable() + " -jar " + jar.toAbsolutePath().toString());
@@ -51,8 +44,7 @@ public class JarExecutor extends ExternalResource {
         }
     }
 
-    @Override
-    protected void after() {
+    void stop() {
         if (jarProcess != null && jarProcess.isAlive()) {
             log.info("Shutting down jar " + JAR_PATTERN);
             jarProcess.destroyForcibly();

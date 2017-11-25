@@ -1,28 +1,12 @@
 package urchin.selenium;
 
 import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import urchin.selenium.testutil.SeleniumTestApplication;
-import urchin.selenium.view.*;
-import urchin.selenium.view.users.UsersView;
-import urchin.selenium.view.users.user.EditUserView;
-import urchin.selenium.view.users.user.NewUserView;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;
 
 public class UserITCase extends SeleniumTestApplication {
-
-    @Autowired
-    private HomeView homeView;
-    @Autowired
-    private MenuView menuView;
-    @Autowired
-    private UsersView usersView;
-    @Autowired
-    private NewUserView newUserView;
-    @Autowired
-    private EditUserView editUserView;
 
     @Test
     public void createAndDeleteUser() {
