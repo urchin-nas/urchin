@@ -39,7 +39,7 @@ class Groups extends Component {
         let availableUsers = this.props.availableUsers;
 
         return (
-            <div className="edit-group">
+            <div id="edit-group">
                 <h2>Group</h2>
                 <div>name: {groupName}</div>
                 <select
@@ -50,9 +50,9 @@ class Groups extends Component {
                         <option key={user.userId} value={user.userId}>{user.username}</option>
                     )}
                 </select>
-                <button onClick={this.addUser}>Add User</button>
-                <button onClick={this.del}>Delete</button>
-                <button onClick={this.back}>Back</button>
+                <button id="edit-group__add-group-btn" onClick={this.addUser}>Add User</button>
+                <button id="edit-group__delete-btn" onClick={this.del}>Delete</button>
+                <button id="edit-user__back-btn" onClick={this.back}>Back</button>
                 <h2>Members of group</h2>
                 <ul>
                     {usersInGroup}

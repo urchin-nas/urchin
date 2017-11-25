@@ -25,7 +25,7 @@ class NewGroup extends Component {
         let groupName = this.props.group.groupName || '';
         return (
 
-            <div className="new-group">
+            <div id="new-group">
                 <h2>Group</h2>
                 <input
                     name="groupName"
@@ -37,8 +37,8 @@ class NewGroup extends Component {
                     fieldErrors={this.props.fieldErrors}
                     field="groupName"
                 />
-                <button onClick={this.create}>Create Group</button>
-                <button onClick={this.cancel}>Cancel</button>
+                <button id="new-group__create-btn"onClick={this.create}>Create Group</button>
+                <button id="new-group__cancel-btn" onClick={this.cancel}>Cancel</button>
             </div>
         )
     }

@@ -2,10 +2,11 @@
 
 exports[`GroupList match snapshot 1`] = `
 <div
-  className="group-list"
+  id="group-list"
 >
   <a
     href="/groups/new"
+    id="group-list__new-group"
   >
     new group
   </a>

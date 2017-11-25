@@ -2,7 +2,7 @@
 
 exports[`NewGroup match snapshot 1`] = `
 <div
-  className="new-group"
+  id="new-group"
 >
   <h2>
     Group
@@ -17,11 +17,13 @@ exports[`NewGroup match snapshot 1`] = `
     field="groupName"
   />
   <button
+    id="new-group__create-btn"
     onClick={[Function]}
   >
     Create Group
   </button>
   <button
+    id="new-group__cancel-btn"
     onClick={[Function]}
   >
     Cancel

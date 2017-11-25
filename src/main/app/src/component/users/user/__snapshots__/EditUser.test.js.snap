@@ -31,6 +31,7 @@ exports[`EditUser match snapshot 1`] = `
     Delete
   </button>
   <button
+    id="edit-user__back-btn"
     onClick={[Function]}
   >
     Back

@@ -2,7 +2,7 @@
 
 exports[`EditGroup match snapshot 1`] = `
 <div
-  className="edit-group"
+  id="edit-group"
 >
   <h2>
     Group
@@ -19,16 +19,19 @@ exports[`EditGroup match snapshot 1`] = `
     </option>
   </select>
   <button
+    id="edit-group__add-group-btn"
     onClick={[Function]}
   >
     Add User
   </button>
   <button
+    id="edit-group__delete-btn"
     onClick={[Function]}
   >
     Delete
   </button>
   <button
+    id="edit-user__back-btn"
     onClick={[Function]}
   >
     Back

@@ -52,7 +52,7 @@ class EditUser extends Component {
                 </select>
                 <button id="edit-user__add-group-btn" onClick={this.addGroup}>Add Group</button>
                 <button id="edit-user__delete-btn" onClick={this.del}>Delete</button>
-                <button onClick={this.back}>Back</button>
+                <button id="edit-user__back-btn" onClick={this.back}>Back</button>
                 <h2>Member of groups</h2>
                 <ul>
                     {groupsForUser}

@@ -10,8 +10,8 @@ class GroupList extends Component {
             </li>
         );
         return (
-            <div className="group-list">
-                <a href="/groups/new">new group</a>
+            <div id="group-list">
+                <a id="group-list__new-group" href="/groups/new">new group</a>
                 <h2>grouplist</h2>
                 <ul>
                     {groupItems}
