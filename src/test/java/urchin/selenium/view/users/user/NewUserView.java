@@ -1,8 +1,9 @@
-package urchin.selenium.view;
+package urchin.selenium.view.users.user;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.springframework.boot.test.context.TestComponent;
+import urchin.selenium.view.PageView;
 
 @TestComponent
 public class NewUserView extends PageView {

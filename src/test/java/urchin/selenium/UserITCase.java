@@ -3,6 +3,9 @@ package urchin.selenium;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import urchin.selenium.view.*;
+import urchin.selenium.view.users.UsersView;
+import urchin.selenium.view.users.user.EditUserView;
+import urchin.selenium.view.users.user.NewUserView;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;

@@ -11,15 +11,15 @@ public abstract class PageView<T> {
 
     @Autowired
     @Qualifier("seleniumWebDriver")
-    WebDriver driver;
+    protected WebDriver driver;
 
     @Autowired
     @Qualifier("seleniumUrl")
-    String url;
+    protected String url;
 
     public abstract T verifyAtView();
 
-    WebElement waitUntil(ExpectedCondition<WebElement> webElementExpectedCondition) {
+    protected WebElement waitUntil(ExpectedCondition<WebElement> webElementExpectedCondition) {
         WebDriverWait wait = new WebDriverWait(driver, 3);
         return wait.until(webElementExpectedCondition);
     }
