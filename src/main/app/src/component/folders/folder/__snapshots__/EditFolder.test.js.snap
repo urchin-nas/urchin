@@ -2,7 +2,7 @@
 
 exports[`EditFolder match snapshot 1`] = `
 <div
-  className="edit-folder"
+  id="edit-folder"
 >
   <h2>
     Folder
@@ -14,6 +14,7 @@ exports[`EditFolder match snapshot 1`] = `
     Path: 
   </div>
   <button
+    id="edit-folder__back-btn"
     onClick={[Function]}
   >
     Back

@@ -25,7 +25,7 @@ class NewFolder extends Component {
         let folder = this.props.folder.folder || '';
 
         return (
-            <div className="new-folder">
+            <div id="new-folder">
                 <h2>Folder</h2>
                 <input
                     name="folder"
@@ -37,8 +37,8 @@ class NewFolder extends Component {
                     fieldErrors={this.props.fieldErrors}
                     field="folder"
                 />
-                <button onClick={this.create}>Create Folder</button>
-                <button onClick={this.cancel}>Cancel</button>
+                <button id="new-folder__create-btn"  onClick={this.create}>Create Folder</button>
+                <button id="new-folder__cancel-btn" onClick={this.cancel}>Cancel</button>
             </div>
         )
     }

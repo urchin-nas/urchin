@@ -2,7 +2,7 @@
 
 exports[`NewFolder match snapshot 1`] = `
 <div
-  className="new-folder"
+  id="new-folder"
 >
   <h2>
     Folder
@@ -17,11 +17,13 @@ exports[`NewFolder match snapshot 1`] = `
     field="folder"
   />
   <button
+    id="new-folder__create-btn"
     onClick={[Function]}
   >
     Create Folder
   </button>
   <button
+    id="new-folder__cancel-btn"
     onClick={[Function]}
   >
     Cancel

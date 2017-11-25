@@ -2,10 +2,11 @@
 
 exports[`FolderList match snapshot 1`] = `
 <div
-  className="folder-list"
+  id="folder-list"
 >
   <a
     href="/folders/new"
+    id="folder-list__new-folder"
   >
     new folder
   </a>

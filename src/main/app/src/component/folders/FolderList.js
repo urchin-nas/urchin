@@ -10,8 +10,8 @@ class FolderList extends Component {
             </li>
         );
         return (
-            <div className="folder-list">
-                <a href="/folders/new">new folder</a>
+            <div id="folder-list">
+                <a id="folder-list__new-folder" href="/folders/new">new folder</a>
                 <h2>Folders</h2>
                 <ul>
                     {folderItems}

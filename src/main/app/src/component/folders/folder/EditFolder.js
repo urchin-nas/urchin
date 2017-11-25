@@ -20,11 +20,11 @@ class Folders extends Component {
         let folderName = this.props.folder.folderName;
         let folderPath = this.props.folder.folderPath;
         return (
-            <div className="edit-folder">
+            <div id="edit-folder">
                 <h2>Folder</h2>
                 <div>Name: {folderName}</div>
                 <div>Path: {folderPath}</div>
-                <button onClick={this.back}>Back</button>
+                <button id="edit-folder__back-btn" onClick={this.back}>Back</button>
             </div>
         )
     }
