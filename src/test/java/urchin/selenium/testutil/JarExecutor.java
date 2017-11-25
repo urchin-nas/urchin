@@ -26,14 +26,14 @@ class JarExecutor {
     private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
     private final boolean executeJar;
 
-    private Process jarProcess;
+    private static Process jarProcess;
 
     JarExecutor() {
         executeJar = isProduction();
     }
 
     void start() throws Exception {
-        if (executeJar && (jarProcess == null || !jarProcess.isAlive())) {
+        if (executeJar && !isStarted()) {
             Path jar = findJar();
             log.info("Starting jar " + jar.toAbsolutePath());
             jarProcess = Runtime.getRuntime().exec(getJavaExecutable() + " -jar " + jar.toAbsolutePath().toString());
@@ -45,10 +45,14 @@ class JarExecutor {
     }
 
     void stop() {
-        if (jarProcess != null && jarProcess.isAlive()) {
+        if (isStarted()) {
             log.info("Shutting down jar " + JAR_PATTERN);
             jarProcess.destroyForcibly();
         }
+    }
+
+    private boolean isStarted() {
+        return jarProcess != null && jarProcess.isAlive();
     }
 
     private String getJavaExecutable() {
