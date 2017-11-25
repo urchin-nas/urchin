@@ -11,7 +11,7 @@ public class GroupITCase extends SeleniumTestApplication {
     public void createAndDeleteGroup() {
         String groupName = GROUP_PREFIX + System.currentTimeMillis();
 
-        homeView.goToView();
+        homeView.goTo();
 
         menuView.verifyAtView()
                 .clickGroupsLink();

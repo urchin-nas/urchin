@@ -31,9 +31,11 @@ class EditUser extends Component {
     render() {
         let username = this.props.user.username;
         let groupsForUser = this.props.groupsForUser.map((group, index) =>
-            <li key={index.toString()}>
+            <li className="edit-user__groups__item" key={index.toString()}>
                 <a href={`/groups/${group.groupId}`}>{group.groupName}</a>
-                <button onClick={() => this.removeGroup(group.groupId)}>Remove Group</button>
+                <button className="edit-user__groups__item__remove-group-btn" onClick={() => this.removeGroup(group.groupId)}>
+                    Remove Group
+                </button>
             </li>
         );
         let availableGroups = this.props.availableGroups;
@@ -43,18 +45,20 @@ class EditUser extends Component {
                 <h2>User</h2>
                 <div>Username: {username}</div>
                 <select
+                    id="edit-user__available-groups"
                     name="groupId"
                     onChange={this.update}>
                     <option>-- select group --</option>
                     {availableGroups.map(group =>
-                        <option key={group.groupId} value={group.groupId}>{group.groupName}</option>
+                        <option className="edit-user__available-groups__item" key={group.groupId}
+                                value={group.groupId}>{group.groupName}</option>
                     )}
                 </select>
                 <button id="edit-user__add-group-btn" onClick={this.addGroup}>Add Group</button>
                 <button id="edit-user__delete-btn" onClick={this.del}>Delete</button>
                 <button id="edit-user__back-btn" onClick={this.back}>Back</button>
                 <h2>Member of groups</h2>
-                <ul>
+                <ul id="edit-user__groups">
                     {groupsForUser}
                 </ul>
             </div>

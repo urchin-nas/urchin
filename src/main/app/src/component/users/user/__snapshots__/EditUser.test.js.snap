@@ -11,6 +11,7 @@ exports[`EditUser match snapshot 1`] = `
     Username: 
   </div>
   <select
+    id="edit-user__available-groups"
     name="groupId"
     onChange={[Function]}
   >
@@ -39,6 +40,8 @@ exports[`EditUser match snapshot 1`] = `
   <h2>
     Member of groups
   </h2>
-  <ul />
+  <ul
+    id="edit-user__groups"
+  />
 </div>
 `;

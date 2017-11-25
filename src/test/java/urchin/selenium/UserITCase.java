@@ -12,7 +12,7 @@ public class UserITCase extends SeleniumTestApplication {
     public void createAndDeleteUser() {
         String username = USERNAME_PREFIX + System.currentTimeMillis();
 
-        homeView.goToView();
+        homeView.goTo();
 
         menuView.verifyAtView()
                 .clickUsersLink();

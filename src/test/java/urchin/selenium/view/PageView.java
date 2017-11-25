@@ -14,10 +14,11 @@ public abstract class PageView<T> {
     protected final WebDriver driver = SeleniumDriver.getDriver();
     protected final String url = SeleniumUrl.getUrl();
 
+    private final WebDriverWait wait = new WebDriverWait(driver, TIME_OUT_IN_SECONDS);
+
     public abstract T verifyAtView();
 
-    protected WebElement waitUntil(ExpectedCondition<WebElement> webElementExpectedCondition) {
-        WebDriverWait wait = new WebDriverWait(driver, TIME_OUT_IN_SECONDS);
-        return wait.until(webElementExpectedCondition);
+    protected void waitUntil(ExpectedCondition<WebElement> webElementExpectedCondition) {
+        wait.until(webElementExpectedCondition);
     }
 }

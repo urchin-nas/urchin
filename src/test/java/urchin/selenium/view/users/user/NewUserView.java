@@ -14,6 +14,11 @@ public class NewUserView extends PageView {
         return this;
     }
 
+    public NewUserView goTo() {
+        driver.get(url + "/users/new");
+        return verifyAtView();
+    }
+
     public NewUserView fillUsername(String username) {
         driver.findElement(By.name("username")).sendKeys(username);
         return this;

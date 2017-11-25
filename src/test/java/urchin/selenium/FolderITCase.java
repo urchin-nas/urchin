@@ -15,7 +15,7 @@ public class FolderITCase extends SeleniumTestApplication {
         String folderName = "test-" + System.currentTimeMillis();
         String folderPath = temporaryFolder.getRoot().getAbsolutePath() + "/" + folderName;
 
-        homeView.goToView();
+        homeView.goTo();
 
         menuView.verifyAtView()
                 .clickFoldersLink();

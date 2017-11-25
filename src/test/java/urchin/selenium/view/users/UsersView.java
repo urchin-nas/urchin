@@ -16,6 +16,11 @@ public class UsersView extends PageView {
         return this;
     }
 
+    public UsersView goTo() {
+        driver.get(url + "/users");
+        return verifyAtView();
+    }
+
     public UsersView verifyUsernameListed(String username) {
         waitUntil(ExpectedConditions.visibilityOfElementLocated(By.linkText(username)));
         return this;
@@ -33,6 +38,5 @@ public class UsersView extends PageView {
     public void clickUsernameLink(String username) {
         driver.findElement(By.linkText(username)).click();
     }
-
 
 }

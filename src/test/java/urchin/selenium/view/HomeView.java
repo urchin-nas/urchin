@@ -7,15 +7,15 @@ import org.springframework.boot.test.context.TestComponent;
 @TestComponent
 public class HomeView extends PageView {
 
-    public HomeView goToView() {
-        driver.get(url);
-        return verifyAtView();
-    }
-
     @Override
     public HomeView verifyAtView() {
         waitUntil(ExpectedConditions.visibilityOfElementLocated(By.id("home")));
         return this;
+    }
+
+    public HomeView goTo() {
+        driver.get(url);
+        return verifyAtView();
     }
 
 }

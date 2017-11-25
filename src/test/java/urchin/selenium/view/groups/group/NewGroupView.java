@@ -14,6 +14,11 @@ public class NewGroupView extends PageView {
         return this;
     }
 
+    public NewGroupView goTo() {
+        driver.get(url + "/groups/new");
+        return verifyAtView();
+    }
+
     public NewGroupView fillGroupName(String username) {
         driver.findElement(By.name("groupName")).sendKeys(username);
         return this;
