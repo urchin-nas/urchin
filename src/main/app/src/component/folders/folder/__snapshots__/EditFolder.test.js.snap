@@ -14,6 +14,12 @@ exports[`EditFolder match snapshot 1`] = `
     Path: 
   </div>
   <button
+    id="edit-folder__delete-btn"
+    onClick={[Function]}
+  >
+    Delete
+  </button>
+  <button
     id="edit-folder__back-btn"
     onClick={[Function]}
   >

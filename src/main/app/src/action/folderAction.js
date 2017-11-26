@@ -1,6 +1,6 @@
 import history from '../history'
 import {Actions, ErrorCodes} from '../constants'
-import {get, post} from './restClient'
+import {del, get, post} from './restClient'
 import {notifyBackendError, notifySuccess} from "./notificationAction";
 
 const {Folders} = Actions;
@@ -58,4 +58,21 @@ export const createFolder = (folder) => (dispatch) => {
                 }
             }
         )
+};
+
+export const deleteFolder = (folderId) => (dispatch) => {
+    dispatch({
+        type: Folder.DELETE_FOLDER
+    });
+    del('/api/folders/' + folderId)
+        .then(json => {
+            dispatch({
+                type: Folder.DELETE_FOLDER_SUCCESS,
+                data: json
+            });
+            history.push('/folders');
+            notifySuccess("Success", "Folder deleted")
+        }, error => (
+            notifyBackendError(error)
+        ))
 };

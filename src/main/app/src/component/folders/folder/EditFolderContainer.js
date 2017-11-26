@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import EditFolder from './EditFolder';
-import {getFolder, setFolder} from '../../../action/folderAction';
+import {deleteFolder, getFolder, setFolder} from '../../../action/folderAction';
 
 export class EditFolderContainer extends Component {
 
@@ -30,6 +30,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         setFolder: (folder) => {
             dispatch(setFolder(folder))
+        },
+        deleteFolder: (folderId) => {
+            dispatch(deleteFolder(folderId))
         }
     }
 };

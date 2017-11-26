@@ -11,7 +11,7 @@ public class FolderITCase extends SeleniumTestApplication {
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
     @Test
-    public void createFolder() {
+    public void creatingAndDeletingFolder() {
         String folderName = "test-" + System.currentTimeMillis();
         String folderPath = temporaryFolder.getRoot().getAbsolutePath() + "/" + folderName;
 
@@ -24,6 +24,12 @@ public class FolderITCase extends SeleniumTestApplication {
                 .clickCreateNewFolderLink();
 
         newFolderView.verifyAtView()
+                .clickCancelButton();
+
+        foldersView.verifyAtView()
+                .clickCreateNewFolderLink();
+
+        newFolderView.verifyAtView()
                 .fillFolderPath(folderPath)
                 .clickCreateFolderButton();
 
@@ -31,6 +37,17 @@ public class FolderITCase extends SeleniumTestApplication {
                 .verifyFolderListed(folderName)
                 .clickFolderLink(folderName);
 
-        editFolderView.verifyAtView();
+        editFolderView.verifyAtView()
+                .clickBackButton();
+
+        foldersView.verifyAtView()
+                .verifyFolderListed(folderName)
+                .clickFolderLink(folderName);
+
+        editFolderView.verifyAtView()
+                .clickDeleteFólderButton();
+
+        foldersView.verifyAtView()
+                .verifyFolderNotListed(folderName);
     }
 }

@@ -11,4 +11,12 @@ public class EditFolderView extends PageView {
         waitUntil(ExpectedConditions.visibilityOfElementLocated(By.id("edit-folder")));
         return this;
     }
+
+    public void clickBackButton() {
+        driver.findElement(By.id("edit-folder__back-btn")).click();
+    }
+
+    public void clickDeleteFólderButton() {
+        driver.findElement(By.id("edit-folder__delete-btn")).click();
+    }
 }

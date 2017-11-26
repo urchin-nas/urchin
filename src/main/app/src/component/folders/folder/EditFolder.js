@@ -12,6 +12,10 @@ class Folders extends Component {
         this.props.callbacks.setFolder(data);
     };
 
+    del = () => {
+        this.props.callbacks.deleteFolder(this.props.folder.folderId);
+    };
+
     back = () => {
         history.push('/folders');
     };
@@ -24,6 +28,7 @@ class Folders extends Component {
                 <h2>Folder</h2>
                 <div>Name: {folderName}</div>
                 <div>Path: {folderPath}</div>
+                <button id="edit-folder__delete-btn" onClick={this.del}>Delete</button>
                 <button id="edit-folder__back-btn" onClick={this.back}>Back</button>
             </div>
         )

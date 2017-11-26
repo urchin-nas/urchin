@@ -31,14 +31,14 @@ public class GroupITCase extends SeleniumTestApplication {
 
         groupsView.verifyAtView()
                 .verifyGroupNameListed(groupName)
-                .clickGroupnameLink(groupName);
+                .clickGroupNameLink(groupName);
 
         editGroupView.verifyAtView()
                 .clickBackButton();
 
         groupsView.verifyAtView()
                 .verifyGroupNameListed(groupName)
-                .clickGroupnameLink(groupName);
+                .clickGroupNameLink(groupName);
 
         editGroupView.verifyAtView()
                 .clickDeleteGroupButton();

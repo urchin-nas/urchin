@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import urchin.selenium.view.PageView;
 
-import static org.junit.Assert.assertTrue;
+import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
 public class GroupsView extends PageView {
 
@@ -25,7 +25,7 @@ public class GroupsView extends PageView {
     }
 
     public GroupsView verifyGroupNameNotListed(String groupName) {
-        assertTrue(driver.findElements(By.linkText(groupName)).size() < 1);
+        waitUntil(invisibilityOfElementLocated(By.linkText(groupName)));
         return this;
     }
 
@@ -33,7 +33,7 @@ public class GroupsView extends PageView {
         driver.findElement(By.id("group-list__new-group")).click();
     }
 
-    public void clickGroupnameLink(String groupName) {
+    public void clickGroupNameLink(String groupName) {
         driver.findElement(By.linkText(groupName)).click();
     }
 

@@ -20,4 +20,8 @@ public class NewFolderView extends PageView {
     public void clickCreateFolderButton() {
         driver.findElement(By.id("new-folder__create-btn")).click();
     }
+
+    public void clickCancelButton() {
+        driver.findElement(By.id("new-folder__cancel-btn")).click();
+    }
 }

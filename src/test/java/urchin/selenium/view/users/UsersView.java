@@ -4,7 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import urchin.selenium.view.PageView;
 
-import static org.junit.Assert.assertTrue;
+import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
 public class UsersView extends PageView {
 
@@ -25,7 +25,7 @@ public class UsersView extends PageView {
     }
 
     public UsersView verifyUsernameNotListed(String username) {
-        assertTrue(driver.findElements(By.linkText(username)).size() < 1);
+        waitUntil(invisibilityOfElementLocated(By.linkText(username)));
         return this;
     }
 

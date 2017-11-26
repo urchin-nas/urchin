@@ -42,7 +42,7 @@ public class UserToGroupITCase extends SeleniumTestApplication {
                 .clickDeleteUserButton();
 
         groupsView.goTo()
-                .clickGroupnameLink(groupName);
+                .clickGroupNameLink(groupName);
 
         editGroupView.verifyAtView()
                 .clickDeleteGroupButton();
@@ -73,7 +73,7 @@ public class UserToGroupITCase extends SeleniumTestApplication {
     public void userCanBeAddedAndRemovedFromGroupView() {
         groupsView.goTo()
                 .verifyGroupNameListed(groupName)
-                .clickGroupnameLink(groupName);
+                .clickGroupNameLink(groupName);
 
         editGroupView.verifyAtView()
                 .selectUser(username)

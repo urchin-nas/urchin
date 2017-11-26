@@ -4,6 +4,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import urchin.selenium.view.PageView;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
+
 public class FoldersView extends PageView {
 
     @Override
@@ -25,5 +27,8 @@ public class FoldersView extends PageView {
         driver.findElement(By.linkText(folderName)).click();
     }
 
-
+    public FoldersView verifyFolderNotListed(String folderName) {
+        waitUntil(invisibilityOfElementLocated(By.linkText(folderName)));
+        return this;
+    }
 }
