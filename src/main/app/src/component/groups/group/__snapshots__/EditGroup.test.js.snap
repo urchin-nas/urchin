@@ -11,6 +11,7 @@ exports[`EditGroup match snapshot 1`] = `
     name: 
   </div>
   <select
+    id="edit-group__available-users"
     name="userId"
     onChange={[Function]}
   >
@@ -19,7 +20,7 @@ exports[`EditGroup match snapshot 1`] = `
     </option>
   </select>
   <button
-    id="edit-group__add-group-btn"
+    id="edit-group__add-user-btn"
     onClick={[Function]}
   >
     Add User
@@ -39,6 +40,8 @@ exports[`EditGroup match snapshot 1`] = `
   <h2>
     Members of group
   </h2>
-  <ul />
+  <ul
+    id="edit-group__users"
+  />
 </div>
 `;

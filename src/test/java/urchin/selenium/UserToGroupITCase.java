@@ -45,11 +45,13 @@ public class UserToGroupITCase extends SeleniumTestApplication {
     }
 
     @Test
-    public void userCanBeAddedAndRemovedFromGroup() {
-        usersView.verifyUsernameListed(username)
+    public void userCanBeAddedAndRemovedFromUserView() {
+        usersView.goTo()
+                .verifyUsernameListed(username)
                 .clickUsernameLink(username);
 
-        editUserView.selectGroup(groupName)
+        editUserView.verifyAtView()
+                .selectGroup(groupName)
                 .clickAddGroupButton()
                 .verifyGroupListed(groupName)
                 .clickGroupLink(groupName);
@@ -61,7 +63,26 @@ public class UserToGroupITCase extends SeleniumTestApplication {
         editUserView.verifyAtView()
                 .clickRemoveGroupButton(groupName)
                 .verifyGroupNotListed(groupName);
+    }
 
+    @Test
+    public void userCanBeAddedAndRemovedFromGroupView() {
+        groupsView.goTo()
+                .verifyGroupNameListed(groupName)
+                .clickGroupnameLink(groupName);
 
+        editGroupView.verifyAtView()
+                .selectUser(username)
+                .clickAddUserButton()
+                .verifyUserListed(username)
+                .clickUserLink(username);
+
+        editUserView.verifyAtView()
+                .verifyGroupListed(groupName)
+                .clickGroupLink(groupName);
+
+        editGroupView.verifyAtView()
+                .clickRemoveUserButton(username)
+                .verifyUserNotListed(username);
     }
 }
