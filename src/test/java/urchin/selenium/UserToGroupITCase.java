@@ -1,5 +1,7 @@
 package urchin.selenium;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 import urchin.selenium.testutil.SeleniumTestApplication;
 
@@ -9,10 +11,13 @@ import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;
 
 public class UserToGroupITCase extends SeleniumTestApplication {
 
-    @Test
-    public void userCanBeAddedAndRemovedFromGroup() {
-        String groupName = GROUP_PREFIX + System.currentTimeMillis();
-        String username = USERNAME_PREFIX + System.currentTimeMillis();
+    private static String groupName;
+    private static String username;
+
+    @BeforeClass
+    public static void setUp() {
+        groupName = GROUP_PREFIX + System.currentTimeMillis();
+        username = USERNAME_PREFIX + System.currentTimeMillis();
 
         newGroupView.goTo()
                 .fillGroupName(groupName)
@@ -22,7 +27,25 @@ public class UserToGroupITCase extends SeleniumTestApplication {
                 .fillUsername(username)
                 .fillPassword(randomAlphanumeric(10))
                 .clickCreateUserButton();
+    }
 
+    @AfterClass
+    public static void tearDown() {
+        usersView.goTo()
+                .clickUsernameLink(username);
+
+        editUserView.verifyAtView()
+                .clickDeleteUserButton();
+
+        groupsView.goTo()
+                .clickGroupnameLink(groupName);
+
+        editGroupView.verifyAtView()
+                .clickDeleteGroupButton();
+    }
+
+    @Test
+    public void userCanBeAddedAndRemovedFromGroup() {
         usersView.verifyUsernameListed(username)
                 .clickUsernameLink(username);
 
@@ -38,8 +61,6 @@ public class UserToGroupITCase extends SeleniumTestApplication {
         editUserView.verifyAtView()
                 .clickRemoveGroupButton(groupName)
                 .verifyGroupNotListed(groupName);
-
-
 
 
     }

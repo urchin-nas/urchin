@@ -2,12 +2,8 @@ package urchin.selenium.view.folders;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.springframework.boot.test.context.TestComponent;
 import urchin.selenium.view.PageView;
 
-import static org.junit.Assert.assertTrue;
-
-@TestComponent
 public class FoldersView extends PageView {
 
     @Override

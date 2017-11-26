@@ -2,10 +2,8 @@ package urchin.selenium.view.groups.group;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.springframework.boot.test.context.TestComponent;
 import urchin.selenium.view.PageView;
 
-@TestComponent
 public class NewGroupView extends PageView {
 
     @Override

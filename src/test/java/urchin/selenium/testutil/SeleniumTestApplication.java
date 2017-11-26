@@ -3,13 +3,12 @@ package urchin.selenium.testutil;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Import;
 import urchin.selenium.view.HomeView;
 import urchin.selenium.view.MenuView;
-import urchin.selenium.view.PageView;
 import urchin.selenium.view.folders.FoldersView;
 import urchin.selenium.view.folders.folder.EditFolderView;
 import urchin.selenium.view.folders.folder.NewFolderView;
@@ -23,37 +22,44 @@ import urchin.testutil.CliTestConfiguration;
 import urchin.testutil.UnixUserAndGroupCleanup;
 
 @RunWith(SeleniumRunner.class)
-@ComponentScan(basePackageClasses = PageView.class)
 @Import(CliTestConfiguration.class)
 public abstract class SeleniumTestApplication {
 
-    protected final WebDriver driver = SeleniumDriver.getDriver();
-    protected final String url = SeleniumUrl.getUrl();
+    private static Logger log = LoggerFactory.getLogger(SeleniumTestApplication.class);
+
+    protected static final WebDriver driver = SeleniumDriver.getDriver();
+    protected static final String url = SeleniumUrl.getUrl();
 
     @Rule
     @Autowired
     public UnixUserAndGroupCleanup unixUserAndGroupCleanup;
-    @Autowired
-    protected HomeView homeView;
-    @Autowired
-    protected MenuView menuView;
-    @Autowired
-    protected GroupsView groupsView;
-    @Autowired
-    protected NewGroupView newGroupView;
-    @Autowired
-    protected EditGroupView editGroupView;
-    @Autowired
-    protected UsersView usersView;
-    @Autowired
-    protected NewUserView newUserView;
-    @Autowired
-    protected EditUserView editUserView;
-    @Autowired
-    protected FoldersView foldersView;
-    @Autowired
-    protected NewFolderView newFolderView;
-    @Autowired
-    protected EditFolderView editFolderView;
+
+    protected static HomeView homeView;
+    protected static MenuView menuView;
+    protected static GroupsView groupsView;
+    protected static NewGroupView newGroupView;
+    protected static EditGroupView editGroupView;
+    protected static UsersView usersView;
+    protected static NewUserView newUserView;
+    protected static EditUserView editUserView;
+    protected static FoldersView foldersView;
+    protected static NewFolderView newFolderView;
+    protected static EditFolderView editFolderView;
+
+    public SeleniumTestApplication() {
+        log.info("Setting up PageViews");
+        homeView = new HomeView();
+        menuView = new MenuView();
+        groupsView = new GroupsView();
+        newGroupView = new NewGroupView();
+        editGroupView = new EditGroupView();
+        usersView = new UsersView();
+        newUserView = new NewUserView();
+        editUserView = new EditUserView();
+        foldersView = new FoldersView();
+        newFolderView = new NewFolderView();
+        editFolderView = new EditFolderView();
+    }
+
 
 }

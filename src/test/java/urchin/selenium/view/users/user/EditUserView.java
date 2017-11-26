@@ -2,13 +2,11 @@ package urchin.selenium.view.users.user;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
-import org.springframework.boot.test.context.TestComponent;
 import urchin.selenium.view.PageView;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.*;
+import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
-@TestComponent
 public class EditUserView extends PageView {
 
     @Override

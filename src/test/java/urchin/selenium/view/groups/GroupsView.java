@@ -2,18 +2,21 @@ package urchin.selenium.view.groups;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.springframework.boot.test.context.TestComponent;
 import urchin.selenium.view.PageView;
 
 import static org.junit.Assert.assertTrue;
 
-@TestComponent
 public class GroupsView extends PageView {
 
     @Override
     public GroupsView verifyAtView() {
         waitUntil(ExpectedConditions.visibilityOfElementLocated(By.id("group-list")));
         return this;
+    }
+
+    public GroupsView goTo() {
+        driver.get(url + "/groups");
+        return verifyAtView();
     }
 
     public GroupsView verifyGroupNameListed(String groupName) {
@@ -33,6 +36,5 @@ public class GroupsView extends PageView {
     public void clickGroupnameLink(String groupName) {
         driver.findElement(By.linkText(groupName)).click();
     }
-
 
 }
