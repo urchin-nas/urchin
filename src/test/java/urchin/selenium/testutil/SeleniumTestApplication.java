@@ -34,6 +34,8 @@ public abstract class SeleniumTestApplication {
     @Autowired
     public UnixUserAndGroupCleanup unixUserAndGroupCleanup;
 
+    private static boolean initialized;
+
     protected static HomeView homeView;
     protected static MenuView menuView;
     protected static GroupsView groupsView;
@@ -47,19 +49,21 @@ public abstract class SeleniumTestApplication {
     protected static EditFolderView editFolderView;
 
     public SeleniumTestApplication() {
-        log.info("Setting up PageViews");
-        homeView = new HomeView();
-        menuView = new MenuView();
-        groupsView = new GroupsView();
-        newGroupView = new NewGroupView();
-        editGroupView = new EditGroupView();
-        usersView = new UsersView();
-        newUserView = new NewUserView();
-        editUserView = new EditUserView();
-        foldersView = new FoldersView();
-        newFolderView = new NewFolderView();
-        editFolderView = new EditFolderView();
+        if (!initialized) {
+            log.info("Setting up PageViews");
+            homeView = new HomeView();
+            menuView = new MenuView();
+            groupsView = new GroupsView();
+            newGroupView = new NewGroupView();
+            editGroupView = new EditGroupView();
+            usersView = new UsersView();
+            newUserView = new NewUserView();
+            editUserView = new EditUserView();
+            foldersView = new FoldersView();
+            newFolderView = new NewFolderView();
+            editFolderView = new EditFolderView();
+
+            initialized = true;
+        }
     }
-
-
 }
