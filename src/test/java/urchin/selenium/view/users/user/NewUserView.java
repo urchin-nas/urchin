@@ -30,4 +30,8 @@ public class NewUserView extends PageView {
     public void clickCreateUserButton() {
         driver.findElement(By.id("new-user__create-btn")).click();
     }
+
+    public void clickCancelButton() {
+        driver.findElement(By.id("new-user__cancel-btn")).click();
+    }
 }

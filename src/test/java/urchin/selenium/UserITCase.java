@@ -21,9 +21,22 @@ public class UserITCase extends SeleniumTestApplication {
                 .clickCreateNewUserLink();
 
         newUserView.verifyAtView()
+                .clickCancelButton();
+
+        usersView.verifyAtView()
+                .clickCreateNewUserLink();
+
+        newUserView.verifyAtView()
                 .fillUsername(username)
                 .fillPassword(randomAlphanumeric(10))
                 .clickCreateUserButton();
+
+        usersView.verifyAtView()
+                .verifyUsernameListed(username)
+                .clickUsernameLink(username);
+
+        editUserView.verifyAtView()
+                .clickBackButton();
 
         usersView.verifyAtView()
                 .verifyUsernameListed(username)

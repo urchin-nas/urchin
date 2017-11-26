@@ -53,4 +53,8 @@ public class EditUserView extends PageView {
                 .click();
         return this;
     }
+
+    public void clickBackButton() {
+        driver.findElement(By.id("edit-user__back-btn")).click();
+    }
 }
