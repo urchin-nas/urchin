@@ -2,10 +2,11 @@ package urchin.model.folder;
 
 import org.immutables.value.Value;
 
+import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 
-abstract class FolderWrapper {
+public abstract class FolderWrapper {
 
     @Value.Parameter
     public abstract Path getPath();
@@ -27,7 +28,12 @@ abstract class FolderWrapper {
     }
 
     public boolean isEmpty() {
-        return this.getPath().toFile().list().length == 0;
+        File file = this.getPath().toFile();
+        if (file != null && file.exists()) {
+            return file.list().length == 0;
+        } else {
+            throw new IllegalArgumentException(String.format("Folder %s does not exist", this));
+        }
     }
 
     public String toAbsolutePath() {

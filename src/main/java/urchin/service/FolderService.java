@@ -19,8 +19,7 @@ import static urchin.util.PassphraseGenerator.generateEcryptfsPassphrase;
 @Service
 public class FolderService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(FolderService.class);
-
+    private final Logger log = LoggerFactory.getLogger(this.getClass());
     private final FolderSettingsRepository folderSettingsRepository;
     private final FolderCli folderCli;
 
@@ -48,9 +47,31 @@ public class FolderService {
                 .build();
     }
 
+    @Transactional
+    public void deleteEncryptedFolder(FolderId folderId) throws IOException {
+        FolderSettings folderSettings = folderSettingsRepository.getFolderSettings(folderId);
+        Folder folder = folderSettings.getFolder();
+
+        if (!folder.isEmpty()) {
+            throw new IllegalStateException(String.format("Folder %s must be empty before it can be deleted", folder));
+        }
+
+        EncryptedFolder encryptedFolder = folderSettings.getEncryptedFolder();
+        if (!encryptedFolder.isEmpty()) {
+            throw new IllegalStateException(String.format("EncryptedFolder %s must be empty before it can be deleted", encryptedFolder));
+        }
+
+        log.info("Deleting encrypted folder {}", folderSettings);
+        folderSettingsRepository.removeFolderSettings(folderId);
+
+        unmountFolder(folder);
+        unmountEncryptedFolder(encryptedFolder);
+        deleteFolder(encryptedFolder);
+    }
+
     public void mountEncryptedFolder(EncryptedFolder encryptedFolder, Passphrase passphrase) throws IOException {
         if (!Files.exists(encryptedFolder.getPath())) {
-            throw new IllegalArgumentException(String.format("Encrypted folder %s does not exist", encryptedFolder.getPath()));
+            throw new IllegalArgumentException(String.format("EncryptedFolder %s does not exist", encryptedFolder.getPath()));
         }
         Folder folder = encryptedFolder.toRegularFolder();
         if (!Files.exists(folder.getPath()) || folder.isEmpty()) {
@@ -61,16 +82,25 @@ public class FolderService {
         }
     }
 
-
     public void unmountFolder(Folder folder) throws IOException {
         if (Files.exists(folder.getPath())) {
             folderCli.unmountFolder(folder);
-            if (folder.isEmpty()) {
-                LOG.info("Deleting empty folder {}", folder.toAbsolutePath());
-                Files.delete(folder.getPath());
-            } else {
-                throw new RuntimeException("Something went wrong during umount");
-            }
+            deleteFolder(folder);
+        }
+    }
+
+    private void unmountEncryptedFolder(EncryptedFolder encryptedFolder) throws IOException {
+        if (Files.exists(encryptedFolder.getPath())) {
+            folderCli.unmountFolder(encryptedFolder);
+        }
+    }
+
+    private <T extends FolderWrapper> void deleteFolder(T folder) throws IOException {
+        if (folder.isEmpty()) {
+            log.info("Deleting empty folder {}", folder.toAbsolutePath());
+            Files.delete(folder.getPath());
+        } else {
+            throw new IllegalStateException(String.format("%s must be empty before it can be deleted", folder));
         }
     }
 
@@ -105,7 +135,7 @@ public class FolderService {
 
     private void createEncryptionFolderPair(Folder folder, EncryptedFolder encryptedFolder) throws IOException {
         if (!folder.isExisting() && !Files.exists(encryptedFolder.getPath())) {
-            LOG.info("Creating folder pair {} - {}", folder, encryptedFolder);
+            log.info("Creating folder pair {} - {}", folder, encryptedFolder);
             createDirectories(folder.getPath());
             createDirectories(encryptedFolder.getPath());
         } else {

@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 
 import static org.junit.Assert.*;
 import static org.mockito.Matchers.eq;
@@ -44,6 +45,7 @@ public class FolderServiceTest {
 
     private Folder folder;
     private EncryptedFolder encryptedFolder;
+    public static final FolderId FOLDER_ID = FolderId.of(1);
 
     @Before
     public void setup() {
@@ -170,6 +172,66 @@ public class FolderServiceTest {
 
         verify(folderCli).unshareFolder(eq(folder));
         verify(folderCli).restartSamba();
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void deletingEncryptedFolderWhereFolderIsNotEmptyThrowsException() throws IOException {
+        Files.createDirectories(folder.getPath());
+        createFileInPath(folder.getPath());
+        FolderSettings folderSettings = createFolderSettings(folder, encryptedFolder);
+
+        when(folderSettingsRepository.getFolderSettings(FOLDER_ID)).thenReturn(folderSettings);
+
+        folderService.deleteEncryptedFolder(FOLDER_ID);
+
+        assertTrue(folder.isExisting());
+        assertTrue(encryptedFolder.isExisting());
+        verify(folderSettingsRepository, times(0)).removeFolderSettings(any(FolderId.class));
+        verifyZeroInteractions(folderCli);
+    }
+
+    @Test(expected = IllegalStateException.class)
+    public void deletingEncryptedFolderWhereEncryptedFolderIsNotEmptyThrowsException() throws IOException {
+        Files.createDirectories(folder.getPath());
+        Files.createDirectories(encryptedFolder.getPath());
+        createFileInPath(encryptedFolder.getPath());
+        FolderSettings folderSettings = createFolderSettings(folder, encryptedFolder);
+
+        when(folderSettingsRepository.getFolderSettings(FOLDER_ID)).thenReturn(folderSettings);
+
+        folderService.deleteEncryptedFolder(FOLDER_ID);
+
+        assertTrue(folder.isExisting());
+        assertTrue(encryptedFolder.isExisting());
+        verify(folderSettingsRepository, times(0)).removeFolderSettings(any(FolderId.class));
+        verifyZeroInteractions(folderCli);
+    }
+
+    @Test
+    public void deletingEncryptedFolder() throws IOException {
+        Files.createDirectories(folder.getPath());
+        Files.createDirectories(encryptedFolder.getPath());
+        FolderSettings folderSettings = createFolderSettings(folder, encryptedFolder);
+
+        when(folderSettingsRepository.getFolderSettings(FOLDER_ID)).thenReturn(folderSettings);
+
+        folderService.deleteEncryptedFolder(FOLDER_ID);
+
+        assertFalse(folder.isExisting());
+        assertFalse(encryptedFolder.isExisting());
+        verify(folderCli).unmountFolder(folder);
+        verify(folderCli).unmountFolder(encryptedFolder);
+        verify(folderSettingsRepository).removeFolderSettings(FOLDER_ID);
+    }
+
+    private FolderSettings createFolderSettings(Folder folder, EncryptedFolder encryptedFolder) {
+        return ImmutableFolderSettings.builder()
+                .folderId(FOLDER_ID)
+                .folder(folder)
+                .encryptedFolder(encryptedFolder)
+                .created(LocalDateTime.now())
+                .isAutoMount(true)
+                .build();
     }
 
     private void createFileInPath(Path path) throws IOException {
