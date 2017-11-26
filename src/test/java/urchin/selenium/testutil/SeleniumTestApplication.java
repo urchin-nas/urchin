@@ -20,16 +20,16 @@ public abstract class SeleniumTestApplication {
     protected static final WebDriver driver = SeleniumDriver.getDriver();
     protected static final String url = SeleniumUrl.getUrl();
 
-    protected static HomeView homeView = new HomeView();
-    protected static MenuView menuView = new MenuView();
-    protected static GroupsView groupsView = new GroupsView();
-    protected static NewGroupView newGroupView = new NewGroupView();
-    protected static EditGroupView editGroupView = new EditGroupView();
-    protected static UsersView usersView = new UsersView();
-    protected static NewUserView newUserView = new NewUserView();
-    protected static EditUserView editUserView = new EditUserView();
-    protected static FoldersView foldersView = new FoldersView();
-    protected static NewFolderView newFolderView = new NewFolderView();
-    protected static EditFolderView editFolderView = new EditFolderView();
+    protected static final HomeView homeView = new HomeView();
+    protected static final MenuView menuView = new MenuView();
+    protected static final GroupsView groupsView = new GroupsView();
+    protected static final NewGroupView newGroupView = new NewGroupView();
+    protected static final EditGroupView editGroupView = new EditGroupView();
+    protected static final UsersView usersView = new UsersView();
+    protected static final NewUserView newUserView = new NewUserView();
+    protected static final EditUserView editUserView = new EditUserView();
+    protected static final FoldersView foldersView = new FoldersView();
+    protected static final NewFolderView newFolderView = new NewFolderView();
+    protected static final EditFolderView editFolderView = new EditFolderView();
 
 }

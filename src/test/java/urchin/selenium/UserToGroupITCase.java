@@ -23,10 +23,14 @@ public class UserToGroupITCase extends SeleniumTestApplication {
                 .fillGroupName(groupName)
                 .clickCreateGroupButton();
 
+        groupsView.verifyGroupNameListed(groupName);
+
         newUserView.goTo()
                 .fillUsername(username)
                 .fillPassword(randomAlphanumeric(10))
                 .clickCreateUserButton();
+
+        usersView.verifyUsernameListed(username);
     }
 
     @AfterClass
