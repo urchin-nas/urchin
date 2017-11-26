@@ -50,6 +50,12 @@ public class FolderController {
         return mapToCreatedFolderDto(createdFolder);
     }
 
+    @RequestMapping(value = "{folderId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public MessageDto deleteEncryptedFolder(@PathVariable int folderId) throws IOException {
+        folderService.deleteEncryptedFolder(FolderId.of(folderId));
+        return ImmutableMessageDto.of("Folder deleted");
+    }
+
     @RequestMapping(value = "mount", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public MessageDto mountEncryptedFolder(@Valid @RequestBody MountEncryptedFolderDto mountEncryptedFolderDto) throws IOException {
         EncryptedFolder encryptedFolder = EncryptedFolderUtil.getEncryptedFolder(ImmutableFolder.of(Paths.get(mountEncryptedFolderDto.getFolder())));

@@ -5,6 +5,8 @@ import jcifs.smb.SmbFile;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import urchin.controller.api.MessageDto;
@@ -81,6 +83,19 @@ public class FolderControllerIT extends TestApplication {
                 .collect(Collectors.toList());
         assertTrue(folders.contains(folder_1.toAbsolutePath()));
         assertTrue(folders.contains(folder_2.toAbsolutePath()));
+    }
+
+    @Test
+    public void createAndDeleteEncryptedFolder() {
+        ResponseEntity<CreatedFolderDto> createResponse = postCreateRequest(ImmutableFolderDto.of(folder_1.toAbsolutePath()));
+
+        assertEquals(HttpStatus.OK, createResponse.getStatusCode());
+
+        Integer folderId = createResponse.getBody().getId();
+
+        ResponseEntity<MessageDto> deleteResponse = deleteFolderRequest(folderId);
+
+        assertEquals(HttpStatus.OK, deleteResponse.getStatusCode());
     }
 
     @Test
@@ -207,6 +222,11 @@ public class FolderControllerIT extends TestApplication {
 
     private ResponseEntity<MessageDto> postUnshareFolderRequest(FolderDto folderDto) {
         return testRestTemplate.postForEntity(discoverControllerPath() + "/unshare", folderDto, MessageDto.class);
+    }
+
+    private ResponseEntity<MessageDto> deleteFolderRequest(int folderId) {
+        return testRestTemplate.exchange(discoverControllerPath() + "/" + folderId, HttpMethod.DELETE, null, new ParameterizedTypeReference<MessageDto>() {
+        });
     }
 
     private Path createFileInFolder(String filename, Path folder) throws IOException {

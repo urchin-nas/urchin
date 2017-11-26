@@ -63,10 +63,21 @@ public class FolderService {
 
         log.info("Deleting encrypted folder {}", folderSettings);
         folderSettingsRepository.removeFolderSettings(folderId);
+        try {
+            unmountFolder(folder);
+        } catch (Exception ignore) {
+        }
+        try {
+            unmountEncryptedFolder(encryptedFolder);
+        } catch (Exception ignore) {
+        }
 
-        unmountFolder(folder);
-        unmountEncryptedFolder(encryptedFolder);
         deleteFolder(encryptedFolder);
+
+        if (folder.isExisting() || encryptedFolder.isExisting()) {
+            throw new RuntimeException("failed to delete folders");
+        }
+
     }
 
     public void mountEncryptedFolder(EncryptedFolder encryptedFolder, Passphrase passphrase) throws IOException {
