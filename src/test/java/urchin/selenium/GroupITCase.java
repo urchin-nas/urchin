@@ -20,8 +20,21 @@ public class GroupITCase extends SeleniumTestApplication {
                 .clickCreateNewGroupLink();
 
         newGroupView.verifyAtView()
+                .clickCancelButton();
+
+        groupsView.verifyAtView()
+                .clickCreateNewGroupLink();
+
+        newGroupView.verifyAtView()
                 .fillGroupName(groupName)
                 .clickCreateGroupButton();
+
+        groupsView.verifyAtView()
+                .verifyGroupNameListed(groupName)
+                .clickGroupnameLink(groupName);
+
+        editGroupView.verifyAtView()
+                .clickBackButton();
 
         groupsView.verifyAtView()
                 .verifyGroupNameListed(groupName)

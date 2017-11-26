@@ -53,4 +53,8 @@ public class EditGroupView extends PageView {
                 .click();
         return this;
     }
+
+    public void clickBackButton() {
+        driver.findElement(By.id("edit-group__back-btn")).click();
+    }
 }

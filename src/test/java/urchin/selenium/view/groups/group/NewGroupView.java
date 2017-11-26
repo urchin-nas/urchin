@@ -25,4 +25,8 @@ public class NewGroupView extends PageView {
     public void clickCreateGroupButton() {
         driver.findElement(By.id("new-group__create-btn")).click();
     }
+
+    public void clickCancelButton() {
+        driver.findElement(By.id("new-group__cancel-btn")).click();
+    }
 }

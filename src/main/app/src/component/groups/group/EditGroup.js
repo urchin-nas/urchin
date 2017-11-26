@@ -56,7 +56,7 @@ class Groups extends Component {
                 </select>
                 <button id="edit-group__add-user-btn" onClick={this.addUser}>Add User</button>
                 <button id="edit-group__delete-btn" onClick={this.del}>Delete</button>
-                <button id="edit-user__back-btn" onClick={this.back}>Back</button>
+                <button id="edit-group__back-btn" onClick={this.back}>Back</button>
                 <h2>Members of group</h2>
                 <ul id="edit-group__users">
                     {usersInGroup}
