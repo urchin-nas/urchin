@@ -2,31 +2,39 @@
 
 exports[`MainContainer match snapshot 1`] = `
 <div
-  className="main-container"
+  id="main-container"
 >
-  <MainMenu />
-  <Switch>
-    <Route
-      component={[Function]}
-      exact={true}
-      path="/"
-    />
-    <Route
-      component={[Function]}
-      path="/users"
-    />
-    <Route
-      component={[Function]}
-      path="/groups"
-    />
-    <Route
-      component={[Function]}
-      path="/folders"
-    />
-    <Redirect
-      push={false}
-      to="/"
-    />
-  </Switch>
+  <div
+    id="main-container__main-menu"
+  >
+    <MainMenu />
+  </div>
+  <div
+    id="main-container__content"
+  >
+    <Switch>
+      <Route
+        component={[Function]}
+        exact={true}
+        path="/"
+      />
+      <Route
+        component={[Function]}
+        path="/users"
+      />
+      <Route
+        component={[Function]}
+        path="/groups"
+      />
+      <Route
+        component={[Function]}
+        path="/folders"
+      />
+      <Redirect
+        push={false}
+        to="/"
+      />
+    </Switch>
+  </div>
 </div>
 `;

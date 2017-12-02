@@ -2,7 +2,7 @@
 
 exports[`App match snapshot 1`] = `
 <div
-  className="urchin"
+  id="urchin"
 >
   <NotificationContainer
     enterTimeout={400}

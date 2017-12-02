@@ -12,14 +12,14 @@ public class MenuView extends PageView {
     }
 
     public void clickUsersLink() {
-        driver.findElement(By.id("main-menu__users")).click();
+        driver.findElement(By.id("main-menu__links__users")).click();
     }
 
     public void clickGroupsLink() {
-        driver.findElement(By.id("main-menu__groups")).click();
+        driver.findElement(By.id("main-menu__links__groups")).click();
     }
 
     public void clickFoldersLink() {
-        driver.findElement(By.id("main-menu__folders")).click();
+        driver.findElement(By.id("main-menu__links__folders")).click();
     }
 }
