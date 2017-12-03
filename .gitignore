@@ -8,6 +8,7 @@ src/main/app/node
 src/main/app/etc
 src/main/app/build
 src/main/app/coverage
+main.css
 
 # backend
 target

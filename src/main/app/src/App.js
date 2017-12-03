@@ -4,7 +4,6 @@ import history from './history'
 import {NotificationContainer} from 'react-notifications';
 import MainContainer from './component/MainContainer';
 import LoginContainer from './component/LoginContainer';
-import './App.css';
 
 class App extends Component {
     render() {

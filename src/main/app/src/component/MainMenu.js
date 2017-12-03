@@ -1,6 +1,4 @@
 import React, {Component} from 'react'
-import './MainMenu.css';
-import Logo from './urchin.jpg';
 
 class MainMenu extends Component {
 
@@ -8,7 +6,6 @@ class MainMenu extends Component {
         return (
             <div id="main-menu">
                 <div id="main-menu__logo">
-                    <img src={Logo}/>
                 </div>
                 <div id="main-menu__links">
                     <ul>

@@ -6,11 +6,7 @@ exports[`MainMenu match snapshot 1`] = `
 >
   <div
     id="main-menu__logo"
-  >
-    <img
-      src="urchin.jpg"
-    />
-  </div>
+  />
   <div
     id="main-menu__links"
   >

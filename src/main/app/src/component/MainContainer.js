@@ -5,7 +5,6 @@ import Groups from './groups/Groups';
 import MainMenu from './MainMenu';
 import Home from './Home';
 import Folders from './folders/Folders';
-import './MainContainer.css';
 
 class MainContainer extends Component {
     render() {
