@@ -10,17 +10,22 @@ class MainContainer extends Component {
     render() {
         return (
             <div id="main-container">
-                <div id="main-container__main-menu">
-                    <MainMenu/>
+                <div id="main-container__header">
+                    Urchin
                 </div>
-                <div id="main-container__content">
-                    <Switch>
-                        <Route exact path="/" component={Home}/>
-                        <Route path="/users" component={Users}/>
-                        <Route path="/groups" component={Groups}/>
-                        <Route path="/folders" component={Folders}/>
-                        <Redirect to="/"/>
-                    </Switch>
+                <div id="main-container__body">
+                    <div id="main-container__main-menu">
+                        <MainMenu/>
+                    </div>
+                    <div id="main-container__content">
+                        <Switch>
+                            <Route exact path="/" component={Home}/>
+                            <Route path="/users" component={Users}/>
+                            <Route path="/groups" component={Groups}/>
+                            <Route path="/folders" component={Folders}/>
+                            <Redirect to="/"/>
+                        </Switch>
+                    </div>
                 </div>
             </div>
         );
