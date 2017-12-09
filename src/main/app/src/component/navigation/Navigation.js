@@ -18,7 +18,7 @@ class Navigation extends Component {
 
         return (
             <nav id="navigation">
-                <Link id="navigation__brand" to="/">Urchin</Link>
+                <Link id="navigation__brand" to="/" onClick={this.hideNavigation}>Urchin</Link>
                 <button id="navigation--toggler" onClick={this.toggleNavigation}>
                     <span id="navigation-toggler__icon"/>
                 </button>
