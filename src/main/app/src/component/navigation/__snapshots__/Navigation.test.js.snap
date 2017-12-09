@@ -26,7 +26,7 @@ exports[`Navigation match snapshot 1`] = `
     <ul
       id="navigation-menu__items"
     >
-      <il
+      <li
         className="navigation-item"
       >
         <Link
@@ -37,8 +37,8 @@ exports[`Navigation match snapshot 1`] = `
         >
           Users
         </Link>
-      </il>
-      <il
+      </li>
+      <li
         className="navigation-item"
       >
         <Link
@@ -49,8 +49,8 @@ exports[`Navigation match snapshot 1`] = `
         >
           Groups
         </Link>
-      </il>
-      <il
+      </li>
+      <li
         className="navigation-item"
       >
         <Link
@@ -61,7 +61,7 @@ exports[`Navigation match snapshot 1`] = `
         >
           Folders
         </Link>
-      </il>
+      </li>
     </ul>
   </div>
 </nav>
