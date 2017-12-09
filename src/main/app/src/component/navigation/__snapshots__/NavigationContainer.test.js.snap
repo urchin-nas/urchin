@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewGroupContainer match snapshot 1`] = `
+<Navigation
+  callbacks={
+    Object {
+      "toggleNavigation": undefined,
+    }
+  }
+/>
+`;

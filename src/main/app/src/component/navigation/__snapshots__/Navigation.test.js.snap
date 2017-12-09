@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Navigation match snapshot 1`] = `
+<nav
+  id="navigation"
+>
+  <a
+    href="/"
+    id="navigation__brand"
+  >
+    Urchin
+  </a>
+  <button
+    id="navigation--toggler"
+    onClick={[Function]}
+  >
+    <span
+      id="navigation-toggler__icon"
+    />
+  </button>
+  <div
+    className="navigation-menu--hide"
+    id="navigation-menu"
+  >
+    <ul
+      id="navigation-menu__items"
+    >
+      <il
+        className="navigation-item"
+      >
+        <a
+          href="/users"
+          id="navigation-item__users"
+        >
+          Users
+        </a>
+      </il>
+      <il
+        className="navigation-item"
+      >
+        <a
+          href="/groups"
+          id="navigation-item__groups"
+        >
+          Groups
+        </a>
+      </il>
+      <il
+        className="navigation-item"
+      >
+        <a
+          href="/folders"
+          id="navigation-item__folders"
+        >
+          Folders
+        </a>
+      </il>
+    </ul>
+  </div>
+</nav>
+`;
