@@ -1,5 +1,5 @@
 import React from 'react';
-import {mount, shallow} from 'enzyme'
+import {shallow} from 'enzyme'
 import toJson from 'enzyme-to-json';
 import {EditGroupContainer} from "./EditGroupContainer";
 
@@ -18,10 +18,6 @@ describe('EditGroupContainer', () => {
         getUsersForGroup: jest.fn(),
         getUsers: jest.fn(),
     };
-
-    it('renders without crashing', () => {
-        expect(mount(<EditGroupContainer {...props}/>).length).toEqual(1);
-    });
 
     it('match snapshot', () => {
         expect(toJson(shallow(<EditGroupContainer {...props}/>))).toMatchSnapshot();

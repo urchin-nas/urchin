@@ -1,5 +1,6 @@
 import React, {Component} from "react";
 import history from "../../../history";
+import {Link} from "react-router-dom";
 
 class EditUser extends Component {
 
@@ -32,7 +33,7 @@ class EditUser extends Component {
         let username = this.props.user.username;
         let groupsForUser = this.props.groupsForUser.map((group, index) =>
             <li className="edit-user__groups__item" key={index.toString()}>
-                <a href={`/groups/${group.groupId}`}>{group.groupName}</a>
+                <Link to={`/groups/${group.groupId}`}>{group.groupName}</Link>
                 <button className="edit-user__groups__item__remove-group-btn" onClick={() => this.removeGroup(group.groupId)}>
                     Remove Group
                 </button>

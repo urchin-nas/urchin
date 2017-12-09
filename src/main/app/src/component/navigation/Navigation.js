@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import {Link} from "react-router-dom";
 
 class Navigation extends Component {
 
@@ -11,20 +12,22 @@ class Navigation extends Component {
 
         return (
             <nav id="navigation">
-                <a id="navigation__brand" href="/">Urchin</a>
+                <Link id="navigation__brand" to="/">Urchin</Link>
                 <button id="navigation--toggler" onClick={this.toggleNavigation}>
                     <span id="navigation-toggler__icon"/>
                 </button>
                 <div className={toggleNav} id="navigation-menu">
                     <ul id="navigation-menu__items">
                         <il className="navigation-item">
-                            <a id="navigation-item__users" href="/users">Users</a>
+                            <Link id="navigation-item__users" to="/users" onClick={this.toggleNavigation}>Users</Link>
                         </il>
                         <il className="navigation-item">
-                            <a id="navigation-item__groups" href="/groups">Groups</a>
+                            <Link id="navigation-item__groups" to="/groups"
+                                  onClick={this.toggleNavigation}>Groups</Link>
                         </il>
                         <il className="navigation-item">
-                            <a id="navigation-item__folders" href="/folders">Folders</a>
+                            <Link id="navigation-item__folders" to="/folders"
+                                  onClick={this.toggleNavigation}>Folders</Link>
                         </il>
                     </ul>
                 </div>

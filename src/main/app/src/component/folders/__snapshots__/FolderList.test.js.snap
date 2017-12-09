@@ -4,12 +4,13 @@ exports[`FolderList match snapshot 1`] = `
 <div
   id="folder-list"
 >
-  <a
-    href="/folders/new"
+  <Link
     id="folder-list__new-folder"
+    replace={false}
+    to="/folders/new"
   >
     new folder
-  </a>
+  </Link>
   <h2>
     Folders
   </h2>

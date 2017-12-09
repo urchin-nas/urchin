@@ -4,12 +4,13 @@ exports[`UserList match snapshot 1`] = `
 <div
   id="user-list"
 >
-  <a
-    href="/users/new"
+  <Link
     id="user-list__new-user"
+    replace={false}
+    to="/users/new"
   >
     new user
-  </a>
+  </Link>
   <h2>
     Users
   </h2>

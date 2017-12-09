@@ -4,12 +4,13 @@ exports[`Navigation match snapshot 1`] = `
 <nav
   id="navigation"
 >
-  <a
-    href="/"
+  <Link
     id="navigation__brand"
+    replace={false}
+    to="/"
   >
     Urchin
-  </a>
+  </Link>
   <button
     id="navigation--toggler"
     onClick={[Function]}
@@ -28,32 +29,38 @@ exports[`Navigation match snapshot 1`] = `
       <il
         className="navigation-item"
       >
-        <a
-          href="/users"
+        <Link
           id="navigation-item__users"
+          onClick={[Function]}
+          replace={false}
+          to="/users"
         >
           Users
-        </a>
+        </Link>
       </il>
       <il
         className="navigation-item"
       >
-        <a
-          href="/groups"
+        <Link
           id="navigation-item__groups"
+          onClick={[Function]}
+          replace={false}
+          to="/groups"
         >
           Groups
-        </a>
+        </Link>
       </il>
       <il
         className="navigation-item"
       >
-        <a
-          href="/folders"
+        <Link
           id="navigation-item__folders"
+          onClick={[Function]}
+          replace={false}
+          to="/folders"
         >
           Folders
-        </a>
+        </Link>
       </il>
     </ul>
   </div>

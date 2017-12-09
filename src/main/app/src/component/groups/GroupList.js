@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {Link} from "react-router-dom";
 
 class GroupList extends Component {
 
@@ -6,12 +7,12 @@ class GroupList extends Component {
         let groups = this.props.groups || [];
         let groupItems = groups.map((item, index) =>
             <li key={index.toString()}>
-                <a href={`/groups/${item.groupId}`}>{item.groupName}</a>
+                <Link to={`/groups/${item.groupId}`}>{item.groupName}</Link>
             </li>
         );
         return (
             <div id="group-list">
-                <a id="group-list__new-group" href="/groups/new">new group</a>
+                <Link id="group-list__new-group" to="/groups/new">new group</Link>
                 <h2>grouplist</h2>
                 <ul>
                     {groupItems}

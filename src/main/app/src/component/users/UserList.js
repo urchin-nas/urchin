@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {Link} from "react-router-dom";
 
 class UserList extends Component {
 
@@ -6,12 +7,12 @@ class UserList extends Component {
         let users = this.props.users || [];
         let userItems = users.map((item, index) =>
             <li key={index.toString()}>
-                <a href={`/users/${item.userId}`}>{item.username}</a>
+                <Link to={`/users/${item.userId}`}>{item.username}</Link>
             </li>
         );
         return (
             <div id="user-list">
-                <a id="user-list__new-user" href="/users/new">new user</a>
+                <Link id="user-list__new-user" to="/users/new">new user</Link>
                 <h2>Users</h2>
                 <ul>
                     {userItems}
