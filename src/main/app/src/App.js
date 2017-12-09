@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Route, Router, Switch} from 'react-router-dom'
 import history from './history'
 import {NotificationContainer} from 'react-notifications';
-import MainContainer from './component/MainContainer';
+import Root from './component/Root';
 import LoginContainer from './component/LoginContainer';
 
 class App extends Component {
@@ -13,7 +13,7 @@ class App extends Component {
                 <Router history={history}>
                     <Switch>
                         <Route path='/login' component={LoginContainer}/>
-                        <Route path='/' component={MainContainer}/>
+                        <Route path='/' component={Root}/>
                     </Switch>
                 </Router>
             </div>

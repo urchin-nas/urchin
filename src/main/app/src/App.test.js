@@ -6,7 +6,7 @@ import App from './App';
 describe('App', () => {
 
     it('renders without crashing', () => {
-        expect(mount(<App/>).length).toEqual(1);
+        expect(shallow(<App/>).length).toEqual(1);
     });
 
     it('match snapshot', () => {

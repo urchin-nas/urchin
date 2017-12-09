@@ -2,22 +2,18 @@ import React, {Component} from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
 import Users from './users/Users';
 import Groups from './groups/Groups';
-import MainMenu from './MainMenu';
+import NavigationContainer from './navigation/NavigationContainer';
 import Home from './Home';
 import Folders from './folders/Folders';
 
-class MainContainer extends Component {
+class Root extends Component {
     render() {
         return (
-            <div id="main-container">
-                <div id="main-container__header">
-                    Urchin
-                </div>
-                <div id="main-container__body">
-                    <div id="main-container__main-menu">
-                        <MainMenu/>
+            <div id="root">
+                    <div id="root__navigation">
+                        <NavigationContainer/>
                     </div>
-                    <div id="main-container__content">
+                    <div id="root__content">
                         <Switch>
                             <Route exact path="/" component={Home}/>
                             <Route path="/users" component={Users}/>
@@ -27,9 +23,8 @@ class MainContainer extends Component {
                         </Switch>
                     </div>
                 </div>
-            </div>
         );
     }
 }
 
-export default MainContainer;
+export default Root;

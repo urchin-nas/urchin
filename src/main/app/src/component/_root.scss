@@ -1,0 +1,6 @@
+#root {
+
+  #root__content {
+    @include make-container();
+  }
+}

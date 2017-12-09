@@ -13,7 +13,7 @@ public class GroupITCase extends SeleniumTestApplication {
 
         homeView.goTo();
 
-        menuView.verifyAtView()
+        navigationView.verifyAtView()
                 .clickGroupsLink();
 
         groupsView.verifyAtView()

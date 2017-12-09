@@ -17,7 +17,7 @@ public class FolderITCase extends SeleniumTestApplication {
 
         homeView.goTo();
 
-        menuView.verifyAtView()
+        navigationView.verifyAtView()
                 .clickFoldersLink();
 
         foldersView.verifyAtView()

@@ -3,7 +3,7 @@ package urchin.selenium.testutil;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.WebDriver;
 import urchin.selenium.view.HomeView;
-import urchin.selenium.view.MenuView;
+import urchin.selenium.view.NavigationView;
 import urchin.selenium.view.folders.FoldersView;
 import urchin.selenium.view.folders.folder.EditFolderView;
 import urchin.selenium.view.folders.folder.NewFolderView;
@@ -21,7 +21,7 @@ public abstract class SeleniumTestApplication {
     protected static final String url = SeleniumUrl.getUrl();
 
     protected static final HomeView homeView = new HomeView();
-    protected static final MenuView menuView = new MenuView();
+    protected static final NavigationView navigationView = new NavigationView();
     protected static final GroupsView groupsView = new GroupsView();
     protected static final NewGroupView newGroupView = new NewGroupView();
     protected static final EditGroupView editGroupView = new EditGroupView();

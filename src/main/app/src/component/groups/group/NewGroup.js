@@ -37,7 +37,7 @@ class NewGroup extends Component {
                     fieldErrors={this.props.fieldErrors}
                     field="groupName"
                 />
-                <button id="new-group__create-btn"onClick={this.create}>Create Group</button>
+                <button id="new-group__create-btn" onClick={this.create}>Create Group</button>
                 <button id="new-group__cancel-btn" onClick={this.cancel}>Cancel</button>
             </div>
         )

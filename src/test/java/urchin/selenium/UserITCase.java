@@ -14,7 +14,7 @@ public class UserITCase extends SeleniumTestApplication {
 
         homeView.goTo();
 
-        menuView.verifyAtView()
+        navigationView.verifyAtView()
                 .clickUsersLink();
 
         usersView.verifyAtView()

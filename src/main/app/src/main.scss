@@ -2,5 +2,5 @@
 @import '../node_modules/bootstrap/scss/bootstrap.scss';
 //urchin
 @import './_app.scss';
-@import './component/_mainContainer.scss';
-@import './component/_mainMenu.scss';
+@import './component/_root.scss';
+@import 'component/navigation/navigation';

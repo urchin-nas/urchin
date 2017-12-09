@@ -1,0 +1,42 @@
+#navigation {
+  @extend .navbar;
+  @extend .navbar-expand-md;
+  @extend .navbar-dark;
+  @extend .fixed-top;
+  @extend .bg-dark;
+
+  #navigation__brand {
+    @extend .navbar-brand;
+  }
+
+  #navigation--toggler {
+    @extend .navbar-toggler;
+
+    #navigation-toggler__icon {
+      @extend .navbar-toggler-icon;
+    }
+  }
+
+  #navigation-menu {
+    @extend .navbar-collapse;
+    @extend .collapse;
+  }
+
+  .navigation-menu--show {
+    @extend .show;
+  }
+
+  #navigation-menu__items {
+    @extend .navbar-nav;
+    @extend .mr-auto;
+  }
+
+  .navigation-item {
+    @extend .nav-item;
+  }
+
+  .navigation-item a {
+    @extend .nav-link;
+  }
+
+}

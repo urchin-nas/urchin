@@ -2,15 +2,15 @@ import React from 'react';
 import {Router} from 'react-router-dom'
 import {mount, shallow} from 'enzyme'
 import toJson from 'enzyme-to-json';
-import MainContainer from "./MainContainer";
+import Root from "./Root";
 import history from '../history'
 
-describe('MainContainer', () => {
+describe('Root', () => {
 
     it('renders without crashing', () => {
-        let component = mount(
+        let component = shallow(
             <Router history={history}>
-                <MainContainer/>
+                <Root/>
             </Router>
         );
 
@@ -18,6 +18,6 @@ describe('MainContainer', () => {
     });
 
     it('match snapshot', () => {
-        expect(toJson(shallow(<MainContainer/>))).toMatchSnapshot();
+        expect(toJson(shallow(<Root/>))).toMatchSnapshot();
     });
 });
