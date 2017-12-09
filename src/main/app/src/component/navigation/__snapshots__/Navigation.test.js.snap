@@ -6,6 +6,7 @@ exports[`Navigation match snapshot 1`] = `
 >
   <Link
     id="navigation__brand"
+    onClick={[Function]}
     replace={false}
     to="/"
   >
