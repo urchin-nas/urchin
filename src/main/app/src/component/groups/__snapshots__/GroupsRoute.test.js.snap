@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`GroupsRoute match snapshot 1`] = `
+<Switch>
+  <Route
+    component={[Function]}
+    exact={true}
+    path="/groups"
+  />
+  <Route
+    component={[Function]}
+    path="/groups/new"
+  />
+  <Route
+    component={[Function]}
+    path="/groups/:id"
+  />
+</Switch>
+`;
