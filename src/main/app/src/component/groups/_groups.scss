@@ -1,11 +1,11 @@
-#user-list {
+#groups {
 
-  .users {
+  .group-list {
     @extend .list-group;
     display: inline-block;
   }
 
-  .users__user {
+  .group-list__group {
     @extend .list-group-item;
   }
 

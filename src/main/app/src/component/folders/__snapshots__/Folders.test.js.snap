@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FolderList match snapshot 1`] = `
+exports[`Folders match snapshot 1`] = `
 <div
-  id="folder-list"
+  id="folders"
 >
   <Link
-    id="folder-list__new-folder"
+    id="folders__new-folder"
     replace={false}
     to="/folders/new"
   >
@@ -14,6 +14,8 @@ exports[`FolderList match snapshot 1`] = `
   <h2>
     Folders
   </h2>
-  <ul />
+  <ul
+    className="folder-list"
+  />
 </div>
 `;

@@ -1,15 +1,15 @@
 import React from 'react';
 import {shallow} from 'enzyme'
 import toJson from 'enzyme-to-json';
-import {FolderListContainer} from "./FolderListContainer";
+import {FoldersContainer} from "./FoldersContainer";
 
-describe('FolderListContainer', () => {
+describe('FoldersContainer', () => {
 
     let props = {
         getFolders: jest.fn(),
     };
 
     it('match snapshot', () => {
-        expect(toJson(shallow(<FolderListContainer {...props}/>))).toMatchSnapshot();
+        expect(toJson(shallow(<FoldersContainer {...props}/>))).toMatchSnapshot();
     });
 });

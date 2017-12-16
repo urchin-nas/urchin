@@ -1,11 +1,11 @@
 import React from 'react';
 import {shallow} from 'enzyme'
 import toJson from 'enzyme-to-json';
-import GroupList from "./GroupList";
+import Folders from "./Folders";
 
-describe('GroupList', () => {
+describe('Folders', () => {
 
     it('match snapshot', () => {
-        expect(toJson(shallow(<GroupList/>))).toMatchSnapshot();
+        expect(toJson(shallow(<Folders/>))).toMatchSnapshot();
     });
 });

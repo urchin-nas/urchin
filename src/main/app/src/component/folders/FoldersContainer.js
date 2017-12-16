@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getFolders} from '../../action/folderAction'
-import FolderList from "./FolderList";
+import Folders from "./Folders";
 
-export class FolderListContainer extends Component {
+export class FoldersContainer extends Component {
 
     componentWillMount() {
         this.props.getFolders();
@@ -11,7 +11,7 @@ export class FolderListContainer extends Component {
 
     render() {
         return (
-            <FolderList
+            <Folders
                 folders={this.props.folders}
             />
         )
@@ -32,4 +32,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FolderListContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(FoldersContainer)

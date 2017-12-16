@@ -1,20 +1,20 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
 
-class UserList extends Component {
+class Users extends Component {
 
     render() {
         let users = this.props.users || [];
         let userItems = users.map((item, index) =>
-            <li className="users__user" key={index.toString()}>
+            <li className="user-list__user" key={index.toString()}>
                 <Link to={`/users/${item.userId}`}>{item.username}</Link>
             </li>
         );
         return (
-            <div id="user-list">
-                <Link id="user-list__new-user" to="/users/new">new user</Link>
+            <div id="users">
+                <Link id="users__new-user" to="/users/new">new user</Link>
                 <h2>Users</h2>
-                <ul className="users">
+                <ul className="user-list">
                     {userItems}
                 </ul>
             </div>
@@ -22,4 +22,4 @@ class UserList extends Component {
     }
 }
 
-export default UserList
+export default Users

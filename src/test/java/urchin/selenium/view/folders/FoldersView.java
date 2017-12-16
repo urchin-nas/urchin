@@ -10,7 +10,7 @@ public class FoldersView extends PageView {
 
     @Override
     public FoldersView verifyAtView() {
-        waitUntil(ExpectedConditions.visibilityOfElementLocated(By.id("folder-list")));
+        waitUntil(ExpectedConditions.visibilityOfElementLocated(By.id("folders")));
         return this;
     }
 
@@ -20,7 +20,7 @@ public class FoldersView extends PageView {
     }
 
     public void clickCreateNewFolderLink() {
-        driver.findElement(By.id("folder-list__new-folder")).click();
+        driver.findElement(By.id("folders__new-folder")).click();
     }
 
     public void clickFolderLink(String folderName) {

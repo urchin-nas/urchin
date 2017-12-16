@@ -1,9 +1,9 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {getGroups} from '../../action/groupAction'
-import GroupList from "./GroupList";
+import Groups from "./Groups";
 
-export class GroupListContainer extends Component {
+export class GroupsContainer extends Component {
 
     componentWillMount() {
         this.props.getGroups();
@@ -11,7 +11,7 @@ export class GroupListContainer extends Component {
 
     render() {
         return (
-            <GroupList
+            <Groups
                 groups={this.props.groups}
             />
         )
@@ -32,4 +32,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(GroupListContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(GroupsContainer)

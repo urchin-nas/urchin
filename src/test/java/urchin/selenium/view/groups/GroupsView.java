@@ -10,7 +10,7 @@ public class GroupsView extends PageView {
 
     @Override
     public GroupsView verifyAtView() {
-        waitUntil(ExpectedConditions.visibilityOfElementLocated(By.id("group-list")));
+        waitUntil(ExpectedConditions.visibilityOfElementLocated(By.id("groups")));
         return this;
     }
 
@@ -30,7 +30,7 @@ public class GroupsView extends PageView {
     }
 
     public void clickCreateNewGroupLink() {
-        driver.findElement(By.id("group-list__new-group")).click();
+        driver.findElement(By.id("groups__new-group")).click();
     }
 
     public void clickGroupNameLink(String groupName) {

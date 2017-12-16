@@ -1,15 +1,15 @@
 import React from 'react';
 import {shallow} from 'enzyme'
 import toJson from 'enzyme-to-json';
-import {GroupListContainer} from "./GroupListContainer";
+import {GroupsContainer} from "./GroupsContainer";
 
-describe('GroupListContainer', () => {
+describe('GroupsContainer', () => {
 
     let props = {
         getGroups: jest.fn(),
     };
 
     it('match snapshot', () => {
-        expect(toJson(shallow(<GroupListContainer {...props}/>))).toMatchSnapshot();
+        expect(toJson(shallow(<GroupsContainer {...props}/>))).toMatchSnapshot();
     });
 });

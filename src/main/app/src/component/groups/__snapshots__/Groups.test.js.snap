@@ -1,11 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`GroupList match snapshot 1`] = `
+exports[`Groups match snapshot 1`] = `
 <div
-  id="group-list"
+  id="groups"
 >
   <Link
-    id="group-list__new-group"
+    id="groups__new-group"
     replace={false}
     to="/groups/new"
   >
@@ -14,6 +14,8 @@ exports[`GroupList match snapshot 1`] = `
   <h2>
     grouplist
   </h2>
-  <ul />
+  <ul
+    className="group-list"
+  />
 </div>
 `;

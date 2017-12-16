@@ -1,15 +1,15 @@
 import React from 'react';
 import {shallow} from 'enzyme'
 import toJson from 'enzyme-to-json';
-import {UserListContainer} from "./UserListContainer";
+import {UsersContainer} from "./UsersContainer";
 
-describe('UserListContainer', () => {
+describe('UsersContainer', () => {
 
     let props = {
         getUsers: jest.fn()
     };
 
     it('match snapshot', () => {
-        expect(toJson(shallow(<UserListContainer {...props}/>))).toMatchSnapshot();
+        expect(toJson(shallow(<UsersContainer {...props}/>))).toMatchSnapshot();
     });
 });
