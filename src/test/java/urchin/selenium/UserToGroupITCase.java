@@ -19,73 +19,73 @@ public class UserToGroupITCase extends SeleniumTestApplication {
         groupName = GROUP_PREFIX + System.currentTimeMillis();
         username = USERNAME_PREFIX + System.currentTimeMillis();
 
-        newGroupView.goTo()
+        NEW_GROUP.goTo()
                 .fillGroupName(groupName)
                 .clickCreateGroupButton();
 
-        groupsView.verifyGroupNameListed(groupName);
+        GROUPS.verifyGroupNameListed(groupName);
 
-        newUserView.goTo()
+        NEW_USER.goTo()
                 .fillUsername(username)
                 .fillPassword(randomAlphanumeric(10))
                 .clickCreateUserButton();
 
-        usersView.verifyUsernameListed(username);
+        USERS.verifyUsernameListed(username);
     }
 
     @AfterClass
     public static void tearDown() {
-        usersView.goTo()
+        USERS.goTo()
                 .clickUsernameLink(username);
 
-        editUserView.verifyAtView()
+        EDIT_USER.verifyAtView()
                 .clickDeleteUserButton();
 
-        groupsView.goTo()
+        GROUPS.goTo()
                 .clickGroupNameLink(groupName);
 
-        editGroupView.verifyAtView()
+        EDIT_GROUP.verifyAtView()
                 .clickDeleteGroupButton();
     }
 
     @Test
     public void userCanBeAddedAndRemovedFromUserView() {
-        usersView.goTo()
+        USERS.goTo()
                 .verifyUsernameListed(username)
                 .clickUsernameLink(username);
 
-        editUserView.verifyAtView()
+        EDIT_USER.verifyAtView()
                 .selectGroup(groupName)
                 .clickAddGroupButton()
                 .verifyGroupListed(groupName)
                 .clickGroupLink(groupName);
 
-        editGroupView.verifyAtView()
+        EDIT_GROUP.verifyAtView()
                 .verifyUserListed(username)
                 .clickUserLink(username);
 
-        editUserView.verifyAtView()
+        EDIT_USER.verifyAtView()
                 .clickRemoveGroupButton(groupName)
                 .verifyGroupNotListed(groupName);
     }
 
     @Test
     public void userCanBeAddedAndRemovedFromGroupView() {
-        groupsView.goTo()
+        GROUPS.goTo()
                 .verifyGroupNameListed(groupName)
                 .clickGroupNameLink(groupName);
 
-        editGroupView.verifyAtView()
+        EDIT_GROUP.verifyAtView()
                 .selectUser(username)
                 .clickAddUserButton()
                 .verifyUserListed(username)
                 .clickUserLink(username);
 
-        editUserView.verifyAtView()
+        EDIT_USER.verifyAtView()
                 .verifyGroupListed(groupName)
                 .clickGroupLink(groupName);
 
-        editGroupView.verifyAtView()
+        EDIT_GROUP.verifyAtView()
                 .clickRemoveUserButton(username)
                 .verifyUserNotListed(username);
     }

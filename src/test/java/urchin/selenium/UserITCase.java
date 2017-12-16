@@ -12,40 +12,40 @@ public class UserITCase extends SeleniumTestApplication {
     public void createAndDeleteUser() {
         String username = USERNAME_PREFIX + System.currentTimeMillis();
 
-        homeView.goTo();
+        HOME.goTo();
 
-        navigationView.verifyAtView()
+        NAVIGATION.verifyAtView()
                 .clickUsersLink();
 
-        usersView.verifyAtView()
+        USERS.verifyAtView()
                 .clickCreateNewUserLink();
 
-        newUserView.verifyAtView()
+        NEW_USER.verifyAtView()
                 .clickCancelButton();
 
-        usersView.verifyAtView()
+        USERS.verifyAtView()
                 .clickCreateNewUserLink();
 
-        newUserView.verifyAtView()
+        NEW_USER.verifyAtView()
                 .fillUsername(username)
                 .fillPassword(randomAlphanumeric(10))
                 .clickCreateUserButton();
 
-        usersView.verifyAtView()
+        USERS.verifyAtView()
                 .verifyUsernameListed(username)
                 .clickUsernameLink(username);
 
-        editUserView.verifyAtView()
+        EDIT_USER.verifyAtView()
                 .clickBackButton();
 
-        usersView.verifyAtView()
+        USERS.verifyAtView()
                 .verifyUsernameListed(username)
                 .clickUsernameLink(username);
 
-        editUserView.verifyAtView()
+        EDIT_USER.verifyAtView()
                 .clickDeleteUserButton();
 
-        usersView.verifyAtView()
+        USERS.verifyAtView()
                 .verifyUsernameNotListed(username);
 
 

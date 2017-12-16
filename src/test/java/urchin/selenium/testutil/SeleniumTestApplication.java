@@ -17,19 +17,19 @@ import urchin.selenium.view.users.user.NewUserView;
 @RunWith(SeleniumRunner.class)
 public abstract class SeleniumTestApplication {
 
-    protected static final WebDriver driver = SeleniumDriver.getDriver();
-    protected static final String url = SeleniumUrl.getUrl();
+    protected static final WebDriver DRIVER = SeleniumDriver.getDriver();
+    protected static final String URL = SeleniumUrl.getUrl();
 
-    protected static final HomeView homeView = new HomeView();
-    protected static final NavigationView navigationView = new NavigationView();
-    protected static final GroupsView groupsView = new GroupsView();
-    protected static final NewGroupView newGroupView = new NewGroupView();
-    protected static final EditGroupView editGroupView = new EditGroupView();
-    protected static final UsersView usersView = new UsersView();
-    protected static final NewUserView newUserView = new NewUserView();
-    protected static final EditUserView editUserView = new EditUserView();
-    protected static final FoldersView foldersView = new FoldersView();
-    protected static final NewFolderView newFolderView = new NewFolderView();
-    protected static final EditFolderView editFolderView = new EditFolderView();
+    protected static final HomeView HOME = new HomeView();
+    protected static final NavigationView NAVIGATION = new NavigationView();
+    protected static final GroupsView GROUPS = new GroupsView();
+    protected static final NewGroupView NEW_GROUP = new NewGroupView();
+    protected static final EditGroupView EDIT_GROUP = new EditGroupView();
+    protected static final UsersView USERS = new UsersView();
+    protected static final NewUserView NEW_USER = new NewUserView();
+    protected static final EditUserView EDIT_USER = new EditUserView();
+    protected static final FoldersView FOLDERS = new FoldersView();
+    protected static final NewFolderView NEW_FOLDER = new NewFolderView();
+    protected static final EditFolderView EDIT_FOLDER = new EditFolderView();
 
 }

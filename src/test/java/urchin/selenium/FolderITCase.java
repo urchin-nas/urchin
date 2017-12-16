@@ -15,39 +15,39 @@ public class FolderITCase extends SeleniumTestApplication {
         String folderName = "test-" + System.currentTimeMillis();
         String folderPath = temporaryFolder.getRoot().getAbsolutePath() + "/" + folderName;
 
-        homeView.goTo();
+        HOME.goTo();
 
-        navigationView.verifyAtView()
+        NAVIGATION.verifyAtView()
                 .clickFoldersLink();
 
-        foldersView.verifyAtView()
+        FOLDERS.verifyAtView()
                 .clickCreateNewFolderLink();
 
-        newFolderView.verifyAtView()
+        NEW_FOLDER.verifyAtView()
                 .clickCancelButton();
 
-        foldersView.verifyAtView()
+        FOLDERS.verifyAtView()
                 .clickCreateNewFolderLink();
 
-        newFolderView.verifyAtView()
+        NEW_FOLDER.verifyAtView()
                 .fillFolderPath(folderPath)
                 .clickCreateFolderButton();
 
-        foldersView.verifyAtView()
+        FOLDERS.verifyAtView()
                 .verifyFolderListed(folderName)
                 .clickFolderLink(folderName);
 
-        editFolderView.verifyAtView()
+        EDIT_FOLDER.verifyAtView()
                 .clickBackButton();
 
-        foldersView.verifyAtView()
+        FOLDERS.verifyAtView()
                 .verifyFolderListed(folderName)
                 .clickFolderLink(folderName);
 
-        editFolderView.verifyAtView()
+        EDIT_FOLDER.verifyAtView()
                 .clickDeleteFólderButton();
 
-        foldersView.verifyAtView()
+        FOLDERS.verifyAtView()
                 .verifyFolderNotListed(folderName);
     }
 }

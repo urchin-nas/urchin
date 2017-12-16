@@ -11,39 +11,39 @@ public class GroupITCase extends SeleniumTestApplication {
     public void createAndDeleteGroup() {
         String groupName = GROUP_PREFIX + System.currentTimeMillis();
 
-        homeView.goTo();
+        HOME.goTo();
 
-        navigationView.verifyAtView()
+        NAVIGATION.verifyAtView()
                 .clickGroupsLink();
 
-        groupsView.verifyAtView()
+        GROUPS.verifyAtView()
                 .clickCreateNewGroupLink();
 
-        newGroupView.verifyAtView()
+        NEW_GROUP.verifyAtView()
                 .clickCancelButton();
 
-        groupsView.verifyAtView()
+        GROUPS.verifyAtView()
                 .clickCreateNewGroupLink();
 
-        newGroupView.verifyAtView()
+        NEW_GROUP.verifyAtView()
                 .fillGroupName(groupName)
                 .clickCreateGroupButton();
 
-        groupsView.verifyAtView()
+        GROUPS.verifyAtView()
                 .verifyGroupNameListed(groupName)
                 .clickGroupNameLink(groupName);
 
-        editGroupView.verifyAtView()
+        EDIT_GROUP.verifyAtView()
                 .clickBackButton();
 
-        groupsView.verifyAtView()
+        GROUPS.verifyAtView()
                 .verifyGroupNameListed(groupName)
                 .clickGroupNameLink(groupName);
 
-        editGroupView.verifyAtView()
+        EDIT_GROUP.verifyAtView()
                 .clickDeleteGroupButton();
 
-        groupsView.verifyAtView()
+        GROUPS.verifyAtView()
                 .verifyGroupNameNotListed(groupName);
 
     }
