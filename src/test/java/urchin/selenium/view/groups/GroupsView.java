@@ -6,17 +6,17 @@ import urchin.selenium.view.PageView;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
-public class GroupsView extends PageView {
+public class GroupsView extends PageView<GroupsView> {
+
+    @Override
+    protected String viewUrl() {
+        return "/groups";
+    }
 
     @Override
     public GroupsView verifyAtView() {
         waitUntil(ExpectedConditions.visibilityOfElementLocated(By.id("groups")));
         return this;
-    }
-
-    public GroupsView goTo() {
-        driver.get(url + "/groups");
-        return verifyAtView();
     }
 
     public GroupsView verifyGroupNameListed(String groupName) {

@@ -4,17 +4,17 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import urchin.selenium.view.PageView;
 
-public class NewGroupView extends PageView {
+public class NewGroupView extends PageView<NewGroupView> {
+
+    @Override
+    protected String viewUrl() {
+        return "/groups/new";
+    }
 
     @Override
     public NewGroupView verifyAtView() {
         waitUntil(ExpectedConditions.visibilityOfElementLocated(By.id("new-group")));
         return this;
-    }
-
-    public NewGroupView goTo() {
-        driver.get(url + "/groups/new");
-        return verifyAtView();
     }
 
     public NewGroupView fillGroupName(String username) {

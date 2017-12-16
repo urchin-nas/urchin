@@ -11,6 +11,7 @@ public class UserITCase extends SeleniumTestApplication {
     @Test
     public void createAndDeleteUser() {
         String username = USERNAME_PREFIX + System.currentTimeMillis();
+        String password = randomAlphanumeric(10);
 
         HOME.goTo();
 
@@ -28,7 +29,7 @@ public class UserITCase extends SeleniumTestApplication {
 
         NEW_USER.verifyAtView()
                 .fillUsername(username)
-                .fillPassword(randomAlphanumeric(10))
+                .fillPassword(password)
                 .clickCreateUserButton();
 
         USERS.verifyAtView()

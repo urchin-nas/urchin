@@ -1,7 +1,6 @@
 package urchin.selenium.testutil;
 
 import org.junit.runner.RunWith;
-import org.openqa.selenium.WebDriver;
 import urchin.selenium.view.HomeView;
 import urchin.selenium.view.NavigationView;
 import urchin.selenium.view.folders.FoldersView;
@@ -16,9 +15,6 @@ import urchin.selenium.view.users.user.NewUserView;
 
 @RunWith(SeleniumRunner.class)
 public abstract class SeleniumTestApplication {
-
-    protected static final WebDriver DRIVER = SeleniumDriver.getDriver();
-    protected static final String URL = SeleniumUrl.getUrl();
 
     protected static final HomeView HOME = new HomeView();
     protected static final NavigationView NAVIGATION = new NavigationView();

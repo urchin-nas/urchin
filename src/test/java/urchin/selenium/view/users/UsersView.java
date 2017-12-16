@@ -6,17 +6,17 @@ import urchin.selenium.view.PageView;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
-public class UsersView extends PageView {
+public class UsersView extends PageView<UsersView> {
+
+    @Override
+    protected String viewUrl() {
+        return "/users";
+    }
 
     @Override
     public UsersView verifyAtView() {
         waitUntil(ExpectedConditions.visibilityOfElementLocated(By.id("users")));
         return this;
-    }
-
-    public UsersView goTo() {
-        driver.get(url + "/users");
-        return verifyAtView();
     }
 
     public UsersView verifyUsernameListed(String username) {

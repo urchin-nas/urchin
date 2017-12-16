@@ -7,7 +7,12 @@ import urchin.selenium.view.PageView;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
-public class EditGroupView extends PageView {
+public class EditGroupView extends PageView<EditGroupView> {
+
+    @Override
+    protected String viewUrl() {
+        return "/groups/edit/0";
+    }
 
     @Override
     public EditGroupView verifyAtView() {

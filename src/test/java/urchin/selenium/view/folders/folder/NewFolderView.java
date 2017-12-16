@@ -4,7 +4,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import urchin.selenium.view.PageView;
 
-public class NewFolderView extends PageView {
+public class NewFolderView extends PageView<NewFolderView> {
+
+    @Override
+    protected String viewUrl() {
+        return "folders/new";
+    }
 
     @Override
     public NewFolderView verifyAtView() {

@@ -7,7 +7,12 @@ import urchin.selenium.view.PageView;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
-public class EditUserView extends PageView {
+public class EditUserView extends PageView<EditUserView> {
+
+    @Override
+    protected String viewUrl() {
+        return "/users/edit/0";
+    }
 
     @Override
     public EditUserView verifyAtView() {

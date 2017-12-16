@@ -6,7 +6,12 @@ import urchin.selenium.view.PageView;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 
-public class FoldersView extends PageView {
+public class FoldersView extends PageView<FoldersView> {
+
+    @Override
+    protected String viewUrl() {
+        return "/folders";
+    }
 
     @Override
     public FoldersView verifyAtView() {

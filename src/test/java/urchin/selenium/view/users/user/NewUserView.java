@@ -4,17 +4,17 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import urchin.selenium.view.PageView;
 
-public class NewUserView extends PageView {
+public class NewUserView extends PageView<NewUserView> {
+
+    @Override
+    protected String viewUrl() {
+        return "/users/new";
+    }
 
     @Override
     public NewUserView verifyAtView() {
         waitUntil(ExpectedConditions.visibilityOfElementLocated(By.id("new-user")));
         return this;
-    }
-
-    public NewUserView goTo() {
-        driver.get(url + "/users/new");
-        return verifyAtView();
     }
 
     public NewUserView fillUsername(String username) {

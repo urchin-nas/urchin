@@ -3,7 +3,12 @@ package urchin.selenium.view;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class NavigationView extends PageView {
+public class NavigationView extends PageView<NavigationView> {
+
+    @Override
+    protected String viewUrl() {
+        return "/";
+    }
 
     @Override
     public NavigationView verifyAtView() {
