@@ -3,9 +3,9 @@ package urchin.selenium;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
-import urchin.selenium.testutil.SeleniumTestApplication;
+import urchin.selenium.testutil.SeleniumTest;
 
-public class FolderITCase extends SeleniumTestApplication {
+public class FolderITCase extends SeleniumTest {
 
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();

@@ -3,13 +3,13 @@ package urchin.selenium;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import urchin.selenium.testutil.SeleniumTestApplication;
+import urchin.selenium.testutil.SeleniumTest;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static urchin.testutil.UnixUserAndGroupCleanup.GROUP_PREFIX;
 import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;
 
-public class UserToGroupITCase extends SeleniumTestApplication {
+public class UserToGroupITCase extends SeleniumTest {
 
     private static String groupName;
     private static String username;

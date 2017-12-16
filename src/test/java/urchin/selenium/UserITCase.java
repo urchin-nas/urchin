@@ -1,12 +1,12 @@
 package urchin.selenium;
 
 import org.junit.Test;
-import urchin.selenium.testutil.SeleniumTestApplication;
+import urchin.selenium.testutil.SeleniumTest;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;
 
-public class UserITCase extends SeleniumTestApplication {
+public class UserITCase extends SeleniumTest {
 
     @Test
     public void createAndDeleteUser() {

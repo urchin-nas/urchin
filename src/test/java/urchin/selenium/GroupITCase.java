@@ -1,11 +1,11 @@
 package urchin.selenium;
 
 import org.junit.Test;
-import urchin.selenium.testutil.SeleniumTestApplication;
+import urchin.selenium.testutil.SeleniumTest;
 
 import static urchin.testutil.UnixUserAndGroupCleanup.GROUP_PREFIX;
 
-public class GroupITCase extends SeleniumTestApplication {
+public class GroupITCase extends SeleniumTest {
 
     @Test
     public void createAndDeleteGroup() {

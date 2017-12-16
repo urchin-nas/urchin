@@ -14,7 +14,7 @@ import urchin.selenium.view.users.user.EditUserView;
 import urchin.selenium.view.users.user.NewUserView;
 
 @RunWith(SeleniumRunner.class)
-public abstract class SeleniumTestApplication {
+public abstract class SeleniumTest {
 
     protected static final HomeView HOME = new HomeView();
     protected static final NavigationView NAVIGATION = new NavigationView();
