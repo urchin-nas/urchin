@@ -1,11 +1,11 @@
 import React from 'react';
 import {shallow} from 'enzyme'
 import toJson from 'enzyme-to-json';
-import Users from "./Users";
+import GroupsRoute from "./GroupsRoute";
 
-describe('Users', () => {
+describe('GroupsRoute', () => {
 
     it('match snapshot', () => {
-        expect(toJson(shallow(<Users/>))).toMatchSnapshot();
+        expect(toJson(shallow(<GroupsRoute/>))).toMatchSnapshot();
     });
 });

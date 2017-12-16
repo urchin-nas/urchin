@@ -4,7 +4,7 @@ import FolderListContainer from './FolderListContainer';
 import EditFolderContainer from './folder/EditFolderContainer';
 import NewFolderContainer from "./folder/NewFolderContainer";
 
-class Folders extends Component {
+class FoldersRoute extends Component {
 
     render() {
         return (
@@ -17,4 +17,4 @@ class Folders extends Component {
     }
 }
 
-export default Folders
+export default FoldersRoute

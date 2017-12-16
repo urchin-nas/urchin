@@ -1,10 +1,10 @@
 import React, {Component} from 'react'
-import {Switch, Route} from 'react-router-dom'
+import {Route, Switch} from 'react-router-dom'
 import UserListContainer from './UserListContainer';
 import EditUserContainer from './user/EditUserContainer';
 import NewUserContainer from './user/NewUserContainer';
 
-class Users extends Component {
+class UsersRoute extends Component {
 
     render() {
         return (
@@ -17,4 +17,4 @@ class Users extends Component {
     }
 }
 
-export default Users
+export default UsersRoute

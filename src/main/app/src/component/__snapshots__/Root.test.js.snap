@@ -12,29 +12,7 @@ exports[`Root match snapshot 1`] = `
   <div
     id="root__content"
   >
-    <Switch>
-      <Route
-        component={[Function]}
-        exact={true}
-        path="/"
-      />
-      <Route
-        component={[Function]}
-        path="/users"
-      />
-      <Route
-        component={[Function]}
-        path="/groups"
-      />
-      <Route
-        component={[Function]}
-        path="/folders"
-      />
-      <Redirect
-        push={false}
-        to="/"
-      />
-    </Switch>
+    <RootRoute />
   </div>
 </div>
 `;

@@ -4,7 +4,7 @@ import GroupListContainer from './GroupListContainer';
 import EditGroupContainer from './group/EditGroupContainer';
 import NewGroupContainer from "./group/NewGroupContainer";
 
-class Groups extends Component {
+class GroupsRoute extends Component {
 
     render() {
         return (
@@ -17,4 +17,4 @@ class Groups extends Component {
     }
 }
 
-export default Groups
+export default GroupsRoute
