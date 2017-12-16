@@ -6,7 +6,7 @@ class UserList extends Component {
     render() {
         let users = this.props.users || [];
         let userItems = users.map((item, index) =>
-            <li key={index.toString()}>
+            <li className="users__user" key={index.toString()}>
                 <Link to={`/users/${item.userId}`}>{item.username}</Link>
             </li>
         );
@@ -14,7 +14,7 @@ class UserList extends Component {
             <div id="user-list">
                 <Link id="user-list__new-user" to="/users/new">new user</Link>
                 <h2>Users</h2>
-                <ul>
+                <ul className="users">
                     {userItems}
                 </ul>
             </div>

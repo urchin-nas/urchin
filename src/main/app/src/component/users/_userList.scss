@@ -1,0 +1,12 @@
+#user-list {
+
+  .users {
+    @extend .list-group;
+    display: inline-block;
+  }
+
+  .users__user {
+    @extend .list-group-item;
+  }
+
+}

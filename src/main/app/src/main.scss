@@ -1,6 +1,7 @@
 //vendor
-@import '../node_modules/bootstrap/scss/bootstrap.scss';
+@import '../node_modules/bootstrap/scss/bootstrap';
 //urchin
-@import './_app.scss';
-@import './component/_root.scss';
+@import 'app';
+@import 'component/root';
 @import 'component/navigation/navigation';
+@import 'component/users/userList';
