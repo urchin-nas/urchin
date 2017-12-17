@@ -6,14 +6,14 @@ class FieldError extends Component {
         let field = this.props.field;
         let fieldErrors = this.props.fieldErrors || {};
         let errorMessages = fieldErrors[field] ? (fieldErrors[field].map((item, index) =>
-            <div className="fieldError" key={index.toString()}>
+            <div className="field-errors__message" key={index.toString()}>
                 {item}
             </div>
         )) : null;
 
         return (<div>
             {errorMessages &&
-            <div className="fieldErrors">
+            <div className="field-errors">
                 {errorMessages}
             </div>
             }

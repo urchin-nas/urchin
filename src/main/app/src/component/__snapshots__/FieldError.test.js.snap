@@ -1,3 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`FieldError match snapshot 1`] = `<div />`;
+exports[`FieldError match snapshot with error to display 1`] = `
+<div>
+  <div
+    className="field-errors"
+  >
+    <div
+      className="field-errors__message"
+      key="0"
+    >
+      error message
+    </div>
+    <div
+      className="field-errors__message"
+      key="1"
+    >
+      some other error message
+    </div>
+  </div>
+</div>
+`;
+
+exports[`FieldError match snapshot without error to display 1`] = `<div />`;

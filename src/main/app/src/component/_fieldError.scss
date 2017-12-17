@@ -1,0 +1,8 @@
+.field-errors {
+
+  .field-errors__message {
+    @extend .alert;
+    @extend .alert-danger;
+  }
+
+}
