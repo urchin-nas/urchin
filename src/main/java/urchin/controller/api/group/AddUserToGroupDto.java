@@ -2,6 +2,7 @@ package urchin.controller.api.group;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.sun.istack.internal.Nullable;
 import org.immutables.value.Value;
 
 import javax.validation.constraints.Min;
@@ -12,11 +13,13 @@ import javax.validation.constraints.NotNull;
 @JsonDeserialize(as = ImmutableAddUserToGroupDto.class)
 public interface AddUserToGroupDto {
 
+    @Nullable
     @NotNull
     @Min(value = 1)
-    int getGroupId();
+    Integer getGroupId();
 
+    @Nullable
     @NotNull
     @Min(value = 1)
-    int getUserId();
+    Integer getUserId();
 }
