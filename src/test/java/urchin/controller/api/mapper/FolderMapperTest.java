@@ -1,7 +1,7 @@
 package urchin.controller.api.mapper;
 
 import org.junit.Test;
-import urchin.controller.api.folder.FolderDetailsDto;
+import urchin.controller.api.folder.FolderDetailsResponse;
 import urchin.model.folder.*;
 
 import java.nio.file.Paths;
@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static urchin.controller.api.mapper.FolderMapper.mapToFolderDetailsDtos;
+import static urchin.controller.api.mapper.FolderMapper.mapToFolderDetailsResponses;
 
 public class FolderMapperTest {
 
@@ -23,14 +23,14 @@ public class FolderMapperTest {
             .build();
 
     @Test
-    public void mappedToDto() {
-        List<FolderDetailsDto> folderDetailsDtos = mapToFolderDetailsDtos(Collections.singletonList(FOLDER_SETTINGS));
+    public void mappedToResponse() {
+        List<FolderDetailsResponse> folderDetailsResponses = mapToFolderDetailsResponses(Collections.singletonList(FOLDER_SETTINGS));
 
-        assertEquals(1, folderDetailsDtos.size());
-        FolderDetailsDto folderDetailsDto = folderDetailsDtos.get(0);
-        assertEquals(FOLDER_SETTINGS.getFolderId().getValue(), folderDetailsDto.getFolderId());
-        assertEquals(FOLDER_SETTINGS.getFolder().getPath().getFileName().toString(), folderDetailsDto.getFolderName());
-        assertEquals(FOLDER_SETTINGS.getFolder().toAbsolutePath(), folderDetailsDto.getFolderPath());
+        assertEquals(1, folderDetailsResponses.size());
+        FolderDetailsResponse folderDetailsResponse = folderDetailsResponses.get(0);
+        assertEquals(FOLDER_SETTINGS.getFolderId().getValue(), folderDetailsResponse.getFolderId());
+        assertEquals(FOLDER_SETTINGS.getFolder().getPath().getFileName().toString(), folderDetailsResponse.getFolderName());
+        assertEquals(FOLDER_SETTINGS.getFolder().toAbsolutePath(), folderDetailsResponse.getFolderPath());
     }
 
 }

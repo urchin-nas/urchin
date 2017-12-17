@@ -5,17 +5,21 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.immutables.value.Value;
 
 import javax.annotation.Nullable;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 @Value.Immutable
-@JsonSerialize(as = ImmutableAddGroupDto.class)
-@JsonDeserialize(as = ImmutableAddGroupDto.class)
-public interface AddGroupDto {
+@JsonSerialize(as = ImmutableAddUserToGroupRequest.class)
+@JsonDeserialize(as = ImmutableAddUserToGroupRequest.class)
+public interface AddUserToGroupRequest {
 
     @Nullable
     @NotNull
-    @Size(min = 3, max = 32)
-    @Value.Parameter
-    String getGroupName();
+    @Min(value = 1)
+    Integer getGroupId();
+
+    @Nullable
+    @NotNull
+    @Min(value = 1)
+    Integer getUserId();
 }

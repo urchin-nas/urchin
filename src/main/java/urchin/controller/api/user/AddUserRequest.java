@@ -9,9 +9,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Value.Immutable
-@JsonSerialize(as = ImmutableAddUserDto.class)
-@JsonDeserialize(as = ImmutableAddUserDto.class)
-public interface AddUserDto {
+@JsonSerialize(as = ImmutableAddUserRequest.class)
+@JsonDeserialize(as = ImmutableAddUserRequest.class)
+public interface AddUserRequest {
 
     @Nullable
     @NotNull

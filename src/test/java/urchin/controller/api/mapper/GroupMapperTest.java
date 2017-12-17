@@ -1,7 +1,7 @@
 package urchin.controller.api.mapper;
 
 import org.junit.Test;
-import urchin.controller.api.group.GroupDto;
+import urchin.controller.api.group.GroupResponse;
 import urchin.model.group.Group;
 import urchin.model.group.GroupId;
 import urchin.model.group.GroupName;
@@ -12,24 +12,24 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
-import static urchin.controller.api.mapper.GroupMapper.mapToGroupsDto;
+import static urchin.controller.api.mapper.GroupMapper.mapToGroupsResponses;
 
 public class GroupMapperTest {
 
     @Test
-    public void mappedToDto() {
+    public void mappedToResponse() {
         Group group = ImmutableGroup.builder()
                 .groupId(GroupId.of(1))
                 .name(GroupName.of("groupName"))
                 .created(LocalDateTime.now())
                 .build();
 
-        List<GroupDto> groupDtos = mapToGroupsDto(Collections.singletonList(group));
+        List<GroupResponse> groupResponses = mapToGroupsResponses(Collections.singletonList(group));
 
-        assertEquals(1, groupDtos.size());
-        GroupDto groupDto = groupDtos.get(0);
-        assertEquals(group.getGroupId().getValue(), groupDto.getGroupId());
-        assertEquals(group.getName().getValue(), groupDto.getGroupName());
+        assertEquals(1, groupResponses.size());
+        GroupResponse groupResponse = groupResponses.get(0);
+        assertEquals(group.getGroupId().getValue(), groupResponse.getGroupId());
+        assertEquals(group.getName().getValue(), groupResponse.getGroupName());
     }
 
 }

@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 @Value.Immutable
-@JsonSerialize(as = ImmutableErrorDto.class)
-@JsonDeserialize(as = ImmutableErrorDto.class)
-public interface ErrorDto {
+@JsonSerialize(as = ImmutableErrorResponse.class)
+@JsonDeserialize(as = ImmutableErrorResponse.class)
+public interface ErrorResponse {
 
     ErrorCode getErrorCode();
 

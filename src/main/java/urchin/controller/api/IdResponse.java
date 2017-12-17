@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.immutables.value.Value;
 
 @Value.Immutable
-@JsonSerialize(as = ImmutableIdDto.class)
-@JsonDeserialize(as = ImmutableIdDto.class)
-public interface IdDto {
+@JsonSerialize(as = ImmutableIdResponse.class)
+@JsonDeserialize(as = ImmutableIdResponse.class)
+public interface IdResponse {
 
     @Value.Parameter
     Integer getId();

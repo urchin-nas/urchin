@@ -7,12 +7,12 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import urchin.controller.api.IdDto;
-import urchin.controller.api.MessageDto;
+import urchin.controller.api.IdResponse;
+import urchin.controller.api.MessageResponse;
 import urchin.controller.api.group.*;
-import urchin.controller.api.user.AddUserDto;
-import urchin.controller.api.user.ImmutableAddUserDto;
-import urchin.controller.api.user.UserDto;
+import urchin.controller.api.user.AddUserRequest;
+import urchin.controller.api.user.ImmutableAddUserRequest;
+import urchin.controller.api.user.UserResponse;
 import urchin.model.group.GroupId;
 import urchin.model.user.UserId;
 import urchin.testutil.TestApplication;
@@ -29,18 +29,18 @@ import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;
 public class GroupControllerIT extends TestApplication {
 
     private UserId userId;
-    private AddGroupDto addGroupDto;
+    private AddGroupRequest addGroupRequest;
 
     @Before
     public void setup() {
-        AddUserDto addUserDto = ImmutableAddUserDto.builder()
+        AddUserRequest addUserRequest = ImmutableAddUserRequest.builder()
                 .username(USERNAME_PREFIX + System.currentTimeMillis())
                 .password(PASSWORD)
                 .build();
-        ResponseEntity<IdDto> addUserResponse = addUserRequest(addUserDto);
+        ResponseEntity<IdResponse> addUserResponse = addUserRequest(addUserRequest);
         userId = UserId.of(addUserResponse.getBody().getId());
 
-        addGroupDto = ImmutableAddGroupDto.of(GROUP_PREFIX + System.currentTimeMillis());
+        addGroupRequest = ImmutableAddGroupRequest.of(GROUP_PREFIX + System.currentTimeMillis());
     }
 
     @After
@@ -52,7 +52,7 @@ public class GroupControllerIT extends TestApplication {
     public void addGroupAndAddUserToGroupAndRemoveUseFromGroupAndRemoveGroup() {
 
         //Add group
-        ResponseEntity<IdDto> addGroupResponse = addGroupRequest(addGroupDto);
+        ResponseEntity<IdResponse> addGroupResponse = addGroupRequest(addGroupRequest);
 
         assertEquals(HttpStatus.OK, addGroupResponse.getStatusCode());
         GroupId groupId = GroupId.of(addGroupResponse.getBody().getId());
@@ -60,47 +60,47 @@ public class GroupControllerIT extends TestApplication {
 
         //Get groups
 
-        ResponseEntity<GroupDto[]> groupsResponse = getGroupsRequest();
+        ResponseEntity<GroupResponse[]> groupsResponse = getGroupsRequest();
 
         assertEquals(HttpStatus.OK, groupsResponse.getStatusCode());
-        List<GroupDto> groups = asList(groupsResponse.getBody());
+        List<GroupResponse> groups = asList(groupsResponse.getBody());
         assertFalse(groups.isEmpty());
-        List<GroupDto> groupDtos = groups.stream()
-                .filter(groupDto -> groupDto.getGroupName().equals(addGroupDto.getGroupName()))
+        List<GroupResponse> groupResponses = groups.stream()
+                .filter(groupResponse -> groupResponse.getGroupName().equals(addGroupRequest.getGroupName()))
                 .collect(Collectors.toList());
-        assertEquals(1, groupDtos.size());
-        assertEquals(groupId.getValue(), groupDtos.get(0).getGroupId());
-        assertEquals(addGroupDto.getGroupName(), groupDtos.get(0).getGroupName());
+        assertEquals(1, groupResponses.size());
+        assertEquals(groupId.getValue(), groupResponses.get(0).getGroupId());
+        assertEquals(addGroupRequest.getGroupName(), groupResponses.get(0).getGroupName());
 
         //Add user to group
 
-        AddUserToGroupDto addUserToGroupDto = ImmutableAddUserToGroupDto.builder()
+        AddUserToGroupRequest addUserToGroupRequest = ImmutableAddUserToGroupRequest.builder()
                 .groupId(groupId.getValue())
                 .userId(userId.getValue())
                 .build();
-        ResponseEntity<MessageDto> addUserToGroupResponse = addUserToGroupRequest(addUserToGroupDto);
+        ResponseEntity<MessageResponse> addUserToGroupResponse = addUserToGroupRequest(addUserToGroupRequest);
 
         assertEquals(HttpStatus.OK, addUserToGroupResponse.getStatusCode());
 
         //Remove user from group
 
-        ResponseEntity<MessageDto> removeUserFromGroupResponse = removeUserFromGroupRequest(userId, groupId);
+        ResponseEntity<MessageResponse> removeUserFromGroupResponse = removeUserFromGroupRequest(userId, groupId);
 
         assertEquals(HttpStatus.OK, removeUserFromGroupResponse.getStatusCode());
 
         //Remove group
 
-        ResponseEntity<MessageDto> removeGroupResponse = removeGroupRequest(groupDtos.get(0).getGroupId());
+        ResponseEntity<MessageResponse> removeGroupResponse = removeGroupRequest(groupResponses.get(0).getGroupId());
 
         assertEquals(HttpStatus.OK, removeGroupResponse.getStatusCode());
     }
 
     @Test
     public void getGroup() {
-        ResponseEntity<IdDto> addGroupResponse = addGroupRequest(addGroupDto);
+        ResponseEntity<IdResponse> addGroupResponse = addGroupRequest(addGroupRequest);
         Integer groupId = addGroupResponse.getBody().getId();
 
-        ResponseEntity<GroupDto> getGroupResponse = getGroupRequest(groupId);
+        ResponseEntity<GroupResponse> getGroupResponse = getGroupRequest(groupId);
 
         assertEquals(HttpStatus.OK, getGroupResponse.getStatusCode());
         assertEquals(groupId, getGroupResponse.getBody().getGroupId());
@@ -108,57 +108,57 @@ public class GroupControllerIT extends TestApplication {
 
     @Test
     public void getUsersForGroupReturnsUsers() {
-        ResponseEntity<IdDto> addGroupResponse = addGroupRequest(ImmutableAddGroupDto.of(GROUP_PREFIX + System.currentTimeMillis()));
+        ResponseEntity<IdResponse> addGroupResponse = addGroupRequest(ImmutableAddGroupRequest.of(GROUP_PREFIX + System.currentTimeMillis()));
         int groupId = addGroupResponse.getBody().getId();
-        AddUserToGroupDto addUserToGroupDto = ImmutableAddUserToGroupDto.builder()
+        AddUserToGroupRequest addUserToGroupRequest = ImmutableAddUserToGroupRequest.builder()
                 .groupId(groupId)
                 .userId(userId.getValue())
                 .build();
-        addUserToGroupRequest(addUserToGroupDto);
+        addUserToGroupRequest(addUserToGroupRequest);
 
-        ResponseEntity<UserDto[]> usersForGroupResponse = getUsersForGroupRequest(groupId);
+        ResponseEntity<UserResponse[]> usersForGroupResponse = getUsersForGroupRequest(groupId);
 
         assertEquals(HttpStatus.OK, usersForGroupResponse.getStatusCode());
         assertNotNull(usersForGroupResponse.getBody());
         assertTrue(usersForGroupResponse.getBody().length > 0);
     }
 
-    private ResponseEntity<IdDto> addGroupRequest(AddGroupDto addGroupDto) {
-        return testRestTemplate.postForEntity(discoverControllerPath() + "/add", addGroupDto, IdDto.class);
+    private ResponseEntity<IdResponse> addGroupRequest(AddGroupRequest addGroupRequest) {
+        return testRestTemplate.postForEntity(discoverControllerPath() + "/add", addGroupRequest, IdResponse.class);
     }
 
-    private ResponseEntity<GroupDto[]> getGroupsRequest() {
-        return testRestTemplate.getForEntity(discoverControllerPath(), GroupDto[].class);
+    private ResponseEntity<GroupResponse[]> getGroupsRequest() {
+        return testRestTemplate.getForEntity(discoverControllerPath(), GroupResponse[].class);
     }
 
-    private ResponseEntity<GroupDto> getGroupRequest(int groupId) {
-        return testRestTemplate.getForEntity(discoverControllerPath() + "/" + groupId, GroupDto.class);
+    private ResponseEntity<GroupResponse> getGroupRequest(int groupId) {
+        return testRestTemplate.getForEntity(discoverControllerPath() + "/" + groupId, GroupResponse.class);
     }
 
-    private ResponseEntity<MessageDto> removeGroupRequest(int groupId) {
-        return testRestTemplate.exchange(discoverControllerPath() + "/" + groupId, HttpMethod.DELETE, null, new ParameterizedTypeReference<MessageDto>() {
+    private ResponseEntity<MessageResponse> removeGroupRequest(int groupId) {
+        return testRestTemplate.exchange(discoverControllerPath() + "/" + groupId, HttpMethod.DELETE, null, new ParameterizedTypeReference<MessageResponse>() {
         });
     }
 
-    private ResponseEntity<MessageDto> addUserToGroupRequest(AddUserToGroupDto addUserToGroupDto) {
-        return testRestTemplate.postForEntity(discoverControllerPath() + "/user", addUserToGroupDto, MessageDto.class);
+    private ResponseEntity<MessageResponse> addUserToGroupRequest(AddUserToGroupRequest addUserToGroupRequest) {
+        return testRestTemplate.postForEntity(discoverControllerPath() + "/user", addUserToGroupRequest, MessageResponse.class);
     }
 
-    private ResponseEntity<MessageDto> removeUserFromGroupRequest(UserId userId, GroupId groupId) {
-        return testRestTemplate.exchange(discoverControllerPath() + "/" + groupId.getValue() + "/user/" + userId.getValue(), HttpMethod.DELETE, null, new ParameterizedTypeReference<MessageDto>() {
+    private ResponseEntity<MessageResponse> removeUserFromGroupRequest(UserId userId, GroupId groupId) {
+        return testRestTemplate.exchange(discoverControllerPath() + "/" + groupId.getValue() + "/user/" + userId.getValue(), HttpMethod.DELETE, null, new ParameterizedTypeReference<MessageResponse>() {
         });
     }
 
-    private ResponseEntity<IdDto> addUserRequest(AddUserDto addUserDto) {
-        return testRestTemplate.postForEntity(discoverControllerPath(UserController.class) + "/add", addUserDto, IdDto.class);
+    private ResponseEntity<IdResponse> addUserRequest(AddUserRequest addUserRequest) {
+        return testRestTemplate.postForEntity(discoverControllerPath(UserController.class) + "/add", addUserRequest, IdResponse.class);
     }
 
-    private ResponseEntity<MessageDto> removeUserRequest(int userId) {
-        return testRestTemplate.exchange(discoverControllerPath(UserController.class) + "/" + userId, HttpMethod.DELETE, null, new ParameterizedTypeReference<MessageDto>() {
+    private ResponseEntity<MessageResponse> removeUserRequest(int userId) {
+        return testRestTemplate.exchange(discoverControllerPath(UserController.class) + "/" + userId, HttpMethod.DELETE, null, new ParameterizedTypeReference<MessageResponse>() {
         });
     }
 
-    private ResponseEntity<UserDto[]> getUsersForGroupRequest(int groupId) {
-        return testRestTemplate.getForEntity(discoverControllerPath() + "/" + groupId + "/users", UserDto[].class);
+    private ResponseEntity<UserResponse[]> getUsersForGroupRequest(int groupId) {
+        return testRestTemplate.getForEntity(discoverControllerPath() + "/" + groupId + "/users", UserResponse[].class);
     }
 }

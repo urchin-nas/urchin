@@ -11,9 +11,9 @@ import javax.validation.constraints.Size;
 import static urchin.model.folder.Passphrase.ECRYPTFS_MAX_PASSPHRASE_LENGTH;
 
 @Value.Immutable
-@JsonSerialize(as = ImmutableMountEncryptedFolderDto.class)
-@JsonDeserialize(as = ImmutableMountEncryptedFolderDto.class)
-public interface MountEncryptedFolderDto {
+@JsonSerialize(as = ImmutableMountEncryptedFolderRequest.class)
+@JsonDeserialize(as = ImmutableMountEncryptedFolderRequest.class)
+public interface MountEncryptedFolderRequest {
 
     @Nullable
     @NotNull

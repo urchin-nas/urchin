@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.immutables.value.Value;
 
 @Value.Immutable
-@JsonSerialize(as = ImmutableCreatedFolderDto.class)
-@JsonDeserialize(as = ImmutableCreatedFolderDto.class)
-public interface CreatedFolderDto {
+@JsonSerialize(as = ImmutableCreatedFolderResponse.class)
+@JsonDeserialize(as = ImmutableCreatedFolderResponse.class)
+public interface CreatedFolderResponse {
 
     Integer getId();
 

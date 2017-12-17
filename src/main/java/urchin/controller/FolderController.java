@@ -3,8 +3,8 @@ package urchin.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import urchin.controller.api.ImmutableMessageDto;
-import urchin.controller.api.MessageDto;
+import urchin.controller.api.ImmutableMessageResponse;
+import urchin.controller.api.MessageResponse;
 import urchin.controller.api.folder.*;
 import urchin.model.folder.*;
 import urchin.service.FolderService;
@@ -16,9 +16,9 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static urchin.controller.api.mapper.CreatedFolderMapper.mapToCreatedFolderDto;
-import static urchin.controller.api.mapper.FolderMapper.mapToFolderDetailsDto;
-import static urchin.controller.api.mapper.FolderMapper.mapToFolderDetailsDtos;
+import static urchin.controller.api.mapper.CreatedFolderMapper.mapToCreatedFolderResponse;
+import static urchin.controller.api.mapper.FolderMapper.mapToFolderDetailsResponse;
+import static urchin.controller.api.mapper.FolderMapper.mapToFolderDetailsResponses;
 
 @RestController
 @RequestMapping("api/folders")
@@ -32,73 +32,73 @@ public class FolderController {
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public List<FolderDetailsDto> getFolders() {
+    public List<FolderDetailsResponse> getFolders() {
         List<FolderSettings> folders = folderService.getFolders();
-        return mapToFolderDetailsDtos(folders);
+        return mapToFolderDetailsResponses(folders);
     }
 
     @RequestMapping(value = "{folderId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public FolderDetailsDto getFolder(@PathVariable int folderId) {
+    public FolderDetailsResponse getFolder(@PathVariable int folderId) {
         FolderId fid = FolderId.of(folderId);
-        return mapToFolderDetailsDto(folderService.getFolder(fid));
+        return mapToFolderDetailsResponse(folderService.getFolder(fid));
     }
 
     @RequestMapping(value = "create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public CreatedFolderDto createEncryptedFolder(@Valid @RequestBody FolderDto folderDto) throws IOException {
-        Folder folder = ImmutableFolder.of(Paths.get(folderDto.getFolder()));
+    public CreatedFolderResponse createEncryptedFolder(@Valid @RequestBody FolderRequest folderRequest) throws IOException {
+        Folder folder = ImmutableFolder.of(Paths.get(folderRequest.getFolder()));
         CreatedFolder createdFolder = folderService.createAndMountEncryptedFolder(folder);
-        return mapToCreatedFolderDto(createdFolder);
+        return mapToCreatedFolderResponse(createdFolder);
     }
 
     @RequestMapping(value = "{folderId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public MessageDto deleteEncryptedFolder(@PathVariable int folderId) throws IOException {
+    public MessageResponse deleteEncryptedFolder(@PathVariable int folderId) throws IOException {
         folderService.deleteEncryptedFolder(FolderId.of(folderId));
-        return ImmutableMessageDto.of("Folder deleted");
+        return ImmutableMessageResponse.of("Folder deleted");
     }
 
     @RequestMapping(value = "mount", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public MessageDto mountEncryptedFolder(@Valid @RequestBody MountEncryptedFolderDto mountEncryptedFolderDto) throws IOException {
-        EncryptedFolder encryptedFolder = EncryptedFolderUtil.getEncryptedFolder(ImmutableFolder.of(Paths.get(mountEncryptedFolderDto.getFolder())));
-        Passphrase passphrase = ImmutablePassphrase.of(mountEncryptedFolderDto.getPassphrase());
+    public MessageResponse mountEncryptedFolder(@Valid @RequestBody MountEncryptedFolderRequest mountEncryptedFolderRequest) throws IOException {
+        EncryptedFolder encryptedFolder = EncryptedFolderUtil.getEncryptedFolder(ImmutableFolder.of(Paths.get(mountEncryptedFolderRequest.getFolder())));
+        Passphrase passphrase = ImmutablePassphrase.of(mountEncryptedFolderRequest.getPassphrase());
         folderService.mountEncryptedFolder(encryptedFolder, passphrase);
-        return ImmutableMessageDto.of("virtual folder created");
+        return ImmutableMessageResponse.of("virtual folder created");
     }
 
     @RequestMapping(value = "unmount", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public MessageDto unmountEncryptedFolder(@Valid @RequestBody FolderDto folderDto) throws IOException {
-        Folder folder = ImmutableFolder.of(Paths.get(folderDto.getFolder()));
+    public MessageResponse unmountEncryptedFolder(@Valid @RequestBody FolderRequest folderRequest) throws IOException {
+        Folder folder = ImmutableFolder.of(Paths.get(folderRequest.getFolder()));
         folderService.unmountFolder(folder);
-        return ImmutableMessageDto.of("encrypted folder unmounted");
+        return ImmutableMessageResponse.of("encrypted folder unmounted");
     }
 
     @RequestMapping(value = "virtual/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public MessageDto setupVirtualFolder(@Valid @RequestBody VirtualFolderDto virtualFolderDto) throws IOException {
-        List<Folder> folders = virtualFolderDto.getFolders().stream()
+    public MessageResponse setupVirtualFolder(@Valid @RequestBody VirtualFolderRequest virtualFolderRequest) throws IOException {
+        List<Folder> folders = virtualFolderRequest.getFolders().stream()
                 .map(folder -> ImmutableFolder.of(Paths.get(folder)))
                 .collect(Collectors.toList());
-        VirtualFolder virtualFolder = ImmutableVirtualFolder.of(Paths.get(virtualFolderDto.getVirtualFolder()));
+        VirtualFolder virtualFolder = ImmutableVirtualFolder.of(Paths.get(virtualFolderRequest.getVirtualFolder()));
         folderService.setupVirtualFolder(folders, virtualFolder);
-        return ImmutableMessageDto.of("virtual folder created");
+        return ImmutableMessageResponse.of("virtual folder created");
     }
 
     @RequestMapping(value = "virtual/unmount", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public MessageDto unmountVirtualFolder(@Valid @RequestBody FolderDto folderDto) throws IOException {
-        Folder folder = ImmutableFolder.of(Paths.get(folderDto.getFolder()));
+    public MessageResponse unmountVirtualFolder(@Valid @RequestBody FolderRequest folderRequest) throws IOException {
+        Folder folder = ImmutableFolder.of(Paths.get(folderRequest.getFolder()));
         folderService.unmountFolder(folder);
-        return ImmutableMessageDto.of("virtual folder unmounted");
+        return ImmutableMessageResponse.of("virtual folder unmounted");
     }
 
     @RequestMapping(value = "share", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public MessageDto shareFolder(@Valid @RequestBody FolderDto folderDto) {
-        Folder folder = ImmutableFolder.of(Paths.get(folderDto.getFolder()));
+    public MessageResponse shareFolder(@Valid @RequestBody FolderRequest folderRequest) {
+        Folder folder = ImmutableFolder.of(Paths.get(folderRequest.getFolder()));
         folderService.shareFolder(folder);
-        return ImmutableMessageDto.of("folder shared");
+        return ImmutableMessageResponse.of("folder shared");
     }
 
     @RequestMapping(value = "unshare", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public MessageDto unShareFolder(@Valid @RequestBody FolderDto folderDto) {
-        Folder folder = ImmutableFolder.of(Paths.get(folderDto.getFolder()));
+    public MessageResponse unShareFolder(@Valid @RequestBody FolderRequest folderRequest) {
+        Folder folder = ImmutableFolder.of(Paths.get(folderRequest.getFolder()));
         folderService.unshareFolder(folder);
-        return ImmutableMessageDto.of("folder unshared");
+        return ImmutableMessageResponse.of("folder unshared");
     }
 }

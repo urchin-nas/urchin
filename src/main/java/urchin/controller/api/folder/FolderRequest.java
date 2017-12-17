@@ -9,9 +9,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Value.Immutable
-@JsonSerialize(as = ImmutableFolderDto.class)
-@JsonDeserialize(as = ImmutableFolderDto.class)
-public interface FolderDto {
+@JsonSerialize(as = ImmutableFolderRequest.class)
+@JsonDeserialize(as = ImmutableFolderRequest.class)
+public interface FolderRequest {
 
     @Nullable
     @NotNull

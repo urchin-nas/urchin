@@ -3,14 +3,14 @@ package urchin.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-import urchin.controller.api.IdDto;
-import urchin.controller.api.ImmutableIdDto;
-import urchin.controller.api.ImmutableMessageDto;
-import urchin.controller.api.MessageDto;
-import urchin.controller.api.group.AddGroupDto;
-import urchin.controller.api.group.AddUserToGroupDto;
-import urchin.controller.api.group.GroupDto;
-import urchin.controller.api.user.UserDto;
+import urchin.controller.api.IdResponse;
+import urchin.controller.api.ImmutableIdResponse;
+import urchin.controller.api.ImmutableMessageResponse;
+import urchin.controller.api.MessageResponse;
+import urchin.controller.api.group.AddGroupRequest;
+import urchin.controller.api.group.AddUserToGroupRequest;
+import urchin.controller.api.group.GroupResponse;
+import urchin.controller.api.user.UserResponse;
 import urchin.model.group.Group;
 import urchin.model.group.GroupId;
 import urchin.model.group.GroupName;
@@ -20,9 +20,9 @@ import urchin.service.GroupService;
 import javax.validation.Valid;
 import java.util.List;
 
-import static urchin.controller.api.mapper.GroupMapper.mapToGroupDto;
-import static urchin.controller.api.mapper.GroupMapper.mapToGroupsDto;
-import static urchin.controller.api.mapper.UserMapper.mapToUsersDto;
+import static urchin.controller.api.mapper.GroupMapper.mapToGroupResponse;
+import static urchin.controller.api.mapper.GroupMapper.mapToGroupsResponses;
+import static urchin.controller.api.mapper.UserMapper.mapToUsersResponses;
 
 @RestController
 @RequestMapping("api/groups")
@@ -36,46 +36,46 @@ public class GroupController {
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public List<GroupDto> getGroups() {
+    public List<GroupResponse> getGroups() {
         List<Group> groups = groupService.getGroups();
-        return mapToGroupsDto(groups);
+        return mapToGroupsResponses(groups);
     }
 
     @RequestMapping(value = "{groupId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public GroupDto getGroup(@PathVariable int groupId) {
-        return mapToGroupDto(groupService.getGroup(GroupId.of(groupId)));
+    public GroupResponse getGroup(@PathVariable int groupId) {
+        return mapToGroupResponse(groupService.getGroup(GroupId.of(groupId)));
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public IdDto addGroup(@Valid @RequestBody AddGroupDto addGroupDto) {
-        GroupId groupId = groupService.addGroup(GroupName.of(addGroupDto.getGroupName()));
-        return ImmutableIdDto.of(groupId.getValue());
+    public IdResponse addGroup(@Valid @RequestBody AddGroupRequest addGroupRequest) {
+        GroupId groupId = groupService.addGroup(GroupName.of(addGroupRequest.getGroupName()));
+        return ImmutableIdResponse.of(groupId.getValue());
     }
 
     @RequestMapping(value = "{groupId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public MessageDto removeGroup(@PathVariable int groupId) {
+    public MessageResponse removeGroup(@PathVariable int groupId) {
         groupService.removeGroup(GroupId.of(groupId));
-        return ImmutableMessageDto.of("Group removed");
+        return ImmutableMessageResponse.of("Group removed");
     }
 
     @RequestMapping(value = "user", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public MessageDto addUserToGroup(@Valid @RequestBody AddUserToGroupDto addUserToGroupDto) {
+    public MessageResponse addUserToGroup(@Valid @RequestBody AddUserToGroupRequest addUserToGroupRequest) {
         groupService.addUserToGroup(
-                UserId.of(addUserToGroupDto.getUserId()),
-                GroupId.of(addUserToGroupDto.getGroupId())
+                UserId.of(addUserToGroupRequest.getUserId()),
+                GroupId.of(addUserToGroupRequest.getGroupId())
         );
-        return ImmutableMessageDto.of("User added to group");
+        return ImmutableMessageResponse.of("User added to group");
     }
 
     @RequestMapping(value = "{groupId}/user/{userId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public MessageDto removeUserFromGroup(@PathVariable int groupId, @PathVariable int userId) {
+    public MessageResponse removeUserFromGroup(@PathVariable int groupId, @PathVariable int userId) {
         groupService.removeUserFromGroup(UserId.of(userId), GroupId.of(groupId));
-        return ImmutableMessageDto.of("User removed from group");
+        return ImmutableMessageResponse.of("User removed from group");
     }
 
     @RequestMapping(value = "{groupId}/users", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    public List<UserDto> getGroupsForUser(@PathVariable int groupId) {
-        return mapToUsersDto(groupService.listUsersForGroup(GroupId.of(groupId)));
+    public List<UserResponse> getGroupsForUser(@PathVariable int groupId) {
+        return mapToUsersResponses(groupService.listUsersForGroup(GroupId.of(groupId)));
     }
 
 }

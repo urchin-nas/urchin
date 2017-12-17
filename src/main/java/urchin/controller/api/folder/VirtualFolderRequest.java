@@ -10,9 +10,9 @@ import javax.validation.constraints.Size;
 import java.util.Collection;
 
 @Value.Immutable
-@JsonSerialize(as = ImmutableVirtualFolderDto.class)
-@JsonDeserialize(as = ImmutableVirtualFolderDto.class)
-public interface VirtualFolderDto {
+@JsonSerialize(as = ImmutableVirtualFolderRequest.class)
+@JsonDeserialize(as = ImmutableVirtualFolderRequest.class)
+public interface VirtualFolderRequest {
 
     @Nullable
     @NotNull

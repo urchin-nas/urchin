@@ -1,13 +1,13 @@
 package urchin.controller.api.mapper;
 
-import urchin.controller.api.folder.CreatedFolderDto;
-import urchin.controller.api.folder.ImmutableCreatedFolderDto;
+import urchin.controller.api.folder.CreatedFolderResponse;
+import urchin.controller.api.folder.ImmutableCreatedFolderResponse;
 import urchin.model.folder.CreatedFolder;
 
 public class CreatedFolderMapper {
 
-    public static CreatedFolderDto mapToCreatedFolderDto(CreatedFolder createdFolder) {
-        return ImmutableCreatedFolderDto.builder()
+    public static CreatedFolderResponse mapToCreatedFolderResponse(CreatedFolder createdFolder) {
+        return ImmutableCreatedFolderResponse.builder()
                 .id(createdFolder.getFolderId().getValue())
                 .passphrase(createdFolder.getPassphrase().getValue())
                 .build();

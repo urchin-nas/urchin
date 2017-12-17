@@ -9,7 +9,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import urchin.controller.api.MessageDto;
+import urchin.controller.api.MessageResponse;
 import urchin.controller.api.folder.*;
 import urchin.model.folder.*;
 import urchin.testutil.TemporaryFolderUnmount;
@@ -57,10 +57,10 @@ public class FolderControllerIT extends TestApplication {
 
     @Test
     public void createAndGetEncryptedFolder() {
-        ResponseEntity<CreatedFolderDto> createResponse = postCreateRequest(ImmutableFolderDto.of(folder_1.toAbsolutePath()));
+        ResponseEntity<CreatedFolderResponse> createResponse = postCreateRequest(ImmutableFolderRequest.of(folder_1.toAbsolutePath()));
         assertEquals(HttpStatus.OK, createResponse.getStatusCode());
 
-        ResponseEntity<FolderDetailsDto> folderResponse = getFolderRequest(createResponse.getBody().getId());
+        ResponseEntity<FolderDetailsResponse> folderResponse = getFolderRequest(createResponse.getBody().getId());
 
         assertEquals(HttpStatus.OK, folderResponse.getStatusCode());
         assertEquals(createResponse.getBody().getId(), folderResponse.getBody().getFolderId());
@@ -68,18 +68,18 @@ public class FolderControllerIT extends TestApplication {
 
     @Test
     public void createEncryptedFoldersAndGetFolderDetailsForAllFolders() {
-        ResponseEntity<CreatedFolderDto> createResponse_1 = postCreateRequest(ImmutableFolderDto.of(folder_1.toAbsolutePath()));
-        ResponseEntity<CreatedFolderDto> createResponse_2 = postCreateRequest(ImmutableFolderDto.of(folder_2.toAbsolutePath()));
+        ResponseEntity<CreatedFolderResponse> createResponse_1 = postCreateRequest(ImmutableFolderRequest.of(folder_1.toAbsolutePath()));
+        ResponseEntity<CreatedFolderResponse> createResponse_2 = postCreateRequest(ImmutableFolderRequest.of(folder_2.toAbsolutePath()));
 
         assertEquals(HttpStatus.OK, createResponse_1.getStatusCode());
         assertEquals(HttpStatus.OK, createResponse_2.getStatusCode());
 
-        ResponseEntity<FolderDetailsDto[]> getFoldersResponse = getFoldersRequest();
+        ResponseEntity<FolderDetailsResponse[]> getFoldersResponse = getFoldersRequest();
 
         assertEquals(HttpStatus.OK, getFoldersResponse.getStatusCode());
         assertTrue(getFoldersResponse.getBody().length > 0);
         List<String> folders = Arrays.stream(getFoldersResponse.getBody())
-                .map(FolderDetailsDto::getFolderPath)
+                .map(FolderDetailsResponse::getFolderPath)
                 .collect(Collectors.toList());
         assertTrue(folders.contains(folder_1.toAbsolutePath()));
         assertTrue(folders.contains(folder_2.toAbsolutePath()));
@@ -87,24 +87,24 @@ public class FolderControllerIT extends TestApplication {
 
     @Test
     public void createAndDeleteEncryptedFolder() {
-        ResponseEntity<CreatedFolderDto> createResponse = postCreateRequest(ImmutableFolderDto.of(folder_1.toAbsolutePath()));
+        ResponseEntity<CreatedFolderResponse> createResponse = postCreateRequest(ImmutableFolderRequest.of(folder_1.toAbsolutePath()));
 
         assertEquals(HttpStatus.OK, createResponse.getStatusCode());
 
         Integer folderId = createResponse.getBody().getId();
 
-        ResponseEntity<MessageDto> deleteResponse = deleteFolderRequest(folderId);
+        ResponseEntity<MessageResponse> deleteResponse = deleteFolderRequest(folderId);
 
         assertEquals(HttpStatus.OK, deleteResponse.getStatusCode());
     }
 
     @Test
     public void createAndMountAndUnmountEncryptedAndVirtualFoldersThatAreSharedAndUnsharedOnNetwork() throws Exception {
-        FolderDto encryptedFolderDto = ImmutableFolderDto.of(folder_1.toAbsolutePath());
+        FolderRequest encryptedFolderRequest = ImmutableFolderRequest.of(folder_1.toAbsolutePath());
 
         //1. create encrypted folder
 
-        ResponseEntity<CreatedFolderDto> createResponse_1 = postCreateRequest(encryptedFolderDto);
+        ResponseEntity<CreatedFolderResponse> createResponse_1 = postCreateRequest(encryptedFolderRequest);
 
         assertEquals(HttpStatus.OK, createResponse_1.getStatusCode());
         assertNotNull(createResponse_1.getBody().getPassphrase());
@@ -113,7 +113,7 @@ public class FolderControllerIT extends TestApplication {
 
         //2. unmount encrypted folder
 
-        ResponseEntity<MessageDto> unmountResponse_1 = postUnmountRequest(encryptedFolderDto);
+        ResponseEntity<MessageResponse> unmountResponse_1 = postUnmountRequest(encryptedFolderRequest);
 
         assertEquals(HttpStatus.OK, unmountResponse_1.getStatusCode());
         assertFalse(folder_1.isExisting());
@@ -121,32 +121,32 @@ public class FolderControllerIT extends TestApplication {
 
         //3. mount encrypted folder again
 
-        MountEncryptedFolderDto mountEncryptedFolderDto = ImmutableMountEncryptedFolderDto.builder()
+        MountEncryptedFolderRequest mountEncryptedFolderRequest = ImmutableMountEncryptedFolderRequest.builder()
                 .folder(folder_1.toAbsolutePath())
                 .passphrase(createResponse_1.getBody().getPassphrase())
                 .build();
 
-        ResponseEntity<MessageDto> mountResponse_1 = postMountRequest(mountEncryptedFolderDto);
+        ResponseEntity<MessageResponse> mountResponse_1 = postMountRequest(mountEncryptedFolderRequest);
         assertEquals(HttpStatus.OK, mountResponse_1.getStatusCode());
         assertTrue(folder_1.isExisting());
         assertTrue(encryptedFolder_1.isExisting());
 
         //4. create 2nd encrypted folder
 
-        ResponseEntity<CreatedFolderDto> createResponse_2 = postCreateRequest(ImmutableFolderDto.of(folder_2.toAbsolutePath()));
+        ResponseEntity<CreatedFolderResponse> createResponse_2 = postCreateRequest(ImmutableFolderRequest.of(folder_2.toAbsolutePath()));
         assertEquals(HttpStatus.OK, createResponse_2.getStatusCode());
         assertTrue(folder_2.isExisting());
         assertTrue(encryptedFolder_2.isExisting());
 
         //5. setup virtual folder
 
-        VirtualFolderDto virtualFolderDto =
-                ImmutableVirtualFolderDto.builder()
+        VirtualFolderRequest virtualFolderRequest =
+                ImmutableVirtualFolderRequest.builder()
                         .folders(Arrays.asList(folder_1.toAbsolutePath(), folder_2.toAbsolutePath()))
                         .virtualFolder(virtualFolder.toAbsolutePath())
                         .build();
 
-        ResponseEntity<MessageDto> virtualFolderResponse = postSetupVirtualFolderRequest(virtualFolderDto);
+        ResponseEntity<MessageResponse> virtualFolderResponse = postSetupVirtualFolderRequest(virtualFolderRequest);
 
         assertEquals(HttpStatus.OK, virtualFolderResponse.getStatusCode());
         assertTrue(virtualFolder.isExisting());
@@ -159,9 +159,9 @@ public class FolderControllerIT extends TestApplication {
 
         //7. share virtual folder
 
-        FolderDto shareFolderDto = ImmutableFolderDto.of(virtualFolder.toAbsolutePath());
+        FolderRequest shareFolderRequest = ImmutableFolderRequest.of(virtualFolder.toAbsolutePath());
 
-        ResponseEntity<MessageDto> shareFolderResponse = postShareFolderRequest(shareFolderDto);
+        ResponseEntity<MessageResponse> shareFolderResponse = postShareFolderRequest(shareFolderRequest);
         assertEquals(HttpStatus.OK, shareFolderResponse.getStatusCode());
 
         SmbFile sharedFolder = getSmbFile(FOLDER_VIRTUAL_NAME);
@@ -170,7 +170,7 @@ public class FolderControllerIT extends TestApplication {
 
         //8. unshare virtual folder
 
-        ResponseEntity<MessageDto> unshareFolderResponse = postUnshareFolderRequest(shareFolderDto);
+        ResponseEntity<MessageResponse> unshareFolderResponse = postUnshareFolderRequest(shareFolderRequest);
         assertEquals(HttpStatus.OK, unshareFolderResponse.getStatusCode());
 
         try {
@@ -181,51 +181,51 @@ public class FolderControllerIT extends TestApplication {
 
         //9. unmount virtual folder
 
-        ResponseEntity<MessageDto> unmountVirtualFOlderResponse = postUnmountVirtualFolderRequest(ImmutableFolderDto.of(virtualFolder.toAbsolutePath()));
+        ResponseEntity<MessageResponse> unmountVirtualFOlderResponse = postUnmountVirtualFolderRequest(ImmutableFolderRequest.of(virtualFolder.toAbsolutePath()));
 
         assertEquals(HttpStatus.OK, unmountVirtualFOlderResponse.getStatusCode());
         assertFalse(virtualFolder.isExisting());
         assertTrue(folderContainsFile(folder_1.getPath(), FILENAME) || folderContainsFile(folder_2.getPath(), FILENAME));
     }
 
-    private ResponseEntity<FolderDetailsDto[]> getFoldersRequest() {
-        return testRestTemplate.getForEntity(discoverControllerPath(), FolderDetailsDto[].class);
+    private ResponseEntity<FolderDetailsResponse[]> getFoldersRequest() {
+        return testRestTemplate.getForEntity(discoverControllerPath(), FolderDetailsResponse[].class);
     }
 
-    private ResponseEntity<FolderDetailsDto> getFolderRequest(int folderId) {
-        return testRestTemplate.getForEntity(discoverControllerPath() + "/" + folderId, FolderDetailsDto.class);
+    private ResponseEntity<FolderDetailsResponse> getFolderRequest(int folderId) {
+        return testRestTemplate.getForEntity(discoverControllerPath() + "/" + folderId, FolderDetailsResponse.class);
     }
 
-    private ResponseEntity<CreatedFolderDto> postCreateRequest(FolderDto folderDto) {
-        return testRestTemplate.postForEntity(discoverControllerPath() + "/create", folderDto, CreatedFolderDto.class);
+    private ResponseEntity<CreatedFolderResponse> postCreateRequest(FolderRequest folderRequest) {
+        return testRestTemplate.postForEntity(discoverControllerPath() + "/create", folderRequest, CreatedFolderResponse.class);
     }
 
-    private ResponseEntity<MessageDto> postUnmountRequest(FolderDto folderDto) {
-        return testRestTemplate.postForEntity(discoverControllerPath() + "/unmount", folderDto, MessageDto.class);
+    private ResponseEntity<MessageResponse> postUnmountRequest(FolderRequest folderRequest) {
+        return testRestTemplate.postForEntity(discoverControllerPath() + "/unmount", folderRequest, MessageResponse.class);
     }
 
-    private ResponseEntity<MessageDto> postMountRequest(MountEncryptedFolderDto mountEncryptedFolderDto) {
-        return testRestTemplate.postForEntity(discoverControllerPath() + "/mount", mountEncryptedFolderDto, MessageDto.class);
+    private ResponseEntity<MessageResponse> postMountRequest(MountEncryptedFolderRequest mountEncryptedFolderRequest) {
+        return testRestTemplate.postForEntity(discoverControllerPath() + "/mount", mountEncryptedFolderRequest, MessageResponse.class);
     }
 
-    private ResponseEntity<MessageDto> postSetupVirtualFolderRequest(VirtualFolderDto virtualFolderDto) {
-        return testRestTemplate.postForEntity(discoverControllerPath() + "/virtual/create", virtualFolderDto, MessageDto.class);
+    private ResponseEntity<MessageResponse> postSetupVirtualFolderRequest(VirtualFolderRequest virtualFolderRequest) {
+        return testRestTemplate.postForEntity(discoverControllerPath() + "/virtual/create", virtualFolderRequest, MessageResponse.class);
     }
 
-    private ResponseEntity<MessageDto> postUnmountVirtualFolderRequest(FolderDto folderDto) {
-        return testRestTemplate.postForEntity(discoverControllerPath() + "/virtual/unmount", folderDto, MessageDto.class);
+    private ResponseEntity<MessageResponse> postUnmountVirtualFolderRequest(FolderRequest folderRequest) {
+        return testRestTemplate.postForEntity(discoverControllerPath() + "/virtual/unmount", folderRequest, MessageResponse.class);
     }
 
-    private ResponseEntity<MessageDto> postShareFolderRequest(FolderDto folderDto) {
-        return testRestTemplate.postForEntity(discoverControllerPath() + "/share", folderDto, MessageDto.class);
+    private ResponseEntity<MessageResponse> postShareFolderRequest(FolderRequest folderRequest) {
+        return testRestTemplate.postForEntity(discoverControllerPath() + "/share", folderRequest, MessageResponse.class);
     }
 
-    private ResponseEntity<MessageDto> postUnshareFolderRequest(FolderDto folderDto) {
-        return testRestTemplate.postForEntity(discoverControllerPath() + "/unshare", folderDto, MessageDto.class);
+    private ResponseEntity<MessageResponse> postUnshareFolderRequest(FolderRequest folderRequest) {
+        return testRestTemplate.postForEntity(discoverControllerPath() + "/unshare", folderRequest, MessageResponse.class);
     }
 
-    private ResponseEntity<MessageDto> deleteFolderRequest(int folderId) {
-        return testRestTemplate.exchange(discoverControllerPath() + "/" + folderId, HttpMethod.DELETE, null, new ParameterizedTypeReference<MessageDto>() {
+    private ResponseEntity<MessageResponse> deleteFolderRequest(int folderId) {
+        return testRestTemplate.exchange(discoverControllerPath() + "/" + folderId, HttpMethod.DELETE, null, new ParameterizedTypeReference<MessageResponse>() {
         });
     }
 

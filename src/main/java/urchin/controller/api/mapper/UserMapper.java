@@ -1,7 +1,7 @@
 package urchin.controller.api.mapper;
 
-import urchin.controller.api.user.ImmutableUserDto;
-import urchin.controller.api.user.UserDto;
+import urchin.controller.api.user.ImmutableUserResponse;
+import urchin.controller.api.user.UserResponse;
 import urchin.model.user.User;
 
 import java.util.List;
@@ -9,14 +9,14 @@ import java.util.stream.Collectors;
 
 public class UserMapper {
 
-    public static List<UserDto> mapToUsersDto(List<User> users) {
+    public static List<UserResponse> mapToUsersResponses(List<User> users) {
         return users.stream()
-                .map(UserMapper::mapToUserDto)
+                .map(UserMapper::mapToUserResponse)
                 .collect(Collectors.toList());
     }
 
-    public static UserDto mapToUserDto(User user) {
-        return ImmutableUserDto.builder()
+    public static UserResponse mapToUserResponse(User user) {
+        return ImmutableUserResponse.builder()
                 .userId(user.getUserId().getValue())
                 .username(user.getUsername().getValue())
                 .build();
