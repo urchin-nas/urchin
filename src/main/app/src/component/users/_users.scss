@@ -2,11 +2,11 @@
 
   .user-list {
     @extend .list-group;
-    display: inline-block;
   }
 
   .user-list__user {
     @extend .list-group-item;
+    border: 0;
   }
 
 }

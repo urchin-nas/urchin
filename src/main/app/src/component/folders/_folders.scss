@@ -2,11 +2,11 @@
 
   .folder-list {
     @extend .list-group;
-    display: inline-block;
   }
 
   .folder-list__folder {
     @extend .list-group-item;
+    border: 0;
   }
 
 }

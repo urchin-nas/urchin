@@ -2,11 +2,11 @@
 
   .group-list {
     @extend .list-group;
-    display: inline-block;
   }
 
   .group-list__group {
     @extend .list-group-item;
+    border: 0;
   }
 
 }
