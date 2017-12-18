@@ -21,14 +21,14 @@ public class UserToGroupITCase extends SeleniumTest {
 
         NEW_GROUP.goTo()
                 .fillGroupName(groupName)
-                .clickCreateGroupButton();
+                .clickOnCreateGroup();
 
         GROUPS.verifyGroupNameListed(groupName);
 
         NEW_USER.goTo()
                 .fillUsername(username)
                 .fillPassword(randomAlphanumeric(10))
-                .clickCreateUserButton();
+                .clickOnCreateUser();
 
         USERS.verifyUsernameListed(username);
     }
@@ -36,23 +36,23 @@ public class UserToGroupITCase extends SeleniumTest {
     @AfterClass
     public static void tearDown() {
         USERS.goTo()
-                .clickUsernameLink(username);
+                .clickOnUsername(username);
 
         EDIT_USER.verifyAtView()
-                .clickDeleteUserButton();
+                .clickOnDeleteUser();
 
         GROUPS.goTo()
-                .clickGroupNameLink(groupName);
+                .clickOnGroupName(groupName);
 
         EDIT_GROUP.verifyAtView()
-                .clickDeleteGroupButton();
+                .clickOnDeleteGroup();
     }
 
     @Test
     public void userCanBeAddedAndRemovedFromUserView() {
         USERS.goTo()
                 .verifyUsernameListed(username)
-                .clickUsernameLink(username);
+                .clickOnUsername(username);
 
         EDIT_USER.verifyAtView()
                 .selectGroup(groupName)
@@ -73,7 +73,7 @@ public class UserToGroupITCase extends SeleniumTest {
     public void userCanBeAddedAndRemovedFromGroupView() {
         GROUPS.goTo()
                 .verifyGroupNameListed(groupName)
-                .clickGroupNameLink(groupName);
+                .clickOnGroupName(groupName);
 
         EDIT_GROUP.verifyAtView()
                 .selectUser(username)

@@ -18,34 +18,34 @@ public class FolderITCase extends SeleniumTest {
         HOME.goTo();
 
         NAVIGATION.verifyAtView()
-                .clickFoldersLink();
+                .clickOnFolders();
 
         FOLDERS.verifyAtView()
-                .clickCreateNewFolderLink();
+                .clickOnCreateNewFolder();
 
         NEW_FOLDER.verifyAtView()
-                .clickCancelButton();
+                .clickOnCancel();
 
         FOLDERS.verifyAtView()
-                .clickCreateNewFolderLink();
+                .clickOnCreateNewFolder();
 
         NEW_FOLDER.verifyAtView()
                 .fillFolderPath(folderPath)
-                .clickCreateFolderButton();
+                .clickOnCreateFolder();
 
         FOLDERS.verifyAtView()
                 .verifyFolderListed(folderName)
-                .clickFolderLink(folderName);
+                .clickOnFolder(folderName);
 
         EDIT_FOLDER.verifyAtView()
-                .clickBackButton();
+                .clickOnBack();
 
         FOLDERS.verifyAtView()
                 .verifyFolderListed(folderName)
-                .clickFolderLink(folderName);
+                .clickOnFolder(folderName);
 
         EDIT_FOLDER.verifyAtView()
-                .clickDeleteFólderButton();
+                .clickOnDeleteFólder();
 
         FOLDERS.verifyAtView()
                 .verifyFolderNotListed(folderName);

@@ -16,11 +16,11 @@ public class EditFolderView extends PageView<EditFolderView> {
         return this;
     }
 
-    public void clickBackButton() {
+    public void clickOnBack() {
         driver.findElement(byDataView("back")).click();
     }
 
-    public void clickDeleteFólderButton() {
+    public void clickOnDeleteFólder() {
         driver.findElement(byDataView("delete")).click();
     }
 }

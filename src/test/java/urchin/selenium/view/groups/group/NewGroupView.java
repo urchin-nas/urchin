@@ -22,11 +22,11 @@ public class NewGroupView extends PageView<NewGroupView> {
         return this;
     }
 
-    public void clickCreateGroupButton() {
+    public void clickOnCreateGroup() {
         driver.findElement(byDataView("create")).click();
     }
 
-    public void clickCancelButton() {
+    public void clickOnCancel() {
         driver.findElement(byDataView("cancel")).click();
     }
 }

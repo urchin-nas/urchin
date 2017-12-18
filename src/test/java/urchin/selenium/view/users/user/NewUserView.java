@@ -27,11 +27,11 @@ public class NewUserView extends PageView<NewUserView> {
         return this;
     }
 
-    public void clickCreateUserButton() {
+    public void clickOnCreateUser() {
         driver.findElement(byDataView("create")).click();
     }
 
-    public void clickCancelButton() {
+    public void clickOnCancel() {
         driver.findElement(byDataView("cancel")).click();
     }
 }

@@ -20,7 +20,7 @@ public class EditGroupView extends PageView<EditGroupView> {
         return this;
     }
 
-    public void clickDeleteGroupButton() {
+    public void clickOnDeleteGroup() {
         driver.findElement(byDataView("delete")).click();
     }
 
@@ -59,7 +59,7 @@ public class EditGroupView extends PageView<EditGroupView> {
         return this;
     }
 
-    public void clickBackButton() {
+    public void clickOnBack() {
         driver.findElement(byDataView("back")).click();
     }
 }

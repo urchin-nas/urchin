@@ -29,11 +29,11 @@ public class GroupsView extends PageView<GroupsView> {
         return this;
     }
 
-    public void clickCreateNewGroupLink() {
+    public void clickOnCreateNewGroup() {
         driver.findElement(byDataView("newGroup")).click();
     }
 
-    public void clickGroupNameLink(String groupName) {
+    public void clickOnGroupName(String groupName) {
         driver.findElement(By.linkText(groupName)).click();
     }
 

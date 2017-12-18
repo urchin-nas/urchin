@@ -22,11 +22,11 @@ public class NewFolderView extends PageView<NewFolderView> {
         return this;
     }
 
-    public void clickCreateFolderButton() {
+    public void clickOnCreateFolder() {
         driver.findElement(byDataView("create")).click();
     }
 
-    public void clickCancelButton() {
+    public void clickOnCancel() {
         driver.findElement(byDataView("cancel")).click();
     }
 }

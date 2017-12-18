@@ -29,11 +29,11 @@ public class UsersView extends PageView<UsersView> {
         return this;
     }
 
-    public void clickCreateNewUserLink() {
+    public void clickOnCreateNewUser() {
         driver.findElement(byDataView("new-user")).click();
     }
 
-    public void clickUsernameLink(String username) {
+    public void clickOnUsername(String username) {
         driver.findElement(By.linkText(username)).click();
     }
 

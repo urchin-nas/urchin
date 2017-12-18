@@ -16,15 +16,15 @@ public class NavigationView extends PageView<NavigationView> {
     }
 
 
-    public void clickUsersLink() {
+    public void clickOnUsers() {
         driver.findElement(byDataView("users")).click();
     }
 
-    public void clickGroupsLink() {
+    public void clickOnGroups() {
         driver.findElement(byDataView("groups")).click();
     }
 
-    public void clickFoldersLink() {
+    public void clickOnFolders() {
         driver.findElement(byDataView("folders")).click();
     }
 }

@@ -24,11 +24,11 @@ public class FoldersView extends PageView<FoldersView> {
         return this;
     }
 
-    public void clickCreateNewFolderLink() {
+    public void clickOnCreateNewFolder() {
         driver.findElement(byDataView("newFolder")).click();
     }
 
-    public void clickFolderLink(String folderName) {
+    public void clickOnFolder(String folderName) {
         driver.findElement(By.linkText(folderName)).click();
     }
 

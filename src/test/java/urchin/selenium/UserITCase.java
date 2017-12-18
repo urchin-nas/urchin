@@ -16,35 +16,35 @@ public class UserITCase extends SeleniumTest {
         HOME.goTo();
 
         NAVIGATION.verifyAtView()
-                .clickUsersLink();
+                .clickOnUsers();
 
         USERS.verifyAtView()
-                .clickCreateNewUserLink();
+                .clickOnCreateNewUser();
 
         NEW_USER.verifyAtView()
-                .clickCancelButton();
+                .clickOnCancel();
 
         USERS.verifyAtView()
-                .clickCreateNewUserLink();
+                .clickOnCreateNewUser();
 
         NEW_USER.verifyAtView()
                 .fillUsername(username)
                 .fillPassword(password)
-                .clickCreateUserButton();
+                .clickOnCreateUser();
 
         USERS.verifyAtView()
                 .verifyUsernameListed(username)
-                .clickUsernameLink(username);
+                .clickOnUsername(username);
 
         EDIT_USER.verifyAtView()
-                .clickBackButton();
+                .clickOnBack();
 
         USERS.verifyAtView()
                 .verifyUsernameListed(username)
-                .clickUsernameLink(username);
+                .clickOnUsername(username);
 
         EDIT_USER.verifyAtView()
-                .clickDeleteUserButton();
+                .clickOnDeleteUser();
 
         USERS.verifyAtView()
                 .verifyUsernameNotListed(username);

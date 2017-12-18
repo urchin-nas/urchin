@@ -20,7 +20,7 @@ public class EditUserView extends PageView<EditUserView> {
         return this;
     }
 
-    public void clickDeleteUserButton() {
+    public void clickOnDeleteUser() {
         driver.findElement(byDataView("delete")).click();
     }
 
@@ -59,7 +59,7 @@ public class EditUserView extends PageView<EditUserView> {
         return this;
     }
 
-    public void clickBackButton() {
+    public void clickOnBack() {
         driver.findElement(byDataView("back")).click();
     }
 }

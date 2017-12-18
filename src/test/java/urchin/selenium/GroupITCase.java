@@ -14,34 +14,34 @@ public class GroupITCase extends SeleniumTest {
         HOME.goTo();
 
         NAVIGATION.verifyAtView()
-                .clickGroupsLink();
+                .clickOnGroups();
 
         GROUPS.verifyAtView()
-                .clickCreateNewGroupLink();
+                .clickOnCreateNewGroup();
 
         NEW_GROUP.verifyAtView()
-                .clickCancelButton();
+                .clickOnCancel();
 
         GROUPS.verifyAtView()
-                .clickCreateNewGroupLink();
+                .clickOnCreateNewGroup();
 
         NEW_GROUP.verifyAtView()
                 .fillGroupName(groupName)
-                .clickCreateGroupButton();
+                .clickOnCreateGroup();
 
         GROUPS.verifyAtView()
                 .verifyGroupNameListed(groupName)
-                .clickGroupNameLink(groupName);
+                .clickOnGroupName(groupName);
 
         EDIT_GROUP.verifyAtView()
-                .clickBackButton();
+                .clickOnBack();
 
         GROUPS.verifyAtView()
                 .verifyGroupNameListed(groupName)
-                .clickGroupNameLink(groupName);
+                .clickOnGroupName(groupName);
 
         EDIT_GROUP.verifyAtView()
-                .clickDeleteGroupButton();
+                .clickOnDeleteGroup();
 
         GROUPS.verifyAtView()
                 .verifyGroupNameNotListed(groupName);
