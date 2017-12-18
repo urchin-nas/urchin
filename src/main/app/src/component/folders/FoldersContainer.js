@@ -11,9 +11,7 @@ export class FoldersContainer extends Component {
 
     render() {
         return (
-            <Folders
-                folders={this.props.folders}
-            />
+            <Folders folders={this.props.folders}/>
         )
     }
 }

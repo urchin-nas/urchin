@@ -12,13 +12,11 @@ export class EditFolderContainer extends Component {
 
     render() {
         return (
-            <EditFolder
-                folder={this.props.folder}
-                callbacks={{
-                    setFolder: this.props.setFolder,
-                    deleteFolder: this.props.deleteFolder,
-                }}
-            />
+            <EditFolder folder={this.props.folder}
+                        callbacks={{
+                            setFolder: this.props.setFolder,
+                            deleteFolder: this.props.deleteFolder,
+                        }}/>
         )
     }
 }

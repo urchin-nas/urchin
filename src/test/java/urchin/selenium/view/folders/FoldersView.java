@@ -15,7 +15,7 @@ public class FoldersView extends PageView<FoldersView> {
 
     @Override
     public FoldersView verifyAtView() {
-        waitUntil(ExpectedConditions.visibilityOfElementLocated(By.id("folders")));
+        waitUntil(ExpectedConditions.visibilityOfElementLocated(byDataView("folders")));
         return this;
     }
 
@@ -25,7 +25,7 @@ public class FoldersView extends PageView<FoldersView> {
     }
 
     public void clickCreateNewFolderLink() {
-        driver.findElement(By.id("folders__new-folder")).click();
+        driver.findElement(byDataView("newFolder")).click();
     }
 
     public void clickFolderLink(String folderName) {

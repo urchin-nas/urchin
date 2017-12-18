@@ -7,14 +7,12 @@ export class NewFolderContainer extends Component {
 
     render() {
         return (
-            <NewFolder
-                folder={this.props.folder}
-                fieldErrors={this.props.fieldErrors}
-                callbacks={{
-                    setFolder: this.props.setFolder,
-                    createFolder: this.props.createFolder,
-                }}
-            />
+            <NewFolder folder={this.props.folder}
+                       fieldErrors={this.props.fieldErrors}
+                       callbacks={{
+                           setFolder: this.props.setFolder,
+                           createFolder: this.props.createFolder,
+                       }}/>
         )
     }
 }

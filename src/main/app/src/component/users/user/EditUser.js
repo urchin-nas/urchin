@@ -32,9 +32,14 @@ class EditUser extends Component {
     render() {
         let username = this.props.user.username;
         let groupsForUser = this.props.groupsForUser.map((group, index) =>
-            <li className="edit-user__groups__item" key={index.toString()}>
+            <li data-view="groups"
+                className="edit-user__groups__item"
+                key={index.toString()}>
                 <Link to={`/groups/${group.groupId}`}>{group.groupName}</Link>
-                <button className="edit-user__groups__item__remove-group-btn" onClick={() => this.removeGroup(group.groupId)}>
+                <button
+                    data-view="removeGroup"
+                    className="edit-user__groups__item__remove-group-btn"
+                    onClick={() => this.removeGroup(group.groupId)}>
                     Remove Group
                 </button>
             </li>
@@ -42,24 +47,40 @@ class EditUser extends Component {
         let availableGroups = this.props.availableGroups;
 
         return (
-            <div id="edit-user">
+            <div data-view="editUser"
+                 className="edit-user">
                 <h2>User</h2>
                 <div>Username: {username}</div>
                 <select
-                    id="edit-user__available-groups"
+                    data-view="availableGroups"
+                    className="edit-user__available-groups"
                     name="groupId"
                     onChange={this.update}>
                     <option>-- select group --</option>
                     {availableGroups.map(group =>
-                        <option className="edit-user__available-groups__item" key={group.groupId}
-                                value={group.groupId}>{group.groupName}</option>
+                        <option className="edit-user__available-groups__item"
+                                key={group.groupId}
+                                value={group.groupId}>{group.groupName}
+                        </option>
                     )}
                 </select>
-                <button id="edit-user__add-group-btn" onClick={this.addGroup}>Add Group</button>
-                <button id="edit-user__delete-btn" onClick={this.del}>Delete</button>
-                <button id="edit-user__back-btn" onClick={this.back}>Back</button>
+                <button data-view="addGroup"
+                        className="edit-user__add-group-btn"
+                        onClick={this.addGroup}>
+                    Add Group
+                </button>
+                <button data-view="delete"
+                        className="edit-user__delete-btn"
+                        onClick={this.del}>
+                    Delete
+                </button>
+                <button data-view="back"
+                        className="edit-user__back-btn"
+                        onClick={this.back}>
+                    Back
+                </button>
                 <h2>Member of groups</h2>
-                <ul id="edit-user__groups">
+                <ul className="edit-user__groups">
                     {groupsForUser}
                 </ul>
             </div>

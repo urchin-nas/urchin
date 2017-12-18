@@ -9,10 +9,14 @@ class RootRoute extends Component {
     render() {
         return (
             <Switch>
-                <Route exact path="/" component={Home}/>
-                <Route path="/users" component={UsersRoute}/>
-                <Route path="/groups" component={GroupsRoute}/>
-                <Route path="/folders" component={FoldersRoute}/>
+                <Route exact path="/"
+                       component={Home}/>
+                <Route path="/users"
+                       component={UsersRoute}/>
+                <Route path="/groups"
+                       component={GroupsRoute}/>
+                <Route path="/folders"
+                       component={FoldersRoute}/>
                 <Redirect to="/"/>
             </Switch>
         );

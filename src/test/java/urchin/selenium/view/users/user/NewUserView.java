@@ -13,7 +13,7 @@ public class NewUserView extends PageView<NewUserView> {
 
     @Override
     public NewUserView verifyAtView() {
-        waitUntil(ExpectedConditions.visibilityOfElementLocated(By.id("new-user")));
+        waitUntil(ExpectedConditions.visibilityOfElementLocated(byDataView("newUser")));
         return this;
     }
 
@@ -28,10 +28,10 @@ public class NewUserView extends PageView<NewUserView> {
     }
 
     public void clickCreateUserButton() {
-        driver.findElement(By.id("new-user__create-btn")).click();
+        driver.findElement(byDataView("create")).click();
     }
 
     public void clickCancelButton() {
-        driver.findElement(By.id("new-user__cancel-btn")).click();
+        driver.findElement(byDataView("cancel")).click();
     }
 }

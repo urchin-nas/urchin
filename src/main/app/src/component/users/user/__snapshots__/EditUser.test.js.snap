@@ -2,7 +2,8 @@
 
 exports[`EditUser match snapshot 1`] = `
 <div
-  id="edit-user"
+  className="edit-user"
+  data-view="editUser"
 >
   <h2>
     User
@@ -11,7 +12,8 @@ exports[`EditUser match snapshot 1`] = `
     Username: 
   </div>
   <select
-    id="edit-user__available-groups"
+    className="edit-user__available-groups"
+    data-view="availableGroups"
     name="groupId"
     onChange={[Function]}
   >
@@ -20,19 +22,22 @@ exports[`EditUser match snapshot 1`] = `
     </option>
   </select>
   <button
-    id="edit-user__add-group-btn"
+    className="edit-user__add-group-btn"
+    data-view="addGroup"
     onClick={[Function]}
   >
     Add Group
   </button>
   <button
-    id="edit-user__delete-btn"
+    className="edit-user__delete-btn"
+    data-view="delete"
     onClick={[Function]}
   >
     Delete
   </button>
   <button
-    id="edit-user__back-btn"
+    className="edit-user__back-btn"
+    data-view="back"
     onClick={[Function]}
   >
     Back
@@ -41,7 +46,7 @@ exports[`EditUser match snapshot 1`] = `
     Member of groups
   </h2>
   <ul
-    id="edit-user__groups"
+    className="edit-user__groups"
   />
 </div>
 `;

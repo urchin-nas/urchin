@@ -2,10 +2,12 @@
 
 exports[`Users match snapshot 1`] = `
 <div
-  id="users"
+  className="users"
+  data-view="users"
 >
   <Link
-    id="users__new-user"
+    className="users__new-user"
+    data-view="new-user"
     replace={false}
     to="/users/new"
   >

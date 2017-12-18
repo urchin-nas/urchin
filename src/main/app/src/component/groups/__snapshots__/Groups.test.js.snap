@@ -2,10 +2,12 @@
 
 exports[`Groups match snapshot 1`] = `
 <div
-  id="groups"
+  className="groups"
+  data-view="groups"
 >
   <Link
-    id="groups__new-group"
+    className="groups__new-group"
+    data-view="newGroup"
     replace={false}
     to="/groups/new"
   >

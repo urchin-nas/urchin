@@ -25,32 +25,33 @@ class NewUser extends Component {
         let username = this.props.user.username || '';
         let password = this.props.user.password || '';
         return (
-            <div id="new-user">
+            <div data-view="newUser"
+                 className="new-user">
                 <h2>User</h2>
-                <input
-                    name="username"
-                    type="text"
-                    placeholder="username"
-                    value={username}
-                    onChange={this.update}
-                />
-                <FieldError
-                    fieldErrors={this.props.fieldErrors}
-                    field="username"
-                />
-                <input
-                    name="password"
-                    type="password"
-                    placeholder="password"
-                    value={password}
-                    onChange={this.update}
-                />
-                <FieldError
-                    fieldErrors={this.props.fieldErrors}
-                    field="password"
-                />
-                <button id="new-user__create-btn" onClick={this.create}>Create User</button>
-                <button id="new-user__cancel-btn" onClick={this.cancel}>Cancel</button>
+                <input name="username"
+                       type="text"
+                       placeholder="username"
+                       value={username}
+                       onChange={this.update}/>
+                <FieldError fieldErrors={this.props.fieldErrors}
+                            field="username"/>
+                <input name="password"
+                       type="password"
+                       placeholder="password"
+                       value={password}
+                       onChange={this.update}/>
+                <FieldError fieldErrors={this.props.fieldErrors}
+                            field="password"/>
+                <button data-view="create"
+                        className="new-user__create-btn"
+                        onClick={this.create}>
+                    Create User
+                </button>
+                <button data-view="cancel"
+                        className="new-user__cancel-btn"
+                        onClick={this.cancel}>
+                    Cancel
+                </button>
             </div>
         )
     }

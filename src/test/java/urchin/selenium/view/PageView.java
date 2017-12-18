@@ -1,5 +1,6 @@
 package urchin.selenium.view;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -28,5 +29,10 @@ public abstract class PageView<T> {
     protected void waitUntil(ExpectedCondition webElementExpectedCondition) {
         wait.until(webElementExpectedCondition);
     }
+
+    protected By byDataView(String name) {
+        return By.cssSelector("[data-view=" + name + "]");
+    }
+
 
 }

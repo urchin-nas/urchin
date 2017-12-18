@@ -15,7 +15,7 @@ public class UsersView extends PageView<UsersView> {
 
     @Override
     public UsersView verifyAtView() {
-        waitUntil(ExpectedConditions.visibilityOfElementLocated(By.id("users")));
+        waitUntil(ExpectedConditions.visibilityOfElementLocated(byDataView("users")));
         return this;
     }
 
@@ -30,7 +30,7 @@ public class UsersView extends PageView<UsersView> {
     }
 
     public void clickCreateNewUserLink() {
-        driver.findElement(By.id("users__new-user")).click();
+        driver.findElement(byDataView("new-user")).click();
     }
 
     public void clickUsernameLink(String username) {

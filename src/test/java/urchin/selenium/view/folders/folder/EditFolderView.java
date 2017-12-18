@@ -1,6 +1,5 @@
 package urchin.selenium.view.folders.folder;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import urchin.selenium.view.PageView;
 
@@ -13,15 +12,15 @@ public class EditFolderView extends PageView<EditFolderView> {
 
     @Override
     public EditFolderView verifyAtView() {
-        waitUntil(ExpectedConditions.visibilityOfElementLocated(By.id("edit-folder")));
+        waitUntil(ExpectedConditions.visibilityOfElementLocated(byDataView("editFolder")));
         return this;
     }
 
     public void clickBackButton() {
-        driver.findElement(By.id("edit-folder__back-btn")).click();
+        driver.findElement(byDataView("back")).click();
     }
 
     public void clickDeleteFólderButton() {
-        driver.findElement(By.id("edit-folder__delete-btn")).click();
+        driver.findElement(byDataView("delete")).click();
     }
 }

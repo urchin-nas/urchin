@@ -25,20 +25,25 @@ class NewFolder extends Component {
         let folder = this.props.folder.folder || '';
 
         return (
-            <div id="new-folder">
+            <div data-view="newFolder"
+                 className="new-folder">
                 <h2>Folder</h2>
-                <input
-                    name="folder"
-                    type="text"
-                    value={folder}
-                    onChange={this.update}
-                />
-                <FieldError
-                    fieldErrors={this.props.fieldErrors}
-                    field="folder"
-                />
-                <button id="new-folder__create-btn"  onClick={this.create}>Create Folder</button>
-                <button id="new-folder__cancel-btn" onClick={this.cancel}>Cancel</button>
+                <input name="folder"
+                       type="text"
+                       value={folder}
+                       onChange={this.update}/>
+                <FieldError fieldErrors={this.props.fieldErrors}
+                            field="folder"/>
+                <button data-view="create"
+                        className="new-folder__create-btn"
+                        onClick={this.create}>
+                    Create Folder
+                </button>
+                <button data-view="cancel"
+                        className="new-folder__cancel-btn"
+                        onClick={this.cancel}>
+                    Cancel
+                </button>
             </div>
         )
     }

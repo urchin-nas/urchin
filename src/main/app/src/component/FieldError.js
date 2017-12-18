@@ -11,13 +11,14 @@ class FieldError extends Component {
             </div>
         )) : null;
 
-        return (<div>
-            {errorMessages &&
-            <div className="field-errors">
-                {errorMessages}
-            </div>
-            }
-        </div>)
+        return (
+            <div>
+                {errorMessages &&
+                <div className="field-errors">
+                    {errorMessages}
+                </div>
+                }
+            </div>)
     }
 }
 

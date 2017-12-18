@@ -7,12 +7,10 @@ export class NavigationContainer extends Component {
 
     render() {
         return (
-            <Navigation
-                navigationVisible={this.props.navigationVisible}
-                callbacks={{
-                    toggleNavigation: this.props.toggleNavigation,
-                }}
-            />
+            <Navigation navigationVisible={this.props.navigationVisible}
+                        callbacks={{
+                            toggleNavigation: this.props.toggleNavigation,
+                        }}/>
         )
     }
 }

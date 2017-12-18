@@ -2,7 +2,8 @@
 
 exports[`EditFolder match snapshot 1`] = `
 <div
-  id="edit-folder"
+  className="edit-folder"
+  data-view="editFolder"
 >
   <h2>
     Folder
@@ -14,13 +15,15 @@ exports[`EditFolder match snapshot 1`] = `
     Path: 
   </div>
   <button
-    id="edit-folder__delete-btn"
+    className="edit-folder__delete-btn"
+    data-view="delete"
     onClick={[Function]}
   >
     Delete
   </button>
   <button
-    id="edit-folder__back-btn"
+    className="edit-folder__back-btn"
+    data-view="back"
     onClick={[Function]}
   >
     Back

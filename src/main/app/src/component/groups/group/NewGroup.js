@@ -25,20 +25,26 @@ class NewGroup extends Component {
         let groupName = this.props.group.groupName || '';
         return (
 
-            <div id="new-group">
+            <div data-view="newGroup"
+                 className="new-group">
                 <h2>Group</h2>
-                <input
-                    name="groupName"
-                    type="text"
-                    value={groupName}
-                    onChange={this.update}
-                />
+                <input name="groupName"
+                       type="text"
+                       value={groupName}
+                       onChange={this.update}/>
                 <FieldError
                     fieldErrors={this.props.fieldErrors}
-                    field="groupName"
-                />
-                <button id="new-group__create-btn" onClick={this.create}>Create Group</button>
-                <button id="new-group__cancel-btn" onClick={this.cancel}>Cancel</button>
+                    field="groupName"/>
+                <button data-view="create"
+                        className="new-group__create-btn"
+                        onClick={this.create}>
+                    Create Group
+                </button>
+                <button data-view="cancel"
+                        className="new-group__cancel-btn"
+                        onClick={this.cancel}>
+                    Cancel
+                </button>
             </div>
         )
     }

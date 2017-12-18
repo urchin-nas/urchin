@@ -7,14 +7,12 @@ export class NewGroupContainer extends Component {
 
     render() {
         return (
-            <NewGroup
-                group={this.props.group}
-                fieldErrors={this.props.fieldErrors}
-                callbacks={{
-                    setGroup: this.props.setGroup,
-                    createGroup: this.props.createGroup,
-                }}
-            />
+            <NewGroup group={this.props.group}
+                      fieldErrors={this.props.fieldErrors}
+                      callbacks={{
+                          setGroup: this.props.setGroup,
+                          createGroup: this.props.createGroup,
+                      }}/>
         )
     }
 }

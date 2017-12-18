@@ -11,9 +11,7 @@ export class UsersContainer extends Component {
 
     render() {
         return (
-            <Users
-                users={this.props.users}
-            />
+            <Users users={this.props.users}/>
         )
     }
 }

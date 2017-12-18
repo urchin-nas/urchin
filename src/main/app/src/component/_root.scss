@@ -1,6 +1,6 @@
-#root {
+.root {
 
-  #root__content {
+  .root__content {
     @include make-container();
   }
 }

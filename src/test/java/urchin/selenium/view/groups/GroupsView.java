@@ -15,7 +15,7 @@ public class GroupsView extends PageView<GroupsView> {
 
     @Override
     public GroupsView verifyAtView() {
-        waitUntil(ExpectedConditions.visibilityOfElementLocated(By.id("groups")));
+        waitUntil(ExpectedConditions.visibilityOfElementLocated(byDataView("groups")));
         return this;
     }
 
@@ -30,7 +30,7 @@ public class GroupsView extends PageView<GroupsView> {
     }
 
     public void clickCreateNewGroupLink() {
-        driver.findElement(By.id("groups__new-group")).click();
+        driver.findElement(byDataView("newGroup")).click();
     }
 
     public void clickGroupNameLink(String groupName) {

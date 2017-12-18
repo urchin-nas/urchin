@@ -9,9 +9,12 @@ class FoldersRoute extends Component {
     render() {
         return (
             <Switch>
-                <Route exact path="/folders" component={FoldersContainer}/>
-                <Route path="/folders/new" component={NewFolderContainer}/>
-                <Route path="/folders/:id" component={EditFolderContainer}/>
+                <Route exact path="/folders"
+                       component={FoldersContainer}/>
+                <Route path="/folders/new"
+                       component={NewFolderContainer}/>
+                <Route path="/folders/:id"
+                       component={EditFolderContainer}/>
             </Switch>
         )
     }

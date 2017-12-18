@@ -9,9 +9,12 @@ class GroupsRoute extends Component {
     render() {
         return (
             <Switch>
-                <Route exact path="/groups" component={GroupsContainer}/>
-                <Route path="/groups/new" component={NewGroupContainer}/>
-                <Route path="/groups/:id" component={EditGroupContainer}/>
+                <Route exact path="/groups"
+                       component={GroupsContainer}/>
+                <Route path="/groups/new"
+                       component={NewGroupContainer}/>
+                <Route path="/groups/:id"
+                       component={EditGroupContainer}/>
             </Switch>
         )
     }

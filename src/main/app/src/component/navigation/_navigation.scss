@@ -1,23 +1,23 @@
-#navigation {
+.navigation {
   @extend .navbar;
   @extend .navbar-expand-md;
   @extend .navbar-dark;
   @extend .fixed-top;
   @extend .bg-dark;
 
-  #navigation__brand {
+  .navigation__brand {
     @extend .navbar-brand;
   }
 
-  #navigation--toggler {
+  .navigation--toggler {
     @extend .navbar-toggler;
 
-    #navigation-toggler__icon {
+    .navigation-toggler__icon {
       @extend .navbar-toggler-icon;
     }
   }
 
-  #navigation-menu {
+  .navigation-menu {
     @extend .navbar-collapse;
     @extend .collapse;
   }
@@ -26,7 +26,7 @@
     @extend .show;
   }
 
-  #navigation-menu__items {
+  .navigation-menu__items {
     @extend .navbar-nav;
     @extend .mr-auto;
   }

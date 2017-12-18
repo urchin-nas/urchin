@@ -1,6 +1,5 @@
 package urchin.selenium.view;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class NavigationView extends PageView<NavigationView> {
@@ -12,19 +11,20 @@ public class NavigationView extends PageView<NavigationView> {
 
     @Override
     public NavigationView verifyAtView() {
-        waitUntil(ExpectedConditions.visibilityOfElementLocated(By.id("navigation")));
+        waitUntil(ExpectedConditions.visibilityOfElementLocated(byDataView("navigation")));
         return this;
     }
 
+
     public void clickUsersLink() {
-        driver.findElement(By.id("navigation-item__users")).click();
+        driver.findElement(byDataView("users")).click();
     }
 
     public void clickGroupsLink() {
-        driver.findElement(By.id("navigation-item__groups")).click();
+        driver.findElement(byDataView("groups")).click();
     }
 
     public void clickFoldersLink() {
-        driver.findElement(By.id("navigation-item__folders")).click();
+        driver.findElement(byDataView("folders")).click();
     }
 }

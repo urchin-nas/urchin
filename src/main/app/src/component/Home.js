@@ -4,7 +4,8 @@ class Home extends Component {
 
     render() {
         return (
-            <div id="home">
+            <div data-view="home"
+                 className="home">
                 Home
             </div>
         )

@@ -16,22 +16,22 @@ public class EditUserView extends PageView<EditUserView> {
 
     @Override
     public EditUserView verifyAtView() {
-        waitUntil(visibilityOfElementLocated(By.id("edit-user")));
+        waitUntil(visibilityOfElementLocated(byDataView("editUser")));
         return this;
     }
 
     public void clickDeleteUserButton() {
-        driver.findElement(By.id("edit-user__delete-btn")).click();
+        driver.findElement(byDataView("delete")).click();
     }
 
     public EditUserView selectGroup(String groupName) {
-        Select groupSelect = new Select(driver.findElement(By.id("edit-user__available-groups")));
+        Select groupSelect = new Select(driver.findElement(byDataView("availableGroups")));
         groupSelect.selectByVisibleText(groupName);
         return this;
     }
 
     public EditUserView clickAddGroupButton() {
-        driver.findElement(By.id("edit-user__add-group-btn")).click();
+        driver.findElement(byDataView("addGroup")).click();
         return this;
     }
 
@@ -50,16 +50,16 @@ public class EditUserView extends PageView<EditUserView> {
     }
 
     public EditUserView clickRemoveGroupButton(String groupName) {
-        driver.findElements(By.className("edit-user__groups__item")).stream()
+        driver.findElements(byDataView("groups")).stream()
                 .filter(webElement -> webElement.findElements(By.linkText(groupName)).size() > 0)
                 .findFirst()
                 .get()
-                .findElement(By.className("edit-user__groups__item__remove-group-btn"))
+                .findElement(byDataView("removeGroup"))
                 .click();
         return this;
     }
 
     public void clickBackButton() {
-        driver.findElement(By.id("edit-user__back-btn")).click();
+        driver.findElement(byDataView("back")).click();
     }
 }

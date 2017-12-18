@@ -2,10 +2,11 @@
 
 exports[`Navigation match snapshot 1`] = `
 <nav
-  id="navigation"
+  className="navigation"
+  data-view="navigation"
 >
   <Link
-    id="navigation__brand"
+    className="navigation__brand"
     onClick={[Function]}
     replace={false}
     to="/"
@@ -13,25 +14,25 @@ exports[`Navigation match snapshot 1`] = `
     Urchin
   </Link>
   <button
-    id="navigation--toggler"
+    className="navigation--toggler"
     onClick={[Function]}
   >
     <span
-      id="navigation-toggler__icon"
+      className="navigation-toggler__icon"
     />
   </button>
   <div
-    className="navigation-menu--hide"
-    id="navigation-menu"
+    className="navigation-menu navigation-menu--hide"
   >
     <ul
-      id="navigation-menu__items"
+      className="navigation-menu__items"
     >
       <li
         className="navigation-item"
+        data-view="users"
       >
         <Link
-          id="navigation-item__users"
+          className="navigation-item__users"
           onClick={[Function]}
           replace={false}
           to="/users"
@@ -41,9 +42,10 @@ exports[`Navigation match snapshot 1`] = `
       </li>
       <li
         className="navigation-item"
+        data-view="groups"
       >
         <Link
-          id="navigation-item__groups"
+          className="navigation-item__groups"
           onClick={[Function]}
           replace={false}
           to="/groups"
@@ -53,9 +55,10 @@ exports[`Navigation match snapshot 1`] = `
       </li>
       <li
         className="navigation-item"
+        data-view="folders"
       >
         <Link
-          id="navigation-item__folders"
+          className="navigation-item__folders"
           onClick={[Function]}
           replace={false}
           to="/folders"

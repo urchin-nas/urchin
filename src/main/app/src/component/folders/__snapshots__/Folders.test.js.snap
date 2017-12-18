@@ -2,10 +2,12 @@
 
 exports[`Folders match snapshot 1`] = `
 <div
-  id="folders"
+  className="folders"
+  data-view="folders"
 >
   <Link
-    id="folders__new-folder"
+    className="folders__new-folder"
+    data-view="newFolder"
     replace={false}
     to="/folders/new"
   >

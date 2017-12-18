@@ -8,12 +8,14 @@ import LoginContainer from './component/LoginContainer';
 class App extends Component {
     render() {
         return (
-            <div id="urchin">
+            <div className="urchin">
                 <NotificationContainer/>
                 <Router history={history}>
                     <Switch>
-                        <Route path='/login' component={LoginContainer}/>
-                        <Route path='/' component={Root}/>
+                        <Route path='/login'
+                               component={LoginContainer}/>
+                        <Route path='/'
+                               component={Root}/>
                     </Switch>
                 </Router>
             </div>

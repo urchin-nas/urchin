@@ -6,13 +6,20 @@ class Groups extends Component {
     render() {
         let groups = this.props.groups || [];
         let groupItems = groups.map((item, index) =>
-            <li className="group-list__group" key={index.toString()}>
-                <Link to={`/groups/${item.groupId}`}>{item.groupName}</Link>
+            <li className="group-list__group"
+                key={index.toString()}>
+                <Link to={`/groups/${item.groupId}`}>
+                    {item.groupName}
+                </Link>
             </li>
         );
         return (
-            <div id="groups">
-                <Link id="groups__new-group" to="/groups/new">new group</Link>
+            <div data-view="groups"
+                 className="groups">
+                <Link data-view="newGroup"
+                      className="groups__new-group"
+                      to="/groups/new">
+                    new group</Link>
                 <h2>grouplist</h2>
                 <ul className="group-list">
                     {groupItems}

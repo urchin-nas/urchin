@@ -24,12 +24,21 @@ class Folders extends Component {
         let folderName = this.props.folder.folderName;
         let folderPath = this.props.folder.folderPath;
         return (
-            <div id="edit-folder">
+            <div data-view="editFolder"
+                 className="edit-folder">
                 <h2>Folder</h2>
                 <div>Name: {folderName}</div>
                 <div>Path: {folderPath}</div>
-                <button id="edit-folder__delete-btn" onClick={this.del}>Delete</button>
-                <button id="edit-folder__back-btn" onClick={this.back}>Back</button>
+                <button data-view="delete"
+                        className="edit-folder__delete-btn"
+                        onClick={this.del}>
+                    Delete
+                </button>
+                <button data-view="back"
+                        className="edit-folder__back-btn"
+                        onClick={this.back}>
+                    Back
+                </button>
             </div>
         )
     }

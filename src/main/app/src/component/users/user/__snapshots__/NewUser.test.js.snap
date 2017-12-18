@@ -2,7 +2,8 @@
 
 exports[`NewUser match snapshot 1`] = `
 <div
-  id="new-user"
+  className="new-user"
+  data-view="newUser"
 >
   <h2>
     User
@@ -28,13 +29,15 @@ exports[`NewUser match snapshot 1`] = `
     field="password"
   />
   <button
-    id="new-user__create-btn"
+    className="new-user__create-btn"
+    data-view="create"
     onClick={[Function]}
   >
     Create User
   </button>
   <button
-    id="new-user__cancel-btn"
+    className="new-user__cancel-btn"
+    data-view="cancel"
     onClick={[Function]}
   >
     Cancel

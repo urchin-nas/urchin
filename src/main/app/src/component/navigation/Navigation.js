@@ -17,27 +17,47 @@ class Navigation extends Component {
         let toggleNav = this.props.navigationVisible ? 'navigation-menu--show' : 'navigation-menu--hide';
 
         return (
-            <nav id="navigation">
-                <Link id="navigation__brand" to="/" onClick={this.hideNavigation}>Urchin</Link>
-                <button id="navigation--toggler" onClick={this.toggleNavigation}>
-                    <span id="navigation-toggler__icon"/>
+            <nav data-view="navigation"
+                 className="navigation">
+                <Link className="navigation__brand"
+                      to="/"
+                      onClick={this.hideNavigation}>
+                    Urchin
+                </Link>
+                <button className="navigation--toggler"
+                        onClick={this.toggleNavigation}>
+                    <span className="navigation-toggler__icon"/>
                 </button>
-                <div className={toggleNav} id="navigation-menu">
-                    <ul id="navigation-menu__items">
-                        <li className="navigation-item">
-                            <Link id="navigation-item__users" to="/users" onClick={this.hideNavigation}>Users</Link>
+                <div className={`navigation-menu ${toggleNav}`}>
+                    <ul className="navigation-menu__items">
+                        <li
+                            data-view="users"
+                            className="navigation-item">
+                            <Link className="navigation-item__users"
+                                  to="/users"
+                                  onClick={this.hideNavigation}>
+                                Users
+                            </Link>
                         </li>
-                        <li className="navigation-item">
-                            <Link id="navigation-item__groups" to="/groups"
-                                  onClick={this.hideNavigation}>Groups</Link>
+                        <li data-view="groups"
+                            className="navigation-item">
+                            <Link className="navigation-item__groups"
+                                  to="/groups"
+                                  onClick={this.hideNavigation}>
+                                Groups
+                            </Link>
                         </li>
-                        <li className="navigation-item">
-                            <Link id="navigation-item__folders" to="/folders"
-                                  onClick={this.hideNavigation}>Folders</Link>
+                        <li data-view="folders"
+                            className="navigation-item">
+                            <Link className="navigation-item__folders"
+                                  to="/folders"
+                                  onClick={this.hideNavigation}>
+                                Folders
+                            </Link>
                         </li>
+
                     </ul>
                 </div>
-
             </nav>
         )
     }

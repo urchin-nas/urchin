@@ -2,7 +2,8 @@
 
 exports[`NewFolder match snapshot 1`] = `
 <div
-  id="new-folder"
+  className="new-folder"
+  data-view="newFolder"
 >
   <h2>
     Folder
@@ -17,13 +18,15 @@ exports[`NewFolder match snapshot 1`] = `
     field="folder"
   />
   <button
-    id="new-folder__create-btn"
+    className="new-folder__create-btn"
+    data-view="create"
     onClick={[Function]}
   >
     Create Folder
   </button>
   <button
-    id="new-folder__cancel-btn"
+    className="new-folder__cancel-btn"
+    data-view="cancel"
     onClick={[Function]}
   >
     Cancel

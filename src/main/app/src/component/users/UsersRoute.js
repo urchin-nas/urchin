@@ -9,9 +9,12 @@ class UsersRoute extends Component {
     render() {
         return (
             <Switch>
-                <Route exact path="/users" component={UsersContainer}/>
-                <Route path="/users/new" component={NewUserContainer}/>
-                <Route path="/users/:id" component={EditUserContainer}/>
+                <Route exact path="/users"
+                       component={UsersContainer}/>
+                <Route path="/users/new"
+                       component={NewUserContainer}/>
+                <Route path="/users/:id"
+                       component={EditUserContainer}/>
             </Switch>
         )
     }

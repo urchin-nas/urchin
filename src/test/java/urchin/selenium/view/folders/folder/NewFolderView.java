@@ -13,7 +13,7 @@ public class NewFolderView extends PageView<NewFolderView> {
 
     @Override
     public NewFolderView verifyAtView() {
-        waitUntil(ExpectedConditions.visibilityOfElementLocated(By.id("new-folder")));
+        waitUntil(ExpectedConditions.visibilityOfElementLocated(byDataView("newFolder")));
         return this;
     }
 
@@ -23,10 +23,10 @@ public class NewFolderView extends PageView<NewFolderView> {
     }
 
     public void clickCreateFolderButton() {
-        driver.findElement(By.id("new-folder__create-btn")).click();
+        driver.findElement(byDataView("create")).click();
     }
 
     public void clickCancelButton() {
-        driver.findElement(By.id("new-folder__cancel-btn")).click();
+        driver.findElement(byDataView("cancel")).click();
     }
 }

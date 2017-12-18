@@ -7,14 +7,12 @@ export class NewUserContainer extends Component {
 
     render() {
         return (
-            <NewUser
-                user={this.props.user}
-                fieldErrors={this.props.fieldErrors}
-                callbacks={{
-                    setUser: this.props.setUser,
-                    createUser: this.props.createUser
-                }}
-            />
+            <NewUser user={this.props.user}
+                     fieldErrors={this.props.fieldErrors}
+                     callbacks={{
+                         setUser: this.props.setUser,
+                         createUser: this.props.createUser
+                     }}/>
         )
     }
 }

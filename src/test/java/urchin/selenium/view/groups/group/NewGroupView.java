@@ -13,7 +13,7 @@ public class NewGroupView extends PageView<NewGroupView> {
 
     @Override
     public NewGroupView verifyAtView() {
-        waitUntil(ExpectedConditions.visibilityOfElementLocated(By.id("new-group")));
+        waitUntil(ExpectedConditions.visibilityOfElementLocated(byDataView("newGroup")));
         return this;
     }
 
@@ -23,10 +23,10 @@ public class NewGroupView extends PageView<NewGroupView> {
     }
 
     public void clickCreateGroupButton() {
-        driver.findElement(By.id("new-group__create-btn")).click();
+        driver.findElement(byDataView("create")).click();
     }
 
     public void clickCancelButton() {
-        driver.findElement(By.id("new-group__cancel-btn")).click();
+        driver.findElement(byDataView("cancel")).click();
     }
 }

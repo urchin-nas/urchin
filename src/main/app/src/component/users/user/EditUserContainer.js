@@ -25,17 +25,15 @@ export class EditUserContainer extends Component {
         let availableGroups = this.filterOutAvailableGroups();
 
         return (
-            <EditUser
-                user={this.props.user}
-                groupsForUser={this.props.groupsForUser}
-                availableGroups={availableGroups}
-                callbacks={{
-                    addGroup: this.props.addGroup,
-                    removeGroup: this.props.removeGroup,
-                    deleteUser: this.props.deleteUser,
-                    setUser: this.props.setUser
-                }}
-            />
+            <EditUser user={this.props.user}
+                      groupsForUser={this.props.groupsForUser}
+                      availableGroups={availableGroups}
+                      callbacks={{
+                          addGroup: this.props.addGroup,
+                          removeGroup: this.props.removeGroup,
+                          deleteUser: this.props.deleteUser,
+                          setUser: this.props.setUser
+                      }}/>
         )
     }
 }

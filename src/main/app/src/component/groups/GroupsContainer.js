@@ -11,9 +11,7 @@ export class GroupsContainer extends Component {
 
     render() {
         return (
-            <Groups
-                groups={this.props.groups}
-            />
+            <Groups groups={this.props.groups}/>
         )
     }
 }

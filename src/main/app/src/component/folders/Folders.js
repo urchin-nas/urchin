@@ -6,13 +6,20 @@ class Folders extends Component {
     render() {
         let folders = this.props.folders || [];
         let folderItems = folders.map((item, index) =>
-            <li className="folder-list__folder" key={index.toString()}>
-                <Link to={`/folders/${item.folderId}`}>{item.folderName}</Link>
+            <li className="folder-list__folder"
+                key={index.toString()}>
+                <Link to={`/folders/${item.folderId}`}>
+                    {item.folderName}
+                </Link>
             </li>
         );
         return (
-            <div id="folders">
-                <Link id="folders__new-folder" to="/folders/new">new folder</Link>
+            <div data-view="folders"
+                 className="folders">
+                <Link data-view="newFolder"
+                      className="folders__new-folder"
+                      to="/folders/new">
+                    new folder</Link>
                 <h2>Folders</h2>
                 <ul className="folder-list">
                     {folderItems}
