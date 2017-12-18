@@ -21,7 +21,7 @@ public class RemoveUserCommand extends BasicCommand {
     }
 
     public void execute(Username username) {
-        LOG.debug("Removing user {}", username);
+        log.debug("Removing user {}", username);
         executeCommand(command.getUserCommand(REMOVE_USER)
                 .replace(USERNAME, username.getValue()));
     }

@@ -21,7 +21,7 @@ public class AddGroupCommand extends BasicCommand {
     }
 
     public void execute(GroupName groupName) {
-        LOG.debug("Creating group {}", groupName);
+        log.debug("Creating group {}", groupName);
         executeCommand(command.getGroupCommand(ADD_GROUP)
                 .replace(GROUP, groupName.getValue()));
     }

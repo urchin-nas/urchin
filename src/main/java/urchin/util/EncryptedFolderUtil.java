@@ -13,21 +13,21 @@ import static java.io.File.separator;
 
 public class EncryptedFolderUtil {
 
-    private static final Logger LOG = LoggerFactory.getLogger(EncryptedFolderUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(EncryptedFolderUtil.class);
     public static final String HIDDEN_FOLDER_DELIMITER = separator + ".";
     private static final String DELIMITER = separator;
 
     public static Folder getFolder(EncryptedFolder encryptedFolder) {
         String path = encryptedFolder.toAbsolutePath();
         String folderPath = path.substring(0, path.lastIndexOf(HIDDEN_FOLDER_DELIMITER)) + DELIMITER + path.substring(path.lastIndexOf(HIDDEN_FOLDER_DELIMITER) + HIDDEN_FOLDER_DELIMITER.length());
-        LOG.debug("Folder path {}", folderPath);
+        log.debug("Folder path {}", folderPath);
         return ImmutableFolder.of(Paths.get(folderPath));
     }
 
     public static EncryptedFolder getEncryptedFolder(Folder folder) {
         String path = folder.toAbsolutePath();
         String encryptedFolderPath = path.substring(0, path.lastIndexOf(DELIMITER)) + HIDDEN_FOLDER_DELIMITER + path.substring(path.lastIndexOf(DELIMITER) + DELIMITER.length());
-        LOG.debug("Encrypted folder path {}", encryptedFolderPath);
+        log.debug("Encrypted folder path {}", encryptedFolderPath);
         return ImmutableEncryptedFolder.of(Paths.get(encryptedFolderPath));
     }
 }

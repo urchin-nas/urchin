@@ -15,7 +15,7 @@ import java.io.OutputStreamWriter;
 @Component
 public class SetUserPasswordCommand {
 
-    private static final Logger LOG = LoggerFactory.getLogger(SetUserPasswordCommand.class);
+    private static final Logger log = LoggerFactory.getLogger(SetUserPasswordCommand.class);
     private static final String USERNAME = "%username%";
     private static final String SET_USER_PASSWORD = "set-user-password";
 
@@ -29,7 +29,7 @@ public class SetUserPasswordCommand {
     }
 
     public void execute(Username username, Password password) {
-        LOG.info("Setting password for user {}", username);
+        log.info("Setting password for user {}", username);
         String[] command = this.command.getUserCommand(SET_USER_PASSWORD)
                 .replace(USERNAME, username.getValue())
                 .split(" ");
@@ -48,7 +48,7 @@ public class SetUserPasswordCommand {
                 throw new CommandException(this.getClass(), process.exitValue());
             }
         } catch (Exception e) {
-            LOG.error("Failed to execute command");
+            log.error("Failed to execute command");
             throw new CommandException(this.getClass(), e);
         }
     }

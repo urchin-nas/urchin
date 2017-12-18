@@ -21,7 +21,7 @@ public class AddUserCommand extends BasicCommand {
     }
 
     public void execute(Username username) {
-        LOG.debug("Creating user {}", username);
+        log.debug("Creating user {}", username);
         executeCommand(command.getUserCommand(ADD_USER)
                 .replace(USERNAME, username.getValue()));
     }

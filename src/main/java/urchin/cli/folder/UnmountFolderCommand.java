@@ -22,7 +22,7 @@ public class UnmountFolderCommand extends BasicCommand {
     }
 
     public void execute(Path path) {
-        LOG.debug("Unmounting folder {}", path.toAbsolutePath());
+        log.debug("Unmounting folder {}", path.toAbsolutePath());
         executeCommand(command.getFolderCommand(UNMOUNT_FOLDER)
                 .replace(FOLDER, path.toAbsolutePath().toString())
         );

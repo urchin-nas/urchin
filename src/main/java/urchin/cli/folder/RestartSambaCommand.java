@@ -16,7 +16,7 @@ public class RestartSambaCommand extends BasicCommand {
     }
 
     public void execute() {
-        LOG.info("Restarting samba service");
+        log.info("Restarting samba service");
         executeCommand(command.getFolderCommand(RESTART_SAMBA));
     }
 

@@ -15,11 +15,11 @@ import java.io.IOException;
 public class CommandConfiguration {
 
     private static final String COMMANDS_YML = "commands.yml";
-    private final Logger LOG = LoggerFactory.getLogger(this.getClass().getName());
+    private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
     @Bean("commands")
     public PropertySource<?> yamlPropertySourceLoader() throws IOException {
-        LOG.info("loading commands from " + COMMANDS_YML);
+        log.info("loading commands from " + COMMANDS_YML);
         YamlPropertySourceLoader yamlPropertySourceLoader = new YamlPropertySourceLoader();
         Resource resource = new ClassPathResource(COMMANDS_YML);
         return yamlPropertySourceLoader.load(resource.getFilename(), resource, null);

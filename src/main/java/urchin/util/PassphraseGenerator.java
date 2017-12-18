@@ -10,10 +10,10 @@ import static urchin.model.folder.Passphrase.ECRYPTFS_MAX_PASSPHRASE_LENGTH;
 
 public class PassphraseGenerator {
 
-    private static final Logger LOG = LoggerFactory.getLogger(PassphraseGenerator.class);
+    private static final Logger log = LoggerFactory.getLogger(PassphraseGenerator.class);
 
     public static Passphrase generateEcryptfsPassphrase() {
-        LOG.info("Generating passphrase for ecryptfs");
+        log.info("Generating passphrase for ecryptfs");
         return ImmutablePassphrase.of(RandomStringUtils.randomAlphanumeric(ECRYPTFS_MAX_PASSPHRASE_LENGTH));
     }
 }

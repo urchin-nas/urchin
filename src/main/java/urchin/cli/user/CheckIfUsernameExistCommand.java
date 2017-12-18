@@ -22,7 +22,7 @@ public class CheckIfUsernameExistCommand extends BasicCommand {
     }
 
     public boolean execute(Username username) {
-        LOG.debug("Checking if username {} exist", username);
+        log.debug("Checking if username {} exist", username);
         try {
             executeCommand(command.getUserCommand(CHECK_IF_USERNAME_EXIST)
                     .replace(USERNAME, username.getValue()));

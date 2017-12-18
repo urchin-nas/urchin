@@ -19,7 +19,7 @@ import static java.nio.charset.Charset.defaultCharset;
 @Component
 public class MountEncryptedFolderCommand {
 
-    private static final Logger LOG = LoggerFactory.getLogger(MountEncryptedFolderCommand.class);
+    private static final Logger log = LoggerFactory.getLogger(MountEncryptedFolderCommand.class);
     private static final String ENCRYPTED_FOLDER = "%encryptedFolder%";
     private static final String FOLDER = "%folder%";
     private static final String PASSPHRASE = "%passphrase%";
@@ -35,7 +35,7 @@ public class MountEncryptedFolderCommand {
     }
 
     public void execute(Folder folder, EncryptedFolder encryptedFolder, Passphrase passphrase) {
-        LOG.info("Setting up encrypted folder {} and mounting it to {}", encryptedFolder.toAbsolutePath(), folder.toAbsolutePath());
+        log.info("Setting up encrypted folder {} and mounting it to {}", encryptedFolder.toAbsolutePath(), folder.toAbsolutePath());
 
         String[] command = this.command.getFolderCommand(MOUNT_ENCRYPTED_FOLDER)
                 .replace(ENCRYPTED_FOLDER, encryptedFolder.toAbsolutePath())
@@ -50,14 +50,14 @@ public class MountEncryptedFolderCommand {
             bufferedWriter.flush();
             process.waitFor();
             if (process.exitValue() != 0) {
-                LOG.debug("Process failed with error: " + IOUtils.toString(process.getErrorStream(), defaultCharset()));
-                LOG.error("Process returned code: " + process.exitValue());
+                log.debug("Process failed with error: " + IOUtils.toString(process.getErrorStream(), defaultCharset()));
+                log.error("Process returned code: " + process.exitValue());
                 throw new CommandException(this.getClass(), process.exitValue());
             }
         } catch (CommandException e) {
             throw e;
         } catch (Exception e) {
-            LOG.error("Failed to execute command");
+            log.error("Failed to execute command");
             throw new CommandException(this.getClass(), e);
         }
     }

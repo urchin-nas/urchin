@@ -21,7 +21,7 @@ public class ListFileInformationCommand extends BasicCommand {
     }
 
     public Optional<String> execute(Path file) {
-        LOG.debug("Listing file modes for {}", file);
+        log.debug("Listing file modes for {}", file);
         return executeCommand(command.getPermissionCommand(LIST_FILE_INFORMATION)
                 .replace(FILE, file.toAbsolutePath().toString()));
     }

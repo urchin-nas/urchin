@@ -22,7 +22,7 @@ public class RemoveUserFromGroupCommand extends BasicCommand {
     }
 
     public void execute(User user, Group group) {
-        LOG.info("Removing user {} to group {}", user, group);
+        log.info("Removing user {} to group {}", user, group);
         executeCommand(command.getGroupCommand(REMOVE_USER_FROM_GROUP)
                 .replace(USERNAME, user.getUsername().getValue())
                 .replace(GROUP, group.getName().getValue())

@@ -21,7 +21,7 @@ public class ListGroupsCommand extends BasicCommand {
     }
 
     public List<GroupName> execute() {
-        LOG.debug("Listing groups");
+        log.debug("Listing groups");
         Optional<String> response = executeCommand(command.getGroupCommand(LIST_GROUPS));
 
         String[] groups = response.get().split(":\n");

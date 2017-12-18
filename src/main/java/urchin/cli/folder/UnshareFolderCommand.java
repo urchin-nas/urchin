@@ -19,7 +19,7 @@ public class UnshareFolderCommand extends BasicCommand {
     }
 
     public void execute(Folder folder) {
-        LOG.info("Unsharing folder {}", folder);
+        log.info("Unsharing folder {}", folder);
         executeCommand(command.getFolderCommand(UNSHARE_FOLDER)
                 .replace(FOLDER, folder.getPath().getFileName().toString())
         );

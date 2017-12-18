@@ -23,7 +23,7 @@ import java.util.List;
 @Repository
 public class FolderSettingsRepository {
 
-    private static final Logger LOG = LoggerFactory.getLogger(FolderSettingsRepository.class);
+    private static final Logger log = LoggerFactory.getLogger(FolderSettingsRepository.class);
     private static final String INSERT_FOLDER_SETTINGS = "INSERT INTO folder_settings(encrypted_folder, folder, created, auto_mount) VALUES(:encryptedFolder,:folder,:created,:autoMount)";
     private static final String SELECT_FOLDER_SETTINGS = "SELECT * FROM folder_settings WHERE id = ?";
     private static final String SELECT_FOLDERS_SETTINGS = "SELECT * FROM folder_settings";
@@ -51,7 +51,7 @@ public class FolderSettingsRepository {
     }
 
     public FolderId saveFolderSettings(EncryptedFolder encryptedFolder, Folder folder) {
-        LOG.info("Saving new folder settings for folder {}", folder);
+        log.info("Saving new folder settings for folder {}", folder);
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         MapSqlParameterSource parameters = new MapSqlParameterSource()
@@ -66,7 +66,7 @@ public class FolderSettingsRepository {
     }
 
     public void removeFolderSettings(FolderId folderId) {
-        LOG.info("Removing folder settings for id {}", folderId);
+        log.info("Removing folder settings for id {}", folderId);
         jdbcTemplate.update(DELETE_FOLDER_SETTINGS, folderId.getValue());
     }
 

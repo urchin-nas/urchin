@@ -21,7 +21,7 @@ public class RemoveGroupCommand extends BasicCommand {
     }
 
     public void execute(GroupName groupName) {
-        LOG.debug("Removing group {}", groupName);
+        log.debug("Removing group {}", groupName);
         executeCommand(command.getGroupCommand(REMOVE_GROUP)
                 .replace(GROUP, groupName.getValue()));
     }

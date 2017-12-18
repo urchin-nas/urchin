@@ -28,7 +28,7 @@ public class MountVirtualFolderCommand extends BasicCommand {
     }
 
     public void execute(List<Folder> folders, VirtualFolder virtualFolder) {
-        LOG.debug("Mounting virtual folder {} for {} folders", virtualFolder.toAbsolutePath(), folders.size());
+        log.debug("Mounting virtual folder {} for {} folders", virtualFolder.toAbsolutePath(), folders.size());
         List<String> folderPaths = folders.stream()
                 .map(folder -> folder.toAbsolutePath())
                 .collect(Collectors.toList());

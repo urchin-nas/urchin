@@ -22,7 +22,7 @@ public class ShareFolderCommand extends BasicCommand {
     }
 
     public void execute(Folder folder) {
-        LOG.info("Sharing folder {}", folder);
+        log.info("Sharing folder {}", folder);
         executeCommand(command.getFolderCommand(SHARE_FOLDER)
                 .replace(FOLDER_NAME, folder.getPath().getFileName().toString())
                 .replace(FOLDER, folder.toAbsolutePath())

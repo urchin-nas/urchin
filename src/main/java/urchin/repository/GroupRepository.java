@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @Repository
 public class GroupRepository {
 
-    private static final Logger LOG = LoggerFactory.getLogger(GroupRepository.class);
+    private static final Logger log = LoggerFactory.getLogger(GroupRepository.class);
     private static final String INSERT_GROUP = "INSERT INTO user_group(name, created) VALUES(:name, :created)";
     private static final String SELECT_GROUP = "SELECT * from user_group WHERE id = :groupId";
     private static final String DELETE_GROUP = "DELETE FROM user_group WHERE id = :groupId";
@@ -40,7 +40,7 @@ public class GroupRepository {
     }
 
     public GroupId saveGroup(GroupName groupName) {
-        LOG.info("Saving group {}", groupName);
+        log.info("Saving group {}", groupName);
         KeyHolder keyHolder = new GeneratedKeyHolder();
         MapSqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("name", groupName.getValue())
@@ -61,7 +61,7 @@ public class GroupRepository {
     }
 
     public void removeGroup(GroupId groupId) {
-        LOG.info("Removing group with id {}", groupId);
+        log.info("Removing group with id {}", groupId);
         MapSqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("groupId", groupId.getValue());
 

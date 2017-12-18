@@ -20,7 +20,7 @@ public class ListUsersCommand extends BasicCommand {
     }
 
     public List<String> execute() {
-        LOG.debug("Listing users");
+        log.debug("Listing users");
 
         Optional<String> response = executeCommand(command.getUserCommand(LIST_USERS));
 

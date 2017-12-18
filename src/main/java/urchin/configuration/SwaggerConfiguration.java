@@ -28,7 +28,7 @@ import static springfox.documentation.schema.AlternateTypeRules.newRule;
 public class SwaggerConfiguration {
 
     private static final String SCAN_PACKAGE = "urchin.controller";
-    private final Logger LOG = LoggerFactory.getLogger(this.getClass().getName());
+    private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
     @Bean
     public Docket api() {
@@ -41,28 +41,28 @@ public class SwaggerConfiguration {
     }
 
     private AlternateTypeRule[] getAlternateTypeRules() {
-        LOG.info("applying alternateTypeRules for swagger");
+        log.info("applying alternateTypeRules for swagger");
 
-        LOG.debug("discovering rest controllers in {} package", SCAN_PACKAGE);
+        log.debug("discovering rest controllers in {} package", SCAN_PACKAGE);
         ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(false);
         provider.addIncludeFilter(new AnnotationTypeFilter(RestController.class));
         List<String> classNames = provider.findCandidateComponents(SCAN_PACKAGE).stream()
                 .map(BeanDefinition::getBeanClassName)
                 .collect(Collectors.toList());
 
-        LOG.debug("discovering parameter classes used in rest controllers");
+        log.debug("discovering parameter classes used in rest controllers");
         List<Class> classes = getClasses(classNames).stream()
                 .map(this::getParameterClasses)
                 .flatMap(List::stream)
                 .distinct()
                 .collect(Collectors.toList());
 
-        LOG.debug("discovering immutable classes for parameter classes");
+        log.debug("discovering immutable classes for parameter classes");
         List<Class> immutableClasses = getClasses(classes.stream()
                 .map(this::getImmutableClassName)
                 .collect(Collectors.toList()));
 
-        LOG.debug("creating alternateTypeRules from discovered parameter classes and corresponding immutable classes");
+        log.debug("creating alternateTypeRules from discovered parameter classes and corresponding immutable classes");
         List<AlternateTypeRule> alternateTypeRules = new ArrayList<>();
         classes.forEach(c -> immutableClasses.stream()
                 .filter(ic -> ic.getName().equals(getImmutableClassName(c)))

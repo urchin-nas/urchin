@@ -22,7 +22,7 @@ public class AddUserToGroupCommand extends BasicCommand {
     }
 
     public void execute(User user, Group group) {
-        LOG.info("Adding user {} to group {}", user, group);
+        log.info("Adding user {} to group {}", user, group);
         executeCommand(command.getGroupCommand(ADD_USER_TO_GROUP)
                 .replace(USERNAME, user.getUsername().getValue())
                 .replace(GROUP, group.getName().getValue())

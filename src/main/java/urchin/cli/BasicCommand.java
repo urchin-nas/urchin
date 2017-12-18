@@ -11,7 +11,7 @@ import static java.nio.charset.Charset.defaultCharset;
 
 public abstract class BasicCommand {
 
-    protected final Logger LOG = LoggerFactory.getLogger(this.getClass().getName());
+    protected final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
     private final Runtime runtime;
 
@@ -29,14 +29,14 @@ public abstract class BasicCommand {
             process.waitFor();
 
             if (process.exitValue() != 0) {
-                LOG.debug("Process failed with error: " + IOUtils.toString(process.getErrorStream(), defaultCharset()));
-                LOG.error("Process returned code: " + process.exitValue());
+                log.debug("Process failed with error: " + IOUtils.toString(process.getErrorStream(), defaultCharset()));
+                log.error("Process returned code: " + process.exitValue());
                 throw new CommandException(this.getClass(), process.exitValue());
             }
 
             String response = IOUtils.toString(process.getInputStream(), defaultCharset());
             if (response.length() > 0) {
-                LOG.debug("Response: " + response);
+                log.debug("Response: " + response);
                 return Optional.of(response);
             } else {
                 return Optional.empty();
@@ -45,7 +45,7 @@ public abstract class BasicCommand {
         } catch (CommandException e) {
             throw e;
         } catch (Exception e) {
-            LOG.error("Failed to execute command");
+            log.error("Failed to execute command");
             throw new CommandException(this.getClass(), e);
         }
     }

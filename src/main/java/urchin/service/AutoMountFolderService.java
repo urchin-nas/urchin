@@ -12,7 +12,7 @@ import urchin.repository.PassphraseRepository;
 @Service
 public class AutoMountFolderService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AutoMountFolderService.class);
+    private static final Logger log = LoggerFactory.getLogger(AutoMountFolderService.class);
 
     private final PassphraseRepository passphraseRepository;
     private final FolderCli folderCli;
@@ -25,7 +25,7 @@ public class AutoMountFolderService {
 
     public void setup(FolderSettings folderSettings, Passphrase passphrase) {
         passphraseRepository.savePassphrase(folderSettings, passphrase);
-        LOG.info("Auto mounting of encrypted folder {} enabled", folderSettings.getFolder());
+        log.info("Auto mounting of encrypted folder {} enabled", folderSettings.getFolder());
     }
 
     public void mount(FolderSettings folderSettings) {

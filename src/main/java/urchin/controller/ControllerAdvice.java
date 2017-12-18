@@ -25,12 +25,12 @@ import static org.apache.commons.lang3.exception.ExceptionUtils.getRootCause;
 @RestControllerAdvice
 public class ControllerAdvice {
 
-    private final static Logger LOG = LoggerFactory.getLogger(ControllerAdvice.class);
+    private final static Logger log = LoggerFactory.getLogger(ControllerAdvice.class);
 
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     protected ErrorResponse handleValidationError(MethodArgumentNotValidException e, WebRequest webRequest) {
-        LOG.debug("Validation error while handling request: {}", webRequest);
+        log.debug("Validation error while handling request: {}", webRequest);
 
         Map<String, List<String>> fieldErrors = new HashMap<>();
         e.getBindingResult().getFieldErrors().forEach(fieldError -> {
@@ -48,7 +48,7 @@ public class ControllerAdvice {
     @ExceptionHandler(value = {FieldErrorException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     protected ErrorResponse handleFieldErrorException(FieldErrorException e, WebRequest webRequest) {
-        LOG.debug("Validation error while handling request: {}", webRequest);
+        log.debug("Validation error while handling request: {}", webRequest);
 
         Map<String, List<String>> fieldErrors = new HashMap<>();
         fieldErrors.put(e.getField(), e.getMessages());
@@ -63,7 +63,7 @@ public class ControllerAdvice {
     @ExceptionHandler(value = {IllegalArgumentException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected ErrorResponse handleIllegalArgumentException(IllegalArgumentException e, WebRequest webRequest) {
-        LOG.warn("Exception while handler request: {}", webRequest, e);
+        log.warn("Exception while handler request: {}", webRequest, e);
         return ImmutableErrorResponse.builder()
                 .errorCode(ErrorCode.ILLEGAL_ARGUMENT)
                 .message(e.getMessage())
@@ -73,7 +73,7 @@ public class ControllerAdvice {
     @ExceptionHandler(value = {CommandException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected ErrorResponse handleCommandException(CommandException e, WebRequest webRequest) {
-        LOG.warn("Exception while handler request: {}", webRequest, e);
+        log.warn("Exception while handler request: {}", webRequest, e);
         return ImmutableErrorResponse.builder()
                 .errorCode(ErrorCode.COMMAND_EXECUTION_ERROR)
                 .message(String.format("Failed to execute %s. %s", e.getCommand().getSimpleName(), e.getMessage()))
@@ -88,7 +88,7 @@ public class ControllerAdvice {
             return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
         }
 
-        LOG.warn("Exception while handler request: {}", webRequest, e);
+        log.warn("Exception while handler request: {}", webRequest, e);
         return new ResponseEntity<>(ImmutableErrorResponse.builder()
                 .errorCode(ErrorCode.UNEXPECTED_ERROR)
                 .message("an unexpected error occurred. See logs for details")

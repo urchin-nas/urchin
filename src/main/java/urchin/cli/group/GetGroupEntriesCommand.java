@@ -23,7 +23,7 @@ public class GetGroupEntriesCommand extends BasicCommand {
     }
 
     public Optional<String> execute(GroupName groupName) {
-        LOG.debug("Getting entries for group {}", groupName);
+        log.debug("Getting entries for group {}", groupName);
         return executeCommand(command.getGroupCommand(GET_GROUP_ENTRIES)
                 .replace(GROUP, groupName.getValue()));
     }

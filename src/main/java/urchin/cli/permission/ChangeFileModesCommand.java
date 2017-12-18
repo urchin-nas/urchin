@@ -22,7 +22,7 @@ public class ChangeFileModesCommand extends BasicCommand {
     }
 
     public void execute(FileModes fileModes, Path file) {
-        LOG.debug("Change file mode {}", fileModes);
+        log.debug("Change file mode {}", fileModes);
         executeCommand(command.getPermissionCommand(CHANGE_FILE_MODES)
                 .replace(MODES, fileModes.getModes())
                 .replace(FILE, file.toAbsolutePath().toString())

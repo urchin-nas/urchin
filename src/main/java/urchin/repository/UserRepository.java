@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @Repository
 public class UserRepository {
 
-    private static final Logger LOG = LoggerFactory.getLogger(UserRepository.class);
+    private static final Logger log = LoggerFactory.getLogger(UserRepository.class);
     private static final String INSERT_USER = "INSERT INTO user(username, created) VALUES(?,?)";
     private static final String SELECT_USER = "SELECT * from user WHERE id = ?";
     private static final String DELETE_USER = "DELETE FROM user WHERE id = ?";
@@ -42,7 +42,7 @@ public class UserRepository {
     }
 
     public UserId saveUser(Username username) {
-        LOG.info("Saving user {}", username);
+        log.info("Saving user {}", username);
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
@@ -63,7 +63,7 @@ public class UserRepository {
     }
 
     public void removeUser(UserId userId) {
-        LOG.info("Removing user with id {}", userId);
+        log.info("Removing user with id {}", userId);
         jdbcTemplate.update(DELETE_USER, userId.getValue());
     }
 
