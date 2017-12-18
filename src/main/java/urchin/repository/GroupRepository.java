@@ -25,13 +25,13 @@ import java.util.stream.Collectors;
 @Repository
 public class GroupRepository {
 
-    private static final Logger log = LoggerFactory.getLogger(GroupRepository.class);
     private static final String INSERT_GROUP = "INSERT INTO user_group(name, created) VALUES(:name, :created)";
     private static final String SELECT_GROUP = "SELECT * from user_group WHERE id = :groupId";
     private static final String DELETE_GROUP = "DELETE FROM user_group WHERE id = :groupId";
     private static final String SELECT_GROUPS = "SELECT * from user_group";
     private static final String SELECT_GROUPS_BY_NAME = "SELECT * FROM user_group WHERE name IN (:names)";
 
+    private final Logger log = LoggerFactory.getLogger(GroupRepository.class);
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired

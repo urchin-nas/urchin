@@ -19,12 +19,12 @@ import static java.nio.charset.Charset.defaultCharset;
 @Component
 public class MountEncryptedFolderCommand {
 
-    private static final Logger log = LoggerFactory.getLogger(MountEncryptedFolderCommand.class);
     private static final String ENCRYPTED_FOLDER = "%encryptedFolder%";
     private static final String FOLDER = "%folder%";
     private static final String PASSPHRASE = "%passphrase%";
     private static final String MOUNT_ENCRYPTED_FOLDER = "mount-encrypted-folder";
 
+    private final Logger log = LoggerFactory.getLogger(MountEncryptedFolderCommand.class);
     private final Runtime runtime;
     private final Command command;
 

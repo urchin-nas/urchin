@@ -12,8 +12,7 @@ import urchin.repository.PassphraseRepository;
 @Service
 public class AutoMountFolderService {
 
-    private static final Logger log = LoggerFactory.getLogger(AutoMountFolderService.class);
-
+    private final Logger log = LoggerFactory.getLogger(AutoMountFolderService.class);
     private final PassphraseRepository passphraseRepository;
     private final FolderCli folderCli;
 

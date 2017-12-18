@@ -28,7 +28,8 @@ import static springfox.documentation.schema.AlternateTypeRules.newRule;
 public class SwaggerConfiguration {
 
     private static final String SCAN_PACKAGE = "urchin.controller";
-    private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
+
+    private final Logger log = LoggerFactory.getLogger(SwaggerConfiguration.class);
 
     @Bean
     public Docket api() {

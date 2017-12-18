@@ -23,12 +23,12 @@ import java.util.List;
 @Repository
 public class FolderSettingsRepository {
 
-    private static final Logger log = LoggerFactory.getLogger(FolderSettingsRepository.class);
     private static final String INSERT_FOLDER_SETTINGS = "INSERT INTO folder_settings(encrypted_folder, folder, created, auto_mount) VALUES(:encryptedFolder,:folder,:created,:autoMount)";
     private static final String SELECT_FOLDER_SETTINGS = "SELECT * FROM folder_settings WHERE id = ?";
     private static final String SELECT_FOLDERS_SETTINGS = "SELECT * FROM folder_settings";
     private static final String DELETE_FOLDER_SETTINGS = "DELETE FROM folder_settings WHERE id = ?";
 
+    private final Logger log = LoggerFactory.getLogger(FolderSettingsRepository.class);
     private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 

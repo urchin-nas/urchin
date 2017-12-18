@@ -15,10 +15,10 @@ import java.io.OutputStreamWriter;
 @Component
 public class SetUserPasswordCommand {
 
-    private static final Logger log = LoggerFactory.getLogger(SetUserPasswordCommand.class);
     private static final String USERNAME = "%username%";
     private static final String SET_USER_PASSWORD = "set-user-password";
 
+    private final Logger log = LoggerFactory.getLogger(SetUserPasswordCommand.class);
     private final Runtime runtime;
     private final Command command;
 

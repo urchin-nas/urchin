@@ -24,13 +24,13 @@ import java.util.stream.Collectors;
 @Repository
 public class UserRepository {
 
-    private static final Logger log = LoggerFactory.getLogger(UserRepository.class);
     private static final String INSERT_USER = "INSERT INTO user(username, created) VALUES(?,?)";
     private static final String SELECT_USER = "SELECT * from user WHERE id = ?";
     private static final String DELETE_USER = "DELETE FROM user WHERE id = ?";
     private static final String SELECT_USERS = "SELECT * from user";
     private static final String SELECT_USERS_BY_USERNAME = "SELECT * FROM user WHERE username IN (:usernames)";
 
+    private final Logger log = LoggerFactory.getLogger(UserRepository.class);
     private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 

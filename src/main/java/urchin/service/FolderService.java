@@ -19,7 +19,7 @@ import static urchin.util.PassphraseGenerator.generateEcryptfsPassphrase;
 @Service
 public class FolderService {
 
-    private final Logger log = LoggerFactory.getLogger(this.getClass());
+    private final Logger log = LoggerFactory.getLogger(FolderService.class);
     private final FolderSettingsRepository folderSettingsRepository;
     private final FolderCli folderCli;
 

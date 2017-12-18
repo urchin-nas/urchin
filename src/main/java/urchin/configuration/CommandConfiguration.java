@@ -15,7 +15,8 @@ import java.io.IOException;
 public class CommandConfiguration {
 
     private static final String COMMANDS_YML = "commands.yml";
-    private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
+
+    private final Logger log = LoggerFactory.getLogger(CommandConfiguration.class);
 
     @Bean("commands")
     public PropertySource<?> yamlPropertySourceLoader() throws IOException {

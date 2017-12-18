@@ -9,7 +9,7 @@ import urchin.model.folder.Passphrase;
 @Repository
 public class PassphraseRepository {
 
-    private static final Logger log = LoggerFactory.getLogger(PassphraseRepository.class);
+    private final Logger log = LoggerFactory.getLogger(PassphraseRepository.class);
 
     public void savePassphrase(FolderSettings folderSettings, Passphrase passphrase) {
         //TODO implement - Save at remote location using SSH
