@@ -30,7 +30,7 @@ public class UsersView extends PageView<UsersView> {
     }
 
     public void clickOnCreateNewUser() {
-        driver.findElement(byDataView("new-user")).click();
+        driver.findElement(byDataView("newUser")).click();
     }
 
     public void clickOnUsername(String username) {

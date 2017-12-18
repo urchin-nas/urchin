@@ -16,7 +16,7 @@ class Users extends Component {
         return (
             <div data-view="users"
                  className="users">
-                <Link data-view="new-user"
+                <Link data-view="newUser"
                       className="users__new-user"
                       to="/users/new">
                     new user
