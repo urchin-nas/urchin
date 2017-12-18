@@ -15,7 +15,6 @@ public class NavigationView extends PageView<NavigationView> {
         return this;
     }
 
-
     public void clickOnUsers() {
         driver.findElement(byDataView("users")).click();
     }
