@@ -7,7 +7,7 @@ exports[`Users match snapshot 1`] = `
 >
   <Link
     className="users__new-user"
-    data-view="new-user"
+    data-view="newUser"
     replace={false}
     to="/users/new"
   >
