@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 @Value.Immutable
+@Value.Style(jdkOnly = true)
 @JsonSerialize(as = ImmutableErrorResponse.class)
 @JsonDeserialize(as = ImmutableErrorResponse.class)
 public interface ErrorResponse {

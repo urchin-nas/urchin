@@ -25,7 +25,8 @@ import static org.apache.commons.lang3.exception.ExceptionUtils.getRootCause;
 @RestControllerAdvice
 public class ControllerAdvice {
 
-    private final static Logger log = LoggerFactory.getLogger(ControllerAdvice.class);
+    public static final String VALIDATION_ERROR_MESSAGE = "validation error";
+    private static final Logger log = LoggerFactory.getLogger(ControllerAdvice.class);
 
     @ExceptionHandler(value = {MethodArgumentNotValidException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -40,7 +41,7 @@ public class ControllerAdvice {
 
         return ImmutableErrorResponse.builder()
                 .errorCode(ErrorCode.VALIDATION_ERROR)
-                .message("validation error")
+                .message(VALIDATION_ERROR_MESSAGE)
                 .fieldErrors(fieldErrors)
                 .build();
     }
@@ -55,7 +56,7 @@ public class ControllerAdvice {
 
         return ImmutableErrorResponse.builder()
                 .errorCode(ErrorCode.VALIDATION_ERROR)
-                .message("validation error")
+                .message(VALIDATION_ERROR_MESSAGE)
                 .fieldErrors(fieldErrors)
                 .build();
     }

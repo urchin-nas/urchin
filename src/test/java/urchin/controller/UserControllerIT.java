@@ -6,6 +6,8 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import urchin.controller.api.ErrorCode;
+import urchin.controller.api.ErrorResponse;
 import urchin.controller.api.IdResponse;
 import urchin.controller.api.MessageResponse;
 import urchin.controller.api.group.*;
@@ -16,6 +18,7 @@ import urchin.testutil.TestApplication;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.*;
@@ -87,6 +90,23 @@ public class UserControllerIT extends TestApplication {
         assertEquals(HttpStatus.OK, getGroupsForUserResponse.getStatusCode());
         assertNotNull(getGroupsForUserResponse.getBody());
         assertTrue(getGroupsForUserResponse.getBody().length > 0);
+    }
+
+    @Test
+    public void addUserWithEmptyRequestReturnsErrorResponse() {
+        AddUserRequest emptyAddUserRequest = ImmutableAddUserRequest.builder()
+                .build();
+
+        ResponseEntity<ErrorResponse> response = testRestTemplate.postForEntity(discoverControllerPath() + "/add", emptyAddUserRequest, ErrorResponse.class);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        ErrorResponse errorResponse = response.getBody();
+        assertEquals(ErrorCode.VALIDATION_ERROR, errorResponse.getErrorCode());
+        assertEquals(ControllerAdvice.VALIDATION_ERROR_MESSAGE, errorResponse.getMessage());
+        Map<String, List<String>> fieldErrors = errorResponse.getFieldErrors();
+        assertEquals(2, fieldErrors.size());
+        assertTrue(fieldErrors.containsKey("password"));
+        assertTrue(fieldErrors.containsKey("username"));
     }
 
     private ResponseEntity<IdResponse> addUserRequest(AddUserRequest addUserRequest) {
