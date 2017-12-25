@@ -9,6 +9,8 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import urchin.controller.api.ErrorCode;
+import urchin.controller.api.ErrorResponse;
 import urchin.controller.api.MessageResponse;
 import urchin.controller.api.folder.*;
 import urchin.model.folder.*;
@@ -22,6 +24,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import static junit.framework.TestCase.fail;
@@ -185,6 +188,21 @@ public class FolderControllerIT extends TestApplication {
         assertThat(unmountVirtualFOlderResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(virtualFolder.isExisting()).isFalse();
         assertThat(folderContainsFile(folder_1.getPath(), FILENAME) || folderContainsFile(folder_2.getPath(), FILENAME)).isTrue();
+    }
+
+    @Test
+    public void addFolderWithEmptyRequestReturnsErrorResponse() {
+        FolderRequest emptyFolderRequest = ImmutableFolderRequest.builder().build();
+
+        ResponseEntity<ErrorResponse> response = testRestTemplate.postForEntity(discoverControllerPath() + "/create", emptyFolderRequest, ErrorResponse.class);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        ErrorResponse errorResponse = response.getBody();
+        assertThat(errorResponse.getErrorCode()).isEqualTo(ErrorCode.VALIDATION_ERROR);
+        assertThat(errorResponse.getMessage()).isEqualTo(ControllerAdvice.VALIDATION_ERROR_MESSAGE);
+        Map<String, List<String>> fieldErrors = errorResponse.getFieldErrors();
+        assertThat(fieldErrors).hasSize(1);
+        assertThat(fieldErrors).containsKeys("folder");
     }
 
     private ResponseEntity<FolderDetailsResponse[]> getFoldersRequest() {
