@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class FolderSettingsRepositoryIT extends TestApplication {
@@ -42,19 +42,19 @@ public class FolderSettingsRepositoryIT extends TestApplication {
         List<FolderSettings> matchedFolderSettings = folderSettingsRepository.getFoldersSettings().stream()
                 .filter(folderSetting -> folderSetting.getFolder().toAbsolutePath().equals(folder.toAbsolutePath()))
                 .collect(Collectors.toList());
-        assertEquals(1, matchedFolderSettings.size());
+        assertThat(matchedFolderSettings).hasSize(1);
         FolderSettings readFolderSettings = matchedFolderSettings.get(0);
-        assertTrue(readFolderSettings.getFolderId().getValue() > 0);
-        assertEquals(folder, readFolderSettings.getFolder());
-        assertEquals(encryptedFolder, readFolderSettings.getEncryptedFolder());
-        assertTrue(now.isBefore(readFolderSettings.getCreated()) || now.isEqual(readFolderSettings.getCreated()));
-        assertFalse(readFolderSettings.isAutoMount());
+        assertThat(readFolderSettings.getFolderId().getValue() > 0).isTrue();
+        assertThat(readFolderSettings.getFolder()).isEqualTo(folder);
+        assertThat(readFolderSettings.getEncryptedFolder()).isEqualTo(encryptedFolder);
+        assertThat(now.isBefore(readFolderSettings.getCreated()) || now.isEqual(readFolderSettings.getCreated())).isTrue();
+        assertThat(readFolderSettings.isAutoMount()).isFalse();
 
         folderSettingsRepository.removeFolderSettings(readFolderSettings.getFolderId());
 
-        assertEquals(0, folderSettingsRepository.getFoldersSettings().stream()
+        assertThat(folderSettingsRepository.getFoldersSettings().stream()
                 .filter(folderSetting -> folderSetting.getFolder().toAbsolutePath().equals(folder.toAbsolutePath()))
-                .count());
+                .count()).isEqualTo(0);
     }
 
     @Test
@@ -63,7 +63,7 @@ public class FolderSettingsRepositoryIT extends TestApplication {
 
         List<FolderSettings> foldersSettings = folderSettingsRepository.getFoldersSettings();
 
-        assertTrue(foldersSettings.size() > 0);
+        assertThat(foldersSettings.size() > 0).isTrue();
     }
 
     @Test
@@ -72,12 +72,12 @@ public class FolderSettingsRepositoryIT extends TestApplication {
 
         FolderSettings folderSettings = folderSettingsRepository.getFolderSettings(folderId);
 
-        assertNotNull(folderSettings);
-        assertEquals(folderId, folderSettings.getFolderId());
-        assertEquals(encryptedFolder.getPath().toAbsolutePath(), folderSettings.getEncryptedFolder().getPath().toAbsolutePath());
-        assertEquals(folder.toAbsolutePath(), folderSettings.getFolder().toAbsolutePath());
-        assertTrue(now.isBefore(folderSettings.getCreated()) || now.isEqual(folderSettings.getCreated()));
-        assertFalse(folderSettings.isAutoMount());
+        assertThat(folderSettings).isNotNull();
+        assertThat(folderSettings.getFolderId()).isEqualTo(folderId);
+        assertThat(folderSettings.getEncryptedFolder().getPath().toAbsolutePath()).isEqualTo(encryptedFolder.getPath().toAbsolutePath());
+        assertThat(folderSettings.getFolder().toAbsolutePath()).isEqualTo(folder.toAbsolutePath());
+        assertThat(now.isBefore(folderSettings.getCreated()) || now.isEqual(folderSettings.getCreated())).isTrue();
+        assertThat(folderSettings.isAutoMount()).isFalse();
 
     }
 

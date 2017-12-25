@@ -19,7 +19,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 import static urchin.util.EncryptedFolderUtil.getEncryptedFolder;
@@ -79,10 +79,10 @@ public class FolderServiceTest {
 
         ArgumentCaptor<EncryptedFolder> captor = ArgumentCaptor.forClass(EncryptedFolder.class);
         verify(folderCli).mountEncryptedFolder(eq(folder), captor.capture(), eq(createdFolder.getPassphrase()));
-        assertEquals(encryptedFolder.getPath().toAbsolutePath().toString(), captor.getValue().getPath().toAbsolutePath().toString());
+        assertThat(captor.getValue().getPath().toAbsolutePath().toString()).isEqualTo(encryptedFolder.getPath().toAbsolutePath().toString());
         assertPathNotEqual(encryptedFolder, folder.getPath());
-        assertTrue(folder.isExisting());
-        assertTrue(encryptedFolder.isExisting());
+        assertThat(folder.isExisting()).isTrue();
+        assertThat(encryptedFolder.isExisting()).isTrue();
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -113,10 +113,10 @@ public class FolderServiceTest {
 
         ArgumentCaptor<Folder> captor = ArgumentCaptor.forClass(Folder.class);
         verify(folderCli).mountEncryptedFolder(captor.capture(), eq(encryptedFolder), eq(passphrase));
-        assertEquals(folder.toAbsolutePath(), captor.getValue().toAbsolutePath());
+        assertThat(captor.getValue().toAbsolutePath()).isEqualTo(folder.toAbsolutePath());
         assertPathNotEqual(encryptedFolder, folder.getPath());
-        assertTrue(folder.isExisting());
-        assertTrue(encryptedFolder.isExisting());
+        assertThat(folder.isExisting()).isTrue();
+        assertThat(encryptedFolder.isExisting()).isTrue();
     }
 
     @Test
@@ -142,7 +142,7 @@ public class FolderServiceTest {
         folderService.unmountFolder(folder);
 
         verify(folderCli).unmountFolder(folder);
-        assertFalse(folder.isExisting());
+        assertThat(folder.isExisting()).isFalse();
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -184,8 +184,8 @@ public class FolderServiceTest {
 
         folderService.deleteEncryptedFolder(FOLDER_ID);
 
-        assertTrue(folder.isExisting());
-        assertTrue(encryptedFolder.isExisting());
+        assertThat(folder.isExisting()).isTrue();
+        assertThat(encryptedFolder.isExisting()).isTrue();
         verify(folderSettingsRepository, times(0)).removeFolderSettings(any(FolderId.class));
         verifyZeroInteractions(folderCli);
     }
@@ -201,8 +201,8 @@ public class FolderServiceTest {
 
         folderService.deleteEncryptedFolder(FOLDER_ID);
 
-        assertTrue(folder.isExisting());
-        assertTrue(encryptedFolder.isExisting());
+        assertThat(folder.isExisting()).isTrue();
+        assertThat(encryptedFolder.isExisting()).isTrue();
         verify(folderSettingsRepository, times(0)).removeFolderSettings(any(FolderId.class));
         verifyZeroInteractions(folderCli);
     }
@@ -217,8 +217,8 @@ public class FolderServiceTest {
 
         folderService.deleteEncryptedFolder(FOLDER_ID);
 
-        assertFalse(folder.isExisting());
-        assertFalse(encryptedFolder.isExisting());
+        assertThat(folder.isExisting()).isFalse();
+        assertThat(encryptedFolder.isExisting()).isFalse();
         verify(folderCli).unmountFolder(folder);
         verify(folderCli).unmountFolder(encryptedFolder);
         verify(folderSettingsRepository).removeFolderSettings(FOLDER_ID);
@@ -239,7 +239,7 @@ public class FolderServiceTest {
     }
 
     private void assertPathNotEqual(EncryptedFolder encryptedFolder, Path folder) {
-        assertNotEquals(encryptedFolder.getPath().toAbsolutePath().toString(), folder.toAbsolutePath().toString());
+        assertThat(encryptedFolder.getPath().toAbsolutePath().toString()).isNotEqualTo(folder.toAbsolutePath().toString());
     }
 
 }

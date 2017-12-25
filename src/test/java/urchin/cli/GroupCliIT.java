@@ -23,7 +23,7 @@ import urchin.testutil.UnixUserAndGroupCleanup;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static urchin.testutil.UnixUserAndGroupCleanup.GROUP_PREFIX;
 import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;
 
@@ -67,11 +67,11 @@ public class GroupCliIT {
     public void addGroupAndCheckIfGroupExistAndRemoveGroupAreExecutedSuccessfully() {
         groupCli.addGroup(groupName);
 
-        assertTrue(groupCli.checkIfGroupExist(groupName));
+        assertThat(groupCli.checkIfGroupExist(groupName)).isTrue();
 
         groupCli.removeGroup(groupName);
 
-        assertFalse(groupCli.checkIfGroupExist(groupName));
+        assertThat(groupCli.checkIfGroupExist(groupName)).isFalse();
     }
 
     @Test
@@ -80,10 +80,10 @@ public class GroupCliIT {
         groupCli.addGroup(groupName);
 
         groupCli.addUserToGroup(user, group);
-        assertTrue(groupCli.checkIfUserIsInGroup(user, group));
+        assertThat(groupCli.checkIfUserIsInGroup(user, group)).isTrue();
 
         groupCli.removeUserFromGroup(user, group);
-        assertFalse(groupCli.checkIfUserIsInGroup(user, group));
+        assertThat(groupCli.checkIfUserIsInGroup(user, group)).isFalse();
 
         removeUserCommand.execute(user.getUsername());
     }
@@ -92,7 +92,7 @@ public class GroupCliIT {
     public void listGroupsReturnsListOfGroups() {
         List<GroupName> groups = groupCli.listGroups();
 
-        assertFalse(groups.isEmpty());
+        assertThat(groups.isEmpty()).isFalse();
     }
 
     @Test
@@ -103,8 +103,8 @@ public class GroupCliIT {
 
         List<Username> usernames = groupCli.listUsersForGroup(group);
 
-        assertEquals(1, usernames.size());
-        assertEquals(user.getUsername(), usernames.get(0));
+        assertThat(usernames).hasSize(1);
+        assertThat(usernames.get(0)).isEqualTo(user.getUsername());
     }
 
 }

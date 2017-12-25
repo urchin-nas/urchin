@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -86,8 +86,8 @@ public class UserServiceTest {
 
         List<Group> groups = userService.listGroupsForUser(USER_ID);
 
-        assertEquals(1, groups.size());
-        assertEquals(group_1, groups.get(0).getName());
+        assertThat(groups).hasSize(1);
+        assertThat(groups.get(0).getName()).isEqualTo(group_1);
     }
 
     @Test(expected = UserNotFoundException.class)

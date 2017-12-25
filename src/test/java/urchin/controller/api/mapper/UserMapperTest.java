@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class UserMapperTest {
 
@@ -25,10 +25,10 @@ public class UserMapperTest {
 
         List<UserResponse> userResponses = UserMapper.mapToUsersResponses(Collections.singletonList(user));
 
-        assertEquals(1, userResponses.size());
+        assertThat(userResponses).hasSize(1);
         UserResponse userResponse = userResponses.get(0);
-        assertEquals(user.getUserId().getValue(), userResponse.getUserId());
-        assertEquals(user.getUsername().getValue(), userResponse.getUsername());
+        assertThat(userResponse.getUserId()).isEqualTo(user.getUserId().getValue());
+        assertThat(userResponse.getUsername()).isEqualTo(user.getUsername().getValue());
     }
 
 }

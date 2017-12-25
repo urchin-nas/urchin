@@ -13,7 +13,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 public class GroupRepositoryIT extends TestApplication {
 
@@ -32,8 +33,8 @@ public class GroupRepositoryIT extends TestApplication {
         GroupId groupId = groupRepository.saveGroup(groupName);
         Group readGroup = groupRepository.getGroup(groupId);
 
-        assertEquals(groupName, readGroup.getName());
-        assertFalse(now.isAfter(readGroup.getCreated()));
+        assertThat(readGroup.getName()).isEqualTo(groupName);
+        assertThat(now.isAfter(readGroup.getCreated())).isFalse();
 
         groupRepository.removeGroup(groupId);
 
@@ -59,8 +60,8 @@ public class GroupRepositoryIT extends TestApplication {
         List<GroupName> groupNames = groupsByName.stream()
                 .map(Group::getName)
                 .collect(Collectors.toList());
-        assertTrue(groupNames.contains(groupname_1));
-        assertTrue(groupNames.contains(groupname_3));
-        assertFalse(groupNames.contains(groupname_2));
+        assertThat(groupNames.contains(groupname_1)).isTrue();
+        assertThat(groupNames.contains(groupname_3)).isTrue();
+        assertThat(groupNames.contains(groupname_2)).isFalse();
     }
 }

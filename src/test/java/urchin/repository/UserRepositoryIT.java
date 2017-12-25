@@ -13,7 +13,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 public class UserRepositoryIT extends TestApplication {
 
@@ -33,8 +34,8 @@ public class UserRepositoryIT extends TestApplication {
         UserId userId = userRepository.saveUser(USERNAME);
         User readUser = userRepository.getUser(userId);
 
-        assertEquals(USERNAME, readUser.getUsername());
-        assertFalse(now.isAfter(readUser.getCreated()));
+        assertThat(readUser.getUsername()).isEqualTo(USERNAME);
+        assertThat(now.isAfter(readUser.getCreated())).isFalse();
 
         userRepository.removeUser(userId);
 
@@ -60,8 +61,8 @@ public class UserRepositoryIT extends TestApplication {
         List<Username> usernames = users.stream()
                 .map(User::getUsername)
                 .collect(Collectors.toList());
-        assertTrue(usernames.contains(username_1));
-        assertTrue(usernames.contains(username_3));
-        assertFalse(usernames.contains(username_2));
+        assertThat(usernames.contains(username_1)).isTrue();
+        assertThat(usernames.contains(username_3)).isTrue();
+        assertThat(usernames.contains(username_2)).isFalse();
     }
 }

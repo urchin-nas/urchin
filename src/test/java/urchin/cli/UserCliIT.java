@@ -15,7 +15,7 @@ import urchin.testutil.UnixUserAndGroupCleanup;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;
 
 @RunWith(SpringRunner.class)
@@ -49,18 +49,18 @@ public class UserCliIT {
         userCli.addUser(username);
         userCli.setUserPassword(username, PASSWORD);
 
-        assertTrue(userCli.checkIfUsernameExist(username));
+        assertThat(userCli.checkIfUsernameExist(username)).isTrue();
 
         userCli.removeUser(username);
 
-        assertFalse(userCli.checkIfUsernameExist(username));
+        assertThat(userCli.checkIfUsernameExist(username)).isFalse();
     }
 
     @Test
     public void listUsersReturnsListOfUsers() {
         List<String> strings = userCli.listUsers();
 
-        assertFalse(strings.isEmpty());
+        assertThat(strings.isEmpty()).isFalse();
     }
 
     @Test
@@ -69,7 +69,7 @@ public class UserCliIT {
 
         List<GroupName> groups = userCli.listGroupsForUser(user);
 
-        assertEquals(1, groups.size());
+        assertThat(groups).hasSize(1);
     }
 
 }

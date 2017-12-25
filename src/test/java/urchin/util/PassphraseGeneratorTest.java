@@ -3,13 +3,13 @@ package urchin.util;
 import org.junit.Test;
 import urchin.model.folder.Passphrase;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class PassphraseGeneratorTest {
 
     @Test
     public void passphraseIsGeneratedWithProperLength() {
-        assertEquals(Passphrase.ECRYPTFS_MAX_PASSPHRASE_LENGTH, PassphraseGenerator.generateEcryptfsPassphrase().getValue().length());
+        assertThat(PassphraseGenerator.generateEcryptfsPassphrase().getValue().length()).isEqualTo(Passphrase.ECRYPTFS_MAX_PASSPHRASE_LENGTH);
     }
 
 }

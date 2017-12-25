@@ -13,7 +13,8 @@ import java.util.Optional;
 
 import static java.nio.charset.Charset.defaultCharset;
 import static org.apache.commons.io.IOUtils.toInputStream;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -44,8 +45,8 @@ public class BasicCommandTest {
 
         Optional<String> stringOptional = testCommand.executeCommand(COMMAND);
 
-        assertTrue(stringOptional.isPresent());
-        assertEquals(SOME_RESPONSE, stringOptional.get());
+        assertThat(stringOptional.isPresent()).isTrue();
+        assertThat(stringOptional.get()).isEqualTo(SOME_RESPONSE);
     }
 
     @Test
@@ -55,7 +56,7 @@ public class BasicCommandTest {
 
         Optional<String> stringOptional = testCommand.executeCommand(COMMAND);
 
-        assertFalse(stringOptional.isPresent());
+        assertThat(stringOptional.isPresent()).isFalse();
     }
 
     @Test
@@ -69,9 +70,9 @@ public class BasicCommandTest {
             testCommand.executeCommand(COMMAND);
             fail("Expected CommandException");
         } catch (CommandException e) {
-            assertEquals(exitValue, e.getExitValue().intValue());
-            assertEquals(TestCommand.class, e.getCommand());
-            assertEquals(CommandException.PROCESS_RETURNED_EXIT_VALUE + exitValue, e.getMessage());
+            assertThat(e.getExitValue().intValue()).isEqualTo(exitValue);
+            assertThat(e.getCommand()).isEqualTo(TestCommand.class);
+            assertThat(e.getMessage()).isEqualTo(CommandException.PROCESS_RETURNED_EXIT_VALUE + exitValue);
         }
     }
 
@@ -84,9 +85,9 @@ public class BasicCommandTest {
             testCommand.executeCommand(COMMAND);
             fail("Expected CommandException");
         } catch (CommandException e) {
-            assertNull(e.getExitValue());
-            assertEquals(TestCommand.class, e.getCommand());
-            assertEquals(runtimeException.toString(), e.getMessage());
+            assertThat(e.getExitValue()).isNull();
+            assertThat(e.getCommand()).isEqualTo(TestCommand.class);
+            assertThat(e.getMessage()).isEqualTo(runtimeException.toString());
         }
     }
 

@@ -6,7 +6,7 @@ import urchin.model.folder.CreatedFolder;
 import urchin.model.folder.FolderId;
 import urchin.model.folder.ImmutableCreatedFolder;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static urchin.controller.api.mapper.CreatedFolderMapper.mapToCreatedFolderResponse;
 import static urchin.util.PassphraseGenerator.generateEcryptfsPassphrase;
 
@@ -21,8 +21,8 @@ public class CreatedFolderMapperTest {
 
         CreatedFolderResponse createdFolderResponse = mapToCreatedFolderResponse(createdFolder);
 
-        assertEquals(createdFolder.getFolderId().getValue(), createdFolderResponse.getId());
-        assertEquals(createdFolder.getPassphrase().getValue(), createdFolderResponse.getPassphrase());
+        assertThat(createdFolderResponse.getId()).isEqualTo(createdFolder.getFolderId().getValue());
+        assertThat(createdFolderResponse.getPassphrase()).isEqualTo(createdFolder.getPassphrase().getValue());
     }
 
 }

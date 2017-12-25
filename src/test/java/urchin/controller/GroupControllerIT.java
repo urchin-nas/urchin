@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static urchin.controller.UserControllerIT.PASSWORD;
 import static urchin.testutil.UnixUserAndGroupCleanup.GROUP_PREFIX;
 import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;
@@ -54,23 +54,23 @@ public class GroupControllerIT extends TestApplication {
         //Add group
         ResponseEntity<IdResponse> addGroupResponse = addGroupRequest(addGroupRequest);
 
-        assertEquals(HttpStatus.OK, addGroupResponse.getStatusCode());
+        assertThat(addGroupResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
         GroupId groupId = GroupId.of(addGroupResponse.getBody().getId());
-        assertTrue(groupId.getValue() > 0);
+        assertThat(groupId.getValue() > 0).isTrue();
 
         //Get groups
 
         ResponseEntity<GroupResponse[]> groupsResponse = getGroupsRequest();
 
-        assertEquals(HttpStatus.OK, groupsResponse.getStatusCode());
+        assertThat(groupsResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
         List<GroupResponse> groups = asList(groupsResponse.getBody());
-        assertFalse(groups.isEmpty());
+        assertThat(groups.isEmpty()).isFalse();
         List<GroupResponse> groupResponses = groups.stream()
                 .filter(groupResponse -> groupResponse.getGroupName().equals(addGroupRequest.getGroupName()))
                 .collect(Collectors.toList());
-        assertEquals(1, groupResponses.size());
-        assertEquals(groupId.getValue(), groupResponses.get(0).getGroupId());
-        assertEquals(addGroupRequest.getGroupName(), groupResponses.get(0).getGroupName());
+        assertThat(groupResponses).hasSize(1);
+        assertThat(groupResponses.get(0).getGroupId()).isEqualTo(groupId.getValue());
+        assertThat(groupResponses.get(0).getGroupName()).isEqualTo(addGroupRequest.getGroupName());
 
         //Add user to group
 
@@ -80,19 +80,19 @@ public class GroupControllerIT extends TestApplication {
                 .build();
         ResponseEntity<MessageResponse> addUserToGroupResponse = addUserToGroupRequest(addUserToGroupRequest);
 
-        assertEquals(HttpStatus.OK, addUserToGroupResponse.getStatusCode());
+        assertThat(addUserToGroupResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         //Remove user from group
 
         ResponseEntity<MessageResponse> removeUserFromGroupResponse = removeUserFromGroupRequest(userId, groupId);
 
-        assertEquals(HttpStatus.OK, removeUserFromGroupResponse.getStatusCode());
+        assertThat(removeUserFromGroupResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
 
         //Remove group
 
         ResponseEntity<MessageResponse> removeGroupResponse = removeGroupRequest(groupResponses.get(0).getGroupId());
 
-        assertEquals(HttpStatus.OK, removeGroupResponse.getStatusCode());
+        assertThat(removeGroupResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
     @Test
@@ -102,8 +102,8 @@ public class GroupControllerIT extends TestApplication {
 
         ResponseEntity<GroupResponse> getGroupResponse = getGroupRequest(groupId);
 
-        assertEquals(HttpStatus.OK, getGroupResponse.getStatusCode());
-        assertEquals(groupId, getGroupResponse.getBody().getGroupId());
+        assertThat(getGroupResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(getGroupResponse.getBody().getGroupId()).isEqualTo(groupId);
     }
 
     @Test
@@ -118,9 +118,9 @@ public class GroupControllerIT extends TestApplication {
 
         ResponseEntity<UserResponse[]> usersForGroupResponse = getUsersForGroupRequest(groupId);
 
-        assertEquals(HttpStatus.OK, usersForGroupResponse.getStatusCode());
-        assertNotNull(usersForGroupResponse.getBody());
-        assertTrue(usersForGroupResponse.getBody().length > 0);
+        assertThat(usersForGroupResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(usersForGroupResponse.getBody()).isNotNull();
+        assertThat(usersForGroupResponse.getBody().length > 0).isTrue();
     }
 
     private ResponseEntity<IdResponse> addGroupRequest(AddGroupRequest addGroupRequest) {

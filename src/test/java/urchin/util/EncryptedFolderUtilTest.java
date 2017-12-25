@@ -8,7 +8,7 @@ import urchin.model.folder.ImmutableFolder;
 import java.io.File;
 import java.nio.file.Paths;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotEquals;
 
 public class EncryptedFolderUtilTest {
@@ -19,7 +19,7 @@ public class EncryptedFolderUtilTest {
         EncryptedFolder encryptedFolder = EncryptedFolderUtil.getEncryptedFolder(folder);
         Folder returnedFolder = EncryptedFolderUtil.getFolder(encryptedFolder);
 
-        assertEquals(folder.toAbsolutePath(), returnedFolder.toAbsolutePath());
+        assertThat(returnedFolder.toAbsolutePath()).isEqualTo(folder.toAbsolutePath());
         assertNotEquals(folder.toAbsolutePath(), encryptedFolder.getPath().toAbsolutePath());
 
     }

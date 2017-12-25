@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static urchin.testutil.UnixUserAndGroupCleanup.GROUP_PREFIX;
 import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;
 
@@ -42,24 +42,24 @@ public class UserControllerIT extends TestApplication {
     public void addAndRemoveUser() {
         ResponseEntity<IdResponse> addUserResponse = addUserRequest(addUserRequest);
 
-        assertEquals(HttpStatus.OK, addUserResponse.getStatusCode());
-        assertTrue(addUserResponse.getBody().getId() > 0);
+        assertThat(addUserResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(addUserResponse.getBody().getId() > 0).isTrue();
 
         ResponseEntity<UserResponse[]> usersResponse = getUsersRequest();
 
-        assertEquals(HttpStatus.OK, usersResponse.getStatusCode());
+        assertThat(usersResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
         List<UserResponse> users = Arrays.asList(usersResponse.getBody());
-        assertFalse(users.isEmpty());
+        assertThat(users.isEmpty()).isFalse();
         List<UserResponse> userResponses = users.stream()
                 .filter(userResponse -> userResponse.getUsername().equals(addUserRequest.getUsername()))
                 .collect(Collectors.toList());
-        assertEquals(1, userResponses.size());
-        assertEquals(addUserRequest.getUsername(), userResponses.get(0).getUsername());
-        assertEquals(addUserResponse.getBody().getId(), userResponses.get(0).getUserId());
+        assertThat(userResponses).hasSize(1);
+        assertThat(userResponses.get(0).getUsername()).isEqualTo(addUserRequest.getUsername());
+        assertThat(userResponses.get(0).getUserId()).isEqualTo(addUserResponse.getBody().getId());
 
         ResponseEntity<MessageResponse> removeUserResponse = removeUserRequest(userResponses.get(0).getUserId());
 
-        assertEquals(HttpStatus.OK, removeUserResponse.getStatusCode());
+        assertThat(removeUserResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
     @Test
@@ -69,8 +69,8 @@ public class UserControllerIT extends TestApplication {
 
         ResponseEntity<UserResponse> getUserResponse = getUserRequest(userId);
 
-        assertEquals(HttpStatus.OK, getUserResponse.getStatusCode());
-        assertEquals(userId, getUserResponse.getBody().getUserId());
+        assertThat(getUserResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(getUserResponse.getBody().getUserId()).isEqualTo(userId);
     }
 
     @Test
@@ -87,9 +87,9 @@ public class UserControllerIT extends TestApplication {
 
         ResponseEntity<GroupResponse[]> getGroupsForUserResponse = getGroupsForUserRequest(userId);
 
-        assertEquals(HttpStatus.OK, getGroupsForUserResponse.getStatusCode());
-        assertNotNull(getGroupsForUserResponse.getBody());
-        assertTrue(getGroupsForUserResponse.getBody().length > 0);
+        assertThat(getGroupsForUserResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(getGroupsForUserResponse.getBody()).isNotNull();
+        assertThat(getGroupsForUserResponse.getBody().length > 0).isTrue();
     }
 
     @Test
@@ -99,14 +99,14 @@ public class UserControllerIT extends TestApplication {
 
         ResponseEntity<ErrorResponse> response = testRestTemplate.postForEntity(discoverControllerPath() + "/add", emptyAddUserRequest, ErrorResponse.class);
 
-        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
         ErrorResponse errorResponse = response.getBody();
-        assertEquals(ErrorCode.VALIDATION_ERROR, errorResponse.getErrorCode());
-        assertEquals(ControllerAdvice.VALIDATION_ERROR_MESSAGE, errorResponse.getMessage());
+        assertThat(errorResponse.getErrorCode()).isEqualTo(ErrorCode.VALIDATION_ERROR);
+        assertThat(errorResponse.getMessage()).isEqualTo(ControllerAdvice.VALIDATION_ERROR_MESSAGE);
         Map<String, List<String>> fieldErrors = errorResponse.getFieldErrors();
-        assertEquals(2, fieldErrors.size());
-        assertTrue(fieldErrors.containsKey("password"));
-        assertTrue(fieldErrors.containsKey("username"));
+        assertThat(fieldErrors).hasSize(2);
+        assertThat(fieldErrors.containsKey("password")).isTrue();
+        assertThat(fieldErrors.containsKey("username")).isTrue();
     }
 
     private ResponseEntity<IdResponse> addUserRequest(AddUserRequest addUserRequest) {
