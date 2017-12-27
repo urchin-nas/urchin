@@ -1,8 +1,8 @@
 package urchin.model;
 
 import org.junit.Test;
-import urchin.model.folder.FileModes;
-import urchin.model.folder.ImmutableFileModes;
+import urchin.model.permission.FileModes;
+import urchin.model.permission.ImmutableFileModes;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

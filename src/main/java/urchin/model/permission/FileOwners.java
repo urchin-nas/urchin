@@ -1,4 +1,4 @@
-package urchin.model.folder;
+package urchin.model.permission;
 
 import org.immutables.value.Value;
 

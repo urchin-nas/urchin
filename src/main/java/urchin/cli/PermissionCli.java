@@ -5,11 +5,11 @@ import org.springframework.stereotype.Repository;
 import urchin.cli.permission.ChangeFileModesCommand;
 import urchin.cli.permission.ChangeOwnerCommand;
 import urchin.cli.permission.ListFileInformationCommand;
-import urchin.model.folder.FileModes;
-import urchin.model.folder.FileOwners;
-import urchin.model.folder.ImmutableFileModes;
-import urchin.model.folder.ImmutableFileOwners;
 import urchin.model.group.GroupName;
+import urchin.model.permission.FileModes;
+import urchin.model.permission.FileOwners;
+import urchin.model.permission.ImmutableFileModes;
+import urchin.model.permission.ImmutableFileOwners;
 import urchin.model.user.Username;
 
 import java.nio.file.Path;

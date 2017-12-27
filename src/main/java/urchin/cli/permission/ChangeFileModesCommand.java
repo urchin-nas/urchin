@@ -3,7 +3,7 @@ package urchin.cli.permission;
 import org.springframework.stereotype.Component;
 import urchin.cli.BasicCommand;
 import urchin.cli.Command;
-import urchin.model.folder.FileModes;
+import urchin.model.permission.FileModes;
 
 import java.nio.file.Path;
 
