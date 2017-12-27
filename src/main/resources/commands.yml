@@ -23,3 +23,8 @@ permission:
   change-file-modes: chmod -R %modes% %file%
   change-owner: sudo chown -R %owner%:%group% %file%
   list-file-information: ls -ld %file%
+  get-acl: getfacl %path%
+  set-acl-group-on-folder: setfacl -Rdm g:%group%:%permission% %folder%
+  set-acl-group-on-file: setfacl -m g:%group%:%permission% %file%
+  set-acl-user-on-folder: setfacl -Rdm u:%user%:%permission% %folder%
+  set-acl-user-on-file: setfacl -m u:%user%:%permission% %file%
