@@ -24,8 +24,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import static java.util.Arrays.asList;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static org.assertj.core.api.Assertions.assertThat;
-import static urchin.controller.UserControllerIT.PASSWORD;
 import static urchin.testutil.UnixUserAndGroupCleanup.GROUP_PREFIX;
 import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;
 
@@ -38,7 +38,7 @@ public class GroupControllerIT extends TestApplication {
     public void setup() {
         AddUserRequest addUserRequest = ImmutableAddUserRequest.builder()
                 .username(USERNAME_PREFIX + System.currentTimeMillis())
-                .password(PASSWORD)
+                .password(randomAlphanumeric(10))
                 .build();
         ResponseEntity<IdResponse> addUserResponse = addUserRequest(addUserRequest);
         userId = UserId.of(addUserResponse.getBody().getId());
