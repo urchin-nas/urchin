@@ -1,0 +1,25 @@
+package urchin.controller.api.mapper;
+
+import urchin.controller.api.permission.AclGroupPermissionsResponse;
+import urchin.controller.api.permission.AclResponse;
+import urchin.controller.api.permission.ImmutableAclResponse;
+import urchin.controller.api.permission.ImmutableAclUserPermissionsResponse;
+import urchin.model.permission.AclPermissions;
+
+import java.util.List;
+
+import static urchin.controller.api.mapper.AclGroupPermissionsMapper.mapToAclGroupPermissionsResponse;
+import static urchin.controller.api.mapper.AclUserPermissionsMapper.mapToAclUserPermissionsResponse;
+
+public class AclPermissionsMapper {
+
+    public static AclResponse mapToAclResponse(AclPermissions acl) {
+        List<AclGroupPermissionsResponse> aclGroupPermissionsResponses = mapToAclGroupPermissionsResponse(acl.getGroups());
+        List<ImmutableAclUserPermissionsResponse> aclUserPermissionsResponses = mapToAclUserPermissionsResponse(acl.getUsers());
+
+        return ImmutableAclResponse.builder()
+                .groups(aclGroupPermissionsResponses)
+                .users(aclUserPermissionsResponses)
+                .build();
+    }
+}

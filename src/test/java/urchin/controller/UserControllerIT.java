@@ -21,20 +21,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static org.assertj.core.api.Assertions.assertThat;
 import static urchin.testutil.UnixUserAndGroupCleanup.GROUP_PREFIX;
 import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;
 
 public class UserControllerIT extends TestApplication {
 
-    static final String PASSWORD = "superSecret";
     private AddUserRequest addUserRequest;
 
     @Before
     public void setUp() {
         addUserRequest = ImmutableAddUserRequest.builder()
                 .username(USERNAME_PREFIX + System.currentTimeMillis())
-                .password(PASSWORD)
+                .password(randomAlphanumeric(10))
                 .build();
     }
 

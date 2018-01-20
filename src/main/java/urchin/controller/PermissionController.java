@@ -16,7 +16,7 @@ import urchin.service.PermissionService;
 
 import javax.validation.Valid;
 
-import static urchin.controller.api.mapper.AclMapper.mapToAclResponse;
+import static urchin.controller.api.mapper.AclPermissionsMapper.mapToAclResponse;
 
 @RestController
 @RequestMapping("api/permissions")
