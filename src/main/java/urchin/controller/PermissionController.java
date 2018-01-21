@@ -34,7 +34,7 @@ public class PermissionController {
         return mapToAclResponse(permissionService.getAcl(FolderId.of(folderId)));
     }
 
-    @RequestMapping(value = "acl/user/set", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "acl/user", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public MessageResponse setAclForUser(@Valid @RequestBody SetAclUserPermissionRequest setAclUserPermissionRequest) {
         permissionService.setAcl(
                 FolderId.of(setAclUserPermissionRequest.getFolderId()),
@@ -45,7 +45,7 @@ public class PermissionController {
         return ImmutableMessageResponse.of("User permissions set");
     }
 
-    @RequestMapping(value = "acl/group/set", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "acl/group", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public MessageResponse setAclForGroup(@Valid @RequestBody SetAclGroupPermissionRequest setAclGroupPermissionRequest) {
         permissionService.setAcl(
                 FolderId.of(setAclGroupPermissionRequest.getFolderId()),

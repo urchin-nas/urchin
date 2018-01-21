@@ -101,11 +101,11 @@ public class PermissionControllerIT extends TestApplication {
     }
 
     private ResponseEntity<MessageResponse> setAclForUserRequest(SetAclUserPermissionRequest setAclUserPermissionRequest) {
-        return testRestTemplate.postForEntity(discoverControllerPath() + "/acl/user/set", setAclUserPermissionRequest, MessageResponse.class);
+        return testRestTemplate.postForEntity(discoverControllerPath() + "/acl/user", setAclUserPermissionRequest, MessageResponse.class);
     }
 
     private ResponseEntity<MessageResponse> setAclForGroupRequest(SetAclGroupPermissionRequest setAclUserPermissionRequest) {
-        return testRestTemplate.postForEntity(discoverControllerPath() + "/acl/group/set", setAclUserPermissionRequest, MessageResponse.class);
+        return testRestTemplate.postForEntity(discoverControllerPath() + "/acl/group", setAclUserPermissionRequest, MessageResponse.class);
     }
 
     private ResponseEntity<AclResponse> getAclRequest(int folderId) {
