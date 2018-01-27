@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditAcl match snapshot 1`] = `
+<div
+  className="edit-acl"
+  data-view="editAcl"
+>
+  <h2>
+    Group permissions
+  </h2>
+  <div
+    className="edit-acl__groups"
+  />
+  <h2>
+    User permissions
+  </h2>
+  <div
+    className="edit-acl__users"
+  />
+</div>
+`;

@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AclContainer match snapshot 1`] = `
+<EditAcl
+  aclGroups={Array []}
+  aclUsers={Array []}
+  callbacks={
+    Object {
+      "updateAclForGroup": [Function],
+      "updateAclForUser": [Function],
+    }
+  }
+/>
+`;

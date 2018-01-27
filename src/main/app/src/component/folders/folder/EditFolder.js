@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import history from "../../../history";
+import AclContainer from "./acl/AclContainer";
 
 class Folders extends Component {
 
@@ -23,6 +24,8 @@ class Folders extends Component {
     render() {
         let folderName = this.props.folder.folderName;
         let folderPath = this.props.folder.folderPath;
+        let folderId = this.props.folder.folderId;
+
         return (
             <div data-view="editFolder"
                  className="edit-folder">
@@ -39,6 +42,7 @@ class Folders extends Component {
                         onClick={this.back}>
                     Back
                 </button>
+                <AclContainer folderId={folderId}/>
             </div>
         )
     }
