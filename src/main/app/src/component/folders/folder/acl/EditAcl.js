@@ -17,23 +17,26 @@ class EditAcl extends Component {
         let userItems = usersAcl.map((item, index) =>
             <div className="edit-acl__users__user"
                  key={index.toString()}>
-                <div>{item.username}</div>
+                <div data-view={item.username}>{item.username}</div>
                 <div>
-                    <input type="checkbox"
+                    <input data-view={`${item.username}-read`}
+                           type="checkbox"
                            name="read"
                            checked={item.read}
                            onChange={(e) => this.updateAclForUser(item.userId, e)}
                     />
                 </div>
                 <div>
-                    <input type="checkbox"
+                    <input data-view={`${item.username}-write`}
+                           type="checkbox"
                            name="write"
                            checked={item.write}
                            onChange={(e) => this.updateAclForUser(item.userId, e)}
                     />
                 </div>
                 <div>
-                    <input type="checkbox"
+                    <input data-view={`${item.username}-execute`}
+                           type="checkbox"
                            name="execute"
                            checked={item.execute}
                            onChange={(e) => this.updateAclForUser(item.userId, e)}
@@ -45,23 +48,26 @@ class EditAcl extends Component {
         let groupItems = groupsAcl.map((item, index) =>
             <div className="edit-acl__groups__group"
                  key={index.toString()}>
-                <div>{item.groupName}</div>
+                <div data-view={item.groupName}>{item.groupName}</div>
                 <div>
-                    <input type="checkbox"
+                    <input data-view={`${item.groupName}-read`}
+                           type="checkbox"
                            name="read"
                            checked={item.read}
                            onChange={(e) => this.updateAclForGroup(item.groupId, e)}
                     />
                 </div>
                 <div>
-                    <input type="checkbox"
+                    <input data-view={`${item.groupName}-write`}
+                           type="checkbox"
                            name="write"
                            checked={item.write}
                            onChange={(e) => this.updateAclForGroup(item.groupId, e)}
                     />
                 </div>
                 <div>
-                    <input type="checkbox"
+                    <input data-view={`${item.groupName}-execute`}
+                           type="checkbox"
                            name="execute"
                            checked={item.execute}
                            onChange={(e) => this.updateAclForGroup(item.groupId, e)}

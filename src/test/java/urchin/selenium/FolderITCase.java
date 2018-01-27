@@ -45,7 +45,7 @@ public class FolderITCase extends SeleniumTest {
                 .clickOnFolder(folderName);
 
         EDIT_FOLDER.verifyAtView()
-                .clickOnDeleteFólder();
+                .clickOnDeleteFolder();
 
         FOLDERS.verifyAtView()
                 .verifyFolderNotListed(folderName);
