@@ -1,3 +1,10 @@
 language: java
 sudo: required
 dist: trusty
+addons:
+  apt:
+    packages:
+      - ecryptfs-utils
+      - mhddfs
+      - samba
+      - samba-common-bin
