@@ -3,8 +3,6 @@ package urchin.selenium.view.folders.folder;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import urchin.selenium.view.PageView;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 public class EditFolderView extends PageView<EditFolderView> {
 
     private static final String READ = "-read";
@@ -94,8 +92,7 @@ public class EditFolderView extends PageView<EditFolderView> {
     }
 
     private EditFolderView verifyAclPermission(String name, boolean expected, String permission) {
-        boolean selected = driver.findElement(byDataView(name + permission)).isSelected();
-        assertThat(selected).as(String.format("permission %s for %s is expected to be %s", permission, name, expected)).isEqualTo(expected);
+        waitUntil(ExpectedConditions.elementSelectionStateToBe(byDataView(name + permission), expected));
         return this;
     }
 }
