@@ -4,6 +4,7 @@ import history from './history'
 import {NotificationContainer} from 'react-notifications';
 import Root from './component/Root';
 import LoginContainer from './component/LoginContainer';
+import ScrollToTop from "./component/ScrollToTop";
 
 class App extends Component {
     render() {
@@ -11,12 +12,14 @@ class App extends Component {
             <div className="urchin">
                 <NotificationContainer/>
                 <Router history={history}>
-                    <Switch>
-                        <Route path='/login'
-                               component={LoginContainer}/>
-                        <Route path='/'
-                               component={Root}/>
-                    </Switch>
+                    <ScrollToTop>
+                        <Switch>
+                            <Route path='/login'
+                                   component={LoginContainer}/>
+                            <Route path='/'
+                                   component={Root}/>
+                        </Switch>
+                    </ScrollToTop>
                 </Router>
             </div>
         );

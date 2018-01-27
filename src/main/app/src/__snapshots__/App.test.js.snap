@@ -30,16 +30,18 @@ exports[`App match snapshot 1`] = `
       }
     }
   >
-    <Switch>
-      <Route
-        component={[Function]}
-        path="/login"
-      />
-      <Route
-        component={[Function]}
-        path="/"
-      />
-    </Switch>
+    <withRouter(ScrollToTop)>
+      <Switch>
+        <Route
+          component={[Function]}
+          path="/login"
+        />
+        <Route
+          component={[Function]}
+          path="/"
+        />
+      </Switch>
+    </withRouter(ScrollToTop)>
   </Router>
 </div>
 `;

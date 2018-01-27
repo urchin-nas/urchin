@@ -8,7 +8,7 @@ public class NewFolderView extends PageView<NewFolderView> {
 
     @Override
     protected String viewUrl() {
-        return "folders/new";
+        return "/folders/new";
     }
 
     @Override
