@@ -20,7 +20,7 @@ public class EditFolderView extends PageView<EditFolderView> {
         driver.findElement(byDataView("back")).click();
     }
 
-    public void clickOnDeleteFólder() {
+    public void clickOnDeleteFolder() {
         driver.findElement(byDataView("delete")).click();
     }
 }
