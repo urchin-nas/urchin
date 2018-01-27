@@ -7,9 +7,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class EditFolderView extends PageView<EditFolderView> {
 
-    public static final String READ = "-read";
-    public static final String WRITE = "-write";
-    public static final String EXECUTE = "-execute";
+    private static final String READ = "-read";
+    private static final String WRITE = "-write";
+    private static final String EXECUTE = "-execute";
 
     @Override
     protected String viewUrl() {
