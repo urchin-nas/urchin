@@ -76,10 +76,10 @@ public class aclITCase extends SeleniumTest {
                 .clickOnFolder(folderName);
 
         EDIT_FOLDER.verifyAtView()
+                .verifyUsernameListed(username)
                 .verifyUserAclReadPermission(username, false)
                 .verifyUserAclWritePermission(username, false)
                 .verifyUserAclExecutePermission(username, false)
-                .verifyUsernameListed(username)
                 .clickOnUserAclReadPermission(username)
                 .clickOnUserAclWritePermission(username)
                 .clickOnUserAclExecutePermission(username)
@@ -101,10 +101,10 @@ public class aclITCase extends SeleniumTest {
                 .clickOnFolder(folderName);
 
         EDIT_FOLDER.verifyAtView()
+                .verifyGroupNameListed(groupName)
                 .verifyGroupAclReadPermission(groupName, false)
                 .verifyGroupAclWritePermission(groupName, false)
                 .verifyGroupAclExecutePermission(groupName, false)
-                .verifyGroupNameListed(groupName)
                 .clickOnGroupAclReadPermission(groupName)
                 .clickOnGroupAclWritePermission(groupName)
                 .clickOnGroupAclExecutePermission(groupName)
