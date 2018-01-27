@@ -1,5 +1,6 @@
 package urchin.selenium;
 
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 import org.junit.Test;
@@ -45,6 +46,27 @@ public class aclITCase extends SeleniumTest {
                 .clickOnCreateFolder();
 
         FOLDERS.verifyFolderListed(folderName);
+    }
+
+    @AfterClass
+    public static void tearDown() {
+        USERS.goTo()
+                .clickOnUsername(username);
+
+        EDIT_USER.verifyAtView()
+                .clickOnDeleteUser();
+
+        GROUPS.goTo()
+                .clickOnGroupName(groupName);
+
+        EDIT_GROUP.verifyAtView()
+                .clickOnDeleteGroup();
+
+        FOLDERS.goTo()
+                .clickOnFolder(folderName);
+
+        EDIT_FOLDER.verifyAtView()
+                .clickOnDeleteFolder();
     }
 
     @Test
