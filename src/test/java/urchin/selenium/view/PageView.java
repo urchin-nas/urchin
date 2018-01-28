@@ -9,7 +9,7 @@ import urchin.selenium.testutil.SeleniumUrl;
 
 public abstract class PageView<T> {
 
-    private static final int TIME_OUT_IN_SECONDS = 3;
+    private static final int TIME_OUT_IN_SECONDS = 5;
 
     protected final WebDriver driver = SeleniumDriver.getDriver();
 
