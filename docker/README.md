@@ -2,8 +2,6 @@
 
 Run Urchin in a docker container that will fetch `development` branch from github, build, test and start application. 
 
-(does not work on on Windows for some reason)
-
 When container is started goto <http://localhost:8080/>
 
 ## Docker commands
