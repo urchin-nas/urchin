@@ -1,5 +1,22 @@
-FROM anhem/docker-urchin-deps
+FROM ubuntu:16.04
 
+ENV DEBIAN_FRONTEND noninteractive
+
+# install dependencies
+RUN apt-get update && \
+    apt-get install -y sudo wget unzip openjdk-8-jdk git maven ecryptfs-utils mhddfs samba samba-common-bin && \
+    apt-get clean
+
+# install chrome
+RUN wget https://dl.google.com/linux/linux_signing_key.pub
+RUN apt-key add linux_signing_key.pub
+RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list
+RUN apt-get update && apt-get install -y google-chrome-stable
+
+# setup permissions
+RUN echo "root ALL=(ALL) NOPASSWD:/usr/bin/sudo,/usr/sbin/adduser,/usr/sbin/useradd,/usr/sbin/deluser,/usr/sbin/addgroup,/usr/sbin/delgroup,/bin/chown,/usr/bin/passwd,/bin/mount,/bin/umount,/usr/bin/mhddfs,/etc/init.d/samba" >> /etc/sudoers.d/urchin
+
+# Get project
 RUN mkdir /workspace && \
     git clone https://github.com/anhem/urchin /workspace
 

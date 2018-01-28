@@ -1,6 +1,9 @@
 #!/bin/bash
 cd /workspace
 
+echo "[Remount / with ACL]"
+mount -o remount,acl /
+
 echo "[Starting Samba in preparation for tests]"
 service samba start
 
