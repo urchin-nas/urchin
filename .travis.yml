@@ -5,3 +5,6 @@ dist: trusty
 before_install:
  - sudo apt-get install -y acl
  - sudo mount -o remount,acl /
+
+script:
+  - mvn clean install
