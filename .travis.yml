@@ -1,0 +1,11 @@
+language: java
+sudo: required
+
+services:
+  - docker
+
+install:
+  - docker build -t urchin-travis docker
+
+script:
+  - docker run -it --privileged --name urchin-dev -p 8080:8080 urchin-travis
