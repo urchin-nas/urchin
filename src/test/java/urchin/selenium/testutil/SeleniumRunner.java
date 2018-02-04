@@ -7,7 +7,8 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class SeleniumRunner extends SpringJUnit4ClassRunner {
 
     static {
-        java.util.logging.Logger.getLogger("org.apache.http.impl.client").setLevel(java.util.logging.Level.WARNING);
+        System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.SimpleLog");
+        System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.http", "warn");
     }
 
 
