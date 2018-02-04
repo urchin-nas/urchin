@@ -15,7 +15,7 @@ docker build -t urchin-dev .
 ### Run
 Unix:
 ```bash
-docker run -it --privileged --name urchin-dev -p 8080:8080 -v /data/urchin/.m2/:/root/.m2/ -v /data/urchin/.npm:/root/.npm/ urchin-dev
+docker run -it --privileged --name urchin-dev -p 8080:8080 urchin-dev
 ```
 ### Start existing container
 ```bash
