@@ -8,6 +8,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.logging.Level;
+
 import static urchin.selenium.testutil.ProfileEvaluator.isProduction;
 
 
@@ -47,6 +49,8 @@ public class SeleniumDriver {
         options.addArguments("--disable-gpu");
         options.addArguments("--no-sandbox");
 
-        return new ChromeDriver(options);
+        ChromeDriver chromeDriver = new ChromeDriver(options);
+        chromeDriver.setLogLevel(Level.WARNING);
+        return chromeDriver;
     }
 }
