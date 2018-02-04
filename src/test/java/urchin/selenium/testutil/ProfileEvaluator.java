@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 class ProfileEvaluator {
 
-    private static final String PROFILE = "production";
+    static final String PROFILE = "production";
 
     static boolean isProduction() {
         String activeProfiles = System.getProperty("spring.profiles.active");

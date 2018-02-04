@@ -14,7 +14,7 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
-import static org.openqa.selenium.firefox.FirefoxDriver.PROFILE;
+import static urchin.selenium.testutil.ProfileEvaluator.PROFILE;
 import static urchin.selenium.testutil.ProfileEvaluator.isProduction;
 import static urchin.selenium.testutil.SeleniumUrl.PORT;
 
