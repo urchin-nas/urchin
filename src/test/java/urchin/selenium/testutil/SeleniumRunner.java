@@ -6,12 +6,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 public class SeleniumRunner extends SpringJUnit4ClassRunner {
 
-    static {
-        System.setProperty("org.apache.commons.logging.Log", "org.apache.commons.logging.impl.SimpleLog");
-        System.setProperty("org.apache.commons.logging.simplelog.log.org.apache.http", "warn");
-    }
-
-
     public SeleniumRunner(Class<?> klass) throws InitializationError {
         super(klass);
     }
