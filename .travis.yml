@@ -1,12 +1,15 @@
-sudo: required
-
 language: java
-
-services:
- - docker
+sudo: required
+dist: trusty
 
 addons:
   chrome: stable
+
+before_install:
+ - sudo apt-get install -y acl ecryptfs-utils mhddfs samba samba-common-bin
+ - sudo mount -o remount,acl /
+
+install: true
 
 script:
   - mvn clean install
