@@ -17,5 +17,10 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-echo "[Starting application]"
-java -jar target/urchin-1.0-SNAPSHOT.jar
+if [ "${1,,}" == "start" ]; then
+    echo "[Starting application]"
+    java -jar target/urchin-1.0-SNAPSHOT.jar
+else
+	echo "Exiting..."
+fi
+
