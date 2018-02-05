@@ -1,16 +1,10 @@
-language: java
 sudo: required
-dist: trusty
 
-addons:
-  chrome: stable
+services:
+  - docker
 
-before_install:
- - sudo apt-get install -y acl ecryptfs-utils mhddfs samba samba-common-bin
- - sudo mount -o remount,acl /
- - sudo service samba start
-
-install: true
+install:
+  - docker build -t urchin-travis docker
 
 script:
-  - mvn clean install
+  - docker run -it --privileged --name urchin-travis urchin-travis
