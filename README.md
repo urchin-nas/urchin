@@ -1,12 +1,13 @@
 # urchin
-...
+
+[![Build Status](https://travis-ci.org/anhem/urchin.svg?branch=develop)](https://travis-ci.org/anhem/urchin)
 
 ## Requirements
 
-* [Ubuntu] (http://www.ubuntu.com/) (may work on other linux distros)
-* [ecryptfs] (http://ecryptfs.org/)
-* [mhddfs] (https://romanrm.net/mhddfs/)
-* [samba] (https://www.samba.org/)
+* [Ubuntu](http://www.ubuntu.com/) (may work on other linux distros)
+* [ecryptfs](http://ecryptfs.org/)
+* [mhddfs](https://romanrm.net/mhddfs/)
+* [samba](https://www.samba.org/)
 
 Installation using apt:
 ```
@@ -32,6 +33,10 @@ java -jar urchin-1.0-SNAPSHOT.jar
 
 Go to http://localhost:8080
 
+## Docker
+
+More information [here](docker/README.md)
+
 ## Development
 
 To start client using `webpack-dev-server`:
@@ -49,6 +54,5 @@ http://localhost:8080/swagger-ui.html
 
 ## Build Server
 
-[docker-build-server] (https://github.com/anhem/docker-build-server) contains a docker compose setup with all requirements to test and build application
-
+[docker-build-server](https://github.com/anhem/docker-build-server) contains a docker compose setup with all requirements to test and build application
 
