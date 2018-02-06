@@ -7,8 +7,13 @@ mount -o remount,acl /
 echo "[Starting Samba in preparation for tests]"
 service samba start
 
-echo "[Updating repository]"
-git pull
+if [ "${branch,,}" ]; then
+    echo "[Checking out branch]"
+    git checkout -b test $1
+else
+    echo "[Updating repository]"
+    git pull
+fi
 
 echo "[Building application]"
 mvn clean install
@@ -17,7 +22,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-if [ "${1,,}" == "start" ]; then
+if [ "${start,,}" ]; then
     echo "[Starting application]"
     java -jar target/urchin-1.0-SNAPSHOT.jar
 else
