@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/anhem/urchin.svg?branch=develop)](https://travis-ci.org/anhem/urchin)
 
-## Requirements 
+## Requirements
 
 * [Ubuntu](http://www.ubuntu.com/) (may work on other linux distros)
 * [ecryptfs](http://ecryptfs.org/)
