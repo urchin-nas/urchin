@@ -17,15 +17,15 @@ mount -o remount,acl /
 echo "[Starting Samba in preparation for tests]"
 service samba start
 
-if [ -n "${BRANCH}" ]; then
-    echo "[Checking out branch ${BRANCH}]"
+if [ -n "${BRANCH}" ] && [ ${BRANCH} != "master" ]; then
+    echo "[Checking out branch '${BRANCH}']"
     git fetch
     git checkout ${BRANCH}
 else
     echo "[Updating master]"
     git pull
 fi
-repository
+
 echo "[Building application]"
 mvn clean install
 if [ $? -ne 0 ]; then
