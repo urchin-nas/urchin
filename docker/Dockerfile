@@ -20,7 +20,7 @@ RUN echo "root ALL=(ALL) NOPASSWD:/usr/bin/sudo,/usr/sbin/adduser,/usr/sbin/user
 
 # Get project
 RUN mkdir /workspace && \
-    git clone https://github.com/anhem/urchin /workspace
+    git clone https://github.com/anhem/urchin.git /workspace
 
 # install project dependencies
 WORKDIR /workspace
