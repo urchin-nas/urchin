@@ -9,7 +9,7 @@ service samba start
 
 if [ "${branch,,}" ]; then
     echo "[Checking out branch]"
-    git checkout -b test $1
+    git checkout -b test ${branch}
 else
     echo "[Updating repository]"
     git pull
