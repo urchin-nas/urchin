@@ -11,7 +11,9 @@ RUN apt-get update && \
 RUN wget https://dl.google.com/linux/linux_signing_key.pub
 RUN apt-key add linux_signing_key.pub
 RUN echo "deb http://dl.google.com/linux/chrome/deb/ stable main" > /etc/apt/sources.list.d/google.list
-RUN apt-get update && apt-get install -y google-chrome-stable
+RUN apt-get update && \
+    apt-get install -y google-chrome-stable && \
+    apt-get clean
 
 # setup permissions
 RUN echo "root ALL=(ALL) NOPASSWD:/usr/bin/sudo,/usr/sbin/adduser,/usr/sbin/useradd,/usr/sbin/deluser,/usr/sbin/addgroup,/usr/sbin/delgroup,/bin/chown,/usr/bin/passwd,/bin/mount,/bin/umount,/usr/bin/mhddfs,/etc/init.d/samba" >> /etc/sudoers.d/urchin
