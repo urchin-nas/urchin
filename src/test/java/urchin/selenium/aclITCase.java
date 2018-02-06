@@ -80,17 +80,23 @@ public class aclITCase extends SeleniumTest {
                 .verifyUserAclReadPermission(username, false)
                 .verifyUserAclWritePermission(username, false)
                 .verifyUserAclExecutePermission(username, false)
+
                 .clickOnUserAclReadPermission(username)
-                .clickOnUserAclWritePermission(username)
-                .clickOnUserAclExecutePermission(username)
                 .verifyUserAclReadPermission(username, true)
-                .verifyUserAclWritePermission(username, true)
-                .verifyUserAclExecutePermission(username, true)
-                .clickOnUserAclReadPermission(username)
+
                 .clickOnUserAclWritePermission(username)
+                .verifyUserAclExecutePermission(username, true)
+
                 .clickOnUserAclExecutePermission(username)
+                .verifyUserAclWritePermission(username, true)
+
+                .clickOnUserAclReadPermission(username)
                 .verifyUserAclReadPermission(username, false)
+
+                .clickOnUserAclWritePermission(username)
                 .verifyUserAclWritePermission(username, false)
+
+                .clickOnUserAclExecutePermission(username)
                 .verifyUserAclExecutePermission(username, false);
     }
 
@@ -105,17 +111,23 @@ public class aclITCase extends SeleniumTest {
                 .verifyGroupAclReadPermission(groupName, false)
                 .verifyGroupAclWritePermission(groupName, false)
                 .verifyGroupAclExecutePermission(groupName, false)
+
                 .clickOnGroupAclReadPermission(groupName)
-                .clickOnGroupAclWritePermission(groupName)
-                .clickOnGroupAclExecutePermission(groupName)
                 .verifyGroupAclReadPermission(groupName, true)
-                .verifyGroupAclWritePermission(groupName, true)
-                .verifyGroupAclExecutePermission(groupName, true)
-                .clickOnGroupAclReadPermission(groupName)
+
                 .clickOnGroupAclWritePermission(groupName)
+                .verifyGroupAclWritePermission(groupName, true)
+
                 .clickOnGroupAclExecutePermission(groupName)
+                .verifyGroupAclExecutePermission(groupName, true)
+
+                .clickOnGroupAclReadPermission(groupName)
                 .verifyGroupAclReadPermission(groupName, false)
+
+                .clickOnGroupAclWritePermission(groupName)
                 .verifyGroupAclWritePermission(groupName, false)
+
+                .clickOnGroupAclExecutePermission(groupName)
                 .verifyGroupAclExecutePermission(groupName, false);
     }
 }
