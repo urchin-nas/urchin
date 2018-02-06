@@ -14,7 +14,7 @@ Installation using apt:
 apt install ecryptfs-utils mhddfs samba samba-common-bin
 ```
 
-## Permissions 
+## Permissions
 
 Either run everything as `root` 
 or copy content from `sudoers.d/urchin` to `visudo -f /etc/sudoers.d/urchin` and change the username if necessary
