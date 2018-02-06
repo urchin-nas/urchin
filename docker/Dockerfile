@@ -22,9 +22,9 @@ RUN echo "root ALL=(ALL) NOPASSWD:/usr/bin/sudo,/usr/sbin/adduser,/usr/sbin/user
 RUN mkdir /workspace && \
     git clone https://github.com/anhem/urchin /workspace
 
-# install
+# install project dependencies
 WORKDIR /workspace
-RUN mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+RUN mvn compile
 
 ADD entrypoint.sh /entrypoint.sh
 
