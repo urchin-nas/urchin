@@ -85,10 +85,10 @@ public class aclITCase extends SeleniumTest {
                 .verifyUserAclReadPermission(username, true)
 
                 .clickOnUserAclWritePermission(username)
-                .verifyUserAclExecutePermission(username, true)
+                .verifyUserAclWritePermission(username, true)
 
                 .clickOnUserAclExecutePermission(username)
-                .verifyUserAclWritePermission(username, true)
+                .verifyUserAclExecutePermission(username, true)
 
                 .clickOnUserAclReadPermission(username)
                 .verifyUserAclReadPermission(username, false)
