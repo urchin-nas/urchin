@@ -4,7 +4,7 @@ services:
   - docker
 
 install:
-  - docker build -t urchin-travis docker
+  - docker pull anhem/urchin
 
 script:
-  - docker run -it --privileged --name urchin-travis urchin-travis
+  - docker run -it --privileged --name urchin-travis anhem/urchin
