@@ -1,6 +1,6 @@
 # urchin
 
-[![Build Status](https://travis-ci.org/anhem/urchin.svg?branch=develop)](https://travis-ci.org/anhem/urchin)
+[![Build Status](https://travis-ci.org/anhem/urchin.svg?branch=master)](https://travis-ci.org/anhem/urchin)
 
 ## Requirements
 
