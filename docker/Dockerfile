@@ -24,7 +24,7 @@ RUN mkdir /workspace && \
 
 # install project dependencies
 WORKDIR /workspace
-RUN mvn install -DskipTests=true -B -V
+RUN mvn clean install -DskipTests=true -B -V
 
 ADD entrypoint.sh /entrypoint.sh
 
