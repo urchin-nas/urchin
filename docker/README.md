@@ -13,11 +13,22 @@ Command examples for running development version of urchin in a docker container
 docker build -t urchin-dev .
 ```
 ### Run
-Unix:
+
 ```bash
-docker run -it --privileged --name urchin-dev -p 8080:8080 urchin-dev start
+docker run -it --privileged --name urchin-dev -p 8080:8080 urchin-dev
 ```
-_Omit `start` from the command if you only want to build and test._
+#### Options
+
+|flag|options|Description|
+| --- | --- | --- |
+| -b | branch | name of branch to build |
+| -s | true | start application after build |
+
+Example:
+
+```bash
+docker run -it --privileged --name urchin-dev -p 8080:8080 urchin-dev -b travis -s true
+```
 
 ### Start existing container
 ```bash
