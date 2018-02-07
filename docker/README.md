@@ -1,6 +1,6 @@
 ## Docker
 
-Run Urchin in a docker container that will fetch `development` branch from github, build, test and optionaly start application. 
+Run Urchin in a docker container that will fetch specified branch from github, build, test and optionaly start application. 
 
 When container is started goto <http://localhost:8080/>
 
@@ -21,9 +21,9 @@ docker run -it --privileged --name urchin-dev -p 8080:8080 urchin-dev
 
 |flag|options|Description|
 | --- | --- | --- |
-| -b | branch-name | name of branch to build |
-| -s | true | start application after build |
-| -a | true | analyze code and upload results to [sonarcloud](https://sonarcloud.io/dashboard?id=urchin%3Aurchin) |
+| -b | branch-name | name of branch to build (default: master) |
+| -s | true | start application after build (default: false) |
+| -a | true | analyze code and upload results to [sonarcloud](https://sonarcloud.io/dashboard?id=urchin%3Aurchin) (default: false) |
 
 Example:
 
