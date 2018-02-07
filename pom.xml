@@ -254,19 +254,6 @@
                             <goal>verify</goal>
                         </goals>
                     </execution>
-                    <execution>
-                        <id>Selenium tests</id>
-                        <configuration>
-                            <argLine>-Dspring.profiles.active=selenium -Dspring.datasource.url=jdbc:h2:mem:</argLine>
-                            <excludes>
-                                <exclude>**/*IT.java</exclude>
-                            </excludes>
-                        </configuration>
-                        <goals>
-                            <goal>integration-test</goal>
-                            <goal>verify</goal>
-                        </goals>
-                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -296,13 +283,6 @@
                         <id>jacoco report integration</id>
                         <goals>
                             <goal>report-integration</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>jacoco report aggregate</id>
-                        <phase>verify</phase>
-                        <goals>
-                            <goal>report-aggregate</goal>
                         </goals>
                     </execution>
                     <execution>
