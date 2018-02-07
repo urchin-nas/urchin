@@ -244,10 +244,9 @@
                 </configuration>
                 <executions>
                     <execution>
+                        <id>Selenium tests</id>
                         <configuration>
-                            <excludes>
-                                <exclude>**/*ITCase.java</exclude>
-                            </excludes>
+                            <argLine>-Dspring.profiles.active=selenium -Dspring.datasource.url=jdbc:h2:mem:</argLine>
                         </configuration>
                         <goals>
                             <goal>integration-test</goal>
