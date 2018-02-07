@@ -21,8 +21,9 @@ docker run -it --privileged --name urchin-dev -p 8080:8080 urchin-dev
 
 |flag|options|Description|
 | --- | --- | --- |
-| -b | branch | name of branch to build |
+| -b | branch-name | name of branch to build |
 | -s | true | start application after build |
+| -a | true | analyze code and upload results to [sonarcloud](https://sonarcloud.io/dashboard?id=urchin%3Aurchin) |
 
 Example:
 

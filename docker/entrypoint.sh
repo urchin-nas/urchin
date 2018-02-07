@@ -1,11 +1,12 @@
 #!/bin/bash
 
-while getopts b:s: option
+while getopts b:s:a: option
 do
  case "${option}"
  in
  b) BRANCH=${OPTARG};;
  s) START=${OPTARG};;
+ a) ANALYZE=${OPTARG};;
  esac
 done
 
@@ -26,14 +27,20 @@ else
     git pull
 fi
 
-echo "[Building application]"
-mvn clean install
+if [ -n "${ANALYZE}" ] && [ ${ANALYZE} == "true" ]; then
+    echo "[Building application and analyzing code]"
+    mvn clean install sonar:sonar -Dsonar.organization=anhem-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=b19b79ed975844e986bed3a6ef86590a687bad31
+else
+    echo "[Building application]"
+    mvn clean install
+fi
+
 if [ $? -ne 0 ]; then
     echo "failed to build and test application, exiting..."
     exit 1
 fi
 
-if [ -n "${START}" ]; then
+if [ -n "${START}" ] && [ ${START} == "true" ]; then
     echo "[Starting application]"
     java -jar target/urchin-1.0-SNAPSHOT.jar
 else

@@ -9,4 +9,4 @@ install:
   - docker pull anhem/urchin
 
 script:
-  - docker run -it --privileged --name urchin-travis anhem/urchin -b $TRAVIS_BRANCH
+  - docker run -it --privileged --name urchin-travis anhem/urchin -b $TRAVIS_BRANCH -a true
