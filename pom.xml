@@ -273,8 +273,15 @@
                 <version>0.8.0</version>
                 <executions>
                     <execution>
+                        <id>jacoco prepare agent</id>
                         <goals>
                             <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>jacoco prepare agent integration</id>
+                        <goals>
+                            <goal>prepare-agent-integration</goal>
                         </goals>
                     </execution>
                 </executions>
@@ -284,4 +291,19 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>sonar</id>
+            <activation>
+            </activation>
+            <properties>
+                <sonar.organization>anhem-github</sonar.organization>
+                <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+                <sonar.login>b19b79ed975844e986bed3a6ef86590a687bad31</sonar.login>
+                <sonar.junit.reportPaths>target/surefire-reports,target/surefire-reports</sonar.junit.reportPaths>
+                <!--<sonar.sources>src/main</sonar.sources>-->
+            </properties>
+        </profile>
+    </profiles>
 </project>
