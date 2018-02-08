@@ -1,7 +1,9 @@
 # urchin
 
 [![Build Status](https://travis-ci.org/anhem/urchin.svg?branch=master)](https://travis-ci.org/anhem/urchin)
-[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=urchin%3Aurchin&metric=alert_status)](https://sonarcloud.io/dashboard?id=urchin%3Aurchin)
+[![Quality](https://sonarcloud.io/api/project_badges/measure?project=urchin%3Aurchin&metric=alert_status)](https://sonarcloud.io/dashboard?id=urchin%3Aurchin)
+[![coverage](https://sonarcloud.io/api/project_badges/measure?project=urchin%3Aurchin&metric=coverage)](https://sonarcloud.io/dashboard?id=urchin%3Aurchin)
+
 ## Requirements
 
 * [Ubuntu](http://www.ubuntu.com/) (may work on other linux distros)
