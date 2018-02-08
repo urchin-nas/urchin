@@ -1,5 +1,9 @@
 #!/bin/bash
 
+BRANCH=master
+START=false
+ANALYZE=false
+
 while getopts b:s:a: option
 do
  case "${option}"
@@ -18,19 +22,20 @@ mount -o remount,acl /
 echo "[Starting Samba in preparation for tests]"
 service samba start
 
-if [ -n "${BRANCH}" ] && [ ${BRANCH} != "master" ]; then
+if [ ${BRANCH} != "master" ]; then
     echo "[Checking out branch '${BRANCH}']"
     git fetch
     git checkout ${BRANCH}
 else
-    echo "[Updating master]"
+    echo "[Updating '${BRANCH}']"
     git pull
 fi
 
-if [ -n "${ANALYZE}" ] && [ ${ANALYZE} == "true" ]; then
+if [ ${ANALYZE} = true ]; then
     echo "[Building application and analyzing code]"
     mvn clean install \
     sonar:sonar \
+    -Dsonar.branch.name=${BRANCH} \
     -Dsonar.organization=anhem-github \
     -Dsonar.host.url=https://sonarcloud.io \
     -Dsonar.login=b19b79ed975844e986bed3a6ef86590a687bad31
@@ -44,7 +49,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-if [ -n "${START}" ] && [ ${START} == "true" ]; then
+if [ ${START} = true ]; then
     echo "[Starting application]"
     java -jar target/urchin-1.0-SNAPSHOT.jar
 else
