@@ -4,9 +4,10 @@ import org.springframework.stereotype.Component;
 import urchin.cli.BasicCommand;
 import urchin.cli.Command;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class ListUsersCommand extends BasicCommand {
@@ -24,12 +25,8 @@ public class ListUsersCommand extends BasicCommand {
 
         Optional<String> response = executeCommand(command.getUserCommand(LIST_USERS));
 
-        String[] users = response.get().split("\n");
-        List<String> unixUsers = new ArrayList<>();
-        for (String user : users) {
-            String[] userValues = user.split(":");
-            unixUsers.add(userValues[0]);
-        }
-        return unixUsers;
+        return Arrays.stream(response.map(s -> s.split("\n")).orElse(new String[0]))
+                .map(user -> user.split(":")[0])
+                .collect(Collectors.toList());
     }
 }

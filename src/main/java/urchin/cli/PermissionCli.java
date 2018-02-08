@@ -51,15 +51,21 @@ public class PermissionCli {
     }
 
     public FileModes getFileModes(Path file) {
-        return ImmutableFileModes.from(listFileInformationCommand.execute(file).get().split(" ")[0]);
+        return listFileInformationCommand.execute(file)
+                .map(s -> ImmutableFileModes.from(s.split(" ")[0]))
+                .orElse(null);
     }
 
     public FileOwners getFileOwners(Path file) {
-        String[] split = listFileInformationCommand.execute(file).get().split(" ");
-        return ImmutableFileOwners.builder()
-                .user(split[2])
-                .group(split[3])
-                .build();
+        return listFileInformationCommand.execute(file)
+                .map(s -> {
+                    String[] split = s.split(" ");
+                    return ImmutableFileOwners.builder()
+                            .user(split[2])
+                            .group(split[3])
+                            .build();
+                })
+                .orElse(null);
     }
 
     public Acl getAcl(Path path) {

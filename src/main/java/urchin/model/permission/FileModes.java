@@ -17,6 +17,8 @@ import static java.lang.String.format;
 @Value.Immutable
 public abstract class FileModes {
 
+    public static final String NO_PERMISSION = "----------";
+
     public abstract int getOwner();
 
     public abstract int getGroup();

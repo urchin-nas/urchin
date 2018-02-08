@@ -6,6 +6,7 @@ import urchin.cli.Command;
 import urchin.model.group.GroupName;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,13 +25,16 @@ public class ListGroupsCommand extends BasicCommand {
         log.debug("Listing groups");
         Optional<String> response = executeCommand(command.getGroupCommand(LIST_GROUPS));
 
-        String[] groups = response.get().split(":\n");
-        List<GroupName> unixGroups = new ArrayList<>();
-        for (String group : groups) {
-            String[] userValues = group.split(":");
-            unixGroups.add(GroupName.of(userValues[0]));
-        }
+        if (response.isPresent()) {
+            String[] groups = response.get().split(":\n");
+            List<GroupName> unixGroups = new ArrayList<>();
+            for (String group : groups) {
+                String[] userValues = group.split(":");
+                unixGroups.add(GroupName.of(userValues[0]));
+            }
 
-        return unixGroups;
+            return unixGroups;
+        }
+        return Collections.emptyList();
     }
 }

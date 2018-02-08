@@ -30,7 +30,7 @@ public class ListGroupsForUserCommand extends BasicCommand {
         Optional<String> response = executeCommand(command.getUserCommand(LIST_GROUPS)
                 .replace(USER, user.getUsername().getValue()));
 
-        return Arrays.stream(response.get().split(":")[1].trim().split(" "))
+        return Arrays.stream(response.map(s -> s.split(":")[1].trim().split(" ")).orElse(new String[0]))
                 .map(GroupName::of)
                 .collect(Collectors.toList());
     }

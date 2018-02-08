@@ -12,7 +12,6 @@ import urchin.model.user.Username;
 import java.nio.file.Path;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -28,10 +27,10 @@ public class GetAclCommand extends BasicCommand {
     public Acl execute(Path path) {
         log.debug("fetching ACL for {}", path);
 
-        Optional<String> response = executeCommand(command.getPermissionCommand("get-acl")
-                .replace("%path%", path.toAbsolutePath().toString()));
-
-        return parseResponse(response.get());
+        return executeCommand(command.getPermissionCommand("get-acl")
+                .replace("%path%", path.toAbsolutePath().toString()))
+                .map(this::parseResponse)
+                .orElse(ImmutableAcl.builder().build());
     }
 
     private Acl parseResponse(String response) {
