@@ -29,7 +29,11 @@ fi
 
 if [ -n "${ANALYZE}" ] && [ ${ANALYZE} == "true" ]; then
     echo "[Building application and analyzing code]"
-    mvn clean install sonar:sonar -Dsonar.organization=anhem-github -Dsonar.host.url=https://sonarcloud.io -Dsonar.login=b19b79ed975844e986bed3a6ef86590a687bad31
+    mvn clean install \
+    sonar:sonar \
+    -Dsonar.organization=anhem-github \
+    -Dsonar.host.url=https://sonarcloud.io \
+    -Dsonar.login=b19b79ed975844e986bed3a6ef86590a687bad31
 else
     echo "[Building application]"
     mvn clean install
