@@ -1,4 +1,4 @@
-package urchin.controller.api.mapper;
+package urchin.controller.mapper;
 
 import org.junit.Test;
 import urchin.controller.api.folder.CreatedFolderResponse;
@@ -7,7 +7,7 @@ import urchin.model.folder.FolderId;
 import urchin.model.folder.ImmutableCreatedFolder;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static urchin.controller.api.mapper.CreatedFolderMapper.mapToCreatedFolderResponse;
+import static urchin.controller.mapper.CreatedFolderMapper.mapToCreatedFolderResponse;
 import static urchin.util.PassphraseGenerator.generateEcryptfsPassphrase;
 
 public class CreatedFolderMapperTest {

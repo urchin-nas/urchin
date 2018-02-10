@@ -1,4 +1,4 @@
-package urchin.controller.api.mapper;
+package urchin.controller.mapper;
 
 import org.junit.Test;
 import urchin.controller.api.group.GroupResponse;
@@ -12,7 +12,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static urchin.controller.api.mapper.GroupMapper.mapToGroupsResponses;
+import static urchin.controller.mapper.GroupMapper.mapToGroupsResponses;
 
 public class GroupMapperTest {
 

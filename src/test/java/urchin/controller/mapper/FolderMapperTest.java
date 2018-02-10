@@ -1,4 +1,4 @@
-package urchin.controller.api.mapper;
+package urchin.controller.mapper;
 
 import org.junit.Test;
 import urchin.controller.api.folder.FolderDetailsResponse;
@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static urchin.controller.api.mapper.FolderMapper.mapToFolderDetailsResponses;
+import static urchin.controller.mapper.FolderMapper.mapToFolderDetailsResponses;
 
 public class FolderMapperTest {
 

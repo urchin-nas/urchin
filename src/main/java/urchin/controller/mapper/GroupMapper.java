@@ -1,4 +1,4 @@
-package urchin.controller.api.mapper;
+package urchin.controller.mapper;
 
 import urchin.controller.api.group.GroupResponse;
 import urchin.controller.api.group.ImmutableGroupResponse;

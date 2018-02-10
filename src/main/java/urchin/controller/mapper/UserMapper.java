@@ -1,4 +1,4 @@
-package urchin.controller.api.mapper;
+package urchin.controller.mapper;
 
 import urchin.controller.api.user.ImmutableUserResponse;
 import urchin.controller.api.user.UserResponse;

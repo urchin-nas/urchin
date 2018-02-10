@@ -16,9 +16,9 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static urchin.controller.api.mapper.CreatedFolderMapper.mapToCreatedFolderResponse;
-import static urchin.controller.api.mapper.FolderMapper.mapToFolderDetailsResponse;
-import static urchin.controller.api.mapper.FolderMapper.mapToFolderDetailsResponses;
+import static urchin.controller.mapper.CreatedFolderMapper.mapToCreatedFolderResponse;
+import static urchin.controller.mapper.FolderMapper.mapToFolderDetailsResponse;
+import static urchin.controller.mapper.FolderMapper.mapToFolderDetailsResponses;
 
 @RestController
 @RequestMapping("api/folders")

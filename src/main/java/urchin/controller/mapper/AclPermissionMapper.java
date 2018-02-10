@@ -1,4 +1,4 @@
-package urchin.controller.api.mapper;
+package urchin.controller.mapper;
 
 import urchin.controller.api.permission.AclPermissionResponse;
 import urchin.controller.api.permission.ImmutableAclPermissionResponse;

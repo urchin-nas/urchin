@@ -1,4 +1,4 @@
-package urchin.controller.api.mapper;
+package urchin.controller.mapper;
 
 import urchin.controller.api.folder.FolderDetailsResponse;
 import urchin.controller.api.folder.ImmutableFolderDetailsResponse;

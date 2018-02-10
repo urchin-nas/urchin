@@ -1,4 +1,4 @@
-package urchin.controller.api.mapper;
+package urchin.controller.mapper;
 
 import org.junit.Test;
 import urchin.controller.api.user.UserResponse;

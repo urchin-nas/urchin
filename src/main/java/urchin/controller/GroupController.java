@@ -20,9 +20,9 @@ import urchin.service.GroupService;
 import javax.validation.Valid;
 import java.util.List;
 
-import static urchin.controller.api.mapper.GroupMapper.mapToGroupResponse;
-import static urchin.controller.api.mapper.GroupMapper.mapToGroupsResponses;
-import static urchin.controller.api.mapper.UserMapper.mapToUsersResponses;
+import static urchin.controller.mapper.GroupMapper.mapToGroupResponse;
+import static urchin.controller.mapper.GroupMapper.mapToGroupsResponses;
+import static urchin.controller.mapper.UserMapper.mapToUsersResponses;
 
 @RestController
 @RequestMapping("api/groups")
