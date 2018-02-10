@@ -35,12 +35,8 @@ public enum JarExecutor {
     }
 
     void start() throws Exception {
-        if (executeJar && !isStarted()) {
-            Path jar = findJar();
-            log.info("Starting jar " + jar.toAbsolutePath());
-            jarProcess = Runtime.getRuntime().exec(getJavaExecutable() + " -jar " + jar.toAbsolutePath().toString());
-            startProcessOutputReader();
-            waitForJarToStart();
+        if (executeJar) {
+            initJar();
         } else {
             log.info("profile '{}' not enabled. Expecting webpack-dev-server and backend to have been started manually", PROFILE);
         }
@@ -50,6 +46,16 @@ public enum JarExecutor {
         if (isStarted()) {
             log.info("Shutting down jar " + JAR_PATTERN);
             jarProcess.destroyForcibly();
+        }
+    }
+
+    private void initJar() throws IOException, InterruptedException {
+        if (!isStarted()) {
+            Path jar = findJar();
+            log.info("Starting jar " + jar.toAbsolutePath());
+            jarProcess = Runtime.getRuntime().exec(getJavaExecutable() + " -jar " + jar.toAbsolutePath().toString());
+            startProcessOutputReader();
+            waitForJarToStart();
         }
     }
 
@@ -112,7 +118,7 @@ public enum JarExecutor {
                 .findFirst();
 
         if (!jar.isPresent()) {
-            String message = String.format("Jar not found! Expected to find jar of pattern %s in %s. Rebuild project to try again", JAR_PATTERN, targetDirectory.toAbsolutePath());
+            String message = String.format("Jar not found! Expected to find jar of pattern %s in %s. Rebuild project and try again", JAR_PATTERN, targetDirectory.toAbsolutePath());
             throw new IllegalStateException(message);
         }
 
