@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.List;
 
-import static java.nio.file.Files.createDirectories;
 import static urchin.util.PassphraseGenerator.generateEcryptfsPassphrase;
 
 @Service
@@ -30,7 +29,7 @@ public class FolderService {
     }
 
     @Transactional
-    public CreatedFolder createAndMountEncryptedFolder(Folder folder) throws IOException {
+    public CreatedFolder createAndMountEncryptedFolder(Folder folder) {
         if (folder.getPath().startsWith("/home/")) {
             throw new IllegalArgumentException("Folder path must not start with /home/");
         }
@@ -48,7 +47,7 @@ public class FolderService {
     }
 
     @Transactional
-    public void deleteEncryptedFolder(FolderId folderId) throws IOException {
+    public void deleteEncryptedFolder(FolderId folderId) {
         FolderSettings folderSettings = folderSettingsRepository.getFolderSettings(folderId);
         Folder folder = folderSettings.getFolder();
 
@@ -93,25 +92,10 @@ public class FolderService {
         }
     }
 
-    public void unmountFolder(Folder folder) throws IOException {
+    public void unmountFolder(Folder folder) {
         if (Files.exists(folder.getPath())) {
             folderCli.unmountFolder(folder);
             deleteFolder(folder);
-        }
-    }
-
-    private void unmountEncryptedFolder(EncryptedFolder encryptedFolder) throws IOException {
-        if (Files.exists(encryptedFolder.getPath())) {
-            folderCli.unmountFolder(encryptedFolder);
-        }
-    }
-
-    private <T extends FolderWrapper> void deleteFolder(T folder) throws IOException {
-        if (folder.isEmpty()) {
-            log.info("Deleting empty folder {}", folder.toAbsolutePath());
-            Files.delete(folder.getPath());
-        } else {
-            throw new IllegalStateException(String.format("%s must be empty before it can be deleted", folder));
         }
     }
 
@@ -138,27 +122,42 @@ public class FolderService {
         }
     }
 
-    private void setupVirtualFolder(VirtualFolder virtualFolder) throws IOException {
-        if (!virtualFolder.isExisting()) {
-            createDirectories(virtualFolder.getPath());
-        }
-    }
-
-    private void createEncryptionFolderPair(Folder folder, EncryptedFolder encryptedFolder) throws IOException {
-        if (!folder.isExisting() && !Files.exists(encryptedFolder.getPath())) {
-            log.info("Creating folder pair {} - {}", folder, encryptedFolder);
-            createDirectories(folder.getPath());
-            createDirectories(encryptedFolder.getPath());
-        } else {
-            throw new IllegalArgumentException("At least one folder in folder pair already exist");
-        }
-    }
-
     public List<FolderSettings> getFolders() {
         return folderSettingsRepository.getFoldersSettings();
     }
 
     public FolderSettings getFolder(FolderId folderId) {
         return folderSettingsRepository.getFolderSettings(folderId);
+    }
+
+    private void unmountEncryptedFolder(EncryptedFolder encryptedFolder) {
+        if (Files.exists(encryptedFolder.getPath())) {
+            folderCli.unmountFolder(encryptedFolder);
+        }
+    }
+
+    private void deleteFolder(FolderWrapper folder) {
+        if (folder.isEmpty()) {
+            log.info("Deleting empty folder {}", folder.toAbsolutePath());
+            folderCli.removeFolder(folder);
+        } else {
+            throw new IllegalStateException(String.format("%s must be empty before it can be deleted", folder));
+        }
+    }
+
+    private void setupVirtualFolder(VirtualFolder virtualFolder) {
+        if (!virtualFolder.isExisting()) {
+            folderCli.createFolder(virtualFolder);
+        }
+    }
+
+    private void createEncryptionFolderPair(Folder folder, EncryptedFolder encryptedFolder) {
+        if (!folder.isExisting() && !encryptedFolder.isExisting()) {
+            log.info("Creating folder pair {} - {}", folder, encryptedFolder);
+            folderCli.createFolder(folder);
+            folderCli.createFolder(encryptedFolder);
+        } else {
+            throw new IllegalArgumentException("At least one folder in folder pair already exist");
+        }
     }
 }

@@ -3,10 +3,7 @@ package urchin.cli;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import urchin.cli.folder.*;
-import urchin.model.folder.EncryptedFolder;
-import urchin.model.folder.Folder;
-import urchin.model.folder.Passphrase;
-import urchin.model.folder.VirtualFolder;
+import urchin.model.folder.*;
 
 import java.util.List;
 
@@ -19,6 +16,8 @@ public class FolderCli {
     private final ShareFolderCommand shareFolderCommand;
     private final UnmountFolderCommand unmountFolderCommand;
     private final UnshareFolderCommand unshareFolderCommand;
+    private final CreateFolderCommand createFolderCommand;
+    private final RemoveFolderCommand removeFolderCommand;
 
     @Autowired
     public FolderCli(
@@ -27,14 +26,17 @@ public class FolderCli {
             RestartSambaCommand restartSambaCommand,
             ShareFolderCommand shareFolderCommand,
             UnmountFolderCommand unmountFolderCommand,
-            UnshareFolderCommand unshareFolderCommand
-    ) {
+            UnshareFolderCommand unshareFolderCommand,
+            CreateFolderCommand createFolderCommand,
+            RemoveFolderCommand removeFolderCommand) {
         this.mountEncryptedFolderCommand = mountEncryptedFolderCommand;
         this.mountVirtualFolderCommand = mountVirtualFolderCommand;
         this.restartSambaCommand = restartSambaCommand;
         this.shareFolderCommand = shareFolderCommand;
         this.unmountFolderCommand = unmountFolderCommand;
         this.unshareFolderCommand = unshareFolderCommand;
+        this.createFolderCommand = createFolderCommand;
+        this.removeFolderCommand = removeFolderCommand;
     }
 
     public void mountEncryptedFolder(Folder folder, EncryptedFolder encryptedFolder, Passphrase passphrase) {
@@ -67,5 +69,13 @@ public class FolderCli {
 
     public void unshareFolder(Folder folder) {
         unshareFolderCommand.execute(folder);
+    }
+
+    public void createFolder(FolderWrapper folder) {
+        createFolderCommand.execute(folder);
+    }
+
+    public void removeFolder(FolderWrapper folder) {
+        removeFolderCommand.execute(folder);
     }
 }

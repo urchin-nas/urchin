@@ -1,1 +1,1 @@
-urchin ALL=(ALL) NOPASSWD:/usr/bin/sudo,/usr/sbin/adduser,/usr/sbin/useradd,/usr/sbin/deluser,/usr/sbin/addgroup,/usr/sbin/delgroup,/bin/chown,/usr/bin/passwd,/bin/mount,/bin/umount,/usr/bin/mhddfs,/etc/init.d/samba
+urchin ALL=(ALL) NOPASSWD:/usr/bin/sudo,/usr/sbin/adduser,/usr/sbin/useradd,/usr/sbin/deluser,/usr/sbin/addgroup,/usr/sbin/delgroup,/bin/chown,/usr/bin/passwd,/bin/mount,/bin/umount,/usr/bin/mhddfs,/etc/init.d/samba,/bin/mkdir,/bin/rm

@@ -11,7 +11,7 @@
 * [mhddfs](https://romanrm.net/mhddfs/)
 * [samba](https://www.samba.org/)
 
-Installation using apt:
+Installation requirements using apt:
 ```
 apt install ecryptfs-utils mhddfs samba samba-common-bin
 ```
