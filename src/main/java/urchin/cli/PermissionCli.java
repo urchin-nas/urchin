@@ -7,7 +7,6 @@ import urchin.model.group.GroupName;
 import urchin.model.permission.*;
 import urchin.model.user.Username;
 
-import java.nio.file.Files;
 import java.nio.file.Path;
 
 @Repository
@@ -73,7 +72,7 @@ public class PermissionCli {
     }
 
     public void setAclGroupPermissions(Path path, GroupName groupName, AclPermission aclPermission) {
-        if (Files.isDirectory(path)) {
+        if (path.toFile().isDirectory()) {
             setAclGroupOnFolderCommand.execute(path, groupName, aclPermission);
         } else {
             setAclGroupOnFileCommand.execute(path, groupName, aclPermission);
@@ -81,7 +80,7 @@ public class PermissionCli {
     }
 
     public void setAclUserPermissions(Path path, Username username, AclPermission aclPermission) {
-        if (Files.isDirectory(path)) {
+        if (path.toFile().isDirectory()) {
             setAclUserOnFolderCommand.execute(path, username, aclPermission);
         } else {
             setAclUserOnFileCommand.execute(path, username, aclPermission);

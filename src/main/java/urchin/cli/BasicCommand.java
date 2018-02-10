@@ -29,14 +29,14 @@ public abstract class BasicCommand {
             process.waitFor();
 
             if (process.exitValue() != 0) {
-                log.debug("Process failed with error: " + IOUtils.toString(process.getErrorStream(), defaultCharset()));
-                log.error("Process returned code: " + process.exitValue());
+                log.debug("Process failed with error: {}", IOUtils.toString(process.getErrorStream(), defaultCharset()));
+                log.error("Process returned code: {}", process.exitValue());
                 throw new CommandException(this.getClass(), process.exitValue());
             }
 
             String response = IOUtils.toString(process.getInputStream(), defaultCharset());
             if (response.length() > 0) {
-                log.debug("Response: " + response);
+                log.debug("Response: {}", response);
                 return Optional.of(response);
             } else {
                 return Optional.empty();

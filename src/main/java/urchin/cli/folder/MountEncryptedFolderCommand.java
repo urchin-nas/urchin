@@ -50,8 +50,8 @@ public class MountEncryptedFolderCommand {
             bufferedWriter.flush();
             process.waitFor();
             if (process.exitValue() != 0) {
-                log.debug("Process failed with error: " + IOUtils.toString(process.getErrorStream(), defaultCharset()));
-                log.error("Process returned code: " + process.exitValue());
+                log.debug("Process failed with error: {}", IOUtils.toString(process.getErrorStream(), defaultCharset()));
+                log.error("Process returned code: {} ", process.exitValue());
                 throw new CommandException(this.getClass(), process.exitValue());
             }
         } catch (CommandException e) {
