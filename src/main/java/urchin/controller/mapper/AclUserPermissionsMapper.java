@@ -1,5 +1,6 @@
 package urchin.controller.mapper;
 
+import urchin.controller.api.permission.AclUserPermissionsResponse;
 import urchin.controller.api.permission.ImmutableAclUserPermissionsResponse;
 import urchin.model.permission.AclPermission;
 import urchin.model.user.User;
@@ -13,7 +14,7 @@ import static urchin.controller.mapper.UserMapper.mapToUserResponse;
 
 public class AclUserPermissionsMapper {
 
-    public static List<ImmutableAclUserPermissionsResponse> mapToAclUserPermissionsResponse(Map<User, AclPermission> userPermissions) {
+    public static List<AclUserPermissionsResponse> mapToAclUserPermissionsResponse(Map<User, AclPermission> userPermissions) {
         return userPermissions.entrySet().stream()
                 .map(e -> ImmutableAclUserPermissionsResponse.builder()
                         .user(mapToUserResponse(e.getKey()))
