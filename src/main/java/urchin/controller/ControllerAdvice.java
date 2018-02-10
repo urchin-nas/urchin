@@ -73,6 +73,16 @@ public class ControllerAdvice {
                 .build();
     }
 
+    @ExceptionHandler(value = {IllegalStateException.class})
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    protected ErrorResponse handleIllegalstateException(IllegalStateException e, WebRequest webRequest) {
+        log.warn(EXCEPTION_WHILE_HANDLER_REQUEST, webRequest, e);
+        return ImmutableErrorResponse.builder()
+                .errorCode(ErrorCode.ILLEGAL_STATE)
+                .message(e.getMessage())
+                .build();
+    }
+
     @ExceptionHandler(value = {CommandException.class})
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     protected ErrorResponse handleCommandException(CommandException e, WebRequest webRequest) {
