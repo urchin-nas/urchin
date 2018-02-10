@@ -14,6 +14,9 @@ import static urchin.controller.mapper.GroupMapper.mapToGroupResponse;
 
 public class AclGroupPermissionsMapper {
 
+    private AclGroupPermissionsMapper() {
+    }
+
     public static List<AclGroupPermissionsResponse> mapToAclGroupPermissionsResponse(Map<Group, AclPermission> groupPermissions) {
         return groupPermissions.entrySet().stream()
                 .map(e -> ImmutableAclGroupPermissionsResponse.builder()
