@@ -72,4 +72,11 @@ public class UserCliIT {
         assertThat(groups).hasSize(1);
     }
 
+    @Test
+    public void whoAmIReturnsMe() {
+        LinuxUser linuxUser = userCli.whoAmI();
+
+        assertThat(linuxUser).isNotNull();
+    }
+
 }

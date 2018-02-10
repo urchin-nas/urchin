@@ -22,6 +22,7 @@ user:
   list-users: cat /etc/passwd
   remove-user: sudo deluser %username%
   set-user-password: sudo passwd %username%
+  who-am-i: whoami
 permission:
   change-file-modes: chmod -R %modes% %file%
   change-owner: sudo chown -R %owner%:%group% %file%

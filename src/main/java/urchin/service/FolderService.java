@@ -6,7 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import urchin.cli.FolderCli;
+import urchin.cli.PermissionCli;
+import urchin.cli.UserCli;
 import urchin.model.folder.*;
+import urchin.model.user.LinuxUser;
 import urchin.repository.FolderSettingsRepository;
 
 import java.io.IOException;
@@ -21,11 +24,18 @@ public class FolderService {
     private final Logger log = LoggerFactory.getLogger(FolderService.class);
     private final FolderSettingsRepository folderSettingsRepository;
     private final FolderCli folderCli;
+    private final UserCli userCli;
+    private final PermissionCli permissionCli;
 
     @Autowired
-    public FolderService(FolderSettingsRepository folderSettingsRepository, FolderCli folderCli) {
+    public FolderService(FolderSettingsRepository folderSettingsRepository,
+                         FolderCli folderCli,
+                         UserCli userCli,
+                         PermissionCli permissionCli) {
         this.folderSettingsRepository = folderSettingsRepository;
         this.folderCli = folderCli;
+        this.userCli = userCli;
+        this.permissionCli = permissionCli;
     }
 
     @Transactional
@@ -33,9 +43,9 @@ public class FolderService {
         if (folder.getPath().startsWith("/home/")) {
             throw new IllegalArgumentException("Folder path must not start with /home/");
         }
-
+        LinuxUser owner = userCli.whoAmI();
         EncryptedFolder encryptedFolder = folder.toEncryptedFolder();
-        createEncryptionFolderPair(folder, encryptedFolder);
+        createEncryptionFolderPair(folder, encryptedFolder, owner);
         Passphrase passphrase = generateEcryptfsPassphrase();
         FolderId folderId = folderSettingsRepository.saveFolderSettings(encryptedFolder, folder);
         folderCli.mountEncryptedFolder(folder, encryptedFolder, passphrase);
@@ -99,7 +109,7 @@ public class FolderService {
         }
     }
 
-    public void setupVirtualFolder(List<Folder> folders, VirtualFolder virtualFolder) throws IOException {
+    public void setupVirtualFolder(List<Folder> folders, VirtualFolder virtualFolder) {
         //TODO add to db, error handling, tests etc
         setupVirtualFolder(virtualFolder);
         folderCli.mountVirtualFolder(folders, virtualFolder);
@@ -147,15 +157,20 @@ public class FolderService {
 
     private void setupVirtualFolder(VirtualFolder virtualFolder) {
         if (!virtualFolder.isExisting()) {
+            LinuxUser linuxUser = userCli.whoAmI();
             folderCli.createFolder(virtualFolder);
+            permissionCli.changeOwner(virtualFolder.getPath(), linuxUser);
+
         }
     }
 
-    private void createEncryptionFolderPair(Folder folder, EncryptedFolder encryptedFolder) {
+    private void createEncryptionFolderPair(Folder folder, EncryptedFolder encryptedFolder, LinuxUser linuxUser) {
         if (!folder.isExisting() && !encryptedFolder.isExisting()) {
             log.info("Creating folder pair {} - {}", folder, encryptedFolder);
             folderCli.createFolder(folder);
+            permissionCli.changeOwner(folder.getPath(), linuxUser);
             folderCli.createFolder(encryptedFolder);
+            permissionCli.changeOwner(encryptedFolder.getPath(), linuxUser);
         } else {
             throw new IllegalArgumentException("At least one folder in folder pair already exist");
         }

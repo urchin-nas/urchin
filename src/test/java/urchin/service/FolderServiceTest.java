@@ -11,7 +11,12 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.mockito.stubbing.Answer;
 import urchin.cli.FolderCli;
+import urchin.cli.PermissionCli;
+import urchin.cli.UserCli;
 import urchin.model.folder.*;
+import urchin.model.user.ImmutableLinuxUser;
+import urchin.model.user.LinuxUser;
+import urchin.model.user.Username;
 import urchin.repository.FolderSettingsRepository;
 
 import java.io.IOException;
@@ -35,10 +40,12 @@ public class FolderServiceTest {
 
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
-
     @Mock
     private FolderCli folderCli;
-
+    @Mock
+    private UserCli userCli;
+    @Mock
+    private PermissionCli permissionCli;
     @Mock
     private FolderSettingsRepository folderSettingsRepository;
 
@@ -47,7 +54,7 @@ public class FolderServiceTest {
 
     private Folder folder;
     private EncryptedFolder encryptedFolder;
-    public static final FolderId FOLDER_ID = FolderId.of(1);
+    private static final FolderId FOLDER_ID = FolderId.of(1);
 
     @Before
     public void setup() {
@@ -76,6 +83,8 @@ public class FolderServiceTest {
     public void FoldersAreCreatedAndShellCommandIsCalledWithCorrectArgumentsWhenCreateAndMountEncryptedFolder() {
         EncryptedFolder encryptedFolder = getEncryptedFolder(folder);
         when(folderSettingsRepository.saveFolderSettings(encryptedFolder, folder)).thenReturn(FolderId.of(1));
+        LinuxUser linuxUser = ImmutableLinuxUser.of(Username.of("linuxUsername"));
+        when(userCli.whoAmI()).thenReturn(linuxUser);
         doAnswer(createFolderAnswer(folder)).when(folderCli).createFolder(folder);
         doAnswer(createFolderAnswer(encryptedFolder)).when(folderCli).createFolder(encryptedFolder);
 
@@ -83,6 +92,7 @@ public class FolderServiceTest {
 
         ArgumentCaptor<EncryptedFolder> captor = ArgumentCaptor.forClass(EncryptedFolder.class);
         verify(folderCli).mountEncryptedFolder(eq(folder), captor.capture(), eq(createdFolder.getPassphrase()));
+        verify(permissionCli).changeOwner(folder.getPath(), linuxUser);
         assertThat(captor.getValue().getPath().toAbsolutePath().toString()).isEqualTo(encryptedFolder.getPath().toAbsolutePath().toString());
         assertPathNotEqual(encryptedFolder, folder.getPath());
         assertThat(folder.isExisting()).isTrue();

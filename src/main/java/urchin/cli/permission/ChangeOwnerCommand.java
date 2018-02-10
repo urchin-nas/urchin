@@ -24,7 +24,7 @@ public class ChangeOwnerCommand extends BasicCommand {
     }
 
     public void execute(Path file, Username username, GroupName groupName) {
-        log.debug("Change owner of file {} to {}:{}", file, username, groupName);
+        log.info("Changing owner of file {} to {}:{}", file, username, groupName);
         executeCommand(command.getPermissionCommand(CHANGE_OWNER)
                 .replace(OWNER, username.getValue())
                 .replace(GROUP, groupName.getValue())

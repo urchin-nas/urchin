@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import urchin.cli.permission.*;
 import urchin.model.group.GroupName;
 import urchin.model.permission.*;
+import urchin.model.user.LinuxUser;
 import urchin.model.user.Username;
 
 import java.nio.file.Path;
@@ -47,6 +48,10 @@ public class PermissionCli {
 
     public void changeOwner(Path file, Username username, GroupName groupName) {
         changeOwnerCommand.execute(file, username, groupName);
+    }
+
+    public void changeOwner(Path file, LinuxUser linuxUser) {
+        changeOwnerCommand.execute(file, linuxUser.getUsername(), GroupName.of(linuxUser.getUsername().getValue()));
     }
 
     public FileModes getFileModes(Path file) {

@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import urchin.cli.user.*;
 import urchin.model.group.GroupName;
+import urchin.model.user.LinuxUser;
 import urchin.model.user.Password;
 import urchin.model.user.User;
 import urchin.model.user.Username;
@@ -19,6 +20,7 @@ public class UserCli {
     private final SetUserPasswordCommand setUserPasswordCommand;
     private final ListUsersCommand listUsersCommand;
     private final ListGroupsForUserCommand listGroupsForUserCommand;
+    private final WhoAmICommand whoAmICommand;
 
     @Autowired
     public UserCli(
@@ -27,14 +29,15 @@ public class UserCli {
             RemoveUserCommand removeUserCommand,
             SetUserPasswordCommand setUserPasswordCommand,
             ListUsersCommand listUsersCommand,
-            ListGroupsForUserCommand listGroupsForUserCommand
-    ) {
+            ListGroupsForUserCommand listGroupsForUserCommand,
+            WhoAmICommand whoAmICommand) {
         this.addUserCommand = addUserCommand;
         this.checkIfUsernameExistCommand = checkIfUsernameExistCommand;
         this.removeUserCommand = removeUserCommand;
         this.setUserPasswordCommand = setUserPasswordCommand;
         this.listUsersCommand = listUsersCommand;
         this.listGroupsForUserCommand = listGroupsForUserCommand;
+        this.whoAmICommand = whoAmICommand;
     }
 
     public void addUser(Username username) {
@@ -59,6 +62,10 @@ public class UserCli {
 
     public List<GroupName> listGroupsForUser(User user) {
         return listGroupsForUserCommand.execute(user);
+    }
+
+    public LinuxUser whoAmI() {
+        return whoAmICommand.execute();
     }
 
 }
