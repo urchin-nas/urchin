@@ -3,7 +3,7 @@ package urchin.selenium.testutil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static urchin.selenium.testutil.ProfileEvaluator.isProduction;
+import static urchin.selenium.testutil.ProfileEvaluator.executeJar;
 
 public class SeleniumUrl {
 
@@ -16,7 +16,7 @@ public class SeleniumUrl {
 
     public static String getUrl() {
         if (url == null) {
-            if (isProduction()) {
+            if (executeJar()) {
                 url = LOCALHOST + PORT;
             } else {
                 log.info("Expecting webpack-dev-server to be running and listening on port " + WEBPACK_PORT);

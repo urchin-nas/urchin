@@ -11,7 +11,7 @@ class ProfileEvaluator {
     private static final Logger log = LoggerFactory.getLogger(ProfileEvaluator.class.getName());
 
 
-    static boolean isProduction() {
+    static boolean executeJar() {
         String activeProfiles = System.getProperty("spring.profiles.active");
         log.info("Active profiles: {}", activeProfiles);
         return activeProfiles != null && Arrays.asList(activeProfiles.split(",")).contains(PROFILE);

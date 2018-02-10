@@ -17,22 +17,19 @@ public class SeleniumExecutionListener extends RunListener {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
 
-    private final JarExecutor jarExecutor;
-
-    public SeleniumExecutionListener(JarExecutor jarExecutor) {
+    public SeleniumExecutionListener() {
         super();
-        this.jarExecutor = jarExecutor;
     }
 
     @Override
     public void testRunStarted(Description description) throws Exception {
-        jarExecutor.start();
+        JarExecutor.INSTANCE.start();
         super.testRunStarted(description);
     }
 
     @Override
     public void testRunFinished(Result result) throws Exception {
-        jarExecutor.stop();
+        JarExecutor.INSTANCE.stop();
         SeleniumDriver.getDriver().quit();
         super.testRunFinished(result);
     }

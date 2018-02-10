@@ -15,10 +15,12 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 import static urchin.selenium.testutil.ProfileEvaluator.PROFILE;
-import static urchin.selenium.testutil.ProfileEvaluator.isProduction;
+import static urchin.selenium.testutil.ProfileEvaluator.executeJar;
 import static urchin.selenium.testutil.SeleniumUrl.PORT;
 
-class JarExecutor {
+public enum JarExecutor {
+
+    INSTANCE;
 
     private static final String JAR_PATTERN = "urchin-.*.jar";
     private static final String HEALTH_ENDPOINT = "http://localhost:" + PORT + "/health";
@@ -29,7 +31,7 @@ class JarExecutor {
     private static Process jarProcess;
 
     JarExecutor() {
-        executeJar = isProduction();
+        executeJar = executeJar();
     }
 
     void start() throws Exception {

@@ -8,7 +8,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static urchin.selenium.testutil.ProfileEvaluator.isProduction;
+import static urchin.selenium.testutil.ProfileEvaluator.executeJar;
 
 
 public class SeleniumDriver {
@@ -18,7 +18,7 @@ public class SeleniumDriver {
 
     public static synchronized WebDriver getDriver() {
         if (driver == null) {
-            if (isProduction()) {
+            if (executeJar()) {
                 driver = createHeadlessDriver();
             } else {
                 driver = createDriver();

@@ -12,8 +12,7 @@ public class SeleniumRunner extends SpringJUnit4ClassRunner {
 
     @Override
     public void run(RunNotifier notifier) {
-        JarExecutor jarExecutor = new JarExecutor();
-        notifier.addListener(new SeleniumExecutionListener(jarExecutor));
+        notifier.addListener(new SeleniumExecutionListener());
         notifier.fireTestRunStarted(getDescription());
         super.run(notifier);
     }
