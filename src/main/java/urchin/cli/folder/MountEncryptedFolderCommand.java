@@ -37,14 +37,14 @@ public class MountEncryptedFolderCommand {
     public void execute(Folder folder, EncryptedFolder encryptedFolder, Passphrase passphrase) {
         log.info("Setting up encrypted folder {} and mounting it to {}", encryptedFolder.toAbsolutePath(), folder.toAbsolutePath());
 
-        String[] command = this.command.getFolderCommand(MOUNT_ENCRYPTED_FOLDER)
+        String[] mntCommand = command.getFolderCommand(MOUNT_ENCRYPTED_FOLDER)
                 .replace(ENCRYPTED_FOLDER, encryptedFolder.toAbsolutePath())
                 .replace(FOLDER, folder.toAbsolutePath())
                 .replace(PASSPHRASE, passphrase.getValue())
                 .split(" ");
 
         try {
-            Process process = runtime.exec(command);
+            Process process = runtime.exec(mntCommand);
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
             bufferedWriter.newLine();
             bufferedWriter.flush();
