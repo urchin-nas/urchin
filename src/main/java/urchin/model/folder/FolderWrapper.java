@@ -3,7 +3,6 @@ package urchin.model.folder;
 import org.immutables.value.Value;
 
 import java.io.File;
-import java.nio.file.Files;
 import java.nio.file.Path;
 
 public abstract class FolderWrapper {
@@ -24,7 +23,7 @@ public abstract class FolderWrapper {
     }
 
     public boolean isExisting() {
-        return Files.exists(this.getPath());
+        return this.getPath().toFile().exists();
     }
 
     public boolean isEmpty() {

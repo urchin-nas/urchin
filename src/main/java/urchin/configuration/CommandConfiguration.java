@@ -19,7 +19,7 @@ public class CommandConfiguration {
     private final Logger log = LoggerFactory.getLogger(CommandConfiguration.class);
 
     @Bean("commands")
-    public PropertySource<?> yamlPropertySourceLoader() throws IOException {
+    public PropertySource yamlPropertySourceLoader() throws IOException {
         log.info("loading commands from " + COMMANDS_YML);
         YamlPropertySourceLoader yamlPropertySourceLoader = new YamlPropertySourceLoader();
         Resource resource = new ClassPathResource(COMMANDS_YML);
