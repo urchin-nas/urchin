@@ -9,6 +9,7 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.stubbing.Answer;
 import urchin.cli.FolderCli;
 import urchin.model.folder.*;
 import urchin.repository.FolderSettingsRepository;
@@ -19,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 
+import static java.nio.file.Files.createDirectories;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
@@ -66,14 +68,16 @@ public class FolderServiceTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void createAndMountEncryptedFolderWhereFolderIsInHomeDirectoryThrowsEception() throws IOException {
+    public void createAndMountEncryptedFolderWhereFolderIsInHomeDirectoryThrowsEception() {
         folderService.createAndMountEncryptedFolder(ImmutableFolder.of(Paths.get("/home/urchin")));
     }
 
     @Test
-    public void FoldersAreCreatedAndShellCommandIsCalledWithCorrectArgumentsWhenCreateAndMountEncryptedFolder() throws IOException {
+    public void FoldersAreCreatedAndShellCommandIsCalledWithCorrectArgumentsWhenCreateAndMountEncryptedFolder() {
         EncryptedFolder encryptedFolder = getEncryptedFolder(folder);
         when(folderSettingsRepository.saveFolderSettings(encryptedFolder, folder)).thenReturn(FolderId.of(1));
+        doAnswer(createFolderAnswer(folder)).when(folderCli).createFolder(folder);
+        doAnswer(createFolderAnswer(encryptedFolder)).when(folderCli).createFolder(encryptedFolder);
 
         CreatedFolder createdFolder = folderService.createAndMountEncryptedFolder(folder);
 
@@ -120,7 +124,7 @@ public class FolderServiceTest {
     }
 
     @Test
-    public void umountEncryptedFolderThatDoesNotExistDoesNothing() throws IOException {
+    public void umountEncryptedFolderThatDoesNotExistDoesNothing() {
         folderService.unmountFolder(folder);
         verifyZeroInteractions(folderCli);
     }
@@ -138,6 +142,7 @@ public class FolderServiceTest {
     @Test
     public void umountEncryptedFolderDeletesTargetFolderIfSuccessful() throws IOException {
         Files.createDirectories(folder.getPath());
+        doAnswer(deleteFolderAnswer(folder)).when(folderCli).removeFolder(folder);
 
         folderService.unmountFolder(folder);
 
@@ -214,6 +219,8 @@ public class FolderServiceTest {
         FolderSettings folderSettings = createFolderSettings(folder, encryptedFolder);
 
         when(folderSettingsRepository.getFolderSettings(FOLDER_ID)).thenReturn(folderSettings);
+        doAnswer(deleteFolderAnswer(folder)).when(folderCli).removeFolder(folder);
+        doAnswer(deleteFolderAnswer(encryptedFolder)).when(folderCli).removeFolder(encryptedFolder);
 
         folderService.deleteEncryptedFolder(FOLDER_ID);
 
@@ -222,6 +229,20 @@ public class FolderServiceTest {
         verify(folderCli).unmountFolder(folder);
         verify(folderCli).unmountFolder(encryptedFolder);
         verify(folderSettingsRepository).removeFolderSettings(FOLDER_ID);
+    }
+
+    private Answer<Void> deleteFolderAnswer(FolderWrapper folder) {
+        return invocationOnMock -> {
+            folder.getPath().toFile().delete();
+            return null;
+        };
+    }
+
+    private Answer<Void> createFolderAnswer(FolderWrapper folder) {
+        return invocationOnMock -> {
+            createDirectories(folder.getPath());
+            return null;
+        };
     }
 
     private FolderSettings createFolderSettings(Folder folder, EncryptedFolder encryptedFolder) {
