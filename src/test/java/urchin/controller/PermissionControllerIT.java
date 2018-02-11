@@ -7,9 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import urchin.controller.api.IdResponse;
 import urchin.controller.api.MessageResponse;
-import urchin.controller.api.folder.CreatedFolderResponse;
-import urchin.controller.api.folder.FolderRequest;
-import urchin.controller.api.folder.ImmutableFolderRequest;
+import urchin.controller.api.folder.*;
 import urchin.controller.api.group.AddGroupRequest;
 import urchin.controller.api.group.ImmutableAddGroupRequest;
 import urchin.controller.api.permission.*;
@@ -38,16 +36,23 @@ public class PermissionControllerIT extends TestApplication {
     public void setUp() {
         String tmpFolderPath = temporaryFolderUnmount.getRoot().getAbsolutePath();
 
-        ImmutableAddUserRequest addUserRequest = ImmutableAddUserRequest.builder()
+        AddUserRequest addUserRequest = ImmutableAddUserRequest.builder()
                 .username(USERNAME_PREFIX + System.currentTimeMillis())
                 .password(randomAlphanumeric(10))
                 .build();
-        ImmutableAddGroupRequest addGroupRequest = ImmutableAddGroupRequest.of(GROUP_PREFIX + System.currentTimeMillis());
-        ImmutableFolderRequest folderRequest = ImmutableFolderRequest.of(Paths.get(tmpFolderPath + "/testFolder").toAbsolutePath().toString());
+        AddGroupRequest addGroupRequest = ImmutableAddGroupRequest.of(GROUP_PREFIX + System.currentTimeMillis());
+        FolderRequest folderRequest = ImmutableFolderRequest.of(Paths.get(tmpFolderPath + "/testFolder").toAbsolutePath().toString());
 
         ResponseEntity<IdResponse> addUserResponse = addUserRequest(addUserRequest);
         ResponseEntity<IdResponse> addGroupResponse = addGroupRequest(addGroupRequest);
         ResponseEntity<CreatedFolderResponse> createFolderResponse = createFolderRequest(folderRequest);
+
+        MountEncryptedFolderRequest mountEncryptedFolderRequest = ImmutableMountEncryptedFolderRequest.builder()
+                .folderId(createFolderResponse.getBody().getId())
+                .passphrase(createFolderResponse.getBody().getPassphrase())
+                .build();
+
+        mountEncryptedFolderRequest(mountEncryptedFolderRequest);
 
         userId = addUserResponse.getBody().getId();
         groupId = addGroupResponse.getBody().getId();
@@ -122,5 +127,9 @@ public class PermissionControllerIT extends TestApplication {
 
     private ResponseEntity<CreatedFolderResponse> createFolderRequest(FolderRequest folderRequest) {
         return testRestTemplate.postForEntity(discoverControllerPath(FolderController.class) + "/create", folderRequest, CreatedFolderResponse.class);
+    }
+
+    private ResponseEntity<MessageResponse> mountEncryptedFolderRequest(MountEncryptedFolderRequest mountEncryptedFolderRequest) {
+        return testRestTemplate.postForEntity(discoverControllerPath(FolderController.class) + "/mount", mountEncryptedFolderRequest, MessageResponse.class);
     }
 }

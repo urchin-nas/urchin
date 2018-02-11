@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.immutables.value.Value;
 
 import javax.annotation.Nullable;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -17,8 +18,8 @@ public interface MountEncryptedFolderRequest {
 
     @Nullable
     @NotNull
-    @Size(min = 1)
-    String getFolder();
+    @Min(1)
+    Integer getFolderId();
 
     @Nullable
     @NotNull

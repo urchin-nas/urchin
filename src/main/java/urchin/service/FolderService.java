@@ -49,6 +49,7 @@ public class FolderService {
         Passphrase passphrase = generateEcryptfsPassphrase();
         FolderId folderId = folderSettingsRepository.saveFolderSettings(encryptedFolder, folder);
         folderCli.mountEncryptedFolder(folder, encryptedFolder, passphrase);
+        folderCli.unmountFolder(encryptedFolder);
 
         return ImmutableCreatedFolder.builder()
                 .folderId(folderId)
@@ -92,7 +93,10 @@ public class FolderService {
         }
     }
 
-    public void mountEncryptedFolder(EncryptedFolder encryptedFolder, Passphrase passphrase) throws IOException {
+    public void mountEncryptedFolder(FolderId folderId, Passphrase passphrase) throws IOException {
+        FolderSettings folderSettings = folderSettingsRepository.getFolderSettings(folderId);
+        EncryptedFolder encryptedFolder = folderSettings.getEncryptedFolder();
+
         if (!Files.exists(encryptedFolder.getPath())) {
             throw new IllegalArgumentException(String.format("EncryptedFolder %s does not exist", encryptedFolder.getPath()));
         }
@@ -103,6 +107,11 @@ public class FolderService {
         } else {
             throw new IllegalStateException(String.format("Folder %s should not exist", folder));
         }
+    }
+
+    public void unmountEncryptedFolder(FolderId folderId) {
+        FolderSettings folderSettings = folderSettingsRepository.getFolderSettings(folderId);
+        folderCli.unmountFolder(folderSettings.getEncryptedFolder());
     }
 
     public void unmountFolder(Folder folder) {

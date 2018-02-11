@@ -37,6 +37,7 @@ public class FolderServiceTest {
 
     private static final String FOLDER_NAME = "/folder";
     private static final String ENCRYPTED_FOLDER_NAME = "/.folder";
+    private static final FolderId FOLDER_ID = FolderId.of(1);
 
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
@@ -54,12 +55,20 @@ public class FolderServiceTest {
 
     private Folder folder;
     private EncryptedFolder encryptedFolder;
-    private static final FolderId FOLDER_ID = FolderId.of(1);
+    private FolderSettings folderSettings;
+
 
     @Before
     public void setup() {
         folder = ImmutableFolder.of(Paths.get(temporaryFolder.getRoot() + FOLDER_NAME));
         encryptedFolder = ImmutableEncryptedFolder.of(Paths.get(temporaryFolder.getRoot() + ENCRYPTED_FOLDER_NAME));
+        folderSettings = ImmutableFolderSettings.builder()
+                .folderId(FOLDER_ID)
+                .folder(folder)
+                .encryptedFolder(encryptedFolder)
+                .created(LocalDateTime.now())
+                .isAutoMount(true)
+                .build();
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -103,8 +112,9 @@ public class FolderServiceTest {
     @Test(expected = IllegalArgumentException.class)
     public void mountEncryptedFolderThatDoesNotExistThrowsException() throws IOException {
         Passphrase passphrase = generateEcryptfsPassphrase();
+        when(folderSettingsRepository.getFolderSettings(FOLDER_ID)).thenReturn(folderSettings);
 
-        folderService.mountEncryptedFolder(encryptedFolder, passphrase);
+        folderService.mountEncryptedFolder(FOLDER_ID, passphrase);
     }
 
     @Test(expected = IllegalStateException.class)
@@ -113,8 +123,9 @@ public class FolderServiceTest {
         Files.createDirectories(encryptedFolder.getPath());
         Files.createDirectories(folder.getPath());
         createFileInPath(folder.getPath());
+        when(folderSettingsRepository.getFolderSettings(FOLDER_ID)).thenReturn(folderSettings);
 
-        folderService.mountEncryptedFolder(encryptedFolder, passphrase);
+        folderService.mountEncryptedFolder(FOLDER_ID, passphrase);
     }
 
     @Test
@@ -123,8 +134,9 @@ public class FolderServiceTest {
         Files.createDirectories(encryptedFolder.getPath());
         Folder folder = encryptedFolder.toRegularFolder();
         Passphrase passphrase = generateEcryptfsPassphrase();
+        when(folderSettingsRepository.getFolderSettings(FOLDER_ID)).thenReturn(folderSettings);
 
-        folderService.mountEncryptedFolder(encryptedFolder, passphrase);
+        folderService.mountEncryptedFolder(FOLDER_ID, passphrase);
 
         ArgumentCaptor<Folder> captor = ArgumentCaptor.forClass(Folder.class);
         verify(folderCli).mountEncryptedFolder(captor.capture(), eq(encryptedFolder), eq(passphrase));

@@ -101,46 +101,48 @@ public class FolderControllerIT extends TestApplication {
     }
 
     @Test
-    public void createAndMountAndUnmountEncryptedAndVirtualFoldersThatAreSharedAndUnsharedOnNetwork() throws Exception {
+    public void createAndMountEncryptedAndVirtualFoldersThatAreSharedAndUnsharedOnNetworkAndUnmounted() throws Exception {
         FolderRequest encryptedFolderRequest = ImmutableFolderRequest.of(folder_1.toAbsolutePath());
 
-        //1. create encrypted folder
+        // create encrypted folder
 
         ResponseEntity<CreatedFolderResponse> createResponse_1 = postCreateRequest(encryptedFolderRequest);
 
         assertThat(createResponse_1.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(createResponse_1.getBody().getPassphrase()).isNotNull();
+        assertThat(createResponse_1.getBody().getId()).isGreaterThan(0);
         assertThat(folder_1.isExisting()).isTrue();
         assertThat(encryptedFolder_1.isExisting()).isTrue();
 
-        //2. unmount encrypted folder
+        // mount encrypted folder
 
-        ResponseEntity<MessageResponse> unmountResponse_1 = postUnmountRequest(encryptedFolderRequest);
-
-        assertThat(unmountResponse_1.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(folder_1.isExisting()).isTrue();
-        assertThat(encryptedFolder_1.isExisting()).isTrue();
-
-        //3. mount encrypted folder again
-
-        MountEncryptedFolderRequest mountEncryptedFolderRequest = ImmutableMountEncryptedFolderRequest.builder()
-                .folder(folder_1.toAbsolutePath())
+        MountEncryptedFolderRequest mountEncryptedFolderRequest_1 = ImmutableMountEncryptedFolderRequest.builder()
+                .folderId(createResponse_1.getBody().getId())
                 .passphrase(createResponse_1.getBody().getPassphrase())
                 .build();
 
-        ResponseEntity<MessageResponse> mountResponse_1 = postMountRequest(mountEncryptedFolderRequest);
+        ResponseEntity<MessageResponse> mountResponse_1 = postMountRequest(mountEncryptedFolderRequest_1);
         assertThat(mountResponse_1.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(folder_1.isExisting()).isTrue();
-        assertThat(encryptedFolder_1.isExisting()).isTrue();
 
-        //4. create 2nd encrypted folder
+        // create 2nd encrypted folder
 
         ResponseEntity<CreatedFolderResponse> createResponse_2 = postCreateRequest(ImmutableFolderRequest.of(folder_2.toAbsolutePath()));
         assertThat(createResponse_2.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(folder_2.isExisting()).isTrue();
         assertThat(encryptedFolder_2.isExisting()).isTrue();
 
-        //5. setup virtual folder
+
+        // mount 2nd encrypted folder
+
+        MountEncryptedFolderRequest mountEncryptedFolderRequest_2 = ImmutableMountEncryptedFolderRequest.builder()
+                .folderId(createResponse_1.getBody().getId())
+                .passphrase(createResponse_1.getBody().getPassphrase())
+                .build();
+
+        ResponseEntity<MessageResponse> mountResponse_2 = postMountRequest(mountEncryptedFolderRequest_2);
+        assertThat(mountResponse_2.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        // setup virtual folder
 
         VirtualFolderRequest virtualFolderRequest =
                 ImmutableVirtualFolderRequest.builder()
@@ -153,13 +155,13 @@ public class FolderControllerIT extends TestApplication {
         assertThat(virtualFolderResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(virtualFolder.isExisting()).isTrue();
 
-        //.6 create file in virtual folder, which will be located in one of the encrypted folders.
+        // create file in virtual folder, which will be located in one of the encrypted folders.
 
         createFileInFolder(FILENAME, virtualFolder.getPath());
         assertThat(folderContainsFile(virtualFolder.getPath(), FILENAME)).isTrue();
         assertThat(folderContainsFile(folder_1.getPath(), FILENAME) || folderContainsFile(folder_2.getPath(), FILENAME)).isTrue();
 
-        //7. share virtual folder
+        // share virtual folder
 
         FolderRequest shareFolderRequest = ImmutableFolderRequest.of(virtualFolder.toAbsolutePath());
 
@@ -170,7 +172,7 @@ public class FolderControllerIT extends TestApplication {
         assertThat(sharedFolder.list().length).isEqualTo(1);
         assertThat(sharedFolder.list()[0]).isEqualTo(FILENAME);
 
-        //8. unshare virtual folder
+        // unshare virtual folder
 
         ResponseEntity<MessageResponse> unshareFolderResponse = postUnshareFolderRequest(shareFolderRequest);
         assertThat(unshareFolderResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
@@ -181,12 +183,29 @@ public class FolderControllerIT extends TestApplication {
         } catch (SmbException ignore) {
         }
 
-        //9. unmount virtual folder
+        // unmount virtual folder
 
-        ResponseEntity<MessageResponse> unmountVirtualFOlderResponse = postUnmountVirtualFolderRequest(ImmutableFolderRequest.of(virtualFolder.toAbsolutePath()));
+        ResponseEntity<MessageResponse> unmountVirtualFolderResponse = postUnmountVirtualFolderRequest(ImmutableFolderRequest.of(virtualFolder.toAbsolutePath()));
 
-        assertThat(unmountVirtualFOlderResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+        assertThat(unmountVirtualFolderResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
         assertThat(folderContainsFile(folder_1.getPath(), FILENAME) || folderContainsFile(folder_2.getPath(), FILENAME)).isTrue();
+
+        // unmount encrypted folder
+
+        UnmountEncryptedFolderRequest unmountEncryptedFolderRequest = ImmutableUnmountEncryptedFolderRequest.builder()
+                .folderId(createResponse_1.getBody().getId())
+                .build();
+
+        ResponseEntity<MessageResponse> unmountEncryptedFolderResponse = postUnmountRequest(unmountEncryptedFolderRequest);
+
+        assertThat(unmountEncryptedFolderResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
+
+        // verify folders still exist
+
+        assertThat(folder_1.isExisting()).isTrue();
+        assertThat(encryptedFolder_1.isExisting()).isTrue();
+        assertThat(folder_2.isExisting()).isTrue();
+        assertThat(encryptedFolder_2.isExisting()).isTrue();
     }
 
     @Test
@@ -216,8 +235,8 @@ public class FolderControllerIT extends TestApplication {
         return testRestTemplate.postForEntity(discoverControllerPath() + "/create", folderRequest, CreatedFolderResponse.class);
     }
 
-    private ResponseEntity<MessageResponse> postUnmountRequest(FolderRequest folderRequest) {
-        return testRestTemplate.postForEntity(discoverControllerPath() + "/unmount", folderRequest, MessageResponse.class);
+    private ResponseEntity<MessageResponse> postUnmountRequest(UnmountEncryptedFolderRequest unmountEncryptedFolderRequest) {
+        return testRestTemplate.postForEntity(discoverControllerPath() + "/unmount", unmountEncryptedFolderRequest, MessageResponse.class);
     }
 
     private ResponseEntity<MessageResponse> postMountRequest(MountEncryptedFolderRequest mountEncryptedFolderRequest) {

@@ -61,16 +61,8 @@ public class FolderCli {
         shareFolderCommand.execute(folder);
     }
 
-    public void unmountFolder(Folder folder) {
+    public void unmountFolder(FolderWrapper folder) {
         unmountFolderCommand.execute(folder.getPath());
-    }
-
-    public void unmountFolder(EncryptedFolder encryptedFolder) {
-        unmountFolderCommand.execute(encryptedFolder.getPath());
-    }
-
-    public void unmountFolder(VirtualFolder virtualFolder) {
-        unmountFolderCommand.execute(virtualFolder.getPath());
     }
 
     public void unshareFolder(Folder folder) {
