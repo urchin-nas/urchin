@@ -102,6 +102,7 @@ public class FolderServiceTest {
         ArgumentCaptor<EncryptedFolder> captor = ArgumentCaptor.forClass(EncryptedFolder.class);
         verify(folderCli).setFolderImmutable(folder);
         verify(folderCli).mountEncryptedFolder(eq(folder), captor.capture(), eq(createdFolder.getPassphrase()));
+        verify(folderCli).unmountFolder(encryptedFolder);
         verify(permissionCli).changeOwner(folder.getPath(), linuxUser);
         assertThat(captor.getValue().getPath().toAbsolutePath().toString()).isEqualTo(encryptedFolder.getPath().toAbsolutePath().toString());
         assertPathNotEqual(encryptedFolder, folder.getPath());
