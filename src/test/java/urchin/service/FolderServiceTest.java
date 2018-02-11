@@ -91,6 +91,7 @@ public class FolderServiceTest {
         CreatedFolder createdFolder = folderService.createAndMountEncryptedFolder(folder);
 
         ArgumentCaptor<EncryptedFolder> captor = ArgumentCaptor.forClass(EncryptedFolder.class);
+        verify(folderCli).setFolderImmutable(folder);
         verify(folderCli).mountEncryptedFolder(eq(folder), captor.capture(), eq(createdFolder.getPassphrase()));
         verify(permissionCli).changeOwner(folder.getPath(), linuxUser);
         assertThat(captor.getValue().getPath().toAbsolutePath().toString()).isEqualTo(encryptedFolder.getPath().toAbsolutePath().toString());
@@ -137,27 +138,6 @@ public class FolderServiceTest {
     public void umountEncryptedFolderThatDoesNotExistDoesNothing() {
         folderService.unmountFolder(folder);
         verifyZeroInteractions(folderCli);
-    }
-
-    @Test(expected = RuntimeException.class)
-    public void umountEncryptedFolderThrowsExceptionWhenTargetFolderIsNotEmptyAfterUmount() throws IOException {
-        Files.createDirectories(folder.getPath());
-        createFileInPath(folder.getPath());
-
-        folderService.unmountFolder(folder);
-
-        verify(folderCli).unmountFolder(folder);
-    }
-
-    @Test
-    public void umountEncryptedFolderDeletesTargetFolderIfSuccessful() throws IOException {
-        Files.createDirectories(folder.getPath());
-        doAnswer(deleteFolderAnswer(folder)).when(folderCli).removeFolder(folder);
-
-        folderService.unmountFolder(folder);
-
-        verify(folderCli).unmountFolder(folder);
-        assertThat(folder.isExisting()).isFalse();
     }
 
     @Test(expected = IllegalArgumentException.class)
@@ -238,6 +218,7 @@ public class FolderServiceTest {
         assertThat(encryptedFolder.isExisting()).isFalse();
         verify(folderCli).unmountFolder(folder);
         verify(folderCli).unmountFolder(encryptedFolder);
+        verify(folderCli).setFolderMutable(folder);
         verify(folderSettingsRepository).removeFolderSettings(FOLDER_ID);
     }
 

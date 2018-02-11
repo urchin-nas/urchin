@@ -118,7 +118,7 @@ public class FolderControllerIT extends TestApplication {
         ResponseEntity<MessageResponse> unmountResponse_1 = postUnmountRequest(encryptedFolderRequest);
 
         assertThat(unmountResponse_1.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(folder_1.isExisting()).isFalse();
+        assertThat(folder_1.isExisting()).isTrue();
         assertThat(encryptedFolder_1.isExisting()).isTrue();
 
         //3. mount encrypted folder again
@@ -186,7 +186,6 @@ public class FolderControllerIT extends TestApplication {
         ResponseEntity<MessageResponse> unmountVirtualFOlderResponse = postUnmountVirtualFolderRequest(ImmutableFolderRequest.of(virtualFolder.toAbsolutePath()));
 
         assertThat(unmountVirtualFOlderResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-        assertThat(virtualFolder.isExisting()).isFalse();
         assertThat(folderContainsFile(folder_1.getPath(), FILENAME) || folderContainsFile(folder_2.getPath(), FILENAME)).isTrue();
     }
 

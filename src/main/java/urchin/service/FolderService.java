@@ -72,6 +72,7 @@ public class FolderService {
 
         log.info("Deleting encrypted folder {}", folderSettings);
         folderSettingsRepository.removeFolderSettings(folderId);
+
         try {
             unmountFolder(folder);
         } catch (Exception ignore) {
@@ -81,12 +82,14 @@ public class FolderService {
         } catch (Exception ignore) {
         }
 
+        folderCli.setFolderMutable(folder);
+
+        deleteFolder(folder);
         deleteFolder(encryptedFolder);
 
         if (folder.isExisting() || encryptedFolder.isExisting()) {
             throw new RuntimeException("failed to delete folders");
         }
-
     }
 
     public void mountEncryptedFolder(EncryptedFolder encryptedFolder, Passphrase passphrase) throws IOException {
@@ -105,7 +108,6 @@ public class FolderService {
     public void unmountFolder(Folder folder) {
         if (Files.exists(folder.getPath())) {
             folderCli.unmountFolder(folder);
-            deleteFolder(folder);
         }
     }
 
@@ -160,7 +162,6 @@ public class FolderService {
             LinuxUser linuxUser = userCli.whoAmI();
             folderCli.createFolder(virtualFolder);
             permissionCli.changeOwner(virtualFolder.getPath(), linuxUser);
-
         }
     }
 
@@ -169,6 +170,7 @@ public class FolderService {
             log.info("Creating folder pair {} - {}", folder, encryptedFolder);
             folderCli.createFolder(folder);
             permissionCli.changeOwner(folder.getPath(), linuxUser);
+            folderCli.setFolderImmutable(folder);
             folderCli.createFolder(encryptedFolder);
             permissionCli.changeOwner(encryptedFolder.getPath(), linuxUser);
         } else {

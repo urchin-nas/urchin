@@ -18,6 +18,8 @@ public class FolderCli {
     private final UnshareFolderCommand unshareFolderCommand;
     private final CreateFolderCommand createFolderCommand;
     private final RemoveFolderCommand removeFolderCommand;
+    private final SetFolderImmutableCommand setFolderImmutableCommand;
+    private final SetFolderMutableCommand setFolderMutableCommand;
 
     @Autowired
     public FolderCli(
@@ -28,7 +30,9 @@ public class FolderCli {
             UnmountFolderCommand unmountFolderCommand,
             UnshareFolderCommand unshareFolderCommand,
             CreateFolderCommand createFolderCommand,
-            RemoveFolderCommand removeFolderCommand) {
+            RemoveFolderCommand removeFolderCommand,
+            SetFolderImmutableCommand setFolderImmutableCommand,
+            SetFolderMutableCommand setFolderMutableCommand) {
         this.mountEncryptedFolderCommand = mountEncryptedFolderCommand;
         this.mountVirtualFolderCommand = mountVirtualFolderCommand;
         this.restartSambaCommand = restartSambaCommand;
@@ -37,6 +41,8 @@ public class FolderCli {
         this.unshareFolderCommand = unshareFolderCommand;
         this.createFolderCommand = createFolderCommand;
         this.removeFolderCommand = removeFolderCommand;
+        this.setFolderImmutableCommand = setFolderImmutableCommand;
+        this.setFolderMutableCommand = setFolderMutableCommand;
     }
 
     public void mountEncryptedFolder(Folder folder, EncryptedFolder encryptedFolder, Passphrase passphrase) {
@@ -77,5 +83,13 @@ public class FolderCli {
 
     public void removeFolder(FolderWrapper folder) {
         removeFolderCommand.execute(folder);
+    }
+
+    public void setFolderImmutable(Folder folder) {
+        setFolderImmutableCommand.execute(folder);
+    }
+
+    public void setFolderMutable(Folder folder) {
+        setFolderMutableCommand.execute(folder);
     }
 }
