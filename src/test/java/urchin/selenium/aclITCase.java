@@ -74,6 +74,9 @@ public class aclITCase extends SeleniumTest {
 
         EDIT_FOLDER.verifyAtView()
                 .clickOnDeleteFolder();
+
+        FOLDERS.verifyAtView()
+                .verifyFolderNotListed(folderName);
     }
 
     @Test
