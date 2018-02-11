@@ -45,7 +45,7 @@ export const createFolder = (folder) => (dispatch) => {
                     type: Folder.SAVE_FOLDER_SUCCESS,
                     data: json
                 });
-                history.push('/folders');
+            history.push('/folders/new/confirm');
                 notifySuccess("Success", "Folder created")
             }, error => {
                 if (error.errorCode === ErrorCodes.VALIDATION_ERROR) {
@@ -75,4 +75,34 @@ export const deleteFolder = (folderId) => (dispatch) => {
         }, error => (
             notifyBackendError(error)
         ))
+};
+
+export const setEncryptedFolderPassphrase = (passphrase) => (dispatch) => {
+    dispatch({
+        type: Folder.SET_CONFIRM_NEW_ENCRYPTED_FOLDER,
+        data: passphrase
+    });
+};
+
+export const confirmEncryptedFolder = (folderId, passphrase) => (dispatch) => {
+    dispatch({
+        type: Folder.CONFIRM_NEW_ENCRYPTED_FOLDER
+    });
+    let data = {
+        folderId: folderId,
+        passphrase: passphrase
+    };
+    post('/api/folders/mount', data)
+        .then(json => {
+                dispatch({
+                    type: Folder.CONFIRM_NEW_ENCRYPTED_FOLDER_SUCCESS,
+                    data: json
+                });
+                history.push('/folders/' + folderId);
+                notifySuccess("Success", "Folder confirmed and ready to use")
+            }, error => {
+                notifyBackendError(error)
+
+            }
+        )
 };

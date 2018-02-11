@@ -33,9 +33,9 @@ public class FolderITCase extends SeleniumTest {
                 .fillFolderPath(folderPath)
                 .clickOnCreateFolder();
 
-        FOLDERS.verifyAtView()
-                .verifyFolderListed(folderName)
-                .clickOnFolder(folderName);
+        CONFIRM_NEW_FOLDER_VIEW.verifyAtView()
+                .fillPassphrase()
+                .clickOnConfirm();
 
         EDIT_FOLDER.verifyAtView()
                 .clickOnBack();

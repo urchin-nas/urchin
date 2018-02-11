@@ -4,6 +4,7 @@ import org.junit.runner.RunWith;
 import urchin.selenium.view.HomeView;
 import urchin.selenium.view.NavigationView;
 import urchin.selenium.view.folders.FoldersView;
+import urchin.selenium.view.folders.folder.ConfirmNewFolderView;
 import urchin.selenium.view.folders.folder.EditFolderView;
 import urchin.selenium.view.folders.folder.NewFolderView;
 import urchin.selenium.view.groups.GroupsView;
@@ -27,5 +28,6 @@ public abstract class SeleniumTest {
     protected static final FoldersView FOLDERS = new FoldersView();
     protected static final NewFolderView NEW_FOLDER = new NewFolderView();
     protected static final EditFolderView EDIT_FOLDER = new EditFolderView();
+    protected static final ConfirmNewFolderView CONFIRM_NEW_FOLDER_VIEW = new ConfirmNewFolderView();
 
 }

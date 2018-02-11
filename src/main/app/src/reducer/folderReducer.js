@@ -21,10 +21,13 @@ const folderReducer = (state = {}, action) => {
             return {...state, isSavingFolder: true};
 
         case Actions.Folder.SAVE_FOLDER_SUCCESS:
-            return {...state, isSavingFolder: false};
+            return {...state, isSavingFolder: false, createdFolder: action.data};
 
         case Actions.Folder.SAVE_FOLDER_VALIDATION_ERROR:
             return {...state, fieldErrors: action.data.fieldErrors};
+
+        case Actions.Folder.SET_CONFIRM_NEW_ENCRYPTED_FOLDER:
+            return {...state, confirmNewFolder: {...state.confirmNewFolder, [action.data.field]: action.data.value}};
 
         default:
             return state;

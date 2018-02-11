@@ -9,6 +9,10 @@ exports[`FoldersRoute match snapshot 1`] = `
   />
   <Route
     component={[Function]}
+    path="/folders/new/confirm"
+  />
+  <Route
+    component={[Function]}
     path="/folders/new"
   />
   <Route

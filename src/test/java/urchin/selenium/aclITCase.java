@@ -45,7 +45,14 @@ public class aclITCase extends SeleniumTest {
                 .fillFolderPath(folderPath)
                 .clickOnCreateFolder();
 
-        FOLDERS.verifyFolderListed(folderName);
+        CONFIRM_NEW_FOLDER_VIEW.verifyAtView()
+                .fillPassphrase()
+                .clickOnConfirm();
+
+        EDIT_FOLDER.verifyAtView();
+
+        FOLDERS.goTo()
+                .verifyFolderListed(folderName);
     }
 
     @AfterClass

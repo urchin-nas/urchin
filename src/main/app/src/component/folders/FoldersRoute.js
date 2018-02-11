@@ -3,6 +3,7 @@ import {Route, Switch} from 'react-router-dom'
 import FoldersContainer from './FoldersContainer';
 import EditFolderContainer from './folder/EditFolderContainer';
 import NewFolderContainer from "./folder/NewFolderContainer";
+import ConfirmNewFolderContainer from "./folder/ConfirmNewFolderContainer";
 
 class FoldersRoute extends Component {
 
@@ -11,6 +12,8 @@ class FoldersRoute extends Component {
             <Switch>
                 <Route exact path="/folders"
                        component={FoldersContainer}/>
+                <Route path="/folders/new/confirm"
+                       component={ConfirmNewFolderContainer}/>
                 <Route path="/folders/new"
                        component={NewFolderContainer}/>
                 <Route path="/folders/:id"
