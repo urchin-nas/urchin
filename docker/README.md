@@ -4,6 +4,16 @@ Run Urchin in a docker container that will fetch specified branch from github, b
 
 When container is started goto <http://localhost:8080/>
 
+### Requirements
+
+Requires `devicemapper` to run properly. `AUFS` is not compatible with `chattr +i`.
+
+**Setup**
+
+1. Run `service docker stop`
+2. open `/etc/default/docker` and add: `DOCKER_OPTS="-s devicemapper"`
+3. Run `service docker start`
+
 ## Docker commands
 
 Command examples for running development version of urchin in a docker container.
@@ -28,7 +38,7 @@ docker run -it --privileged --name urchin-dev -p 8080:8080 urchin-dev
 Example:
 
 ```bash
-docker run -it --privileged --name urchin-dev -p 8080:8080 urchin-dev -b travis -s true
+docker run -it --privileged --name urchin-dev -p 8080:8080 urchin-dev -b my-branch§ -s true
 ```
 
 ### Start existing container
