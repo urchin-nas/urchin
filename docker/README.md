@@ -38,7 +38,7 @@ docker run -it --privileged --name urchin-dev -p 8080:8080 urchin-dev
 Example:
 
 ```bash
-docker run -it --privileged --name urchin-dev -p 8080:8080 urchin-dev -b my-branch§ -s true
+docker run -it --privileged --name urchin-dev -p 8080:8080 urchin-dev -b my-branch -s true
 ```
 
 ### Start existing container
