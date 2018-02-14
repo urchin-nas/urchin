@@ -5,6 +5,10 @@ sudo: required
 services:
   - docker
 
+before_install:
+  - echo 'DOCKER_OPTS="-s devicemapper"' | sudo tee /etc/default/docker > /dev/null
+  - sudo service docker restart
+
 install:
   - docker pull anhem/urchin
 
