@@ -42,36 +42,42 @@ public class SwaggerConfiguration {
     }
 
     private AlternateTypeRule[] getAlternateTypeRules() {
-        log.info("applying alternateTypeRules for swagger");
-
-        log.debug("discovering rest controllers in {} package", SCAN_PACKAGE);
+        log.info("discovering rest controllers in {} package", SCAN_PACKAGE);
         ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(false);
         provider.addIncludeFilter(new AnnotationTypeFilter(RestController.class));
         List<String> classNames = provider.findCandidateComponents(SCAN_PACKAGE).stream()
                 .map(BeanDefinition::getBeanClassName)
                 .collect(Collectors.toList());
 
-        log.debug("discovering parameter classes used in rest controllers");
-        List<Class> classes = getClasses(classNames).stream()
-                .map(this::getParameterClasses)
-                .flatMap(List::stream)
-                .distinct()
-                .collect(Collectors.toList());
+        List<Class> classes = findClasses(classNames);
+        List<Class> immutableClasses = findImmutableClasses(classes);
+        List<AlternateTypeRule> alternateTypeRules = createAlternateTypeRules(classes, immutableClasses);
 
-        log.debug("discovering immutable classes for parameter classes");
-        List<Class> immutableClasses = getClasses(classes.stream()
-                .map(this::getImmutableClassName)
-                .collect(Collectors.toList()));
+        return alternateTypeRules.toArray(new AlternateTypeRule[0]);
+    }
 
-        log.debug("creating alternateTypeRules from discovered parameter classes and corresponding immutable classes");
+    private List<AlternateTypeRule> createAlternateTypeRules(List<Class> classes, List<Class> immutableClasses) {
         List<AlternateTypeRule> alternateTypeRules = new ArrayList<>();
         classes.forEach(c -> immutableClasses.stream()
                 .filter(ic -> ic.getName().equals(getImmutableClassName(c)))
                 .findFirst()
                 .ifPresent(ic -> alternateTypeRules.add(newRule(c, ic)))
         );
+        return alternateTypeRules;
+    }
 
-        return alternateTypeRules.toArray(new AlternateTypeRule[0]);
+    private List<Class> findImmutableClasses(List<Class> classes) {
+        return getClasses(classes.stream()
+                .map(this::getImmutableClassName)
+                .collect(Collectors.toList()));
+    }
+
+    private List<Class> findClasses(List<String> classNames) {
+        return getClasses(classNames).stream()
+                .map(this::getParameterClasses)
+                .flatMap(List::stream)
+                .distinct()
+                .collect(Collectors.toList());
     }
 
     private List<Class> getClasses(List<String> classNames) {
@@ -98,7 +104,7 @@ public class SwaggerConfiguration {
 
     private String getImmutableClassName(Class c) {
         String className = c.getName();
-        int i = className.lastIndexOf(".");
+        int i = className.lastIndexOf('.');
         return className.substring(0, i) + ".Immutable" + className.substring(i + 1, className.length());
     }
 }
