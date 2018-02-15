@@ -10,9 +10,15 @@ Requires `devicemapper` to run properly. `AUFS` is not compatible with `chattr +
 
 **Setup**
 
-1. Run `service docker stop`
-2. open `/etc/default/docker` and add: `DOCKER_OPTS="-s devicemapper"`
-3. Run `service docker start`
+1. Run `sudo systemctl stop docker`
+2. add or edit `/etc/docker/daemon.json` with the following
+```
+{
+  "storage-driver": "devicemapper"
+}
+```
+3. Run `sudo systemctl start docker`
+4. Verify with `docker info | grep "Storage Driver"`
 
 ## Docker commands
 
