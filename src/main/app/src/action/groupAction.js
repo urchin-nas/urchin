@@ -10,7 +10,7 @@ export const getGroups = () => (dispatch) => {
     dispatch({
         type: Groups.GET_GROUPS
     });
-    get('/api/groups')
+    return get('/api/groups')
         .then(json => dispatch({
             type: Groups.GET_GROUPS_SUCCESS,
             data: json
@@ -21,7 +21,7 @@ export const getGroup = (groupId) => (dispatch) => {
     dispatch({
         type: Group.GET_GROUP
     });
-    get('/api/groups/' + groupId)
+    return get('/api/groups/' + groupId)
         .then(json => dispatch({
             type: Group.GET_GROUP_SUCCESS,
             data: json
@@ -29,7 +29,7 @@ export const getGroup = (groupId) => (dispatch) => {
 };
 
 export const setGroup = (group) => (dispatch) => {
-    dispatch({
+    return dispatch({
         type: Group.SET_GROUP,
         data: group
     });
@@ -39,7 +39,7 @@ export const createGroup = (group) => (dispatch) => {
     dispatch({
         type: Group.SAVE_GROUP
     });
-    post('/api/groups/add', group)
+    return post('/api/groups/add', group)
         .then(json => {
                 dispatch({
                     type: Group.SAVE_GROUP_SUCCESS,
@@ -49,7 +49,7 @@ export const createGroup = (group) => (dispatch) => {
                 notifySuccess("Success", "Group created")
             }, error => {
                 if (error.errorCode === ErrorCodes.VALIDATION_ERROR) {
-                    dispatch({
+                    return dispatch({
                         type: Group.SAVE_GROUP_VALIDATION_ERROR,
                         data: error
                     });
@@ -64,7 +64,7 @@ export const deleteGroup = (groupId) => (dispatch) => {
     dispatch({
         type: Group.DELETE_GROUP
     });
-    del('/api/groups/' + groupId)
+    return del('/api/groups/' + groupId)
         .then(json => {
             dispatch({
                 type: Group.DELETE_GROUP_SUCCESS,
@@ -81,7 +81,7 @@ export const getUsersForGroup = (groupId) => (dispatch) => {
     dispatch({
         type: Group.GET_USERS_FOR_GROUP
     });
-    get('/api/groups/' + groupId + "/users")
+    return get('/api/groups/' + groupId + '/users')
         .then(json => dispatch({
             type: Group.GET_USERS_FOR_GROUP_SUCCESS,
             data: json
@@ -96,14 +96,14 @@ export const addUser = (groupId, userId) => (dispatch) => {
     dispatch({
         type: Group.ADD_USER
     });
-    post('/api/groups/user', body)
+    return post('/api/groups/user', body)
         .then(json => {
             dispatch({
                 type: Group.ADD_USER_SUCCESS,
                 data: json
             });
             notifySuccess("Success", "User added to group");
-            dispatch(getUsersForGroup(groupId));
+            return dispatch(getUsersForGroup(groupId));
         }, error => (
             notifyBackendError(error)
         ))
@@ -113,14 +113,14 @@ export const removeUser = (groupId, userId) => (dispatch) => {
     dispatch({
         type: Group.REMOVE_USER
     });
-    del('/api/groups/' + groupId + "/user/" + userId)
+    return del('/api/groups/' + groupId + "/user/" + userId)
         .then(json => {
             dispatch({
                 type: Group.REMOVE_USER_SUCCESS,
                 data: json
             });
             notifySuccess("Success", "User was removed from group");
-            dispatch(getUsersForGroup(groupId));
+            return dispatch(getUsersForGroup(groupId));
         }, error => (
             notifyBackendError(error)
         ))

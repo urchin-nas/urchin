@@ -1,0 +1,147 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`groupAction addUser failed 1`] = `
+Array [
+  Object {
+    "type": "ADD_USER_TO_GROUP",
+  },
+]
+`;
+
+exports[`groupAction addUser is successful 1`] = `
+Array [
+  Object {
+    "type": "ADD_USER_TO_GROUP",
+  },
+  Object {
+    "data": Object {
+      "groupId": 10,
+      "userId": 100,
+    },
+    "type": "ADD_USER_TO_GROUP_SUCCESS",
+  },
+  Object {
+    "type": "GET_USERS_FOR_GROUP",
+  },
+  Object {
+    "data": Object {},
+    "type": "GET_USERS_FOR_GROUP_SUCCESS",
+  },
+]
+`;
+
+exports[`groupAction createGroup failed 1`] = `
+Array [
+  Object {
+    "type": "SAVE_GROUP",
+  },
+]
+`;
+
+exports[`groupAction createGroup is successful 1`] = `
+Array [
+  Object {
+    "type": "SAVE_GROUP",
+  },
+  Object {
+    "data": Object {
+      "groupName": "name",
+    },
+    "type": "SAVE_GROUP_SUCCESS",
+  },
+]
+`;
+
+exports[`groupAction deleteGroup failed 1`] = `
+Array [
+  Object {
+    "type": "DELETE_GROUP",
+  },
+]
+`;
+
+exports[`groupAction deleteGroup is successful 1`] = `
+Array [
+  Object {
+    "type": "DELETE_GROUP",
+  },
+  Object {
+    "data": Object {},
+    "type": "DELETE_GROUP_SUCCESS",
+  },
+]
+`;
+
+exports[`groupAction getGroup is successful 1`] = `
+Array [
+  Object {
+    "type": "GET_GROUP",
+  },
+  Object {
+    "data": Object {},
+    "type": "GET_GROUP_SUCCESS",
+  },
+]
+`;
+
+exports[`groupAction getGroups is successful 1`] = `
+Array [
+  Object {
+    "type": "GET_GROUPS",
+  },
+  Object {
+    "data": Object {},
+    "type": "GET_GROUPS_SUCCESS",
+  },
+]
+`;
+
+exports[`groupAction getUsersForGroup is successful 1`] = `
+Array [
+  Object {
+    "type": "GET_USERS_FOR_GROUP",
+  },
+  Object {
+    "data": Object {},
+    "type": "GET_USERS_FOR_GROUP_SUCCESS",
+  },
+]
+`;
+
+exports[`groupAction removeUser failed 1`] = `
+Array [
+  Object {
+    "type": "REMOVE_USER",
+  },
+]
+`;
+
+exports[`groupAction removeUser is successful 1`] = `
+Array [
+  Object {
+    "type": "REMOVE_USER",
+  },
+  Object {
+    "data": Object {},
+    "type": "REMOVE_USER_SUCCESS",
+  },
+  Object {
+    "type": "GET_USERS_FOR_GROUP",
+  },
+  Object {
+    "data": Object {},
+    "type": "GET_USERS_FOR_GROUP_SUCCESS",
+  },
+]
+`;
+
+exports[`groupAction setGroup is successful 1`] = `
+Array [
+  Object {
+    "data": Object {
+      "groupName": "name",
+    },
+    "type": "SET_GROUP",
+  },
+]
+`;
