@@ -8,7 +8,7 @@ export const getAcl = (folderId) => (dispatch) => {
     dispatch({
         type: ACL.GET_ACL
     });
-    get('/api/permissions/acl/' + folderId)
+    return get('/api/permissions/acl/' + folderId)
         .then(json => dispatch({
             type: ACL.GET_ACL_SUCCESS,
             data: json
