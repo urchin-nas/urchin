@@ -1,4 +1,4 @@
-import fetch from 'isomorphic-fetch'
+import 'isomorphic-fetch'
 
 const resolveResponse = (response) => {
     return response.json().then(json => {
