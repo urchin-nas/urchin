@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AclAction getAcl is successful 1`] = `
+Array [
+  Object {
+    "type": "GET_ACL",
+  },
+  Object {
+    "data": Object {
+      "data": "some data",
+    },
+    "type": "GET_ACL_SUCCESS",
+  },
+]
+`;
