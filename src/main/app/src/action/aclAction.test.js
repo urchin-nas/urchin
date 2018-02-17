@@ -31,7 +31,7 @@ describe('AclAction', () => {
         })
     });
 
-    it('updateAclForGroup is successful and executes getAcl', () => {
+    it('updateAclForGroup is successful', () => {
 
         const groupAcl = {
             folderId: folderId
@@ -44,7 +44,7 @@ describe('AclAction', () => {
         })
     });
 
-    it('updateAclForUser is successful and executes getAcl', () => {
+    it('updateAclForUser is successful', () => {
 
         const userAcl = {
             folderId: folderId,
