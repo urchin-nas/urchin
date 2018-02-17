@@ -10,7 +10,7 @@ export const getUsers = () => (dispatch) => {
     dispatch({
         type: Users.GET_USERS
     });
-    get('/api/users')
+    return get('/api/users')
         .then(json => dispatch({
             type: Users.GET_USERS_SUCCESS,
             data: json
@@ -21,7 +21,7 @@ export const getUser = (userId) => (dispatch) => {
     dispatch({
         type: User.GET_USER
     });
-    get('/api/users/' + userId)
+    return get('/api/users/' + userId)
         .then(json => dispatch({
             type: User.GET_USER_SUCCESS,
             data: json
@@ -29,7 +29,7 @@ export const getUser = (userId) => (dispatch) => {
 };
 
 export const setUser = (user) => (dispatch) => {
-    dispatch({
+    return dispatch({
         type: User.SET_USER,
         data: user
     });
@@ -39,7 +39,7 @@ export const createUser = (user) => (dispatch) => {
     dispatch({
         type: User.SAVE_USER
     });
-    post('/api/users/add', user)
+    return post('/api/users/add', user)
         .then(json => {
             dispatch({
                 type: User.SAVE_USER_SUCCESS,
@@ -49,7 +49,7 @@ export const createUser = (user) => (dispatch) => {
             notifySuccess("Success", "User created")
         }, error => {
             if (error.errorCode === ErrorCodes.VALIDATION_ERROR) {
-                dispatch({
+                return dispatch({
                     type: User.SAVE_USER_VALIDATION_ERROR,
                     data: error
                 });
@@ -63,7 +63,7 @@ export const deleteUser = (userId) => (dispatch) => {
     dispatch({
         type: User.DELETE_USER
     });
-    del('/api/users/' + userId)
+    return del('/api/users/' + userId)
         .then(json => {
             dispatch({
                 type: User.DELETE_USER_SUCCESS,
@@ -80,7 +80,7 @@ export const getGroupsForUser = (userId) => (dispatch) => {
     dispatch({
         type: User.GET_GROUPS_FOR_USER
     });
-    get('/api/users/' + userId + "/groups")
+    return get('/api/users/' + userId + "/groups")
         .then(json => dispatch({
             type: User.GET_GROUPS_FOR_USER_SUCCESS,
             data: json
@@ -95,14 +95,14 @@ export const addGroup = (userId, groupId) => (dispatch) => {
     dispatch({
         type: User.ADD_GROUP
     });
-    post('/api/groups/user', body)
+    return post('/api/groups/user', body)
         .then(json => {
             dispatch({
                 type: User.ADD_GROUP_SUCCESS,
                 data: json
             });
             notifySuccess("Success", "User added to group");
-            dispatch(getGroupsForUser(userId));
+            return dispatch(getGroupsForUser(userId));
         }, error => (
             notifyBackendError(error)
         ))
@@ -112,14 +112,14 @@ export const removeGroup = (userId, groupId) => (dispatch) => {
     dispatch({
         type: User.REMOVE_GROUP
     });
-    del('/api/groups/' + groupId + "/user/" + userId)
+    return del('/api/groups/' + groupId + "/user/" + userId)
         .then(json => {
             dispatch({
                 type: User.REMOVE_GROUP_SUCCESS,
                 data: json
             });
             notifySuccess("Success", "User was removed from group");
-            dispatch(getGroupsForUser(userId));
+            return dispatch(getGroupsForUser(userId));
         }, error => (
             notifyBackendError(error)
         ))
