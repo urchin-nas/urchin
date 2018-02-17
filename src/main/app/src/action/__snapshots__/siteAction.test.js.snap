@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`userAction toggleNavigation is successful 1`] = `
+Array [
+  Object {
+    "data": true,
+    "type": "TOGGLE_NAVIGATION",
+  },
+]
+`;
