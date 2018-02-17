@@ -38,11 +38,7 @@ describe('AclAction', () => {
     it('updateAclForGroup is successful and executes getAcl', () => {
 
         const groupAcl = {
-            execute: true,
-            folderId: folderId,
-            groupId: 10,
-            read: true,
-            write: true
+            folderId: folderId
         };
 
         fetchMock.postOnce('/api/permissions/acl/group', groupAcl);
@@ -55,11 +51,7 @@ describe('AclAction', () => {
     it('updateAclForUser is successful and executes getAcl', () => {
 
         const userAcl = {
-            execute: false,
             folderId: folderId,
-            read: true,
-            userId: 100,
-            write: false
         };
 
         fetchMock.postOnce('/api/permissions/acl/user', userAcl);

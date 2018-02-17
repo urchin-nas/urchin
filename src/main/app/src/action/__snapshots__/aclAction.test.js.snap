@@ -22,11 +22,7 @@ Array [
   },
   Object {
     "data": Object {
-      "execute": true,
       "folderId": 1,
-      "groupId": 10,
-      "read": true,
-      "write": true,
     },
     "type": "UPDATE_GROUP_ACL_SUCCESS",
   },
@@ -50,11 +46,7 @@ Array [
   },
   Object {
     "data": Object {
-      "execute": false,
       "folderId": 1,
-      "read": true,
-      "userId": 100,
-      "write": false,
     },
     "type": "UPDATE_USER_ACL_SUCCESS",
   },
