@@ -19,14 +19,14 @@ export const updateAclForGroup = (groupAcl) => (dispatch) => {
     dispatch({
         type: ACL.UPDATE_GROUP_ACL
     });
-    post('/api/permissions/acl/group', groupAcl)
+    return post('/api/permissions/acl/group', groupAcl)
         .then(json => {
                 dispatch({
                     type: ACL.UPDATE_GROUP_ACL_SUCCESS,
                     data: json
                 });
                 notifySuccess("Success", "Group permissions updated");
-                dispatch(getAcl(groupAcl.folderId))
+            return dispatch(getAcl(groupAcl.folderId))
             }, error => {
                 notifyBackendError(error);
             }
@@ -37,14 +37,14 @@ export const updateAclForUser = (userAcl) => (dispatch) => {
     dispatch({
         type: ACL.UPDATE_USER_ACL
     });
-    post('/api/permissions/acl/user', userAcl)
+    return post('/api/permissions/acl/user', userAcl)
         .then(json => {
                 dispatch({
                     type: ACL.UPDATE_USER_ACL_SUCCESS,
                     data: json
                 });
                 notifySuccess("Success", "User permissions updated");
-                dispatch(getAcl(userAcl.folderId));
+            return dispatch(getAcl(userAcl.folderId));
             }, error => {
                 notifyBackendError(error);
             }

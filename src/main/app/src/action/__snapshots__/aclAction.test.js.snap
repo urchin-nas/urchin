@@ -7,7 +7,64 @@ Array [
   },
   Object {
     "data": Object {
-      "data": "some data",
+      "groups": Array [],
+      "users": Array [],
+    },
+    "type": "GET_ACL_SUCCESS",
+  },
+]
+`;
+
+exports[`AclAction updateAclForGroup is successful and executes getAcl 1`] = `
+Array [
+  Object {
+    "type": "UPDATE_GROUP_ACL",
+  },
+  Object {
+    "data": Object {
+      "execute": true,
+      "folderId": 1,
+      "groupId": 10,
+      "read": true,
+      "write": true,
+    },
+    "type": "UPDATE_GROUP_ACL_SUCCESS",
+  },
+  Object {
+    "type": "GET_ACL",
+  },
+  Object {
+    "data": Object {
+      "groups": Array [],
+      "users": Array [],
+    },
+    "type": "GET_ACL_SUCCESS",
+  },
+]
+`;
+
+exports[`AclAction updateAclForUser is successful and executes getAcl 1`] = `
+Array [
+  Object {
+    "type": "UPDATE_USER_ACL",
+  },
+  Object {
+    "data": Object {
+      "execute": false,
+      "folderId": 1,
+      "read": true,
+      "userId": 100,
+      "write": false,
+    },
+    "type": "UPDATE_USER_ACL_SUCCESS",
+  },
+  Object {
+    "type": "GET_ACL",
+  },
+  Object {
+    "data": Object {
+      "groups": Array [],
+      "users": Array [],
     },
     "type": "GET_ACL_SUCCESS",
   },
