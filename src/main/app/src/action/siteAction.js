@@ -1,7 +1,7 @@
 import {Actions} from '../constants'
 
 export const toggleNavigation = (navigationVisible) => (dispatch) => {
-    dispatch({
+    return dispatch({
         type: Actions.Site.TOGGLE_NAVIGATION,
         data: !navigationVisible
     });
