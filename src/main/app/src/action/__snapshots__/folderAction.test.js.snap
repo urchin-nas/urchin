@@ -1,0 +1,88 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`folderAction confirmEncryptedFolder is successful 1`] = `
+Array [
+  Object {
+    "type": "CONFIRM_NEW_ENCRYPTED_FOLDER",
+  },
+  Object {
+    "data": Object {
+      "folderId": 1,
+      "passphrase": "random",
+    },
+    "type": "CONFIRM_NEW_ENCRYPTED_FOLDER_SUCCESS",
+  },
+]
+`;
+
+exports[`folderAction createFolder is successful 1`] = `
+Array [
+  Object {
+    "type": "SAVE_FOLDER",
+  },
+  Object {
+    "data": Object {
+      "path": "folderpath",
+    },
+    "type": "SAVE_FOLDER_SUCCESS",
+  },
+]
+`;
+
+exports[`folderAction deleteFolder is successful 1`] = `
+Array [
+  Object {
+    "type": "DELETE_FOLDER",
+  },
+  Object {
+    "data": Object {},
+    "type": "DELETE_FOLDER_SUCCESS",
+  },
+]
+`;
+
+exports[`folderAction getFolder is successful 1`] = `
+Array [
+  Object {
+    "type": "GET_FOLDER",
+  },
+  Object {
+    "data": Object {},
+    "type": "GET_FOLDER_SUCCESS",
+  },
+]
+`;
+
+exports[`folderAction getFolders is successful 1`] = `
+Array [
+  Object {
+    "type": "GET_FOLDERS",
+  },
+  Object {
+    "data": Object {},
+    "type": "GET_FOLDERS_SUCCESS",
+  },
+]
+`;
+
+exports[`folderAction setEncryptedFolderPassphrase is successful 1`] = `
+Array [
+  Object {
+    "data": Object {
+      "passphrase": "random",
+    },
+    "type": "SET_CONFIRM_NEW_ENCRYPTED_FOLDER",
+  },
+]
+`;
+
+exports[`folderAction setFolder is successful 1`] = `
+Array [
+  Object {
+    "data": Object {
+      "path": "folderpath",
+    },
+    "type": "SET_FOLDER",
+  },
+]
+`;

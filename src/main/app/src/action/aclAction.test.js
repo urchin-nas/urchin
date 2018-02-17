@@ -5,7 +5,6 @@ import {getAcl, updateAclForGroup, updateAclForUser} from "./aclAction";
 
 describe('AclAction', () => {
 
-    const headers = {'content-type': 'application/json'};
     const folderId = 1;
     const getAclResponse = {
         groups: [],
@@ -17,10 +16,7 @@ describe('AclAction', () => {
     beforeEach(() => {
         store = configureMockStore([thunk])({});
 
-        fetchMock.get('/api/permissions/acl/' + folderId, {
-            body: getAclResponse,
-            headers: headers
-        });
+        fetchMock.get('/api/permissions/acl/' + folderId, getAclResponse);
     });
 
     afterEach(() => {
