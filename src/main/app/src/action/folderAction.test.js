@@ -13,7 +13,6 @@ import {
 
 describe('folderAction', () => {
 
-    const headers = {'content-type': 'application/json'};
     const getFoldersResponse = {};
     const folderId = 1;
     let store;
@@ -64,10 +63,25 @@ describe('folderAction', () => {
         })
     });
 
+    it('createFolder failed', () => {
+
+        const folder = {path: 'folderpath'};
+
+        return store.dispatch(createFolder(folder)).then(() => {
+            expect(store.getActions()).toMatchSnapshot();
+        })
+    });
 
     it('deleteFolder is successful', () => {
 
         fetchMock.deleteOnce('/api/folders/' + folderId, {});
+
+        return store.dispatch(deleteFolder(folderId)).then(() => {
+            expect(store.getActions()).toMatchSnapshot();
+        })
+    });
+
+    it('deleteFolder failed', () => {
 
         return store.dispatch(deleteFolder(folderId)).then(() => {
             expect(store.getActions()).toMatchSnapshot();
@@ -91,6 +105,15 @@ describe('folderAction', () => {
         };
 
         fetchMock.postOnce('/api/folders/mount', data);
+
+        return store.dispatch(confirmEncryptedFolder(folderId, passphrase)).then(() => {
+            expect(store.getActions()).toMatchSnapshot();
+        })
+    });
+
+    it('confirmEncryptedFolder failed', () => {
+
+        const passphrase = 'random';
 
         return store.dispatch(confirmEncryptedFolder(folderId, passphrase)).then(() => {
             expect(store.getActions()).toMatchSnapshot();

@@ -1,5 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`folderAction confirmEncryptedFolder failed 1`] = `
+Array [
+  Object {
+    "type": "CONFIRM_NEW_ENCRYPTED_FOLDER",
+  },
+]
+`;
+
 exports[`folderAction confirmEncryptedFolder is successful 1`] = `
 Array [
   Object {
@@ -15,6 +23,14 @@ Array [
 ]
 `;
 
+exports[`folderAction createFolder failed 1`] = `
+Array [
+  Object {
+    "type": "SAVE_FOLDER",
+  },
+]
+`;
+
 exports[`folderAction createFolder is successful 1`] = `
 Array [
   Object {
@@ -25,6 +41,14 @@ Array [
       "path": "folderpath",
     },
     "type": "SAVE_FOLDER_SUCCESS",
+  },
+]
+`;
+
+exports[`folderAction deleteFolder failed 1`] = `
+Array [
+  Object {
+    "type": "DELETE_FOLDER",
   },
 ]
 `;
