@@ -76,11 +76,13 @@ public class FolderService {
 
         try {
             unmountFolder(folder);
-        } catch (Exception ignore) {
+        } catch (Exception e) {
+            log.warn("Failed to unmount {}", folder, e);
         }
         try {
             unmountEncryptedFolder(encryptedFolder);
-        } catch (Exception ignore) {
+        } catch (Exception e) {
+            log.warn("Failed to unmount {}", encryptedFolder, e);
         }
 
         folderCli.setFolderMutable(folder);
@@ -115,7 +117,7 @@ public class FolderService {
     }
 
     public void unmountFolder(Folder folder) {
-        if (Files.exists(folder.getPath())) {
+        if (folder.isExisting()) {
             folderCli.unmountFolder(folder);
         }
     }
@@ -159,7 +161,7 @@ public class FolderService {
 
     private void deleteFolder(FolderWrapper folder) {
         if (folder.isEmpty()) {
-            log.info("Deleting empty folder {}", folder.toAbsolutePath());
+            log.info("Deleting empty folder {}", folder);
             folderCli.removeFolder(folder);
         } else {
             throw new IllegalStateException(String.format("%s must be empty before it can be deleted", folder));
