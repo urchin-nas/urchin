@@ -301,8 +301,11 @@
                 <sonar.organization>anhem-github</sonar.organization>
                 <sonar.host.url>https://sonarcloud.io</sonar.host.url>
                 <sonar.login>b19b79ed975844e986bed3a6ef86590a687bad31</sonar.login>
+                <sonar.sources>src/main</sonar.sources>
+                <sonar.exclusions>**/node_modules/**,**/node/**,**/build/**,**/coverage/**,**/*.test.js
+                </sonar.exclusions>
                 <sonar.junit.reportPaths>target/surefire-reports,target/surefire-reports</sonar.junit.reportPaths>
-                <!--<sonar.sources>src/main</sonar.sources>-->
+                <sonar.javascript.lcov.reportPaths>src/main/app/coverage/lcov.info</sonar.javascript.lcov.reportPaths>
             </properties>
         </profile>
     </profiles>
