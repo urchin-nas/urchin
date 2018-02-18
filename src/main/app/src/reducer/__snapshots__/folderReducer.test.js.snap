@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`folderReducer GET_FOLDER 1`] = `
+Object {
+  "isFetchingFolder": true,
+}
+`;
+
+exports[`folderReducer GET_FOLDER_SUCCESS 1`] = `
+Object {
+  "folder": Object {
+    "folderId": 1,
+    "folderName": "folder",
+    "folderPath": "/folder",
+  },
+  "isFetchingFolder": false,
+}
+`;
+
+exports[`folderReducer GET_FOLDERS 1`] = `
+Object {
+  "isFetchingFolders": true,
+}
+`;
+
+exports[`folderReducer GET_FOLDERS_SUCCESS 1`] = `
+Object {
+  "folders": Array [
+    Object {
+      "folderId": 1,
+      "folderName": "folder",
+      "folderPath": "/folder",
+    },
+  ],
+  "isFetchingFolders": false,
+}
+`;
+
+exports[`folderReducer SAVE_FOLDER 1`] = `
+Object {
+  "isSavingFolder": true,
+}
+`;
+
+exports[`folderReducer SAVE_FOLDER_SUCCESS 1`] = `
+Object {
+  "createdFolder": Object {
+    "id": 1,
+    "passphrase": "randomString",
+  },
+  "isSavingFolder": false,
+}
+`;
+
+exports[`folderReducer SAVE_FOLDER_VALIDATION_ERROR 1`] = `
+Object {
+  "fieldErrors": Object {
+    "folder": Array [
+      "Folder path must be absolute",
+    ],
+  },
+}
+`;
+
+exports[`folderReducer SET_CONFIRM_NEW_ENCRYPTED_FOLDER 1`] = `
+Object {
+  "confirmNewFolder": Object {
+    "passphrase": "randomString",
+  },
+}
+`;
+
+exports[`folderReducer SET_FOLDER 1`] = `
+Object {
+  "folder": Object {
+    "path": "/folder",
+  },
+}
+`;
+
+exports[`folderReducer initial state 1`] = `Object {}`;

@@ -31,3 +31,5 @@ Object {
   "isFetchingAcl": false,
 }
 `;
+
+exports[`aclReducer initial state 1`] = `Object {}`;
