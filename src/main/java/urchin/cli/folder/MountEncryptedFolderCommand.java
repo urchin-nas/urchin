@@ -35,11 +35,13 @@ public class MountEncryptedFolderCommand {
     }
 
     public void execute(Folder folder, EncryptedFolder encryptedFolder, Passphrase passphrase) {
-        log.info("Setting up encrypted folder {} and mounting it to {}", encryptedFolder.toAbsolutePath(), folder.toAbsolutePath());
+        String folderAbsolutePath = folder.toAbsolutePath();
+        String encryptedFolderAbsolutePath = encryptedFolder.toAbsolutePath();
+        log.info("Setting up encrypted folder {} and mounting it to {}", encryptedFolderAbsolutePath, folderAbsolutePath);
 
         String[] mntCommand = command.getFolderCommand(MOUNT_ENCRYPTED_FOLDER)
-                .replace(ENCRYPTED_FOLDER, encryptedFolder.toAbsolutePath())
-                .replace(FOLDER, folder.toAbsolutePath())
+                .replace(ENCRYPTED_FOLDER, encryptedFolderAbsolutePath)
+                .replace(FOLDER, folderAbsolutePath)
                 .replace(PASSPHRASE, passphrase.getValue())
                 .split(" ");
 
@@ -50,8 +52,8 @@ public class MountEncryptedFolderCommand {
             bufferedWriter.flush();
             process.waitFor();
             if (process.exitValue() != 0) {
-                log.debug("Process failed with error: {}", IOUtils.toString(process.getErrorStream(), defaultCharset()));
-                log.error("Process returned code: {} ", process.exitValue());
+                String error = IOUtils.toString(process.getErrorStream(), defaultCharset());
+                log.error("Process failed with error: {}", error);
                 throw new CommandException(this.getClass(), process.exitValue());
             }
         } catch (CommandException e) {

@@ -9,7 +9,6 @@ import urchin.model.folder.FolderWrapper;
 import urchin.model.folder.VirtualFolder;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static org.springframework.util.StringUtils.arrayToDelimitedString;
 
@@ -29,13 +28,14 @@ public class MountVirtualFolderCommand extends BasicCommand {
     }
 
     public void execute(List<Folder> folders, VirtualFolder virtualFolder) {
-        log.info("Mounting virtual folder {} for {} folders", virtualFolder.toAbsolutePath(), folders.size());
-        List<String> folderPaths = folders.stream()
-                .map(FolderWrapper::toAbsolutePath)
-                .collect(Collectors.toList());
+        String virtualFolderAbsolutePath = virtualFolder.toAbsolutePath();
+        log.info("Mounting virtual folder {} for {} folders", virtualFolderAbsolutePath, folders.size());
         executeCommand(command.getFolderCommand(MOUNT_VIRTUAL_FOLDER)
-                .replace(FOLDER_LIST, arrayToDelimitedString(folderPaths.toArray(), ","))
-                .replace(VIRTUAL_FOLDER, virtualFolder.toAbsolutePath())
+                .replace(FOLDER_LIST, arrayToDelimitedString(
+                        folders.stream()
+                                .map(FolderWrapper::toAbsolutePath).toArray(), ",")
+                )
+                .replace(VIRTUAL_FOLDER, virtualFolderAbsolutePath)
         );
     }
 }

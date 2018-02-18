@@ -89,7 +89,7 @@ public class FolderService {
         deleteFolder(encryptedFolder);
 
         if (folder.isExisting() || encryptedFolder.isExisting()) {
-            throw new RuntimeException("failed to delete folders");
+            throw new IllegalStateException("failed to delete folders");
         }
     }
 
@@ -97,11 +97,11 @@ public class FolderService {
         FolderSettings folderSettings = folderSettingsRepository.getFolderSettings(folderId);
         EncryptedFolder encryptedFolder = folderSettings.getEncryptedFolder();
 
-        if (!Files.exists(encryptedFolder.getPath())) {
+        if (!encryptedFolder.isExisting()) {
             throw new IllegalArgumentException(String.format("EncryptedFolder %s does not exist", encryptedFolder.getPath()));
         }
         Folder folder = encryptedFolder.toRegularFolder();
-        if (!Files.exists(folder.getPath()) || folder.isEmpty()) {
+        if (!folder.isExisting() || folder.isEmpty()) {
             Files.createDirectories(folder.getPath());
             folderCli.mountEncryptedFolder(folder, encryptedFolder, passphrase);
         } else {
@@ -152,7 +152,7 @@ public class FolderService {
     }
 
     private void unmountEncryptedFolder(EncryptedFolder encryptedFolder) {
-        if (Files.exists(encryptedFolder.getPath())) {
+        if (encryptedFolder.isExisting()) {
             folderCli.unmountFolder(encryptedFolder);
         }
     }
