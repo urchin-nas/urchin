@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`aclReducer GET_ACL 1`] = `
+Object {
+  "isFetchingAcl": true,
+}
+`;
+
+exports[`aclReducer GET_ACL_SUCCESS 1`] = `
+Object {
+  "acl": Object {
+    "groups": Array [
+      Object {
+        "execute": true,
+        "groupId": 10,
+        "groupName": "group",
+        "read": true,
+        "write": true,
+      },
+    ],
+    "users": Array [
+      Object {
+        "execute": true,
+        "read": true,
+        "userId": 100,
+        "username": "user",
+        "write": true,
+      },
+    ],
+  },
+  "isFetchingAcl": false,
+}
+`;
