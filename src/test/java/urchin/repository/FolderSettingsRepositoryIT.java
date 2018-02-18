@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import urchin.exception.FolderNotFoundException;
 import urchin.model.folder.*;
 import urchin.testutil.TestApplication;
 
@@ -78,7 +79,11 @@ public class FolderSettingsRepositoryIT extends TestApplication {
         assertThat(folderSettings.getFolder().toAbsolutePath()).isEqualTo(folder.toAbsolutePath());
         assertThat(now.isBefore(folderSettings.getCreated()) || now.isEqual(folderSettings.getCreated())).isTrue();
         assertThat(folderSettings.isAutoMount()).isFalse();
+    }
 
+    @Test(expected = FolderNotFoundException.class)
+    public void exceptionIsThrownWhenFolderIsNotFound() {
+        folderSettingsRepository.getFolderSettings(FolderId.of(0));
     }
 
 }
