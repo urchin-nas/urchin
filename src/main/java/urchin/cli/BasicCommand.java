@@ -29,7 +29,8 @@ public abstract class BasicCommand {
             process.waitFor();
 
             if (process.exitValue() != 0) {
-                log.error("Process returned code: {}", IOUtils.toString(process.getErrorStream(), defaultCharset()));
+                String error = IOUtils.toString(process.getErrorStream(), defaultCharset());
+                log.error("Process returned error: {}", error);
                 throw new CommandException(this.getClass(), process.exitValue());
             }
 

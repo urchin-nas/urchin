@@ -30,12 +30,12 @@ public class SetUserPasswordCommand {
 
     public void execute(Username username, Password password) {
         log.info("Setting password for user {}", username);
-        String[] command = this.command.getUserCommand(SET_USER_PASSWORD)
+        String[] cmd = command.getUserCommand(SET_USER_PASSWORD)
                 .replace(USERNAME, username.getValue())
                 .split(" ");
 
         try {
-            Process process = runtime.exec(command);
+            Process process = runtime.exec(cmd);
             BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
             bufferedWriter.write(password.getValue());
             bufferedWriter.newLine();

@@ -20,7 +20,7 @@ public class CommandConfiguration {
 
     @Bean("commands")
     public PropertySource yamlPropertySourceLoader() throws IOException {
-        log.info("loading commands from " + COMMANDS_YML);
+        log.info("loading commands from {}", COMMANDS_YML);
         YamlPropertySourceLoader yamlPropertySourceLoader = new YamlPropertySourceLoader();
         Resource resource = new ClassPathResource(COMMANDS_YML);
         return yamlPropertySourceLoader.load(resource.getFilename(), resource, null);
