@@ -1,0 +1,88 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`userReducer GET_GROUPS_FOR_USER 1`] = `
+Object {
+  "isFetchingGroupsForUser": true,
+}
+`;
+
+exports[`userReducer GET_GROUPS_FOR_USER_SUCCESS 1`] = `
+Object {
+  "groupsForUser": Array [
+    Object {
+      "groupId": 10,
+      "groupName": "group",
+    },
+  ],
+  "isFetchingGroupsForUser": false,
+}
+`;
+
+exports[`userReducer GET_USER 1`] = `
+Object {
+  "isFetchingUser": true,
+}
+`;
+
+exports[`userReducer GET_USER_SUCCESS 1`] = `
+Object {
+  "isFetchingUser": false,
+  "user": Object {
+    "userId": 100,
+    "username": "user",
+  },
+}
+`;
+
+exports[`userReducer GET_USERS 1`] = `
+Object {
+  "isFetchingUsers": true,
+}
+`;
+
+exports[`userReducer GET_USERS_SUCCESS 1`] = `
+Object {
+  "isFetchingUsers": false,
+  "users": Array [
+    Object {
+      "userId": 100,
+      "username": "user",
+    },
+  ],
+}
+`;
+
+exports[`userReducer SAVE_USER 1`] = `
+Object {
+  "isSavingUser": true,
+}
+`;
+
+exports[`userReducer SAVE_USER_SUCCESS 1`] = `
+Object {
+  "isSavingUser": false,
+}
+`;
+
+exports[`userReducer SAVE_USER_VALIDATION_ERROR 1`] = `
+Object {
+  "fieldErrors": Object {
+    "password": Array [
+      "size must be between 6 and 2147483647",
+    ],
+    "username": Array [
+      "size must be between 3 and 32",
+    ],
+  },
+}
+`;
+
+exports[`userReducer SET_USER 1`] = `
+Object {
+  "user": Object {
+    "username": "user",
+  },
+}
+`;
+
+exports[`userReducer initial state 1`] = `Object {}`;
