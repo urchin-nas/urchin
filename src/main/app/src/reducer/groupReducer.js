@@ -27,7 +27,7 @@ const groupReducer = (state = {}, action) => {
             return {...state, fieldErrors: action.data.fieldErrors};
 
         case Actions.Group.GET_USERS_FOR_GROUP:
-            return {...state, isFetchingUsersForGroup: false};
+            return {...state, isFetchingUsersForGroup: true};
 
         case Actions.Group.GET_USERS_FOR_GROUP_SUCCESS:
             return {...state, isFetchingUsersForGroup: false, usersInGroup: action.data};

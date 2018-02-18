@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`groupReducer GET_GROUP 1`] = `
+Object {
+  "isFetchingGroup": true,
+}
+`;
+
+exports[`groupReducer GET_GROUP_SUCCESS 1`] = `
+Object {
+  "group": Object {
+    "groupId": 10,
+    "groupName": "group",
+  },
+  "isFetchingGroup": false,
+}
+`;
+
+exports[`groupReducer GET_GROUPS 1`] = `
+Object {
+  "isFetchingGroups": true,
+}
+`;
+
+exports[`groupReducer GET_GROUPS_SUCCESS 1`] = `
+Object {
+  "groups": Array [
+    Object {
+      "groupId": 10,
+      "groupName": "group",
+    },
+  ],
+  "isFetchingGroups": false,
+}
+`;
+
+exports[`groupReducer GET_USERS_FOR_GROUP 1`] = `
+Object {
+  "isFetchingUsersForGroup": true,
+}
+`;
+
+exports[`groupReducer GET_USERS_FOR_GROUP_SUCCESS 1`] = `
+Object {
+  "isFetchingUsersForGroup": false,
+  "usersInGroup": Array [
+    Object {
+      "userId": 100,
+      "username": "user",
+    },
+  ],
+}
+`;
+
+exports[`groupReducer SAVE_GROUP 1`] = `
+Object {
+  "isSavingGroup": true,
+}
+`;
+
+exports[`groupReducer SAVE_GROUP_SUCCESS 1`] = `
+Object {
+  "isSavingGroup": false,
+}
+`;
+
+exports[`groupReducer SAVE_GROUP_VALIDATION_ERROR 1`] = `
+Object {
+  "fieldErrors": Object {
+    "groupName": Array [
+      "size must be between 3 and 32",
+    ],
+  },
+}
+`;
+
+exports[`groupReducer SET_GROUP 1`] = `
+Object {
+  "group": Object {
+    "groupName": "group",
+  },
+}
+`;
+
+exports[`groupReducer initial state 1`] = `Object {}`;
