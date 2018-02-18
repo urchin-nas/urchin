@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import history from "../../../history";
 import AclContainer from "./acl/AclContainer";
 
-class Folders extends Component {
+class EditFolder extends Component {
 
     update = (e) => {
         let data = {
@@ -48,4 +48,4 @@ class Folders extends Component {
     }
 }
 
-export default Folders
+export default EditFolder

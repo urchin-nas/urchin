@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import history from "../../../history";
 import {Link} from "react-router-dom";
 
-class Groups extends Component {
+class EditGroup extends Component {
 
     update = (e) => {
         let data = {
@@ -87,4 +87,4 @@ class Groups extends Component {
     }
 }
 
-export default Groups
+export default EditGroup
