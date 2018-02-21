@@ -28,6 +28,6 @@ public abstract class SeleniumTest {
     protected static final FoldersView FOLDERS = new FoldersView();
     protected static final NewFolderView NEW_FOLDER = new NewFolderView();
     protected static final EditFolderView EDIT_FOLDER = new EditFolderView();
-    protected static final ConfirmNewFolderView CONFIRM_NEW_FOLDER_VIEW = new ConfirmNewFolderView();
+    protected static final ConfirmNewFolderView CONFIRM_NEW_FOLDER = new ConfirmNewFolderView();
 
 }

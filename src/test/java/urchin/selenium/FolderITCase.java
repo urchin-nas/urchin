@@ -33,7 +33,7 @@ public class FolderITCase extends SeleniumTest {
                 .fillFolderPath(folderPath)
                 .clickOnCreateFolder();
 
-        CONFIRM_NEW_FOLDER_VIEW.verifyAtView()
+        CONFIRM_NEW_FOLDER.verifyAtView()
                 .fillPassphrase()
                 .clickOnConfirm();
 
