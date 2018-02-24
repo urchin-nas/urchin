@@ -26,6 +26,7 @@ public abstract class PageView<T> {
         return verifyAtView();
     }
 
+    @SuppressWarnings("unchecked")
     protected void waitUntil(ExpectedCondition webElementExpectedCondition) {
         wait.until(webElementExpectedCondition);
     }

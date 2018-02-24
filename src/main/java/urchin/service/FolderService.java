@@ -76,11 +76,13 @@ public class FolderService {
 
         try {
             unmountFolder(folder);
-        } catch (Exception ignore) {
+        } catch (Exception e) {
+            log.warn("Failed to unmount {}", folder, e);
         }
         try {
             unmountEncryptedFolder(encryptedFolder);
-        } catch (Exception ignore) {
+        } catch (Exception e) {
+            log.warn("Failed to unmount {}", encryptedFolder, e);
         }
 
         folderCli.setFolderMutable(folder);
@@ -89,7 +91,7 @@ public class FolderService {
         deleteFolder(encryptedFolder);
 
         if (folder.isExisting() || encryptedFolder.isExisting()) {
-            throw new RuntimeException("failed to delete folders");
+            throw new IllegalStateException("failed to delete folders");
         }
     }
 
@@ -97,11 +99,11 @@ public class FolderService {
         FolderSettings folderSettings = folderSettingsRepository.getFolderSettings(folderId);
         EncryptedFolder encryptedFolder = folderSettings.getEncryptedFolder();
 
-        if (!Files.exists(encryptedFolder.getPath())) {
+        if (!encryptedFolder.isExisting()) {
             throw new IllegalArgumentException(String.format("EncryptedFolder %s does not exist", encryptedFolder.getPath()));
         }
         Folder folder = encryptedFolder.toRegularFolder();
-        if (!Files.exists(folder.getPath()) || folder.isEmpty()) {
+        if (!folder.isExisting() || folder.isEmpty()) {
             Files.createDirectories(folder.getPath());
             folderCli.mountEncryptedFolder(folder, encryptedFolder, passphrase);
         } else {
@@ -115,7 +117,7 @@ public class FolderService {
     }
 
     public void unmountFolder(Folder folder) {
-        if (Files.exists(folder.getPath())) {
+        if (folder.isExisting()) {
             folderCli.unmountFolder(folder);
         }
     }
@@ -152,14 +154,14 @@ public class FolderService {
     }
 
     private void unmountEncryptedFolder(EncryptedFolder encryptedFolder) {
-        if (Files.exists(encryptedFolder.getPath())) {
+        if (encryptedFolder.isExisting()) {
             folderCli.unmountFolder(encryptedFolder);
         }
     }
 
     private void deleteFolder(FolderWrapper folder) {
         if (folder.isEmpty()) {
-            log.info("Deleting empty folder {}", folder.toAbsolutePath());
+            log.info("Deleting empty folder {}", folder);
             folderCli.removeFolder(folder);
         } else {
             throw new IllegalStateException(String.format("%s must be empty before it can be deleted", folder));
