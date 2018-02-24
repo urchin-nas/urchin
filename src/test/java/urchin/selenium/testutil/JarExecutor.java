@@ -14,6 +14,7 @@ import java.nio.file.Paths;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+import static java.lang.String.format;
 import static urchin.selenium.testutil.ProfileEvaluator.PROFILE;
 import static urchin.selenium.testutil.ProfileEvaluator.executeJar;
 import static urchin.selenium.testutil.SeleniumUrl.PORT;
@@ -53,7 +54,10 @@ public enum JarExecutor {
         if (!isStarted()) {
             Path jar = findJar();
             log.info("Starting jar " + jar.toAbsolutePath());
-            jarProcess = Runtime.getRuntime().exec(getJavaExecutable() + " -jar " + jar.toAbsolutePath().toString());
+            String temporaryFolderPath = System.getProperty("java.io.tmpdir");
+            String execute = format("%s -Dspring.datasource.url=jdbc:h2:%s/urchintestdb -jar %s", getJavaExecutable(), temporaryFolderPath, jar.toAbsolutePath().toString());
+            log.info(execute);
+            jarProcess = Runtime.getRuntime().exec(execute);
             startProcessOutputReader();
             waitForJarToStart();
         }
@@ -110,7 +114,7 @@ public enum JarExecutor {
     }
 
     private Path findJar() throws IOException {
-        Path targetDirectory = Paths.get(String.format("%s/target/", System.getProperty("user.dir")));
+        Path targetDirectory = Paths.get(format("%s/target/", System.getProperty("user.dir")));
         log.info("Searching for jar {} in {}", JAR_PATTERN, targetDirectory.toAbsolutePath());
 
         Optional<Path> jar = Files.walk(targetDirectory)
@@ -118,7 +122,7 @@ public enum JarExecutor {
                 .findFirst();
 
         if (!jar.isPresent()) {
-            String message = String.format("Jar not found! Expected to find jar of pattern %s in %s. Rebuild project and try again", JAR_PATTERN, targetDirectory.toAbsolutePath());
+            String message = format("Jar not found! Expected to find jar of pattern %s in %s. Rebuild project and try again", JAR_PATTERN, targetDirectory.toAbsolutePath());
             throw new IllegalStateException(message);
         }
 
