@@ -19,12 +19,14 @@ class Navigation extends Component {
         return (
             <nav data-view="navigation"
                  className="navigation">
-                <Link className="navigation__brand"
+                <Link data-view="navigationBrand"
+                      className="navigation__brand"
                       to="/"
                       onClick={this.hideNavigation}>
                     Urchin
                 </Link>
-                <button className="navigation--toggler"
+                <button data-view="toggleNavigation"
+                        className="navigation--toggler"
                         onClick={this.toggleNavigation}>
                     <span className="navigation-toggler__icon"/>
                 </button>

@@ -7,6 +7,7 @@ exports[`Navigation match snapshot 1`] = `
 >
   <Link
     className="navigation__brand"
+    data-view="navigationBrand"
     onClick={[Function]}
     replace={false}
     to="/"
@@ -15,6 +16,7 @@ exports[`Navigation match snapshot 1`] = `
   </Link>
   <button
     className="navigation--toggler"
+    data-view="toggleNavigation"
     onClick={[Function]}
   >
     <span
