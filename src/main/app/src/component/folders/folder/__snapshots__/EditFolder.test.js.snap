@@ -28,6 +28,8 @@ exports[`EditFolder match snapshot 1`] = `
   >
     Back
   </button>
-  <Connect(AclContainer) />
+  <Connect(AclContainer)
+    folderId={1}
+  />
 </div>
 `;

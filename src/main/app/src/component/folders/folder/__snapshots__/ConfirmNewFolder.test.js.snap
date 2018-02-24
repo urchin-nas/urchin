@@ -6,7 +6,33 @@ exports[`ConfirmNewFolder match snapshot 1`] = `
   data-view="confirmNewFolder"
 >
   <div>
-    Undesired state! Passphrase is missing. Please delete newly created folder and try again.
+    <div>
+      Your folder has been created. This is the randomly generated passphrase for your folder:
+    </div>
+    <p
+      data-view="passphraseToMatch"
+    >
+      randomString
+    </p>
+    <div>
+      Make sure to write down this passphrase and store it in a safe place!
+    </div>
+    <input
+      name="passphrase"
+      onChange={[Function]}
+      type="password"
+      value="random"
+    />
+    <FieldError
+      field="passphrase"
+    />
+    <button
+      className="confirm-new-folder__confirm-btn"
+      data-view="confirm"
+      onClick={[Function]}
+    >
+      Confirm
+    </button>
   </div>
 </div>
 `;

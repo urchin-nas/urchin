@@ -4,15 +4,6 @@ import AclContainer from "./acl/AclContainer";
 
 class EditFolder extends Component {
 
-    update = (e) => {
-        let data = {
-            field: e.target.name,
-            value: e.target.value
-        };
-
-        this.props.callbacks.setFolder(data);
-    };
-
     del = () => {
         this.props.callbacks.deleteFolder(this.props.folder.folderId);
     };
