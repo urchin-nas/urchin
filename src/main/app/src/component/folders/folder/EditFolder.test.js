@@ -5,11 +5,11 @@ import EditFolder from "./EditFolder";
 
 describe('EditFolder', () => {
 
-    let callbacks = {
+    const callbacks = {
         deleteFolder: jest.fn(),
     };
 
-    let props = {
+    const props = {
         folder: {
             folderId: 1
         },
@@ -18,18 +18,20 @@ describe('EditFolder', () => {
         callbacks: callbacks
     };
 
+    let component;
+
     beforeEach(() => {
         Object.entries(callbacks).forEach(([name, fn]) => {
             fn.mockClear();
         });
+        component = shallow(<EditFolder {...props}/>);
     });
 
     it('match snapshot', () => {
-        expect(toJson(shallow(<EditFolder {...props}/>))).toMatchSnapshot();
+        expect(toJson(component)).toMatchSnapshot();
     });
 
     it('deleteFolder is called when clicking delete', () => {
-        let component = shallow(<EditFolder {...props}/>);
         component.find('[data-view="delete"]').simulate('click');
 
         expect(callbacks.deleteFolder).toHaveBeenCalledWith(props.folder.folderId)
