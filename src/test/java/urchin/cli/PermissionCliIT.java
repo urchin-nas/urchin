@@ -25,7 +25,7 @@ import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;
 
 @RunWith(SpringRunner.class)
 @Import(CliTestConfiguration.class)
-public class PermissionCliTest {
+public class PermissionCliIT {
 
     private static final String TEST_FILE = "test_file";
 
