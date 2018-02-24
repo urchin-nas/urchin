@@ -9,6 +9,10 @@ import urchin.configuration.RuntimeConfiguration;
 
 @TestConfiguration
 @ComponentScan(basePackageClasses = {BasicCommand.class})
-@Import({RuntimeConfiguration.class, CommandConfiguration.class, UnixUserAndGroupCleanup.class})
+@Import({
+        RuntimeConfiguration.class,
+        CommandConfiguration.class,
+        UnixUserAndGroupCleanup.class
+})
 public class CliTestConfiguration {
 }

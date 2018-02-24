@@ -15,7 +15,9 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(properties = "spring.datasource.url=jdbc:h2:mem:", webEnvironment = WebEnvironment.RANDOM_PORT)
-@Import(CliTestConfiguration.class)
+@Import({
+        UnixUserAndGroupCleanup.class
+})
 public abstract class TestApplication {
 
     @Rule
