@@ -5,7 +5,7 @@
 
 This project is built primarily on **Ubuntu** (16.04). Even though the backend is written in Java, it is tightly coupled with the underlying operating system and will not work on Windows or OS X machines. Some of the requirements are listed below. 
 
-For development on non-suported platforms, run everything on a virtualization software such as [VirtualBox](https://www.virtualbox.org/).
+For development on non-supported platforms, run everything on Ubuntu using a virtualization software such as [VirtualBox](https://www.virtualbox.org/).
 
 ## Requirements
 
@@ -46,7 +46,7 @@ More information [here](docker/README.md)
 
 To start client using `webpack-dev-server`:
 ```bash
-npm run dev
+npm start
 ```
 
 go to: http://localhost:3000/ (backend must be running to serve the api)
