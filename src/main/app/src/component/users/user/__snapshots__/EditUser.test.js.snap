@@ -47,6 +47,26 @@ exports[`EditUser match snapshot 1`] = `
   </h2>
   <ul
     className="edit-user__groups"
-  />
+  >
+    <li
+      className="edit-user__groups__item"
+      data-view="groups"
+      key="0"
+    >
+      <Link
+        replace={false}
+        to="/groups/11"
+      >
+        alreadyAddedGroup
+      </Link>
+      <button
+        className="edit-user__groups__item__remove-group-btn"
+        data-view="removeGroup"
+        onClick={[Function]}
+      >
+        Remove Group
+      </button>
+    </li>
+  </ul>
 </div>
 `;
