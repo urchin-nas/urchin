@@ -23,6 +23,11 @@ import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;
 public class UserCliIT {
 
     private static final Password PASSWORD = Password.of("superSecret");
+    private static final Shadow SHADOW = ImmutableShadow.builder()
+            .id("6")
+            .salt("iDvr6NoE")
+            .encryptedPassword("L18aEvySgnBP3lCW0wgDzsLzx6DDeoLYNctxkJB4i7mbkaqEtmuxZwIPn8NWJ6wjlGtzYmfPMUX05VWtqlFru.")
+            .build();
 
     @Rule
     @Autowired
@@ -33,6 +38,7 @@ public class UserCliIT {
 
     private User user;
     private Username username;
+
 
     @Before
     public void setUp() {
@@ -77,6 +83,25 @@ public class UserCliIT {
         LinuxUser linuxUser = userCli.whoAmI();
 
         assertThat(linuxUser).isNotNull();
+    }
+
+    @Test
+    public void getShadowReturnsShadow() {
+        LinuxUser linuxUser = userCli.whoAmI();
+
+        Shadow shadow = userCli.getShadow(linuxUser);
+
+        assertThat(shadow).isNotNull();
+    }
+
+    @Test
+    public void verifyShadowPasswordCommandReturnsTrueWhenEncryptedPasswordsMatch() {
+        assertThat(userCli.verifyShadowPassword(PASSWORD, SHADOW)).isTrue();
+    }
+
+    @Test
+    public void verifyShadowPasswordCommandReturnsFalseWhenEncryptedPasswordsDoesNotMatch() {
+        assertThat(userCli.verifyShadowPassword(Password.of("invalidPassword"), SHADOW)).isFalse();
     }
 
 }
