@@ -10,6 +10,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 
 import java.io.IOException;
+import java.util.List;
 
 @Configuration
 public class CommandConfiguration {
@@ -23,7 +24,8 @@ public class CommandConfiguration {
         log.info("loading commands from {}", COMMANDS_YML);
         YamlPropertySourceLoader yamlPropertySourceLoader = new YamlPropertySourceLoader();
         Resource resource = new ClassPathResource(COMMANDS_YML);
-        return yamlPropertySourceLoader.load(resource.getFilename(), resource, null);
+        List<PropertySource<?>> propertySources = yamlPropertySourceLoader.load(resource.getFilename(), resource);
+        return propertySources.get(0);
     }
 
 }

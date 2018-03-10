@@ -4,7 +4,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 import urchin.cli.GroupCli;
 import urchin.exception.GroupNotFoundException;
 import urchin.exception.UserNotFoundException;
@@ -117,7 +117,6 @@ public class GroupServiceTest {
     @Test(expected = UserNotFoundException.class)
     public void removeUserFromGroupWhenUserDoesNotExistInRepositoryThrowsException() {
         when(userService.getUser(USER_ID)).thenThrow(new UserNotFoundException(""));
-        when(groupRepository.getGroup(GROUP_ID)).thenReturn(GROUP);
 
         groupService.removeUserFromGroup(USER.getUserId(), GROUP_ID);
     }
