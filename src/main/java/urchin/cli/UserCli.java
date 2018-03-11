@@ -71,11 +71,16 @@ public class UserCli {
         return whoAmICommand.execute();
     }
 
-    public Shadow getShadow(LinuxUser linuxUser) {
+    public boolean verifyPassword(LinuxUser linuxUser, Password password) {
+        Shadow systemShadow = getShadow(linuxUser);
+        return verifyShadowPassword(password, systemShadow);
+    }
+
+    Shadow getShadow(LinuxUser linuxUser) {
         return toShadow(getShadowCommand.execute(linuxUser));
     }
 
-    public boolean verifyShadowPassword(Password password, Shadow shadow) {
+    boolean verifyShadowPassword(Password password, Shadow shadow) {
         Shadow newShadow = toShadow(verifyShadowPasswordCommand.execute(password, shadow));
         return newShadow.getEncryptedPassword().equals(shadow.getEncryptedPassword());
     }

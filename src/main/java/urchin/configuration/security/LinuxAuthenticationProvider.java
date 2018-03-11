@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import urchin.cli.UserCli;
 import urchin.model.user.LinuxUser;
 import urchin.model.user.Password;
-import urchin.model.user.Shadow;
 
 @Component
 public class LinuxAuthenticationProvider implements AuthenticationProvider {
@@ -30,13 +29,7 @@ public class LinuxAuthenticationProvider implements AuthenticationProvider {
 
         LinuxUser linuxUser = userCli.whoAmI();
 
-        if (!linuxUser.getUsername().getValue().equals(username)) {
-            throw new BadCredentialsException(BAD_CREDENTIALS);
-        }
-
-        Shadow shadow = userCli.getShadow(linuxUser);
-
-        if (userCli.verifyShadowPassword(password, shadow)) {
+        if (linuxUser.getUsername().getValue().equals(username) && userCli.verifyPassword(linuxUser, password)) {
             return authentication;
         }
 
