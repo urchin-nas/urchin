@@ -23,26 +23,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //@formatter:off
         http
-                .authorizeRequests()
+            .authorizeRequests()
                 .antMatchers("/resources/**").permitAll()
-                .antMatchers("/api/**").hasAnyRole()
+                .antMatchers("/api/**").authenticated()
                 .and()
-                .formLogin()
+            .formLogin()
                 .permitAll()
                 .and()
-                .logout()
+            .logout()
                 .permitAll()
-                .and()
-                .logout()
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .logoutSuccessUrl("/")
                 .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(HttpStatus.ACCEPTED))
-                .permitAll()
                 .and()
-                .csrf()
-                .disable();
+            .csrf()
+                .disable(); //TODO enable
+        //@formatter:on
     }
 
     @Override
