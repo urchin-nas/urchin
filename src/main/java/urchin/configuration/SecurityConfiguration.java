@@ -14,6 +14,8 @@ import urchin.security.LinuxAuthenticationProvider;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
+    public static final String URCHIN_ADMIN = "URCHIN_ADMIN";
+
     private final LinuxAuthenticationProvider linuxAuthenticationProvider;
 
     @Autowired
@@ -28,7 +30,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
                 .antMatchers("/resources/**").permitAll()
                 .antMatchers("/api/authenticate").permitAll()
-                .antMatchers("/api/**").authenticated()
+                .antMatchers("/api/authenticate/add-first-admin").permitAll()
+                .antMatchers("/api/**").hasRole(URCHIN_ADMIN)
                 .and()
             .formLogin()
                 .permitAll()
@@ -46,7 +49,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) {
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(linuxAuthenticationProvider);
     }
 

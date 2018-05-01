@@ -43,7 +43,7 @@ public class AdminService {
         if (adminsMissing()) {
             return addAdmin(username);
         }
-        throw new IllegalStateException("Denied!");
+        throw new IllegalStateException("An admin already exist");
     }
 
     public List<Admin> getAdmins() {
