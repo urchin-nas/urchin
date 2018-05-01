@@ -59,7 +59,7 @@ public class AdminRepository {
         try {
             return namedParameterJdbcTemplate.queryForObject(SELECT_ADMIN, parameters, (resultSet, i) -> adminMapper(resultSet));
         } catch (EmptyResultDataAccessException e) {
-            throw new AdminNotFoundException("Invalid adminId " + adminId);
+            throw new AdminNotFoundException(adminId);
         }
     }
 
@@ -77,8 +77,11 @@ public class AdminRepository {
     public Admin getAdminByUsername(Username username) {
         MapSqlParameterSource parameters = new MapSqlParameterSource()
                 .addValue("username", username.getValue());
-
-        return namedParameterJdbcTemplate.queryForObject(SELECT_ADMIN_BY_USERNAME, parameters, (resultSet, i) -> adminMapper(resultSet));
+        try {
+            return namedParameterJdbcTemplate.queryForObject(SELECT_ADMIN_BY_USERNAME, parameters, (resultSet, i) -> adminMapper(resultSet));
+        } catch (EmptyResultDataAccessException e) {
+            throw new AdminNotFoundException(username);
+        }
     }
 
     private Admin adminMapper(ResultSet resultSet) throws SQLException {

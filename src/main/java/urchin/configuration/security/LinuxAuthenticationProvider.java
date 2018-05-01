@@ -7,9 +7,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
-import urchin.cli.UserCli;
-import urchin.model.user.LinuxUser;
 import urchin.model.user.Password;
+import urchin.model.user.Username;
+import urchin.service.AdminService;
 
 import java.util.Collections;
 
@@ -18,21 +18,19 @@ public class LinuxAuthenticationProvider implements AuthenticationProvider {
 
     private static final String BAD_CREDENTIALS = "Invalid username and/or password";
 
-    private final UserCli userCli;
+    private final AdminService adminService;
 
     @Autowired
-    public LinuxAuthenticationProvider(UserCli userCli) {
-        this.userCli = userCli;
+    public LinuxAuthenticationProvider(AdminService adminService) {
+        this.adminService = adminService;
     }
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        String username = authentication.getName();
+        Username username = Username.of(authentication.getName());
         Password password = Password.of(authentication.getCredentials().toString());
 
-        LinuxUser linuxUser = userCli.whoAmI();
-
-        if (linuxUser.getUsername().getValue().equals(username) && userCli.verifyPassword(linuxUser, password)) {
+        if (adminService.authenticateAdmin(username, password)) {
             return new UsernamePasswordAuthenticationToken(username, password, Collections.emptyList());
         }
 

@@ -24,7 +24,7 @@ public abstract class Shadow {
             case "1":
                 return MD5;
             default:
-                throw new IllegalArgumentException("Invalid encryption method id " + getId());
+                throw new IllegalArgumentException("Unsupported encryption method id " + getId());
         }
     }
 }

@@ -5,12 +5,16 @@ import org.immutables.value.Value;
 import java.time.LocalDateTime;
 
 @Value.Immutable
-public interface Admin {
+public abstract class Admin {
 
-    AdminId getAdminId();
+    public abstract AdminId getAdminId();
 
-    Username getUsername();
+    public abstract Username getUsername();
 
-    LocalDateTime getCreated();
+    public abstract LocalDateTime getCreated();
+
+    public LinuxUser asLinuxUser() {
+        return ImmutableLinuxUser.of(getUsername());
+    }
 
 }

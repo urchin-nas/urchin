@@ -58,7 +58,7 @@ public class UserRepository {
         try {
             return jdbcTemplate.queryForObject(SELECT_USER, new Object[]{userId.getValue()}, (resultSet, i) -> userMapper(resultSet));
         } catch (EmptyResultDataAccessException e) {
-            throw new UserNotFoundException("Invalid userId " + userId);
+            throw new UserNotFoundException(userId);
         }
     }
 

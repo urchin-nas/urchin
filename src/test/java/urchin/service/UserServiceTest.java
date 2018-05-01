@@ -66,7 +66,7 @@ public class UserServiceTest {
 
     @Test(expected = UserNotFoundException.class)
     public void removeUserThatDoesNotExistThrowsException() {
-        when(userRepository.getUser(USER_ID)).thenThrow(new UserNotFoundException(""));
+        when(userRepository.getUser(USER_ID)).thenThrow(new UserNotFoundException(USER_ID));
 
         userService.removeUser(USER_ID);
     }
@@ -92,7 +92,7 @@ public class UserServiceTest {
 
     @Test(expected = UserNotFoundException.class)
     public void listGroupsForUserThrowsExceptionWhenUserDoesNotExist() {
-        when(userRepository.getUser(USER_ID)).thenThrow(new UserNotFoundException(""));
+        when(userRepository.getUser(USER_ID)).thenThrow(new UserNotFoundException(USER_ID));
 
         userService.listGroupsForUser(USER_ID);
     }
