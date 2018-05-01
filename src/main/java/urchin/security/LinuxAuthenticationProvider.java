@@ -1,4 +1,4 @@
-package urchin.configuration.security;
+package urchin.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationProvider;
