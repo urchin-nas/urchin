@@ -20,7 +20,7 @@
     "fetch-mock": "6.0.0",
     "node-sass-chokidar": "0.0.3",
     "npm-run-all": "4.1.2",
-    "react-scripts": "1.1.1",
+    "react-scripts": "1.1.4",
     "react-test-renderer": "16.2.0",
     "redux-mock-store": "1.5.1"
   },
