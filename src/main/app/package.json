@@ -16,9 +16,9 @@
   "devDependencies": {
     "enzyme": "3.3.0",
     "enzyme-adapter-react-16": "1.1.1",
-    "enzyme-to-json": "3.3.1",
-    "fetch-mock": "6.0.0",
-    "node-sass-chokidar": "0.0.3",
+    "enzyme-to-json": "3.3.3",
+    "fetch-mock": "6.3.0",
+    "node-sass-chokidar": "1.2.2",
     "npm-run-all": "4.1.2",
     "react-scripts": "1.1.4",
     "react-test-renderer": "16.3.2",
