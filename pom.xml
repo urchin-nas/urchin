@@ -18,7 +18,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.0.RELEASE</version>
+        <version>2.0.1.RELEASE</version>
     </parent>
 
     <dependencies>
@@ -55,7 +55,7 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>5.3.6.Final</version>
+            <version>6.0.9.Final</version>
         </dependency>
         <dependency>
             <groupId>org.liquibase</groupId>
@@ -69,12 +69,12 @@
         <dependency>
             <groupId>org.immutables</groupId>
             <artifactId>value</artifactId>
-            <version>2.5.5</version>
+            <version>2.5.6</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>24.0-jre</version>
+            <version>25.0-jre</version>
         </dependency>
         <dependency>
             <groupId>io.springfox</groupId>
@@ -89,7 +89,7 @@
         <dependency>
             <groupId>com.google.code.findbugs</groupId>
             <artifactId>jsr305</artifactId>
-            <version>3.0.0</version>
+            <version>3.0.2</version>
         </dependency>
 
         <!-- test -->
@@ -117,7 +117,7 @@
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>2.1.0</version>
+            <version>2.2.1</version>
             <scope>test</scope>
         </dependency>
         <dependency>
