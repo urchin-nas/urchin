@@ -20,6 +20,6 @@ public class UrchinSecurityContext {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
-        return roles.contains(URCHIN_ADMIN);
+        return roles.contains("ROLE_" + URCHIN_ADMIN);
     }
 }
