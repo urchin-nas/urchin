@@ -10,11 +10,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.web.authentication.logout.HttpStatusReturningLogoutSuccessHandler;
 import urchin.security.LinuxAuthenticationProvider;
 
+import static urchin.model.user.Role.URCHIN_ADMIN;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-
-    public static final String URCHIN_ADMIN = "URCHIN_ADMIN";
 
     private final LinuxAuthenticationProvider linuxAuthenticationProvider;
 
@@ -31,7 +31,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/resources/**").permitAll()
                 .antMatchers("/api/authenticate").permitAll()
                 .antMatchers("/api/authenticate/add-first-admin").permitAll()
-                .antMatchers("/api/**").hasRole(URCHIN_ADMIN)
+                .antMatchers("/api/**").hasRole(URCHIN_ADMIN.name())
                 .and()
             .formLogin()
                 .permitAll()

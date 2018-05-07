@@ -7,7 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static urchin.configuration.SecurityConfiguration.URCHIN_ADMIN;
+import static urchin.model.user.Role.URCHIN_ADMIN;
 
 public class UrchinSecurityContext {
 
@@ -20,6 +20,6 @@ public class UrchinSecurityContext {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.toList());
 
-        return roles.contains("ROLE_" + URCHIN_ADMIN);
+        return roles.contains(URCHIN_ADMIN.getRole());
     }
 }
