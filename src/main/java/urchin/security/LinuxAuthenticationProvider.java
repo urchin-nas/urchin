@@ -16,7 +16,7 @@ import urchin.service.AdminService;
 import java.util.ArrayList;
 import java.util.List;
 
-import static urchin.configuration.SecurityConfiguration.URCHIN_ADMIN;
+import static urchin.model.user.Role.URCHIN_ADMIN;
 
 @Component
 public class LinuxAuthenticationProvider implements AuthenticationProvider {
