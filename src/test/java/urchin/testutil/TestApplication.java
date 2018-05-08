@@ -75,7 +75,7 @@ public abstract class TestApplication {
     }
 
     private void setupAdmin() {
-        if (Objects.isNull(username)) {
+        if (Objects.isNull(username) || adminRepository.getAdmins().isEmpty()) {
             Username user = Username.of(USERNAME_PREFIX + System.currentTimeMillis());
             password = Password.of(randomAlphanumeric(10));
             userCli.addUser(user);
