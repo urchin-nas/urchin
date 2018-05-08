@@ -4,7 +4,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 # install dependencies
 RUN apt-get update && \
-    apt-get install -y sudo wget unzip openjdk-8-jdk git maven ecryptfs-utils mhddfs samba samba-common-bin makepasswd && \
+    apt-get install -y sudo wget unzip openjdk-8-jdk git maven ecryptfs-utils mhddfs samba samba-common-bin whois && \
     apt-get clean
 
 # install chrome
