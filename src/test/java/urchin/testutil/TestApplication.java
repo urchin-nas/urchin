@@ -19,10 +19,7 @@ import urchin.model.user.Password;
 import urchin.model.user.Username;
 import urchin.repository.AdminRepository;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 import static java.util.Collections.singletonList;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
@@ -75,18 +72,14 @@ public abstract class TestApplication {
     }
 
     private void setupAdmin() {
-        if (adminRepository.getAdmins().isEmpty()) {
-            username = null;
-            cookies = null;
-        }
-
-        if (Objects.isNull(username)) {
+        if (Objects.isNull(username) || adminRepository.getAdmins().isEmpty()) {
             Username user = Username.of(USERNAME_PREFIX + System.currentTimeMillis());
             password = Password.of(randomAlphanumeric(10));
             userCli.addUser(user);
             userCli.setUserPassword(user, password);
             adminRepository.saveAdmin(user);
             username = user;
+            cookies = Collections.emptyList();
         }
     }
 
