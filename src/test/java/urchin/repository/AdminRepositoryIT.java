@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
-public class AdminRepositoryTest extends TestApplication {
+public class AdminRepositoryIT extends TestApplication {
 
     @Autowired
     private AdminRepository adminRepository;

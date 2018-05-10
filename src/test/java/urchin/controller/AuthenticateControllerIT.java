@@ -21,7 +21,7 @@ public class AuthenticateControllerIT extends TestApplication {
 
     @Test
     public void authenticateAddAdminAndAuthenticate() {
-        logoutAndReset();
+        logoutAndResetAdmins();
 
         // try to authenticate
 
@@ -46,7 +46,7 @@ public class AuthenticateControllerIT extends TestApplication {
         assertThat(secondAuthenticatedResponse.getStatusCode()).isEqualTo(HttpStatus.UNAUTHORIZED);
         assertThat(secondAuthenticatedResponse.getBody()).isEqualTo(AuthenticateController.UNAUTHORIZED);
 
-        login();
+        login(username, password);
 
         // try to authenticate
 
@@ -56,11 +56,13 @@ public class AuthenticateControllerIT extends TestApplication {
         assertThat(thirdAuthenticatedResponse.getBody()).isEqualTo(AuthenticateController.OK);
     }
 
-    private void logoutAndReset() {
+    private void logoutAndResetAdmins() {
         logout();
+
         adminService.getAdmins().stream()
                 .map(Admin::getAdminId)
                 .forEach(adminId -> adminService.removeAdmin(adminId));
+
         assertThat(adminService.getAdmins()).hasSize(0);
     }
 

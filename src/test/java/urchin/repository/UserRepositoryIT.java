@@ -1,7 +1,7 @@
 package urchin.repository;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import urchin.exception.UserNotFoundException;
 import urchin.model.user.User;
 import urchin.model.user.UserId;
@@ -20,12 +20,8 @@ public class UserRepositoryIT extends TestApplication {
 
     private static final Username USERNAME = Username.of("username");
 
+    @Autowired
     private UserRepository userRepository;
-
-    @Before
-    public void setup() {
-        userRepository = new UserRepository(jdbcTemplate, namedParameterJdbcTemplate);
-    }
 
     @Test
     public void crd() {
