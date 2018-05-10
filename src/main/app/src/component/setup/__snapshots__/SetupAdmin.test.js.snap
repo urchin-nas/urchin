@@ -2,8 +2,8 @@
 
 exports[`Setup match snapshot 1`] = `
 <div
-  className="setup"
-  data-view="setup"
+  className="setup-admin"
+  data-view="setupAdmin"
 >
   <h2>
     Setup admin
@@ -19,8 +19,8 @@ exports[`Setup match snapshot 1`] = `
     field="username"
   />
   <button
-    className="setup__add-btn"
-    data-view="setupAdmin"
+    className="setup-admin__add-btn"
+    data-view="add"
     onClick={[Function]}
   >
     Create User

@@ -4,7 +4,8 @@ class Login extends Component {
 
     render() {
         return (
-            <div>
+            <div data-view="login"
+                 className="login">
                 <form method="post" action="/login">
                     <input type="text" name="username" placeholder="Username"/>
                     <input type="password" name="password" placeholder="Password"/>

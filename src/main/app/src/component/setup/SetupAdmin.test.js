@@ -35,7 +35,7 @@ describe('Setup', () => {
     });
 
     it('setupAdmin is called when clicking add', () => {
-        component.find('[data-view="setupAdmin"]').simulate('click');
+        component.find('[data-view="add"]').simulate('click');
 
         expect(callbacks.setupAdmin).toHaveBeenCalledWith(props.admin)
     });

@@ -20,8 +20,8 @@ class SetupAdmin extends Component {
         let username = this.props.admin.username || '';
 
         return (
-            <div data-view="setup"
-                 className="setup">
+            <div data-view="setupAdmin"
+                 className="setup-admin">
                 <h2>Setup admin</h2>
                 <input name="username"
                        type="text"
@@ -30,8 +30,8 @@ class SetupAdmin extends Component {
                        onChange={this.update}/>
                 <FieldError fieldErrors={this.props.fieldErrors}
                             field="username"/>
-                <button data-view="setupAdmin"
-                        className="setup__add-btn"
+                <button data-view="add"
+                        className="setup-admin__add-btn"
                         onClick={this.setupAdmin}>
                     Create User
                 </button>
