@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`authAction setAdmin is successful 1`] = `
+Array [
+  Object {
+    "data": Object {
+      "username": "admin",
+    },
+    "type": "SET_ADMIN",
+  },
+]
+`;
+
+exports[`authAction setupAdmin failed 1`] = `
+Array [
+  Object {
+    "type": "SETUP_ADMIN",
+  },
+]
+`;
+
+exports[`authAction setupAdmin is successful 1`] = `
+Array [
+  Object {
+    "type": "SETUP_ADMIN",
+  },
+  Object {
+    "data": Object {
+      "username": "admin",
+    },
+    "type": "SETUP_ADMIN_SUCCESS",
+  },
+]
+`;

@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`adminReducer SET_ADMIN 1`] = `
+Object {
+  "admin": Object {
+    "username": "admin",
+  },
+}
+`;
+
+exports[`adminReducer SETUP_ADMIN 1`] = `
+Object {
+  "isAddingAdmin": true,
+}
+`;
+
+exports[`adminReducer SETUP_ADMIN_SUCCESS 1`] = `
+Object {
+  "isAddingAdmin": false,
+}
+`;
+
+exports[`adminReducer SETUP_ADMIN_VALIDATION_ERROR 1`] = `Object {}`;
+
+exports[`adminReducer initial state 1`] = `Object {}`;

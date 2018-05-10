@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`RootContainer match snapshot when logged in 1`] = `<Root />`;
+
+exports[`RootContainer match snapshot when login failed 1`] = `
+<Redirect
+  push={false}
+  to="/login"
+/>
+`;
+
+exports[`RootContainer match snapshot when login invalid 1`] = `
+<Redirect
+  push={false}
+  to="/login"
+/>
+`;
+
+exports[`RootContainer match snapshot when not authenticated 1`] = `<div />`;
+
+exports[`RootContainer match snapshot when precondition failed 1`] = `
+<Redirect
+  push={false}
+  to="/setup-admin"
+/>
+`;

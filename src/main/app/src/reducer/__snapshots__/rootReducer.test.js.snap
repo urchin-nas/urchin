@@ -3,6 +3,8 @@
 exports[`rootReducer initial state 1`] = `
 Object {
   "aclData": Object {},
+  "adminData": Object {},
+  "authData": Object {},
   "folderData": Object {},
   "groupData": Object {},
   "siteData": Object {},

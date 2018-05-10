@@ -38,6 +38,10 @@ exports[`App match snapshot 1`] = `
         />
         <Route
           component={[Function]}
+          path="/setup-admin"
+        />
+        <Route
+          component={[Function]}
           path="/"
         />
       </Switch>
