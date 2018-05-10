@@ -87,9 +87,10 @@ public class UserCliIT {
 
     @Test
     public void getShadowReturnsShadow() {
-        LinuxUser linuxUser = userCli.whoAmI();
+        userCli.addUser(username);
+        userCli.setUserPassword(username, PASSWORD);
 
-        Shadow shadow = userCli.getShadow(linuxUser);
+        Shadow shadow = userCli.getShadow(ImmutableLinuxUser.of(username));
 
         assertThat(shadow).isNotNull();
     }
