@@ -57,12 +57,11 @@ public abstract class SeleniumTest {
         if (redirectUrl.endsWith("/login")) {
             login();
         } else if (redirectUrl.endsWith("/setup-admin")) {
-            setupAdmin();
-            setUpAndLogin();
+            setupAdminAndLogin();
         }
     }
 
-    private static void setupAdmin() throws IOException {
+    private static void setupAdminAndLogin() throws IOException {
         CommandConfiguration commandConfiguration = new CommandConfiguration();
         PropertySource propertySource = commandConfiguration.yamlPropertySourceLoader();
         Command command = new Command(propertySource);
@@ -80,12 +79,16 @@ public abstract class SeleniumTest {
 
         username = user.getValue();
         password = pwd.getValue();
+
+        login();
     }
 
     private static void login() {
-        LOGIN.fillUsername(username)
+        LOGIN.verifyAtView()
+                .fillUsername(username)
                 .fillpassword(password)
                 .clickOnLogin();
+
         HOME.verifyAtView();
     }
 

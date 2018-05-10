@@ -23,7 +23,7 @@ export const setupAdmin = (admin) => (dispatch) => {
                 type: Admin.SETUP_ADMIN_SUCCESS,
                 data: json
             });
-            history.push('/');
+            history.push('/login');
             notifySuccess("Success", "Admin setup")
         }, error => {
             if (error.errorCode === ErrorCodes.VALIDATION_ERROR) {
