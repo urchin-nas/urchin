@@ -9,12 +9,12 @@ import urchin.controller.api.user.AddAdminRequest;
 import urchin.controller.api.user.ImmutableAddAdminRequest;
 import urchin.model.user.Admin;
 import urchin.service.AdminService;
-import urchin.testutil.TestApplication;
+import urchin.testutil.SecureTestApplication;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class AuthenticateControllerIT extends TestApplication {
+public class AuthenticateControllerIT extends SecureTestApplication {
 
     @Autowired
     private AdminService adminService;

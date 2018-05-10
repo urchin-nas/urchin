@@ -14,8 +14,8 @@ import urchin.controller.api.ErrorResponse;
 import urchin.controller.api.MessageResponse;
 import urchin.controller.api.folder.*;
 import urchin.model.folder.*;
+import urchin.testutil.SecureTestApplication;
 import urchin.testutil.TemporaryFolderUnmount;
-import urchin.testutil.TestApplication;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -31,7 +31,7 @@ import static junit.framework.TestCase.fail;
 import static org.assertj.core.api.Assertions.assertThat;
 import static urchin.util.EncryptedFolderUtil.getEncryptedFolder;
 
-public class FolderControllerIT extends TestApplication {
+public class FolderControllerIT extends SecureTestApplication {
 
     private static final String FILENAME = "test_file_for_folder_service_it.txt";
     private static final String FOLDER1_NAME = "/folder1";
