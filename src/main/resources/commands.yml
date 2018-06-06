@@ -5,7 +5,7 @@ folder:
   set-folder-mutable: sudo chattr -i %folder%
   mount-encrypted-folder: sudo mount -t ecryptfs %encryptedFolder% %folder% -o key=passphrase:passphrase_passwd=%passphrase%,ecryptfs_cipher=aes,ecryptfs_key_bytes=16,ecryptfs_passthrough=n,no_sig_cache=n,ecryptfs_enable_filename_crypto=y
   mount-virtual-folder: sudo mhddfs -o allow_other %folderList% %virtualFolder%
-  restart-samba: sudo /etc/init.d/samba restart
+  restart-samba: sudo /etc/init.d/smbd restart
   share-folder: net usershare add %folderName% %folder% desc everyone:F guest_ok=y
   unmount-folder: sudo umount -l %folder%
   unshare-folder: net usershare delete %folder%
@@ -24,6 +24,8 @@ user:
   remove-user: sudo deluser %username%
   set-user-password: sudo passwd %username%
   who-am-i: whoami
+  get-shadow: sudo cat /etc/shadow
+  verify-shadow-password: mkpasswd -m %method% %password% -s %salt%
 permission:
   change-file-modes: chmod -R %modes% %file%
   change-owner: sudo chown -R %owner%:%group% %file%

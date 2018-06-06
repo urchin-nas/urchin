@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Setup match snapshot 1`] = `
+<div
+  className="setup-admin"
+  data-view="setupAdmin"
+>
+  <h2>
+    Setup admin
+  </h2>
+  <input
+    name="username"
+    onChange={[Function]}
+    placeholder="username"
+    type="text"
+    value=""
+  />
+  <FieldError
+    field="username"
+  />
+  <button
+    className="setup-admin__add-btn"
+    data-view="add"
+    onClick={[Function]}
+  >
+    Create User
+  </button>
+</div>
+`;

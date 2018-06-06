@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
+import org.springframework.beans.factory.annotation.Autowired;
 import urchin.exception.FolderNotFoundException;
 import urchin.model.folder.*;
 import urchin.testutil.TestApplication;
@@ -21,6 +22,7 @@ public class FolderSettingsRepositoryIT extends TestApplication {
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
+    @Autowired
     private FolderSettingsRepository folderSettingsRepository;
 
     private Folder folder;
@@ -33,7 +35,6 @@ public class FolderSettingsRepositoryIT extends TestApplication {
         String tmpFolderPath = temporaryFolder.getRoot().getAbsolutePath();
         folder = ImmutableFolder.of(Paths.get(tmpFolderPath + "/folder"));
         encryptedFolder = folder.toEncryptedFolder();
-        folderSettingsRepository = new FolderSettingsRepository(jdbcTemplate, namedParameterJdbcTemplate);
     }
 
     @Test

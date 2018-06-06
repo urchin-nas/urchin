@@ -79,3 +79,27 @@ databaseChangeLog:
                   type: datetime
                   constraints:
                     nullable: false
+  - changeSet:
+      id: 4
+      author: andhem
+      changes:
+        - createTable:
+            tableName: admin
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: username
+                  type: varchar(32)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created
+                  type: datetime
+                  constraints:
+                    nullable: false

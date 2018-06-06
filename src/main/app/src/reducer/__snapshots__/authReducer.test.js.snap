@@ -1,0 +1,44 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`authReducer LOGIN 1`] = `
+Object {
+  "isLoggingIn": true,
+}
+`;
+
+exports[`authReducer LOGIN_FAILED 1`] = `
+Object {
+  "authed": "LOGIN_FAILED",
+  "isLoggingIn": false,
+}
+`;
+
+exports[`authReducer LOGIN_INVALID 1`] = `
+Object {
+  "authed": "LOGIN_INVALID",
+  "isLoggingIn": false,
+}
+`;
+
+exports[`authReducer LOGIN_SUCCESS 1`] = `
+Object {
+  "authed": "LOGIN_SUCCESS",
+  "isLoggingIn": false,
+}
+`;
+
+exports[`authReducer LOGOUT_SUCCESS 1`] = `
+Object {
+  "authed": "LOGOUT_SUCCESS",
+  "isLoggingIn": false,
+}
+`;
+
+exports[`authReducer PRECONDITION_FAILED 1`] = `
+Object {
+  "authed": "PRECONDITION_FAILED",
+  "isLoggingIn": false,
+}
+`;
+
+exports[`authReducer initial state 1`] = `Object {}`;

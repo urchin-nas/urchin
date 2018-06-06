@@ -1,5 +1,6 @@
 package urchin.selenium.testutil;
 
+import org.junit.rules.TemporaryFolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -54,7 +55,7 @@ public enum JarExecutor {
         if (!isStarted()) {
             Path jar = findJar();
             log.info("Starting jar " + jar.toAbsolutePath());
-            String temporaryFolderPath = System.getProperty("java.io.tmpdir");
+            String temporaryFolderPath = createTemporaryFolder();
             String execute = format("%s -Dspring.datasource.url=jdbc:h2:%s/urchintestdb -jar %s", getJavaExecutable(), temporaryFolderPath, jar.toAbsolutePath().toString());
             log.info(execute);
             jarProcess = Runtime.getRuntime().exec(execute);
@@ -65,6 +66,12 @@ public enum JarExecutor {
 
     private boolean isStarted() {
         return jarProcess != null && jarProcess.isAlive();
+    }
+
+    private String createTemporaryFolder() throws IOException {
+        TemporaryFolder temporaryFolder = new TemporaryFolder();
+        temporaryFolder.create();
+        return temporaryFolder.newFolder().getAbsolutePath();
     }
 
     private String getJavaExecutable() {

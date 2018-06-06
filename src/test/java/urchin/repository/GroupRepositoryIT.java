@@ -1,7 +1,7 @@
 package urchin.repository;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import urchin.exception.GroupNotFoundException;
 import urchin.model.group.Group;
 import urchin.model.group.GroupId;
@@ -18,12 +18,8 @@ import static org.assertj.core.api.Assertions.fail;
 
 public class GroupRepositoryIT extends TestApplication {
 
+    @Autowired
     private GroupRepository groupRepository;
-
-    @Before
-    public void setup() {
-        groupRepository = new GroupRepository(namedParameterJdbcTemplate);
-    }
 
     @Test
     public void crd() {

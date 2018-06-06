@@ -91,7 +91,7 @@ public class GroupServiceTest {
 
     @Test(expected = UserNotFoundException.class)
     public void addUserToGroupWhenUserDoesNotExistInRepositoryThrowsException() {
-        when(userService.getUser(USER_ID)).thenThrow(new UserNotFoundException(""));
+        when(userService.getUser(USER_ID)).thenThrow(new UserNotFoundException(USER_ID));
 
         groupService.addUserToGroup(USER.getUserId(), GROUP_ID);
     }
@@ -116,7 +116,7 @@ public class GroupServiceTest {
 
     @Test(expected = UserNotFoundException.class)
     public void removeUserFromGroupWhenUserDoesNotExistInRepositoryThrowsException() {
-        when(userService.getUser(USER_ID)).thenThrow(new UserNotFoundException(""));
+        when(userService.getUser(USER_ID)).thenThrow(new UserNotFoundException(USER_ID));
 
         groupService.removeUserFromGroup(USER.getUserId(), GROUP_ID);
     }

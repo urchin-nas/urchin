@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import urchin.cli.user.*;
 import urchin.model.group.GroupName;
-import urchin.model.user.LinuxUser;
-import urchin.model.user.Password;
-import urchin.model.user.User;
-import urchin.model.user.Username;
+import urchin.model.user.*;
 
 import java.util.List;
 
@@ -21,6 +18,8 @@ public class UserCli {
     private final ListUsersCommand listUsersCommand;
     private final ListGroupsForUserCommand listGroupsForUserCommand;
     private final WhoAmICommand whoAmICommand;
+    private final GetShadowCommand getShadowCommand;
+    private final VerifyShadowPasswordCommand verifyShadowPasswordCommand;
 
     @Autowired
     public UserCli(
@@ -30,7 +29,9 @@ public class UserCli {
             SetUserPasswordCommand setUserPasswordCommand,
             ListUsersCommand listUsersCommand,
             ListGroupsForUserCommand listGroupsForUserCommand,
-            WhoAmICommand whoAmICommand) {
+            WhoAmICommand whoAmICommand,
+            GetShadowCommand getShadowCommand,
+            VerifyShadowPasswordCommand verifyShadowPasswordCommand) {
         this.addUserCommand = addUserCommand;
         this.checkIfUsernameExistCommand = checkIfUsernameExistCommand;
         this.removeUserCommand = removeUserCommand;
@@ -38,6 +39,8 @@ public class UserCli {
         this.listUsersCommand = listUsersCommand;
         this.listGroupsForUserCommand = listGroupsForUserCommand;
         this.whoAmICommand = whoAmICommand;
+        this.getShadowCommand = getShadowCommand;
+        this.verifyShadowPasswordCommand = verifyShadowPasswordCommand;
     }
 
     public void addUser(Username username) {
@@ -66,6 +69,33 @@ public class UserCli {
 
     public LinuxUser whoAmI() {
         return whoAmICommand.execute();
+    }
+
+    public boolean verifyPassword(LinuxUser linuxUser, Password password) {
+        Shadow systemShadow = getShadow(linuxUser);
+        return verifyShadowPassword(password, systemShadow);
+    }
+
+    Shadow getShadow(LinuxUser linuxUser) {
+        return toShadow(getShadowCommand.execute(linuxUser));
+    }
+
+    boolean verifyShadowPassword(Password password, Shadow shadow) {
+        Shadow newShadow = toShadow(verifyShadowPasswordCommand.execute(password, shadow));
+        return newShadow.getEncryptedPassword().equals(shadow.getEncryptedPassword());
+    }
+
+    private Shadow toShadow(String response) {
+        String[] split = response.trim().split("\\$");
+        String id = split[1];
+        String salt = split[2];
+        String encryptedPassword = split[3].split(":")[0];
+
+        return ImmutableShadow.builder()
+                .id(id)
+                .salt(salt)
+                .encryptedPassword(encryptedPassword)
+                .build();
     }
 
 }

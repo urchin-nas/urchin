@@ -13,8 +13,8 @@ import urchin.controller.api.group.ImmutableAddGroupRequest;
 import urchin.controller.api.permission.*;
 import urchin.controller.api.user.AddUserRequest;
 import urchin.controller.api.user.ImmutableAddUserRequest;
+import urchin.testutil.SecureTestApplication;
 import urchin.testutil.TemporaryFolderUnmount;
-import urchin.testutil.TestApplication;
 
 import java.nio.file.Paths;
 
@@ -23,7 +23,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static urchin.testutil.UnixUserAndGroupCleanup.GROUP_PREFIX;
 import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;
 
-public class PermissionControllerIT extends TestApplication {
+public class PermissionControllerIT extends SecureTestApplication {
 
     @Rule
     public TemporaryFolderUnmount temporaryFolderUnmount = new TemporaryFolderUnmount();

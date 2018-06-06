@@ -17,7 +17,7 @@ import urchin.controller.api.user.ImmutableAddUserRequest;
 import urchin.controller.api.user.UserResponse;
 import urchin.model.group.GroupId;
 import urchin.model.user.UserId;
-import urchin.testutil.TestApplication;
+import urchin.testutil.SecureTestApplication;
 
 import java.util.List;
 import java.util.Map;
@@ -29,7 +29,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static urchin.testutil.UnixUserAndGroupCleanup.GROUP_PREFIX;
 import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;
 
-public class GroupControllerIT extends TestApplication {
+public class GroupControllerIT extends SecureTestApplication {
 
     private UserId userId;
     private AddGroupRequest addGroupRequest;

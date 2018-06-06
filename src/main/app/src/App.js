@@ -2,9 +2,10 @@ import React, {Component} from 'react';
 import {Route, Router, Switch} from 'react-router-dom'
 import history from './history'
 import {NotificationContainer} from 'react-notifications';
-import Root from './component/Root';
-import LoginContainer from './component/LoginContainer';
+import RootContainer from './component/RootContainer';
+import LoginContainer from './component/login/LoginContainer';
 import ScrollToTop from "./component/ScrollToTop";
+import SetupAdminContainer from "./component/setup/SetupAdminContainer";
 
 class App extends Component {
     render() {
@@ -16,8 +17,10 @@ class App extends Component {
                         <Switch>
                             <Route path='/login'
                                    component={LoginContainer}/>
+                            <Route path='/setup-admin'
+                                   component={SetupAdminContainer}/>
                             <Route path='/'
-                                   component={Root}/>
+                                   component={RootContainer}/>
                         </Switch>
                     </ScrollToTop>
                 </Router>

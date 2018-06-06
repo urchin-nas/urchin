@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginContainer match snapshot 1`] = `
+<div
+  className="login"
+  data-view="login"
+>
+  <form
+    action="/login"
+    method="post"
+  >
+    <input
+      name="username"
+      placeholder="Username"
+      type="text"
+    />
+    <input
+      name="password"
+      placeholder="Password"
+      type="password"
+    />
+    <input
+      name="login"
+      type="submit"
+      value="Login"
+    />
+  </form>
+</div>
+`;

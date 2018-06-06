@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`authAction authenticate failed 1`] = `
+Array [
+  Object {
+    "type": "LOGOUT_SUCCESS",
+  },
+]
+`;
+
+exports[`authAction authenticate is successful 1`] = `
+Array [
+  Object {
+    "type": "LOGIN_SUCCESS",
+  },
+]
+`;
+
+exports[`authAction authenticate precondition failed 1`] = `
+Array [
+  Object {
+    "type": "PRECONDITION_FAILED",
+  },
+]
+`;
+
+exports[`authAction login failed 1`] = `
+Array [
+  Object {
+    "type": "LOGIN",
+  },
+  Object {
+    "type": "LOGIN_FAILED",
+  },
+]
+`;
+
+exports[`authAction login failed network error 1`] = `
+Array [
+  Object {
+    "type": "LOGIN",
+  },
+  Object {
+    "data": [TypeError: Network request failed],
+    "type": "LOGIN_FAILED",
+  },
+]
+`;
+
+exports[`authAction login invalid 1`] = `
+Array [
+  Object {
+    "type": "LOGIN",
+  },
+  Object {
+    "type": "LOGIN_INVALID",
+  },
+]
+`;
+
+exports[`authAction login is successful 1`] = `
+Array [
+  Object {
+    "type": "LOGIN",
+  },
+  Object {
+    "type": "LOGIN_SUCCESS",
+  },
+]
+`;
