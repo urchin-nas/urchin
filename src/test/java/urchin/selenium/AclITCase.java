@@ -11,7 +11,7 @@ import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
 import static urchin.testutil.UnixUserAndGroupCleanup.GROUP_PREFIX;
 import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;
 
-public class aclITCase extends SeleniumTest {
+public class AclITCase extends SeleniumTest {
 
     @ClassRule
     public static TemporaryFolder temporaryFolder = new TemporaryFolder();
