@@ -53,6 +53,26 @@ go to: http://localhost:3000/ (backend must be running to serve the api)
 
 To start backend run `Application.java` or build the application and start it with java -jar command (see Build and Run)
 
+### Selenium
+
+Selenium tests can be run in two different modes. 
+
+By **default** selenium tests assumes we want to run everything in `development mode`.
+I.e selenium expects that both the backend and the frontend has been started **manually**. 
+All selenium tests are also configured to run with an interactive browser window.
+
+**Important!** Because an OS user is required to interact with this application, these tests also has this requirement. 
+
+create a new user with `sudo useradd <os_user>` and give it a password with `sudo passwd <os_user>`. Then add the following environment variables:
+
+```
+URCHIN_USR=<os_user>
+URCHIN_PWD=<os_user_password>
+```
+
+The second mode is fully **automatic** and is part of `mvn install` and will run all tests using headless non-interactive browser.
+It can be enabled by executing with `-Dspring.profiles.active=selenium`
+
 ### Swagger
 
 http://localhost:8080/swagger-ui.html

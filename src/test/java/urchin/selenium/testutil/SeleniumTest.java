@@ -2,6 +2,8 @@ package urchin.selenium.testutil;
 
 import org.junit.BeforeClass;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.core.env.PropertySource;
 import urchin.cli.Command;
 import urchin.cli.user.AddUserCommand;
@@ -27,11 +29,14 @@ import urchin.selenium.view.users.user.NewUserView;
 import java.io.IOException;
 
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
+import static urchin.selenium.testutil.ProfileEvaluator.executeJar;
 import static urchin.testutil.UnixUserAndGroupCleanup.USERNAME_PREFIX;
 
 @RunWith(SeleniumRunner.class)
 public abstract class SeleniumTest {
 
+    public static final String URCHIN_USR = "URCHIN_USR";
+    public static final String URCHIN_PWD = "URCHIN_PWD";
     private static String username;
     private static String password;
 
@@ -47,15 +52,18 @@ public abstract class SeleniumTest {
     protected static final NewFolderView NEW_FOLDER = new NewFolderView();
     protected static final EditFolderView EDIT_FOLDER = new EditFolderView();
     protected static final ConfirmNewFolderView CONFIRM_NEW_FOLDER = new ConfirmNewFolderView();
+
     private static final SetupAdminView SETUP_ADMIN_VIEW = new SetupAdminView();
     private static final LoginView LOGIN = new LoginView();
+
+    private static final Logger log = LoggerFactory.getLogger(SeleniumTest.class.getName());
 
     @BeforeClass
     public static void setUpAndLogin() throws IOException {
         String redirectUrl = LOGIN.goToHome();
 
         if (redirectUrl.endsWith("/login")) {
-            login();
+            loginAdmin();
         } else if (redirectUrl.endsWith("/setup-admin")) {
             setupAdminAndLogin();
         }
@@ -80,13 +88,21 @@ public abstract class SeleniumTest {
         username = user.getValue();
         password = pwd.getValue();
 
-        login();
+        loginAdmin();
     }
 
-    private static void login() {
+    private static void loginAdmin() {
+        String usr = username;
+        String pwd = password;
+        if (!executeJar()) {
+            log.info("Expecting OS user to have been created, registered as an 'Urchin Admin' " +
+                    "and its username and password to be set in environment variables {} and {}", URCHIN_USR, URCHIN_PWD);
+            usr = System.getenv(URCHIN_USR);
+            pwd = System.getenv(URCHIN_PWD);
+        }
         LOGIN.verifyAtView()
-                .fillUsername(username)
-                .fillpassword(password)
+                .fillUsername(usr)
+                .fillpassword(pwd)
                 .clickOnLogin();
 
         HOME.verifyAtView();
