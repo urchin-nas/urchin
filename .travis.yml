@@ -9,6 +9,7 @@ before_install:
   - echo 'DOCKER_OPTS="-s devicemapper"' | sudo tee /etc/default/docker > /dev/null
   - sudo service docker restart
   - sleep 5
+  - docker info | grep "Storage Driver"
 
 install:
   - docker pull anhem/urchin
