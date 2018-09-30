@@ -1,6 +1,7 @@
 package urchin.selenium.testutil;
 
 import io.github.bonigarcia.wdm.ChromeDriverManager;
+import io.github.bonigarcia.wdm.DriverManagerType;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -30,7 +31,7 @@ public class SeleniumDriver {
 
     private static WebDriver createDriver() {
         log.info("Configuring webDriver to execute in normal mode");
-        WebDriverManager webDriverManager = ChromeDriverManager.getInstance();
+        WebDriverManager webDriverManager = ChromeDriverManager.chromedriver();
         webDriverManager.setup();
 
         ChromeOptions options = new ChromeOptions();
@@ -40,7 +41,7 @@ public class SeleniumDriver {
 
     private static WebDriver createHeadlessDriver() {
         log.info("Configuring webDriver to execute in headless mode");
-        WebDriverManager webDriverManager = ChromeDriverManager.getInstance();
+        WebDriverManager webDriverManager = ChromeDriverManager.chromedriver();
         webDriverManager.setup();
 
         ChromeOptions options = new ChromeOptions();
