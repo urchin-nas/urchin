@@ -1,6 +1,5 @@
 package urchin.cli;
 
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import urchin.exception.CommandException;
@@ -8,7 +7,7 @@ import urchin.exception.CommandException;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
-import static java.nio.charset.Charset.defaultCharset;
+import static urchin.cli.CommandUtil.readResponse;
 
 public abstract class BasicCommand {
 
@@ -30,12 +29,13 @@ public abstract class BasicCommand {
             process.waitFor(10, TimeUnit.SECONDS);
 
             if (process.exitValue() != 0) {
-                String error = IOUtils.toString(process.getErrorStream(), defaultCharset());
+                String error = readResponse(process.getErrorStream());
                 log.error("Process returned error: {}", error);
                 throw new CommandException(this.getClass(), process.exitValue());
             }
 
-            String response = IOUtils.toString(process.getInputStream(), defaultCharset());
+            String response = readResponse(process.getInputStream());
+
             if (response.length() > 0) {
                 log.debug("Response: {}", response);
                 return Optional.of(response);

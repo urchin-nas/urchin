@@ -1,6 +1,5 @@
 package urchin.cli.folder;
 
-import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,7 @@ import urchin.model.folder.Passphrase;
 import java.io.BufferedWriter;
 import java.io.OutputStreamWriter;
 
-import static java.nio.charset.Charset.defaultCharset;
+import static urchin.cli.CommandUtil.readResponse;
 
 @Component
 public class MountEncryptedFolderCommand {
@@ -52,7 +51,7 @@ public class MountEncryptedFolderCommand {
             bufferedWriter.flush();
             process.waitFor();
             if (process.exitValue() != 0) {
-                String error = IOUtils.toString(process.getErrorStream(), defaultCharset());
+                String error = readResponse(process.getErrorStream());
                 log.error("Process failed with error: {}", error);
                 throw new CommandException(this.getClass(), process.exitValue());
             }
