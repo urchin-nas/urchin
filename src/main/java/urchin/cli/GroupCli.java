@@ -93,7 +93,13 @@ public class GroupCli {
 
     private String[] getUsers(Group group) {
         return getGroupEntriesCommand.execute(group.getName())
-                .map(s -> s.split(":")[3].split(","))
+                .map(s -> {
+                    String[] split = s.split(":");
+                    if (split.length > 3) {
+                        return s.split(":")[3].split(",");
+                    }
+                    return new String[0];
+                })
                 .orElse(new String[0]);
     }
 }
