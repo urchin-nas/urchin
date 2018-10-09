@@ -19,19 +19,19 @@ import static org.assertj.core.api.Assertions.fail;
 public class UserRepositoryIT extends TestApplication {
 
     private static final Username USERNAME = Username.of("username");
+    private static final LocalDateTime NOW = LocalDateTime.now();
 
     @Autowired
     private UserRepository userRepository;
 
     @Test
     public void crd() {
-        LocalDateTime now = LocalDateTime.now();
 
         UserId userId = userRepository.saveUser(USERNAME);
         User readUser = userRepository.getUser(userId);
 
         assertThat(readUser.getUsername()).isEqualTo(USERNAME);
-        assertThat(now.isAfter(readUser.getCreated())).isFalse();
+        assertThat(NOW.isAfter(readUser.getCreated())).isFalse();
 
         userRepository.removeUser(userId);
 
