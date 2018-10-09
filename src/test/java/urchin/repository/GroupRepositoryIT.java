@@ -18,19 +18,20 @@ import static org.assertj.core.api.Assertions.fail;
 
 public class GroupRepositoryIT extends TestApplication {
 
+    private static final LocalDateTime NOW = LocalDateTime.now();
+
     @Autowired
     private GroupRepository groupRepository;
 
     @Test
     public void crd() {
-        LocalDateTime now = LocalDateTime.now();
         GroupName groupName = GroupName.of("groupName");
 
         GroupId groupId = groupRepository.saveGroup(groupName);
         Group readGroup = groupRepository.getGroup(groupId);
 
         assertThat(readGroup.getName()).isEqualTo(groupName);
-        assertThat(now.isAfter(readGroup.getCreated())).isFalse();
+        assertThat(NOW.isAfter(readGroup.getCreated())).isFalse();
 
         groupRepository.removeGroup(groupId);
 
