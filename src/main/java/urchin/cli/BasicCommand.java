@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import urchin.exception.CommandException;
 
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import static java.nio.charset.Charset.defaultCharset;
 
@@ -26,7 +27,7 @@ public abstract class BasicCommand {
     protected Optional<String> executeCommand(String[] command) {
         try {
             Process process = runtime.exec(command);
-            process.waitFor();
+            process.waitFor(10, TimeUnit.SECONDS);
 
             if (process.exitValue() != 0) {
                 String error = IOUtils.toString(process.getErrorStream(), defaultCharset());
