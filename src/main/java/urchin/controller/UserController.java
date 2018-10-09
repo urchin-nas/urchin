@@ -24,7 +24,7 @@ import static urchin.controller.mapper.UserMapper.mapToUserResponse;
 import static urchin.controller.mapper.UserMapper.mapToUsersResponses;
 
 @RestController
-@RequestMapping("api/users")
+@RequestMapping(value = "api/users", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class UserController {
 
     private final UserService userService;
@@ -34,31 +34,31 @@ public class UserController {
         this.userService = userService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping
     public List<UserResponse> getUsers() {
         List<User> users = userService.getUsers();
         return mapToUsersResponses(users);
     }
 
-    @RequestMapping(value = "{userId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "{userId}")
     public UserResponse getUser(@PathVariable int userId) {
         UserId uid = UserId.of(userId);
         return mapToUserResponse(userService.getUser(uid));
     }
 
-    @RequestMapping(value = "add", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "add", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public IdResponse addUser(@Valid @RequestBody AddUserRequest addUserRequest) {
         UserId userId = userService.addUser(Username.of(addUserRequest.getUsername()), Password.of(addUserRequest.getPassword()));
         return ImmutableIdResponse.of(userId.getValue());
     }
 
-    @RequestMapping(value = "{userId}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @DeleteMapping(value = "{userId}")
     public MessageResponse removeUser(@PathVariable int userId) {
         userService.removeUser(UserId.of(userId));
         return ImmutableMessageResponse.of("User removed");
     }
 
-    @RequestMapping(value = "{userId}/groups", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "{userId}/groups")
     public List<GroupResponse> getGroupsForUser(@PathVariable int userId) {
         return mapToGroupsResponses(userService.listGroupsForUser(UserId.of(userId)));
     }

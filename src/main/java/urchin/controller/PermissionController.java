@@ -19,7 +19,7 @@ import javax.validation.Valid;
 import static urchin.controller.mapper.AclPermissionsMapper.mapToAclResponse;
 
 @RestController
-@RequestMapping("api/permissions")
+@RequestMapping(value = "api/permissions", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class PermissionController {
 
     private final PermissionService permissionService;
@@ -29,12 +29,12 @@ public class PermissionController {
         this.permissionService = permissionService;
     }
 
-    @RequestMapping(value = "/acl/{folderId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping(value = "/acl/{folderId}")
     public AclResponse getAcl(@PathVariable int folderId) {
         return mapToAclResponse(permissionService.getAcl(FolderId.of(folderId)));
     }
 
-    @RequestMapping(value = "acl/user", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "acl/user", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public MessageResponse setAclForUser(@Valid @RequestBody SetAclUserPermissionRequest setAclUserPermissionRequest) {
         permissionService.setAcl(
                 FolderId.of(setAclUserPermissionRequest.getFolderId()),
@@ -45,7 +45,7 @@ public class PermissionController {
         return ImmutableMessageResponse.of("User permissions set");
     }
 
-    @RequestMapping(value = "acl/group", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "acl/group", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public MessageResponse setAclForGroup(@Valid @RequestBody SetAclGroupPermissionRequest setAclGroupPermissionRequest) {
         permissionService.setAcl(
                 FolderId.of(setAclGroupPermissionRequest.getFolderId()),

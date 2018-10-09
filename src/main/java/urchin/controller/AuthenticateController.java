@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import urchin.controller.api.ImmutableMessageResponse;
 import urchin.controller.api.MessageResponse;
 import urchin.controller.api.user.AddAdminRequest;
@@ -18,7 +15,7 @@ import urchin.service.AdminService;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("api/authenticate")
+@RequestMapping(value = "api/authenticate", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 public class AuthenticateController {
 
     static final MessageResponse OK = ImmutableMessageResponse.of("OK");
@@ -32,7 +29,7 @@ public class AuthenticateController {
         this.adminService = adminService;
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @GetMapping
     public ResponseEntity<MessageResponse> authenticated() {
         if (adminService.adminsMissing()) {
             return ResponseEntity.status(HttpStatus.PRECONDITION_REQUIRED).body(NO_ADMIN_CONFIGURED);
@@ -42,7 +39,7 @@ public class AuthenticateController {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(UNAUTHORIZED);
     }
 
-    @RequestMapping(value = "add-first-admin", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @PostMapping(value = "add-first-admin", consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public MessageResponse addFirstAdmin(@Valid @RequestBody AddAdminRequest addAdminRequest) {
         adminService.addFirstAdmin(Username.of(addAdminRequest.getUsername()));
         return OK;
