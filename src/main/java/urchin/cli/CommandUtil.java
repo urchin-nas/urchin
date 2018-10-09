@@ -11,6 +11,6 @@ public class CommandUtil {
     public static String readResponse(InputStream inputStream) {
         return new BufferedReader(new InputStreamReader(inputStream, Charset.defaultCharset()))
                 .lines()
-                .collect(Collectors.joining());
+                .collect(Collectors.joining(System.lineSeparator()));
     }
 }
