@@ -17,19 +17,20 @@ import static org.assertj.core.api.Assertions.fail;
 
 public class AdminRepositoryIT extends TestApplication {
 
+    private static final LocalDateTime NOW = LocalDateTime.now();
+
     @Autowired
     private AdminRepository adminRepository;
 
     @Test
     public void crd() {
-        LocalDateTime now = LocalDateTime.now();
         Username username = Username.of("username");
 
         AdminId adminId = adminRepository.saveAdmin(username);
         Admin readAdmin = adminRepository.getAdmin(adminId);
 
         assertThat(readAdmin.getUsername()).isEqualTo(username);
-        assertThat(now.isAfter(readAdmin.getCreated())).isFalse();
+        assertThat(NOW.isAfter(readAdmin.getCreated())).isFalse();
 
         adminRepository.removeAdmin(adminId);
 
