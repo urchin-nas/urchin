@@ -19,6 +19,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class FolderSettingsRepositoryIT extends TestApplication {
 
+    private static LocalDateTime NOW = LocalDateTime.now();
+
     @Rule
     public TemporaryFolder temporaryFolder = new TemporaryFolder();
 
@@ -27,11 +29,9 @@ public class FolderSettingsRepositoryIT extends TestApplication {
 
     private Folder folder;
     private EncryptedFolder encryptedFolder;
-    private LocalDateTime now;
 
     @Before
     public void setup() {
-        now = LocalDateTime.now();
         String tmpFolderPath = temporaryFolder.getRoot().getAbsolutePath();
         folder = ImmutableFolder.of(Paths.get(tmpFolderPath + "/folder"));
         encryptedFolder = folder.toEncryptedFolder();
@@ -49,7 +49,7 @@ public class FolderSettingsRepositoryIT extends TestApplication {
         assertThat(readFolderSettings.getFolderId().getValue() > 0).isTrue();
         assertThat(readFolderSettings.getFolder()).isEqualTo(folder);
         assertThat(readFolderSettings.getEncryptedFolder()).isEqualTo(encryptedFolder);
-        assertThat(now.isBefore(readFolderSettings.getCreated()) || now.isEqual(readFolderSettings.getCreated())).isTrue();
+        assertThat(NOW.isBefore(readFolderSettings.getCreated()) || NOW.isEqual(readFolderSettings.getCreated())).isTrue();
         assertThat(readFolderSettings.isAutoMount()).isFalse();
 
         folderSettingsRepository.removeFolderSettings(readFolderSettings.getFolderId());
@@ -78,7 +78,7 @@ public class FolderSettingsRepositoryIT extends TestApplication {
         assertThat(folderSettings.getFolderId()).isEqualTo(folderId);
         assertThat(folderSettings.getEncryptedFolder().getPath().toAbsolutePath()).isEqualTo(encryptedFolder.getPath().toAbsolutePath());
         assertThat(folderSettings.getFolder().toAbsolutePath()).isEqualTo(folder.toAbsolutePath());
-        assertThat(now.isBefore(folderSettings.getCreated()) || now.isEqual(folderSettings.getCreated())).isTrue();
+        assertThat(NOW.isBefore(folderSettings.getCreated()) || NOW.isEqual(folderSettings.getCreated())).isTrue();
         assertThat(folderSettings.isAutoMount()).isFalse();
     }
 
