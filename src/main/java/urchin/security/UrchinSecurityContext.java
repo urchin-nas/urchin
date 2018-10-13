@@ -11,6 +11,9 @@ import static urchin.model.user.Role.URCHIN_ADMIN;
 
 public class UrchinSecurityContext {
 
+    private UrchinSecurityContext() {
+    }
+
     public static Authentication getLoggedInUserAuthentication() {
         return SecurityContextHolder.getContext().getAuthentication();
     }
