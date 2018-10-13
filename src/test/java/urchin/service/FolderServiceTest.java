@@ -27,7 +27,6 @@ import java.time.LocalDateTime;
 
 import static java.nio.file.Files.createDirectories;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.*;
 import static urchin.util.EncryptedFolderUtil.getEncryptedFolder;
 import static urchin.util.PassphraseGenerator.generateEcryptfsPassphrase;

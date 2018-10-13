@@ -20,7 +20,7 @@ echo "[Remount / with ACL]"
 mount -o remount,acl /
 
 echo "[Starting Samba in preparation for tests]"
-service samba start
+service smbd start
 
 if [ ${BRANCH} != "master" ]; then
     echo "[Checking out branch '${BRANCH}']"

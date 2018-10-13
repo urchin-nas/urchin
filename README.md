@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/anhem/urchin.svg?branch=master)](https://travis-ci.org/anhem/urchin)
 [![Quality](https://sonarcloud.io/api/project_badges/measure?project=urchin%3Aurchin&metric=alert_status)](https://sonarcloud.io/dashboard?id=urchin%3Aurchin)
 
-This project is built primarily on **Ubuntu** (16.04). Even though the backend is written in Java, it is tightly coupled with the underlying operating system and will not work on Windows or OS X machines. Some of the requirements are listed below. 
+This project is built primarily on **Ubuntu** (18.04). Even though the backend is written in Java, it is tightly coupled with the underlying operating system and will not work on Windows or OS X machines. Some of the requirements are listed below. 
 
 For development on non-supported platforms, run everything on Ubuntu using a virtualization software such as [VirtualBox](https://www.virtualbox.org/).
 
