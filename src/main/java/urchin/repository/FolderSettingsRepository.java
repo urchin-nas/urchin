@@ -19,6 +19,9 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
+import static java.lang.String.format;
 
 @Repository
 public class FolderSettingsRepository {
@@ -62,7 +65,11 @@ public class FolderSettingsRepository {
 
         namedParameterJdbcTemplate.update(INSERT_FOLDER_SETTINGS, parameters, keyHolder);
 
-        return FolderId.of(keyHolder.getKey().intValue());
+        int folderId = Optional.ofNullable(keyHolder.getKey())
+                .map(Number::intValue)
+                .orElseThrow(() -> new RuntimeException(format("Failed to save folder settings for folder %s", folder)));
+
+        return FolderId.of(folderId);
     }
 
     public void removeFolderSettings(FolderId folderId) {

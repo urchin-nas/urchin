@@ -14,6 +14,9 @@ import static urchin.controller.mapper.UserMapper.mapToUserResponse;
 
 public class AclUserPermissionsMapper {
 
+    private AclUserPermissionsMapper() {
+    }
+
     public static List<AclUserPermissionsResponse> mapToAclUserPermissionsResponse(Map<User, AclPermission> userPermissions) {
         return userPermissions.entrySet().stream()
                 .map(e -> ImmutableAclUserPermissionsResponse.builder()

@@ -17,6 +17,9 @@ public class EncryptedFolderUtil {
     public static final String HIDDEN_FOLDER_DELIMITER = separator + ".";
     private static final String DELIMITER = separator;
 
+    private EncryptedFolderUtil() {
+    }
+
     public static Folder getFolder(EncryptedFolder encryptedFolder) {
         String path = encryptedFolder.toAbsolutePath();
         String folderPath = path.substring(0, path.lastIndexOf(HIDDEN_FOLDER_DELIMITER)) + DELIMITER + path.substring(path.lastIndexOf(HIDDEN_FOLDER_DELIMITER) + HIDDEN_FOLDER_DELIMITER.length());

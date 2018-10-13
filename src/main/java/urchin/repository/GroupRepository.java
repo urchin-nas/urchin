@@ -20,7 +20,10 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static java.lang.String.format;
 
 @Repository
 public class GroupRepository {
@@ -47,7 +50,11 @@ public class GroupRepository {
                 .addValue("created", new Timestamp(new Date().getTime()));
 
         namedParameterJdbcTemplate.update(INSERT_GROUP, parameters, keyHolder);
-        return GroupId.of(keyHolder.getKey().intValue());
+        int groupId = Optional.ofNullable(keyHolder.getKey())
+                .map(Number::intValue)
+                .orElseThrow(() -> new RuntimeException(format("Failed to save group %s", groupName)));
+
+        return GroupId.of(groupId);
     }
 
     public Group getGroup(GroupId groupId) {

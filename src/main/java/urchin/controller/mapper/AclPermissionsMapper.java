@@ -13,6 +13,9 @@ import static urchin.controller.mapper.AclUserPermissionsMapper.mapToAclUserPerm
 
 public class AclPermissionsMapper {
 
+    private AclPermissionsMapper() {
+    }
+
     public static AclResponse mapToAclResponse(AclPermissions acl) {
         List<AclGroupPermissionsResponse> aclGroupPermissionsResponses = mapToAclGroupPermissionsResponse(acl.getGroups());
         List<AclUserPermissionsResponse> aclUserPermissionsResponses = mapToAclUserPermissionsResponse(acl.getUsers());

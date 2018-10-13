@@ -20,6 +20,9 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
+import static java.lang.String.format;
 
 @Repository
 public class AdminRepository {
@@ -29,6 +32,9 @@ public class AdminRepository {
     private static final String DELETE_ADMIN = "DELETE FROM admin WHERE id = :id";
     private static final String SELECT_ADMINS = "SELECT * from admin";
     private static final String SELECT_ADMIN_BY_USERNAME = "SELECT * FROM admin WHERE username = :username";
+    private static final String USERNAME = "username";
+    private static final String CREATED = "created";
+    private static final String ID = "id";
 
     private final Logger log = LoggerFactory.getLogger(AdminRepository.class);
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
@@ -44,17 +50,21 @@ public class AdminRepository {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         MapSqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("username", username.getValue())
-                .addValue("created", new Timestamp(new Date().getTime()));
+                .addValue(USERNAME, username.getValue())
+                .addValue(CREATED, new Timestamp(new Date().getTime()));
 
         namedParameterJdbcTemplate.update(INSERT_ADMIN, parameters, keyHolder);
 
-        return AdminId.of(keyHolder.getKey().intValue());
+        int adminId = Optional.ofNullable(keyHolder.getKey())
+                .map(Number::intValue)
+                .orElseThrow(() -> new RuntimeException(format("Failed to save admin %s", username)));
+
+        return AdminId.of(adminId);
     }
 
     public Admin getAdmin(AdminId adminId) {
         MapSqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("id", adminId.getValue());
+                .addValue(ID, adminId.getValue());
 
         try {
             return namedParameterJdbcTemplate.queryForObject(SELECT_ADMIN, parameters, (resultSet, i) -> adminMapper(resultSet));
@@ -65,7 +75,7 @@ public class AdminRepository {
 
     public void removeAdmin(AdminId adminId) {
         MapSqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("id", adminId.getValue());
+                .addValue(ID, adminId.getValue());
 
         namedParameterJdbcTemplate.update(DELETE_ADMIN, parameters);
     }
@@ -76,7 +86,7 @@ public class AdminRepository {
 
     public Admin getAdminByUsername(Username username) {
         MapSqlParameterSource parameters = new MapSqlParameterSource()
-                .addValue("username", username.getValue());
+                .addValue(USERNAME, username.getValue());
         try {
             return namedParameterJdbcTemplate.queryForObject(SELECT_ADMIN_BY_USERNAME, parameters, (resultSet, i) -> adminMapper(resultSet));
         } catch (EmptyResultDataAccessException e) {
@@ -86,9 +96,9 @@ public class AdminRepository {
 
     private Admin adminMapper(ResultSet resultSet) throws SQLException {
         return ImmutableAdmin.builder()
-                .adminId(AdminId.of(resultSet.getInt("id")))
-                .username(Username.of(resultSet.getString("username")))
-                .created(resultSet.getTimestamp("created").toLocalDateTime())
+                .adminId(AdminId.of(resultSet.getInt(ID)))
+                .username(Username.of(resultSet.getString(USERNAME)))
+                .created(resultSet.getTimestamp(CREATED).toLocalDateTime())
                 .build();
     }
 }

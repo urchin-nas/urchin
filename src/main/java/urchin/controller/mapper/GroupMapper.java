@@ -9,6 +9,9 @@ import java.util.stream.Collectors;
 
 public class GroupMapper {
 
+    private GroupMapper() {
+    }
+
     public static List<GroupResponse> mapToGroupsResponses(List<Group> groups) {
         return groups.stream()
                 .map(GroupMapper::mapToGroupResponse)

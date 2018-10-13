@@ -8,6 +8,9 @@ import java.util.stream.Collectors;
 
 public class CommandUtil {
 
+    private CommandUtil() {
+    }
+
     public static String readResponse(InputStream inputStream) {
         return new BufferedReader(new InputStreamReader(inputStream, Charset.defaultCharset()))
                 .lines()

@@ -8,6 +8,9 @@ import static urchin.model.permission.AclPermission.*;
 
 public class AclPermissionMapper {
 
+    private AclPermissionMapper() {
+    }
+
     public static AclPermissionResponse mapToAclPermissionResponse(AclPermission aclPermission) {
         return ImmutableAclPermissionResponse.builder()
                 .hasRead(aclPermission.getPermissions().contains(READ))

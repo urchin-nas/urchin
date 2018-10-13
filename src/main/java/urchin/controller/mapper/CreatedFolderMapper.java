@@ -6,6 +6,9 @@ import urchin.model.folder.CreatedFolder;
 
 public class CreatedFolderMapper {
 
+    private CreatedFolderMapper() {
+    }
+
     public static CreatedFolderResponse mapToCreatedFolderResponse(CreatedFolder createdFolder) {
         return ImmutableCreatedFolderResponse.builder()
                 .id(createdFolder.getFolderId().getValue())

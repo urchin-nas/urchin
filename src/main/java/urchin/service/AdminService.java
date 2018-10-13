@@ -35,10 +35,11 @@ public class AdminService {
 
     @Transactional
     public void removeAdmin(AdminId adminId) {
-        Admin admin = adminRepository.getAdmin(adminId);
+        adminRepository.getAdmin(adminId);
         adminRepository.removeAdmin(adminId);
     }
 
+    @Transactional
     public AdminId addFirstAdmin(Username username) {
         if (adminsMissing()) {
             return addAdmin(username);
@@ -48,10 +49,6 @@ public class AdminService {
 
     public List<Admin> getAdmins() {
         return adminRepository.getAdmins();
-    }
-
-    public Admin getAdmin(AdminId adminId) {
-        return adminRepository.getAdmin(adminId);
     }
 
     public boolean adminsMissing() {

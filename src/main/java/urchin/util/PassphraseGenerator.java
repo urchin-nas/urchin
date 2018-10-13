@@ -12,6 +12,9 @@ public class PassphraseGenerator {
 
     private static final Logger log = LoggerFactory.getLogger(PassphraseGenerator.class);
 
+    private PassphraseGenerator() {
+    }
+
     public static Passphrase generateEcryptfsPassphrase() {
         log.info("Generating passphrase for ecryptfs");
         return ImmutablePassphrase.of(RandomStringUtils.randomAlphanumeric(ECRYPTFS_MAX_PASSPHRASE_LENGTH));

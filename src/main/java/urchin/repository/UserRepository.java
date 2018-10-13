@@ -19,6 +19,7 @@ import urchin.model.user.Username;
 import java.sql.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Repository
@@ -51,7 +52,11 @@ public class UserRepository {
             return preparedStatement;
         }, keyHolder);
 
-        return UserId.of(keyHolder.getKey().intValue());
+        int userId = Optional.ofNullable(keyHolder.getKey())
+                .map(Number::intValue)
+                .orElseThrow(() -> new RuntimeException(String.format("Failed to save user %s", username)));
+
+        return UserId.of(userId);
     }
 
     public User getUser(UserId userId) {

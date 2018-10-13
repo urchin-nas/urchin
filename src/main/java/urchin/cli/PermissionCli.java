@@ -42,11 +42,11 @@ public class PermissionCli {
         this.setAclUserOnFolderCommand = setAclUserOnFolderCommand;
     }
 
-    public void changeFileMode(FileModes fileModes, Path file) {
+    void changeFileMode(FileModes fileModes, Path file) {
         changeFileModesCommand.execute(fileModes, file);
     }
 
-    public void changeOwner(Path file, Username username, GroupName groupName) {
+    void changeOwner(Path file, Username username, GroupName groupName) {
         changeOwnerCommand.execute(file, username, groupName);
     }
 
@@ -54,13 +54,13 @@ public class PermissionCli {
         changeOwnerCommand.execute(file, linuxUser.getUsername(), GroupName.of(linuxUser.getUsername().getValue()));
     }
 
-    public FileModes getFileModes(Path file) {
+    FileModes getFileModes(Path file) {
         return listFileInformationCommand.execute(file)
                 .map(s -> ImmutableFileModes.from(s.split(" ")[0]))
                 .orElse(null);
     }
 
-    public FileOwners getFileOwners(Path file) {
+    FileOwners getFileOwners(Path file) {
         return listFileInformationCommand.execute(file)
                 .map(s -> {
                     String[] split = s.split(" ");

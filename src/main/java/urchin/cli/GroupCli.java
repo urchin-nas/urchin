@@ -45,7 +45,7 @@ public class GroupCli {
         addGroupCommand.execute(groupName);
     }
 
-    public boolean checkIfGroupExist(GroupName groupName) {
+    boolean checkIfGroupExist(GroupName groupName) {
         try {
             return getGroupEntriesCommand.execute(groupName).isPresent();
         } catch (CommandException e) {
@@ -69,7 +69,7 @@ public class GroupCli {
         removeUserFromGroupCommand.execute(user, group);
     }
 
-    public boolean checkIfUserIsInGroup(User user, Group group) {
+    boolean checkIfUserIsInGroup(User user, Group group) {
         try {
             String[] users = getUsers(group);
             return stream(users)

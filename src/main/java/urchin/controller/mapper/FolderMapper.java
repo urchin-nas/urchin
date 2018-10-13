@@ -8,6 +8,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class FolderMapper {
+
+    private FolderMapper() {
+    }
+
     public static List<FolderDetailsResponse> mapToFolderDetailsResponses(List<FolderSettings> folders) {
         return folders.stream()
                 .map(FolderMapper::mapToFolderDetailsResponse)
