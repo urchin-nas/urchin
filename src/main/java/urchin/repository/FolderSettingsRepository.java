@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -27,30 +26,30 @@ import static java.lang.String.format;
 public class FolderSettingsRepository {
 
     private static final String INSERT_FOLDER_SETTINGS = "INSERT INTO folder_settings(encrypted_folder, folder, created, auto_mount) VALUES(:encryptedFolder,:folder,:created,:autoMount)";
-    private static final String SELECT_FOLDER_SETTINGS = "SELECT * FROM folder_settings WHERE id = ?";
+    private static final String SELECT_FOLDER_SETTINGS = "SELECT * FROM folder_settings WHERE id = :folderId";
     private static final String SELECT_FOLDERS_SETTINGS = "SELECT * FROM folder_settings";
-    private static final String DELETE_FOLDER_SETTINGS = "DELETE FROM folder_settings WHERE id = ?";
+    private static final String DELETE_FOLDER_SETTINGS = "DELETE FROM folder_settings WHERE id = :folderId";
 
     private final Logger log = LoggerFactory.getLogger(FolderSettingsRepository.class);
-    private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
     @Autowired
-    public FolderSettingsRepository(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public FolderSettingsRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     public FolderSettings getFolderSettings(FolderId folderId) {
         try {
-            return jdbcTemplate.queryForObject(SELECT_FOLDER_SETTINGS, new Object[]{folderId.getValue()}, (resultSet, i) -> folderSettingsMapper(resultSet));
+            MapSqlParameterSource params = new MapSqlParameterSource()
+                    .addValue("folderId", folderId.getValue());
+            return namedParameterJdbcTemplate.queryForObject(SELECT_FOLDER_SETTINGS, params, (resultSet, i) -> folderSettingsMapper(resultSet));
         } catch (EmptyResultDataAccessException e) {
             throw new FolderNotFoundException("Invalid folderId " + folderId);
         }
     }
 
     public List<FolderSettings> getFoldersSettings() {
-        return jdbcTemplate.query(SELECT_FOLDERS_SETTINGS, (resultSet, i) -> folderSettingsMapper(resultSet));
+        return namedParameterJdbcTemplate.query(SELECT_FOLDERS_SETTINGS, new MapSqlParameterSource(), (resultSet, i) -> folderSettingsMapper(resultSet));
     }
 
     public FolderId saveFolderSettings(EncryptedFolder encryptedFolder, Folder folder) {
@@ -74,7 +73,10 @@ public class FolderSettingsRepository {
 
     public void removeFolderSettings(FolderId folderId) {
         log.info("Removing folder settings for id {}", folderId);
-        jdbcTemplate.update(DELETE_FOLDER_SETTINGS, folderId.getValue());
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("folderId", folderId.getValue());
+
+        namedParameterJdbcTemplate.update(DELETE_FOLDER_SETTINGS, params);
     }
 
     private FolderSettings folderSettingsMapper(ResultSet resultSet) throws SQLException {

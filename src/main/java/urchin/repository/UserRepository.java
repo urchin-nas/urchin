@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -16,7 +15,9 @@ import urchin.model.user.User;
 import urchin.model.user.UserId;
 import urchin.model.user.Username;
 
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -25,32 +26,29 @@ import java.util.stream.Collectors;
 @Repository
 public class UserRepository {
 
-    private static final String INSERT_USER = "INSERT INTO user(username, created) VALUES(?,?)";
-    private static final String SELECT_USER = "SELECT * from user WHERE id = ?";
-    private static final String DELETE_USER = "DELETE FROM user WHERE id = ?";
+    private static final String INSERT_USER = "INSERT INTO user(username, created) VALUES(:username, :created)";
+    private static final String SELECT_USER = "SELECT * from user WHERE id = :userId";
+    private static final String DELETE_USER = "DELETE FROM user WHERE id = :userId";
     private static final String SELECT_USERS = "SELECT * from user";
     private static final String SELECT_USERS_BY_USERNAME = "SELECT * FROM user WHERE username IN (:usernames)";
 
     private final Logger log = LoggerFactory.getLogger(UserRepository.class);
-    private final JdbcTemplate jdbcTemplate;
     private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
-
     @Autowired
-    public UserRepository(JdbcTemplate jdbcTemplate, NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
-        this.jdbcTemplate = jdbcTemplate;
+    public UserRepository(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
         this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
     }
 
     public UserId saveUser(Username username) {
         log.info("Saving user {}", username);
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        jdbcTemplate.update(connection -> {
-            PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USER, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1, username.getValue());
-            preparedStatement.setTimestamp(2, new Timestamp(new Date().getTime()));
-            return preparedStatement;
-        }, keyHolder);
+
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("username", username.getValue())
+                .addValue("created", new Timestamp(new Date().getTime()));
+
+        namedParameterJdbcTemplate.update(INSERT_USER, params, keyHolder);
 
         int userId = Optional.ofNullable(keyHolder.getKey())
                 .map(Number::intValue)
@@ -61,7 +59,9 @@ public class UserRepository {
 
     public User getUser(UserId userId) {
         try {
-            return jdbcTemplate.queryForObject(SELECT_USER, new Object[]{userId.getValue()}, (resultSet, i) -> userMapper(resultSet));
+            MapSqlParameterSource params = new MapSqlParameterSource()
+                    .addValue("userId", userId.getValue());
+            return namedParameterJdbcTemplate.queryForObject(SELECT_USER, params, (resultSet, i) -> userMapper(resultSet));
         } catch (EmptyResultDataAccessException e) {
             throw new UserNotFoundException(userId);
         }
@@ -69,11 +69,13 @@ public class UserRepository {
 
     public void removeUser(UserId userId) {
         log.info("Removing user with id {}", userId);
-        jdbcTemplate.update(DELETE_USER, userId.getValue());
+        MapSqlParameterSource params = new MapSqlParameterSource()
+                .addValue("userId", userId.getValue());
+        namedParameterJdbcTemplate.update(DELETE_USER, params);
     }
 
     public List<User> getUsers() {
-        return jdbcTemplate.query(SELECT_USERS, (resultSet, i) -> userMapper(resultSet));
+        return namedParameterJdbcTemplate.query(SELECT_USERS, (resultSet, i) -> userMapper(resultSet));
     }
 
     public List<User> getUsersByUsername(List<Username> usernames) {
