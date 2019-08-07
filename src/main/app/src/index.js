@@ -6,7 +6,7 @@ import thunk from 'redux-thunk';
 import rootReducer from './reducer/rootReducer';
 import initialStore from './store.json';
 import App from './App';
-import 'react-notifications/lib/notifications.css';
+import "react-notifications/lib/notifications.css";
 import "./main.css";
 
 const middleware = [thunk];
