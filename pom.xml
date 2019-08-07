@@ -193,6 +193,9 @@
                             <goal>npm</goal>
                         </goals>
                         <configuration>
+                            <environmentVariables>
+                                <CI>1</CI>
+                            </environmentVariables>
                             <arguments>test -- --coverage</arguments>
                         </configuration>
                     </execution>
