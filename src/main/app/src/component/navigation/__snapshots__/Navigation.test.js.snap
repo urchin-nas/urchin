@@ -9,7 +9,6 @@ exports[`Navigation match snapshot 1`] = `
     className="navigation__brand"
     data-view="navigationBrand"
     onClick={[Function]}
-    replace={false}
     to="/"
   >
     Urchin
@@ -36,7 +35,6 @@ exports[`Navigation match snapshot 1`] = `
         <Link
           className="navigation-item__users"
           onClick={[Function]}
-          replace={false}
           to="/users"
         >
           Users
@@ -49,7 +47,6 @@ exports[`Navigation match snapshot 1`] = `
         <Link
           className="navigation-item__groups"
           onClick={[Function]}
-          replace={false}
           to="/groups"
         >
           Groups
@@ -62,7 +59,6 @@ exports[`Navigation match snapshot 1`] = `
         <Link
           className="navigation-item__folders"
           onClick={[Function]}
-          replace={false}
           to="/folders"
         >
           Folders

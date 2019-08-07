@@ -3,16 +3,40 @@
 exports[`UsersRoute match snapshot 1`] = `
 <Switch>
   <Route
-    component={[Function]}
+    component={
+      Object {
+        "$$typeof": Symbol(react.memo),
+        "WrappedComponent": [Function],
+        "compare": null,
+        "displayName": "Connect(UsersContainer)",
+        "type": [Function],
+      }
+    }
     exact={true}
     path="/users"
   />
   <Route
-    component={[Function]}
+    component={
+      Object {
+        "$$typeof": Symbol(react.memo),
+        "WrappedComponent": [Function],
+        "compare": null,
+        "displayName": "Connect(NewUserContainer)",
+        "type": [Function],
+      }
+    }
     path="/users/new"
   />
   <Route
-    component={[Function]}
+    component={
+      Object {
+        "$$typeof": Symbol(react.memo),
+        "WrappedComponent": [Function],
+        "compare": null,
+        "displayName": "Connect(EditUserContainer)",
+        "type": [Function],
+      }
+    }
     path="/users/:id"
   />
 </Switch>

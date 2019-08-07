@@ -8,7 +8,6 @@ exports[`Folders match snapshot 1`] = `
   <Link
     className="folders__new-folder"
     data-view="newFolder"
-    replace={false}
     to="/folders/new"
   >
     new folder

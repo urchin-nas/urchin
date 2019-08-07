@@ -54,7 +54,6 @@ exports[`EditUser match snapshot 1`] = `
       key="0"
     >
       <Link
-        replace={false}
         to="/groups/11"
       >
         alreadyAddedGroup

@@ -8,7 +8,6 @@ exports[`Groups match snapshot 1`] = `
   <Link
     className="groups__new-group"
     data-view="newGroup"
-    replace={false}
     to="/groups/new"
   >
     new group

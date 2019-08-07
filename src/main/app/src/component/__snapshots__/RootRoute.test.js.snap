@@ -20,7 +20,6 @@ exports[`RootRoute match snapshot 1`] = `
     path="/folders"
   />
   <Redirect
-    push={false}
     to="/"
   />
 </Switch>

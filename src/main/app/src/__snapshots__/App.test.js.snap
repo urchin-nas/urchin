@@ -37,11 +37,27 @@ exports[`App match snapshot 1`] = `
           path="/login"
         />
         <Route
-          component={[Function]}
+          component={
+            Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(SetupAdminContainer)",
+              "type": [Function],
+            }
+          }
           path="/setup-admin"
         />
         <Route
-          component={[Function]}
+          component={
+            Object {
+              "$$typeof": Symbol(react.memo),
+              "WrappedComponent": [Function],
+              "compare": null,
+              "displayName": "Connect(RootContainer)",
+              "type": [Function],
+            }
+          }
           path="/"
         />
       </Switch>

@@ -3,16 +3,40 @@
 exports[`GroupsRoute match snapshot 1`] = `
 <Switch>
   <Route
-    component={[Function]}
+    component={
+      Object {
+        "$$typeof": Symbol(react.memo),
+        "WrappedComponent": [Function],
+        "compare": null,
+        "displayName": "Connect(GroupsContainer)",
+        "type": [Function],
+      }
+    }
     exact={true}
     path="/groups"
   />
   <Route
-    component={[Function]}
+    component={
+      Object {
+        "$$typeof": Symbol(react.memo),
+        "WrappedComponent": [Function],
+        "compare": null,
+        "displayName": "Connect(NewGroupContainer)",
+        "type": [Function],
+      }
+    }
     path="/groups/new"
   />
   <Route
-    component={[Function]}
+    component={
+      Object {
+        "$$typeof": Symbol(react.memo),
+        "WrappedComponent": [Function],
+        "compare": null,
+        "displayName": "Connect(EditGroupContainer)",
+        "type": [Function],
+      }
+    }
     path="/groups/:id"
   />
 </Switch>

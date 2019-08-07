@@ -3,20 +3,52 @@
 exports[`FoldersRoute match snapshot 1`] = `
 <Switch>
   <Route
-    component={[Function]}
+    component={
+      Object {
+        "$$typeof": Symbol(react.memo),
+        "WrappedComponent": [Function],
+        "compare": null,
+        "displayName": "Connect(FoldersContainer)",
+        "type": [Function],
+      }
+    }
     exact={true}
     path="/folders"
   />
   <Route
-    component={[Function]}
+    component={
+      Object {
+        "$$typeof": Symbol(react.memo),
+        "WrappedComponent": [Function],
+        "compare": null,
+        "displayName": "Connect(ConfirmNewFolderContainer)",
+        "type": [Function],
+      }
+    }
     path="/folders/new/confirm"
   />
   <Route
-    component={[Function]}
+    component={
+      Object {
+        "$$typeof": Symbol(react.memo),
+        "WrappedComponent": [Function],
+        "compare": null,
+        "displayName": "Connect(NewFolderContainer)",
+        "type": [Function],
+      }
+    }
     path="/folders/new"
   />
   <Route
-    component={[Function]}
+    component={
+      Object {
+        "$$typeof": Symbol(react.memo),
+        "WrappedComponent": [Function],
+        "compare": null,
+        "displayName": "Connect(EditFolderContainer)",
+        "type": [Function],
+      }
+    }
     path="/folders/:id"
   />
 </Switch>
