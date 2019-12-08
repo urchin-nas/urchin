@@ -21,8 +21,7 @@ public class SetFolderImmutableCommand extends BasicCommand {
         log.info("Setting folder {} immutable", folder);
         String cmd = command.getFolderCommand(SET_FOLDER_IMMUTABLE);
         try {
-            executeCommand(cmd.replace(FOLDER, folder.toAbsolutePath())
-            );
+            executeCommand(cmd.replace(FOLDER, folder.toAbsolutePath()));
         } catch (Exception e) {
             log.warn("Could not set folder {} to immutable. {} is probably not supported by the file system. Continuing...", folder, cmd, e);
         }
