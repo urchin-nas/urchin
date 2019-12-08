@@ -2,6 +2,7 @@ package urchin.cli;
 
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -95,6 +96,7 @@ public class FolderCliIT {
     }
 
     @Test
+    @Ignore //TODO conditional run when file system supports immutable folders (chattr +i)
     public void setFolderImmutableAndBackToMutable() throws IOException {
         String filename1 = "testfile1";
         String filename2 = "testfile2";
