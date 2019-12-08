@@ -1,7 +1,6 @@
 package urchin.selenium.testutil;
 
 import io.github.bonigarcia.wdm.ChromeDriverManager;
-import io.github.bonigarcia.wdm.DriverManagerType;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -12,24 +11,27 @@ import org.slf4j.LoggerFactory;
 import static urchin.selenium.testutil.ProfileEvaluator.executeJar;
 
 
-public class SeleniumDriver {
+public enum SeleniumDriver {
 
-    private static final Logger log = LoggerFactory.getLogger(SeleniumDriver.class.getName());
-    private static WebDriver driver;
+    SELENIUM_DRIVER;
 
-    public static synchronized WebDriver getDriver() {
-        if (driver == null) {
-            if (executeJar()) {
-                driver = createHeadlessDriver();
-            } else {
-                driver = createDriver();
-            }
+    private final Logger log = LoggerFactory.getLogger(SeleniumDriver.class.getName());
+
+    private WebDriver driver;
+
+    SeleniumDriver() {
+        if (executeJar()) {
+            driver = createHeadlessDriver();
+        } else {
+            driver = createDriver();
         }
+    }
 
+    public WebDriver getDriver() {
         return driver;
     }
 
-    private static WebDriver createDriver() {
+    private WebDriver createDriver() {
         log.info("Configuring webDriver to execute in normal mode");
         WebDriverManager webDriverManager = ChromeDriverManager.chromedriver();
         webDriverManager.setup();
@@ -39,7 +41,7 @@ public class SeleniumDriver {
         return new ChromeDriver(options);
     }
 
-    private static WebDriver createHeadlessDriver() {
+    private WebDriver createHeadlessDriver() {
         log.info("Configuring webDriver to execute in headless mode");
         WebDriverManager webDriverManager = ChromeDriverManager.chromedriver();
         webDriverManager.setup();

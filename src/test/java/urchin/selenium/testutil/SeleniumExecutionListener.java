@@ -13,6 +13,8 @@ import org.slf4j.LoggerFactory;
 import java.io.File;
 import java.io.IOException;
 
+import static urchin.selenium.testutil.SeleniumDriver.SELENIUM_DRIVER;
+
 public class SeleniumExecutionListener extends RunListener {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass().getName());
@@ -30,7 +32,7 @@ public class SeleniumExecutionListener extends RunListener {
     @Override
     public void testRunFinished(Result result) throws Exception {
         JarExecutor.INSTANCE.stop();
-        SeleniumDriver.getDriver().quit();
+        SELENIUM_DRIVER.getDriver().quit();
         super.testRunFinished(result);
     }
 
@@ -45,7 +47,7 @@ public class SeleniumExecutionListener extends RunListener {
         String fullPath = String.format("%s/target/screenshots/%s", System.getProperty("user.dir"), filename);
         log.info("Taking screenshot " + fullPath);
 
-        File scrFile = ((TakesScreenshot) SeleniumDriver.getDriver()).getScreenshotAs(OutputType.FILE);
+        File scrFile = ((TakesScreenshot) SELENIUM_DRIVER.getDriver()).getScreenshotAs(OutputType.FILE);
         FileUtils.copyFile(scrFile, new File(fullPath));
     }
 }

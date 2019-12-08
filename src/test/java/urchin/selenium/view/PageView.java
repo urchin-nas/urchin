@@ -5,16 +5,16 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import urchin.selenium.testutil.SeleniumDriver;
 import urchin.selenium.testutil.SeleniumUrl;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
+import static urchin.selenium.testutil.SeleniumDriver.SELENIUM_DRIVER;
 
 public abstract class PageView<T> {
 
     private static final int TIME_OUT_IN_SECONDS = 3;
 
-    protected final WebDriver driver = SeleniumDriver.getDriver();
+    protected final WebDriver driver = SELENIUM_DRIVER.getDriver();
 
     protected final String url = SeleniumUrl.getUrl();
 
