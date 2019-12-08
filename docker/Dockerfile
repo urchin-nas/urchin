@@ -17,12 +17,13 @@ RUN apt-get update && \
 # setup permissions
 RUN echo "root ALL=(ALL) NOPASSWD:/usr/bin/sudo,/usr/sbin/adduser,/usr/sbin/useradd,/usr/sbin/deluser,/usr/sbin/addgroup,/usr/sbin/delgroup,/bin/chown,/usr/bin/passwd,/bin/mount,/bin/umount,/usr/bin/mhddfs,/etc/init.d/smbd,/bin/mkdir,/bin/rm,/usr/bin/setfacl,/usr/bin/chattr,/bin/cat" >> /etc/sudoers.d/urchin
 
-# Get project
-RUN mkdir /workspace && \
-    git clone https://github.com/anhem/urchin.git /workspace
+# get project
+WORKDIR workspace
 
-# resolve project dependencies
-WORKDIR /workspace
+# get project
+RUN git clone https://github.com/anhem/urchin.git .
+
+# resolve dependencies
 RUN mvn dependency:resolve
 RUN mvn dependency:resolve-plugins
 RUN mvn clean install -DskipTests=true -B -V
@@ -31,6 +32,4 @@ ADD entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
 #ENTRYPOINT ["tail", "-f", "/dev/null"]
-
-EXPOSE 8080
 

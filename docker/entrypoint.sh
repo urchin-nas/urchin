@@ -11,10 +11,12 @@ do
  b) BRANCH=${OPTARG};;
  s) START=${OPTARG};;
  a) ANALYZE=${OPTARG};;
+ *) echo "usage: $0 [-b] [-s] [-a]" >&2
+    exit 1 ;;
  esac
 done
 
-cd /workspace
+cd /workspace || exit
 
 echo "[Remount / with ACL]"
 mount -o remount,acl /
