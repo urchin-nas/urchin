@@ -19,8 +19,12 @@ public class SetFolderMutableCommand extends BasicCommand {
 
     public void execute(FolderWrapper folder) {
         log.info("Setting folder {} mutable", folder);
-        executeCommand(command.getFolderCommand(SET_FOLDER_MUTABLE)
-                .replace(FOLDER, folder.toAbsolutePath())
-        );
+        String cmd = command.getFolderCommand(SET_FOLDER_MUTABLE);
+        try {
+            executeCommand(cmd.replace(FOLDER, folder.toAbsolutePath())
+            );
+        } catch (Exception e) {
+            log.warn("Could not set folder {} to mutable. {} is probably not supported by the file system. Continuing...", folder, cmd, e);
+        }
     }
 }
