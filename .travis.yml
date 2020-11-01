@@ -15,4 +15,4 @@ install:
   - docker pull anhem/urchin
 
 script:
-  - docker run -it --privileged --name urchin-travis anhem/urchin -b $TRAVIS_BRANCH -a true -e SONAR_LOGIN
+  - docker run -it -e SONAR_LOGIN --privileged --name urchin-travis anhem/urchin -b $TRAVIS_BRANCH -a true
