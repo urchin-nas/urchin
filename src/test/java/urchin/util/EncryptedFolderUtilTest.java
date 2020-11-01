@@ -20,7 +20,7 @@ public class EncryptedFolderUtilTest {
         Folder returnedFolder = EncryptedFolderUtil.getFolder(encryptedFolder);
 
         assertThat(returnedFolder.toAbsolutePath()).isEqualTo(folder.toAbsolutePath());
-        assertNotEquals(folder.toAbsolutePath(), encryptedFolder.getPath().toAbsolutePath());
+        assertNotEquals(folder.getPath().toAbsolutePath(), encryptedFolder.getPath().toAbsolutePath());
 
     }
 
