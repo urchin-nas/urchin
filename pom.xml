@@ -330,7 +330,7 @@
             <properties>
                 <sonar.organization>anhem-github</sonar.organization>
                 <sonar.host.url>https://sonarcloud.io</sonar.host.url>
-                <sonar.login>${env.SONAR_LOGIN}</sonar.login>
+                <sonar.login>${SONAR_LOGIN}</sonar.login>
                 <sonar.sources>src/main</sonar.sources>
                 <sonar.exclusions>**/node_modules/**,**/node/**,**/build/**,**/coverage/**,**/*.test.js
                 </sonar.exclusions>
